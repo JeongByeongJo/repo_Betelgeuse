@@ -1,7 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.bycycledoctors.infra.codegroup.CodeGroupDao">
-
-	  
+<mapper namespace="com.bicycledoctors.module.codegroup.CodeGroupDao">
+	
+	<resultMap type="com.bicycledoctors.module.codegroup.CodeGroupDto" id="resultMapObj"></resultMap>
+	
+	<select id="selectList" resultMap="resultMapObj">
+		select
+			cdgSeq
+			,cdgName
+			,cdgUseNy
+			,cdgDelNy
+			,cdgDesc
+		from
+			codegroup
+		where 1=1			
+		order by cdgSeq asc	
+	</select>
+	<select id="selectOne" resultMap="resultMapObj">
+		select
+			cdgSeq
+			,cdgName
+			,cdgUseNy
+			,cdgDelNy
+			,cdgDesc
+		from
+			codegroup
+		where 1=1
+			and cdgSeq = #{cdgSeq}
+	</select>
+	
+	<insert id="insert">
+		insert into codegroup (
+			cdgName
+		) values (
+			#{cdgName}
+		)
+		<selectKey resultType="String" keyProperty="cdgSeq" order="AFTER">
+			SELECT last_insert_id()
+		</selectKey>
+	</insert>
+	
+	<update id="update">
+		update codegroup set
+			cdgName = #{cdgName}
+		where
+			cdgSeq = #{cdgSeq}
+	</update>
+	
+	<update id="uelete">
+		update codegroup set
+			cdgDelNy = 1
+		where
+			cdgSeq = #{cdgSeq}
+	</update>
 </mapper>
