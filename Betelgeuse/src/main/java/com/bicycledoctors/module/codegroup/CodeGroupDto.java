@@ -3,8 +3,8 @@ package com.bicycledoctors.module.codegroup;
 public class CodeGroupDto {
 	private String cdgSeq;
 	private String cdgName;
-	private int cdgUseNy;
-	private int cdgDelNy;
+	private Integer cdgUseNy;
+	private Integer cdgDelNy;
 	private String cdgDesc;
 //	-----
 	public String getCdgSeq() {
@@ -19,16 +19,16 @@ public class CodeGroupDto {
 	public void setCdgName(String cdgName) {
 		this.cdgName = cdgName;
 	}
-	public int getCdgUseNy() {
+	public Integer getCdgUseNy() {
 		return cdgUseNy;
 	}
-	public void setCdgUseNy(int cdgUseNy) {
+	public void setCdgUseNy(Integer cdgUseNy) {
 		this.cdgUseNy = cdgUseNy;
 	}
-	public int getCdgDelNy() {
+	public Integer getCdgDelNy() {
 		return cdgDelNy;
 	}
-	public void setCdgDelNy(int cdgDelNy) {
+	public void setCdgDelNy(Integer cdgDelNy) {
 		this.cdgDelNy = cdgDelNy;
 	}
 	public String getCdgDesc() {
