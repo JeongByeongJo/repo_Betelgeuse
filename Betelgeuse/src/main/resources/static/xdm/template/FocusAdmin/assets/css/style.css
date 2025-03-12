@@ -260,7 +260,7 @@ body {
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #BDBDC7;
+  color: #000011;
   text-align: left;
   background-color: rgba(88, 115, 254, 0.04); }
 
@@ -1340,7 +1340,7 @@ pre {
 .table {
   width: 100%;
   margin-bottom: 1rem;
-  color: #BDBDC7; }
+  color: #000011; }
   .table th,
   .table td {
     padding: 0.75rem;
@@ -1375,7 +1375,7 @@ pre {
   background-color: rgba(0, 0, 0, 0.05); }
 
 .table-hover tbody tr:hover {
-  color: #BDBDC7;
+  color: #000011;
   background-color: rgba(0, 0, 0, 0.075); }
 
 .table-primary,
@@ -7850,7 +7850,7 @@ li {
   list-style: none; }
 
 a {
-  color: #BDBDC7; }
+  color: #000011; }
   a:hover, a:focus, a.active {
     color: #593bdb;
     text-decoration: none; }
