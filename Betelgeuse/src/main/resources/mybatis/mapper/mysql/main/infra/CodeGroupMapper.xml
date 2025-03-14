@@ -5,6 +5,17 @@
 	
 	<resultMap type="com.bicycledoctors.module.codegroup.CodeGroupDto" id="resultMapObj"></resultMap>
 	
+	<sql id="selectCommon">	    
+	    from codegroup as a
+	    where 1=1
+	    and cdgdelNy = 0
+    </sql>
+    
+    <select id="selectOneCount" resultType="Integer">
+    	select count(*)
+    	 <include refid = "selectCommon"></include>
+    </select>
+
 	<select id="selectList" resultMap="resultMapObj">
 		select
 			cdgSeq

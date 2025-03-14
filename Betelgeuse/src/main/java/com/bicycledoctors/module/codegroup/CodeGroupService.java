@@ -30,4 +30,8 @@ public class CodeGroupService {
 	public int uelete(CodeGroupDto codeGroupDto) {
 		return codeGroupDao.uelete(codeGroupDto);
 	}
+	
+	public int selectOneCount() {
+		return codeGroupDao.selectOneCount();
+	}
 }
