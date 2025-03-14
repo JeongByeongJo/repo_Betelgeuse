@@ -17,6 +17,7 @@
     </select>
 
 	<select id="selectList" resultMap="resultMapObj">
+	select aa.* from (
 		select
 			cdgSeq
 			,cdgName
@@ -26,7 +27,9 @@
 		from
 			codegroup
 		where 1=1			
-		order by cdgSeq desc	
+		order by cdgSeq desc
+	) aa
+	limit #{rowNumToShow} offset #{startRnumForMysql}
 	</select>
 	<select id="selectOne" resultMap="resultMapObj">
 		select

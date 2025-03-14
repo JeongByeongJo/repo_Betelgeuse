@@ -13,11 +13,13 @@ public class CodeGroupController {
 	CodeGroupService codeGroupService;
 	
 	@RequestMapping(value = "/codegroup/CodegroupXdmList")
-	public String CodegroupXdmList(Model model) {
+	public String CodegroupXdmList(CodeGroupVo vo, Model model) {
 		
-		int a = codeGroupService.selectOneCount();
+		vo.setParamsPaging(codeGroupService.selectOneCount());
 		
-		model.addAttribute("list", codeGroupService.selectList());
+		model.addAttribute("list", codeGroupService.selectList(vo));
+		model.addAttribute("vo", vo);
+		
 		return "xdm/codegroup/CodegroupXdmList";
 	}
 	
