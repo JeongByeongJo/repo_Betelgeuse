@@ -1,6 +1,6 @@
-package com.bicycledoctors.module.codegroup;
+package com.bicycledoctors.module.code;
 
-public class CodeGroupVo {
+public class CodeVo {
 	//	paging
 	private int thisPage = 1;									// 현재 페이지
 	private int rowNumToShow = 3;								// 화면에 보여줄 데이터 줄 갯수

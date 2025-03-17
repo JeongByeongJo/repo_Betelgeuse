@@ -15,7 +15,7 @@
                                 <li class="breadcrumb-item"><a href="javascript:void(0)">Page 2</a></li>
                                 <li class="breadcrumb-item active"><a href="javascript:void(0)">Default</a></li>
                             </ol>
-                            <h2>Code Group</h2>                           
+                            <h2>Code</h2>                           
                         </div>
                         <div class="row" style="margin-bottom: 1em; border-color: black;">
                             <div class="col">                                    
@@ -94,7 +94,7 @@
                 <!-- row -->
                  <div class="card">
                     <div class="card-body">
-                        <form name="formList" action="/codegroup/CodegroupXdmUele" method="post" id="formList">
+                        <form name="formList" action="/code/CodeXdmUele" method="post" id="formList">
 							<input type="hidden" name="thisPage" th:value="${vo.thisPage}" default="1"/>
 							<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${vo.rowNumToShow}"/>
                             <div class="row" style="margin-bottom: 1em;">
@@ -126,12 +126,14 @@
                                                     <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">                                                
                                                     </div>
                                                 </th>
-                                                <th scope="col">#</th>
+												<th scope="col">#</th>
                                                 <th scope="col">사용</th>
                                                 <th scope="col">코드그룹 코드</th>
                                                 <th scope="col">코드그룹이름</th>
-                                                <th scope="col">코드그룹 이름(영문)</th>
-                                                <th scope="col">갯수</th>
+                                                <th scope="col">코드</th>
+                                                <th scope="col">대체 코드</th>
+                                                <th scope="col">코드 이름</th>
+                                                <th scope="col">코드 이름(영문)</th>
                                                 <th scope="col">순서</th>
                                                 <th scope="col">등록일</th>
                                                 <th scope="col">수정일</th>
@@ -147,10 +149,12 @@
                                                 <th scope="row"><div class="form-check" style="padding-bottom: 4ex;">
                                                     <input class="form-check-input" type="checkbox"  value="" id="flexCheckDefault">                                                
                                                     </div></th>
-                                                <td th:text="${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
+                                                <td th:text = "${list.cdSeq}"></td>
                                                 <td th:text = "${list.cdgUseNy}"></td>
                                                 <td th:text = "${list.cdgSeq}"></td>
-                                                <td><a th:href="@{/codegroup/CodegroupXdmMfom(cdgSeq=${list.cdgSeq})}" th:text="${list.cdgName}"></a></td>
+                                                <td th:text = "${list.cdgName}"></td>
+                                                <td></td>                                                
+                                                <td><a th:href="@{/code/CodeXdmMfom(cdgSeq=${list.cdSeq})}" th:text="${list.cdName}"></a></td>
                                                 <td></td>
                                                 <td>8</td>
                                                 <td>1</td>
@@ -170,7 +174,7 @@
                                             <li class="page-item">
 											<li th:if="${vo.startPage gt vo.pageNumToShow}" class="page-item" style="cursor: pointer;">
 												<a class="page-link" href="javascript:goList(${vo.startPage - 1})" th:attr="onclick=|goList('${vo.startPage - 1}')|">
-													&laquo;
+													<<
 												</a>
 											</li>
 											<li th:each="num: ${#numbers.sequence(vo.startPage, vo.endPage)}" th:classappend="${num eq vo.thisPage} ? active : ''" class="page-item" style="cursor: pointer;">
@@ -178,9 +182,21 @@
 											</li>
 											<li th:if="${vo.endPage ne vo.totalPages}" class="page-item" style="cursor: pointer;">
 												<a class="page-link" th:attr="onclick=|goList('${vo.endPage + 1}')|">
-													&raquo;
+													>>
 												</a>
-											</li>
+											</li>	
+                                            <!-- <a class="page-link" href="#" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                            </li>
+                                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                            <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                            </li>-->
                                         </ul>
                                     </nav> 
                                 </div>
@@ -202,7 +218,7 @@
                                         <path d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z"/>
                                         <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
                                         </svg></button>
-                                    <button type="button" class="btn btn-primary"><a href="/codegroup/CodegroupXdmForm"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                    <button type="button" class="btn btn-primary"><a href="/code/CodeXdmForm"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
                                         </svg></a></button>
                                 </div>
@@ -253,7 +269,7 @@
 		
 		goList = function (thisPage) {
 		    document.querySelector("input[name=thisPage]").value = thisPage;
-		    form.action = "/codegroup/CodegroupXdmList";
+		    form.action = "/code/CodeXdmList";
 		    form.submit();
 		}
 			

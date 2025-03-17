@@ -8,7 +8,7 @@
 	<sql id="selectCommon">	    
 	    from codegroup as a
 	    where 1=1
-	    and cdgdelNy = 0
+	    and cdgDelNy = 0
     </sql>
     
     <select id="selectOneCount" resultType="Integer">
@@ -24,9 +24,7 @@
 			,cdgUseNy
 			,cdgDelNy
 			,cdgDesc
-		from
-			codegroup
-		where 1=1			
+		<include refid = "selectCommon"></include>	
 		order by cdgSeq desc
 	) aa
 	limit #{rowNumToShow} offset #{startRnumForMysql}

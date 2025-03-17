@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<th:block th:fragment="head">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,7 +8,7 @@
     <title>Admin</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
-    <!-- Datatable -->        
+    <!-- Datatable -->
     <link href="/xdm/template/FocusAdmin/assets/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
     <!-- Custom Stylesheet -->
     <link href="/xdm/template/FocusAdmin/assets/css/style.css" rel="stylesheet">
@@ -317,4 +317,282 @@
         <!--**********************************
             Sidebar end
         ***********************************-->
-        </th:block>
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+            <div class="container-fluid">
+                <div class="row page-titles mx-0">
+                    <div class="col">
+                        <div class="welcome-text">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="javascript:void(0)">Page 1</a></li>
+                                <li class="breadcrumb-item"><a href="javascript:void(0)">Page 2</a></li>
+                                <li class="breadcrumb-item active"><a href="javascript:void(0)">Default</a></li>
+                            </ol>
+                            <h2>Code</h2>                           
+                        </div>
+                        <div class="row" style="margin-bottom: 1em; border-color: black;">
+                            <div class="col">                                    
+                                <div class="row" style="margin-bottom: 1em;">
+                                    <div class="col">
+                                        <select class="form-control" aria-label="Default select example">
+                                            <option selected>N</option>
+                                            <option value="1">Y</option>                            
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <select class="form-control" aria-label="Default select example">
+                                            <option selected>Y</option>
+                                            <option value="1">N</option>                            
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <select class="form-control" aria-label="Default select example">
+                                            <option selected>날짜</option>
+                                            <option value="1">등록일</option>                            
+                                            <option value="2">수정일</option>                            
+                                        </select>
+                                    </div>
+                                    <div class="col">                            
+                                        <input type="text" class="form-control" placeholder="2024-12-25">
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" class="form-control" placeholder="2025-01-24">
+                                    </div>
+                                    <div class="col"></div>
+                                </div>
+                                <div class="row" style="margin-bottom: 1em;">
+                                    <div class="col">
+                                        <select class="form-control" aria-label="Default select example">
+                                            <option selected>검색구분</option>
+                                            <option value="1">코드그룹 코드</option>
+                                            <option value="2">코드그룹 이름</option>
+                                            <option value="3">코드</option>
+                                            <option value="4">대체 코드</option>
+                                            <option value="5">코드 이름</option>
+                                            <option value="5">코드 이름(영문)</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+                                        <input type="text" class="form-control" placeholder="검색어">
+                                    </div>
+                                    <div class="col">
+                                        <div class="row">
+                                            <div class="col">
+                                                <button class="form-control" style="border-color: black;">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                            <div class="col" style="padding: 0ch;">
+                                                <button class="form-control" style="border-color: black;">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                                                        <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z"/>
+                                                        <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466"/>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                            <div class="col"></div>
+                                            <div class="col"></div>
+                                            <div class="col"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col"></div>
+                                    <div class="col"></div>
+                                    <div class="col"></div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>                    
+                </div>
+                <!-- row -->
+                 <div class="card">
+                    <div class="card-body">
+                        <form name="formList" action="/code/CodeXdmUele" method="post" id="formList">
+							<input type="hidden" name="thisPage" th:value="${vo.thisPage}" default="1"/>
+							<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${vo.rowNumToShow}"/>
+                            <div class="row" style="margin-bottom: 1em;">
+                                <div class="col">
+                                    <!-- &nbsp; Total: 160 -->
+                                </div>
+                                <div class="col"></div>
+                                <div class="col"></div>
+                                <div class="col"></div>
+                                <div class="col"></div>
+                                <div class="col">
+                                    <!-- <select class="form-control" aria-label="Default select example">
+                                        <option selected>5</option>
+                                        <option value="1">10</option>
+                                        <option value="2">15</option>
+                                        <option value="3">20</option>
+                                    </select> -->
+                                </div>
+                            </div>
+                            <div class="row" style="margin-bottom: 1em;">                                
+                                <div class="col">
+                                    <div class="table-responsive">
+                                        <table class="table table-responsive-sm" style="text-align: center;">
+                                            <thead>
+                                                <tr>
+												<th scope="col">
+                                                    <div class="form-check" style="padding-bottom: 4ex;">
+                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">                                                
+                                                    </div>
+                                                </th>
+                                                <th scope="col">#</th>
+                                                <th scope="col">사용</th>
+                                                <th scope="col">코드그룹 코드</th>
+                                                <th scope="col">코드그룹이름</th>
+                                                <th scope="col">코드</th>
+                                                <th scope="col">대체 코드</th>
+                                                <th scope="col">코드 이름</th>
+                                                <th scope="col">코드 이름(영문)</th>
+                                                <th scope="col">순서</th>
+                                                <th scope="col">등록일</th>
+                                                <th scope="col">수정일</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+												<tr th:if="${#lists.isEmpty(list)}" class="hover-action-trigger btn-reveal-trigger position-static">
+                                        		<td colspan="10">
+                                        			<p class="fs-0" style="padding-top: 12px;">There are no data!</p>
+                                        		</td>
+                                        	</tr>
+                                            <tr th:if="${!#lists.isEmpty(list)}" th:each ="list : ${list}">
+                                            <th scope="row"><div class="form-check" style="padding-bottom: 4ex;">
+                                                <input class="form-check-input" type="checkbox"  value="" id="flexCheckDefault">                                                
+                                                </div></th>
+                                            <td th:text="${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
+                                            <td th:text = "${list.cdUseNy}"></td>
+                                            <td th:text = "${list.cdgSeq}"></td>                                                
+                                            <td th:text = "${list.cdgName}"></td>
+                                            <td th:text = "${list.cdSeq}"></td>
+                                            <td></td>
+                                            <td><a th:href="@{/code/CodeXdmMfom(cdSeq=${list.cdSeq})}" th:text="${list.cdName}"></a></td>
+                                            <td th:text = "${list.cdNameEng}"></td>
+                                            <td>1</td>
+                                            <td></td>
+                                            <td></td>                                                
+                                            </tr>     
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>                               
+                            </div>
+                            <div class="row" style="margin-bottom: 1em;">
+                                <div class="col"></div> 
+                                <div class="col" style="align-items: center;">
+									<nav aria-label="Page navigation example">
+	                                    <ul class="pagination">
+	                                        <li class="page-item">
+											<li th:if="${vo.startPage gt vo.pageNumToShow}" class="page-item" style="cursor: pointer;">
+												<a class="page-link" href="javascript:goList(${vo.startPage - 1})" th:attr="onclick=|goList('${vo.startPage - 1}')|">
+													&laquo;
+												</a>
+											</li>
+											<li th:each="num: ${#numbers.sequence(vo.startPage, vo.endPage)}" th:classappend="${num eq vo.thisPage} ? active : ''" class="page-item" style="cursor: pointer;">
+												<a class="page-link" th:attr="onclick=|goList('${num}')|" th:text="${num}"><!-- ${i.index} --></a>
+											</li>
+											<li th:if="${vo.endPage ne vo.totalPages}" class="page-item" style="cursor: pointer;">
+												<a class="page-link" th:attr="onclick=|goList('${vo.endPage + 1}')|">
+													&raquo;
+												</a>
+											</li>
+	                                    </ul>
+	                                </nav> 
+                                </div>
+                                <div class="col"></div>                           
+                            </div>                                                               
+                            <div class="row" style="padding: 1em;">
+                                <div class="col" style="text-align: left;">
+                                    <button type="button" class="btn btn-danger"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                                        </svg></button>
+                                    <button type="button" class="btn btn-danger"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+                                        </svg></button>
+                                    
+                                </div>
+                                <div class="col" style="text-align: right;">
+                                    <button type="button" class="btn btn-primary"><span>U</span></button>
+                                    <button type="button" class="btn btn-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel" viewBox="0 0 16 16">
+                                        <path d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z"/>
+                                        <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+                                        </svg></button>
+                                    <button type="button" class="btn btn-primary"><a href="/code/CodeXdmForm"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+                                        </svg></a></button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div> 
+            </div>
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+
+
+        <!--**********************************
+            Footer start
+        ***********************************-->
+        <!-- <div class="footer">
+            <div class="copyright">
+                <p>Copyright © Designed &amp; Developed by <a href="#" target="_blank">Quixkit</a> 2019</p>
+            </div>
+        </div> -->
+        <!--**********************************
+            Footer end
+        ***********************************-->
+
+        <!--**********************************
+           Support ticket button start
+        ***********************************-->
+
+        <!--**********************************
+           Support ticket button end
+        ***********************************-->
+
+        
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <!-- Required vendors -->
+    <script src="/xdm/template/FocusAdmin/assets/vendor/global/global.min.js"></script>
+    <script src="/xdm/template/FocusAdmin/assets/js/quixnav-init.js"></script>
+    <script src="/xdm/template/FocusAdmin/assets/js/custom.min.js"></script>
+    
+	<script type="text/javascript">
+		document.getElementById("btndelete").onclick = function() {
+			document.getElementById("formList").submit();
+		}				
+	</script>
+	
+	<script>
+		let form = document.querySelector("form[name=formList]");
+				
+				goList = function (thisPage) {
+				    document.querySelector("input[name=thisPage]").value = thisPage;
+				    form.action = "/code/CodeXdmList";
+				    form.submit();
+				}					
+	</script>
+
+    <!-- Datatable -->
+    <script src="/xdm/template/FocusAdmin/assets/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="/xdm/template/FocusAdmin/assets/js/plugins-init/datatables.init.js"></script>
+
+</body>
+
+</html>

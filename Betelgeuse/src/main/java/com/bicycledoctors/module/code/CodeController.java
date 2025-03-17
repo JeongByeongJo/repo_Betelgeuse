@@ -1,0 +1,50 @@
+package com.bicycledoctors.module.code;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+
+@Controller
+public class CodeController {
+	
+	@Autowired
+	CodeService codeService;
+
+	@RequestMapping(value = "/code/CodeXdmList")
+	public String CodeXdmList(CodeVo vo, Model model) {
+		
+		vo.setParamsPaging(codeService.selectOneCount());
+		
+		model.addAttribute("list", codeService.selectList(vo));
+		model.addAttribute("vo", vo);
+		
+		return "xdm/code/CodeXdmList";
+	}
+	
+	@RequestMapping(value = "/code/CodeXdmForm")
+	public String CodeXdmForm(Model model) {
+		model.addAttribute("list", codeService.selectGroupList());
+		return "xdm/code/CodeXdmForm";
+	}
+	
+	@RequestMapping(value = "/code/CodeXdmInst")
+	public String CodeXdmInst(CodeDto codeDto) {
+		codeService.insert(codeDto);
+		return "redirect:/code/CodeXdmList";
+	}
+	
+	@RequestMapping(value = "/code/CodeXdmMfom")
+	public String CodeXdmMfom(Model model, CodeDto codeDto) {
+		model.addAttribute("list", codeService.selectGroupList());
+		model.addAttribute("item", codeService.selectOne(codeDto));
+		return "xdm/code/CodeXdmMfom";
+	}
+	
+	@RequestMapping(value = "/code/CodeXdmUpdt")
+	public String CodeXdmUpdt(CodeDto codeDto) {
+		codeService.update(codeDto);
+		return "redirect:/code/CodeXdmList";
+	}
+}
