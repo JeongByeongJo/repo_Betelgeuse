@@ -13,6 +13,7 @@ public interface CodeDao {
 	
 	public int insert(CodeDto codeDto);
 	public int update(CodeDto codeDto);
+	public int uelete(CodeDto codeDto);
 	
 	public int selectOneCount();
 }

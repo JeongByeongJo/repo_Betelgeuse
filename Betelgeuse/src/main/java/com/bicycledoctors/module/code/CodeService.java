@@ -26,6 +26,9 @@ public class CodeService {
 	public int update(CodeDto codeDto) {
 		return codeDao.update(codeDto);				
 	}
+	public int uelete(CodeDto codeDto) {
+		return codeDao.uelete(codeDto);				
+	}
 	public int selectOneCount() {
 		return codeDao.selectOneCount();				
 	}

@@ -47,4 +47,9 @@ public class CodeController {
 		codeService.update(codeDto);
 		return "redirect:/code/CodeXdmList";
 	}
+	@RequestMapping(value = "/code/CodeXdmUele")
+	public String CodeXdmUele(CodeDto codeDto) {
+		codeService.uelete(codeDto);
+		return "redirect:/code/CodeXdmList";
+	}
 }
