@@ -99,7 +99,7 @@
 							<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${vo.rowNumToShow}"/>
                             <div class="row" style="margin-bottom: 1em;">
                                 <div class="col">
-                                    <!-- &nbsp; Total: 160 -->
+                                    &nbsp; Total: <span th:text="${vo.totalRows}"></span>
                                 </div>
                                 <div class="col"></div>
                                 <div class="col"></div>
@@ -152,7 +152,7 @@
                                                 <td th:text = "${list.cdgSeq}"></td>
                                                 <td><a th:href="@{/codegroup/CodegroupXdmMfom(cdgSeq=${list.cdgSeq})}" th:text="${list.cdgName}"></a></td>
                                                 <td></td>
-                                                <td>8</td>
+                                                <td th:text = "${list.xcdSeqCount}"></td>
                                                 <td>1</td>
                                                 <td></td>
                                                 <td></td>                                                

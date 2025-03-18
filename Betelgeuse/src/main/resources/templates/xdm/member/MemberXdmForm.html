@@ -22,19 +22,19 @@
                 <!-- row -->
 
                 <div class="basic-form">
-                    <form action="/code/CodeXdmUpdt" method="post" id="form">
+                    <form action="/code/CodeXdmInst" method="post" id="form">
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
                             <h4 class="card-header">기본정보</h4>
                             <div class="card-body">
-								<div class="row" style="margin-bottom: 1em;">
+                                <div class="row" style="margin-bottom: 1em;">
                                     <div class="col">
                                          &nbsp; 코드그룹<span style="color: red;"><sup>*</sup></span>
                                         <div class="form-group">
                                             <select class="form-control" id="codegroup_cdgSeq" name="codegroup_cdgSeq" aria-label="Default select example">
-                                                <option value="">선택하세요</option>
-                                                <option th:each ="list : ${list}" th:value="${list.cdgSeq}" th:text="${list.cdgName}" th:selected="${list.cdgSeq == item?.codegroup_cdgSeq}" ></option>                                           
+                                                <option selected>선택하세요</option>
+                                                <option th:each ="list : ${list}" th:value="${list.cdgSeq}" th:text="${list.cdgName}"></option>                                               
                                                 
                                             </select>
                                         </div>
@@ -42,12 +42,11 @@
                                     <div class="col"></div>
                                     <div class="col"></div>
                                     <div class="col"></div>
-                                </div>                              
+                                </div>
                                 <div class="row" style="margin-bottom: 1em;">
                                     <div class="col">
-                                		<input type="hidden" name="cdSeq" th:value="${item?.cdSeq}">	
                                         &nbsp; 코드그룹 코드<span style="color: red;"><sup>*</sup></span>
-                                        <input type="text" class="form-control" id="" placeholder="자동생성" disabled th:value="${item?.cdSeq}">                                 
+                                        <input type="text" class="form-control" id="" placeholder="자동생성" disabled>                                 
                                     </div>
                                     <div class="col">                                
                                         &nbsp; 코드 (ANOTHER)
@@ -55,18 +54,17 @@
                                     </div>
                                     <div class="col">
                                         &nbsp; 코드 이름<span style="color: red;"><sup>*</sup></span>
-                                        <input type="text" class="form-control" name="cdName" id="cdName" placeholder="한글, 영대소문자, 숫자" th:value="${item?.cdName}">
+                                        <input type="text" class="form-control" id="cdName" name="cdName" placeholder="한글, 영대소문자, 숫자">
                                     </div>
                                     <div class="col">
                                         &nbsp; 코드 이름 (영문)<span style="color: red;"><sup>*</sup></span>
-                                        <input type="text" class="form-control" name="cdNameEng" id="cdNameEng" placeholder="영대소문자, 숫자" th:value="${item?.cdNameEng}">
+                                        <input type="text" class="form-control" id="cdNameEng" name="cdNameEng" placeholder="영대소문자, 숫자">
                                     </div>
                                 </div>
                                 <div class="row" style="margin-bottom: 1em;">
                                     <div class="col">
                                          &nbsp; 사용여부<span style="color: red;"><sup>*</sup></span>
-                                        <select class="form-control" aria-label="Default select example" id="cdUseNy" name="cdUseNy" th:value="${item?.cdUseNy}">
-                                            <!--  <option selected>사용</option>-->
+                                        <select class="form-control" aria-label="Default select example" id="cdUseNy" name="cdUseNy">
                                             <option th:value="1">사용</option>                                            
                                             <option th:value="0">미사용</option>
                                         </select>
@@ -81,7 +79,7 @@
                                 <div class="row" style="margin-bottom: 1em;">
                                     <div class="col">
                                          &nbsp; 설명
-                                         <textarea class="form-control" id="cdDesc" name="cdDesc" rows="3" th:text="${item?.cdDesc}"></textarea>
+                                         <textarea class="form-control" id="cdDesc" name="cdDesc" rows="3"></textarea>
                                     </div>
                                     <div class="col"></div>                           
                                 </div>
@@ -91,7 +89,8 @@
                                         <button type="button" class="btn btn-outline-secondary"><a href="/code/CodeXdmList"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-ul" viewBox="0 0 16 16">
                                             <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
                                           </svg></a>
-                                        </button>                                        
+                                        </button>
+                                        
                                     </div>
                                     <div class="col" style="text-align: right;">
                                         <button type="button" class="btn btn-primary" id="btnsave"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-database" viewBox="0 0 16 16">
@@ -143,6 +142,7 @@
         Scripts
     ***********************************-->
     <!-- Required vendors -->
+    
     <script type="text/javascript">
 
 		document.getElementById("btnsave").onclick = function() {
@@ -150,7 +150,6 @@
 		}
 			
 	</script>
-    
     
     <script src="/xdm/template/FocusAdmin/assets//vendor/global/global.min.js"></script>
     <script src="/xdm/template/FocusAdmin/assets//js/quixnav-init.js"></script>

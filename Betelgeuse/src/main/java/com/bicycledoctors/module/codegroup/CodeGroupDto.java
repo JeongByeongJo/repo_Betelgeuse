@@ -6,6 +6,7 @@ public class CodeGroupDto {
 	private Integer cdgUseNy;
 	private Integer cdgDelNy;
 	private String cdgDesc;
+	private String xcdSeqCount;
 //	-----
 	public String getCdgSeq() {
 		return cdgSeq;
@@ -36,6 +37,12 @@ public class CodeGroupDto {
 	}
 	public void setCdgDesc(String cdgDesc) {
 		this.cdgDesc = cdgDesc;
+	}
+	public String getXcdSeqCount() {
+		return xcdSeqCount;
+	}
+	public void setXcdSeqCount(String xcdSeqCount) {
+		this.xcdSeqCount = xcdSeqCount;
 	}
 	
 	

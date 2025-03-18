@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bicycledoctors.module.member.MemberDao">
+	
+	<resultMap type="com.bicycledoctors.module.member.MemberDto" id="resultMapObj"></resultMap>
+	
+	<sql id="selectCommon">	    
+	    from
+			usercustomer
+		where 1=1
+			and delNy = 0
+    </sql>
+	
+	<select id="selectOneCount" resultType="Integer">
+    	select count(*)
+    	 <include refid = "selectCommon"></include>
+    </select>
+	
+	<select id="selectList" resultMap="resultMapObj">
+	select aa.* from (
+		SELECT
+			seq
+			,userId
+		    ,userPassword
+		    ,userCate
+		    ,userName
+		    ,userTel
+		    ,userEmail
+		    ,userDob
+		    ,userGender
+		    ,userAddressCd
+		    ,userNote
+		    ,userGps
+		    ,userIp
+		    ,shopComment
+		    ,noshow
+		    ,isBlack
+		    ,delNy
+		<include refid = "selectCommon"></include>
+		order by seq desc
+	) aa
+	limit #{rowNumToShow} offset #{startRnumForMysql}
+	</select>
+	
+	<select id="selectOne" resultMap="resultMapObj">
+		SELECT
+			seq
+			,userId
+		    ,userPassword
+		    ,userCate
+		    ,userName
+		    ,userTel
+		    ,userEmail
+		    ,userDob
+		    ,userGender
+		    ,userAddressCd
+		    ,userNote
+		    ,userGps
+		    ,userIp
+		    ,shopComment
+		    ,noshow
+		    ,isBlack
+		    ,delNy
+	    from
+	    	usercustomer
+	    where 1=1
+	    	and seq = #{seq}
+	</select>
+	
+</mapper>

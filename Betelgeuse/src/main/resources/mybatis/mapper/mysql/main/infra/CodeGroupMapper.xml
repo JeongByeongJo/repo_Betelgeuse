@@ -19,13 +19,14 @@
 	<select id="selectList" resultMap="resultMapObj">
 	select aa.* from (
 		select
-			cdgSeq
-			,cdgName
-			,cdgUseNy
-			,cdgDelNy
-			,cdgDesc
+			a.cdgSeq
+			,a.cdgName
+			,(select count(aa.codegroup_cdgSeq) from code aa where 1 = 1 and aa.cdDelNy = 0 and aa.codegroup_cdgSeq = a.cdgSeq) as xcdSeqCount
+			,a.cdgUseNy
+			,a.cdgDelNy
+			,a.cdgDesc
 		<include refid = "selectCommon"></include>	
-		order by cdgSeq desc
+		order by a.cdgSeq desc
 	) aa
 	limit #{rowNumToShow} offset #{startRnumForMysql}
 	</select>
