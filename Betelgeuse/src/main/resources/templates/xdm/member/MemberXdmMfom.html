@@ -22,73 +22,106 @@
                 <!-- row -->
 
                 <div class="basic-form">
-                    <form action="/code/CodeXdmUpdt" method="post" id="form">
+                    <form action="/member/MemberXdmUpdt" method="post" id="form">
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
                             <h4 class="card-header">기본정보</h4>
                             <div class="card-body">
-								<div class="row" style="margin-bottom: 1em;">
-                                    <div class="col">
-                                         &nbsp; 코드그룹<span style="color: red;"><sup>*</sup></span>
-                                        <div class="form-group">
-                                            <select class="form-control" id="codegroup_cdgSeq" name="codegroup_cdgSeq" aria-label="Default select example">
-                                                <option value="">선택하세요</option>
-                                                <option th:each ="list : ${list}" th:value="${list.cdgSeq}" th:text="${list.cdgName}" th:selected="${list.cdgSeq == item?.codegroup_cdgSeq}" ></option>                                           
-                                                
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col"></div>
-                                    <div class="col"></div>
-                                    <div class="col"></div>
-                                </div>                              
                                 <div class="row" style="margin-bottom: 1em;">
-                                    <div class="col">
-                                		<input type="hidden" name="cdSeq" th:value="${item?.cdSeq}">	
-                                        &nbsp; 코드그룹 코드<span style="color: red;"><sup>*</sup></span>
-                                        <input type="text" class="form-control" id="" placeholder="자동생성" disabled th:value="${item?.cdSeq}">                                 
+										<input type="hidden" name="seq" th:value="${item?.seq}">
+									<div class="col">
+                                        &nbsp; ID<span style="color: red;"><sup>*</sup></span>
+                                        <input type="text" class="form-control" id="userId" name="userId" placeholder="" disabled th:value="${item?.userId}"/>
                                     </div>
                                     <div class="col">                                
-                                        &nbsp; 코드 (ANOTHER)
-                                        <input type="text" class="form-control" id="" placeholder="영어소문자, 숫자">
+                                        &nbsp; 비밀번호
+                                        <input type="text" class="form-control" id="userPassword" name="userPassword"placeholder="" th:value="${item?.userPassword}" />
                                     </div>
                                     <div class="col">
-                                        &nbsp; 코드 이름<span style="color: red;"><sup>*</sup></span>
-                                        <input type="text" class="form-control" name="cdName" id="cdName" placeholder="한글, 영대소문자, 숫자" th:value="${item?.cdName}">
-                                    </div>
-                                    <div class="col">
-                                        &nbsp; 코드 이름 (영문)<span style="color: red;"><sup>*</sup></span>
-                                        <input type="text" class="form-control" name="cdNameEng" id="cdNameEng" placeholder="영대소문자, 숫자" th:value="${item?.cdNameEng}">
-                                    </div>
-                                </div>
-                                <div class="row" style="margin-bottom: 1em;">
-                                    <div class="col">
-                                         &nbsp; 사용여부<span style="color: red;"><sup>*</sup></span>
-                                        <select class="form-control" aria-label="Default select example" id="cdUseNy" name="cdUseNy" th:value="${item?.cdUseNy}">
-                                            <!--  <option selected>사용</option>-->
-                                            <option th:value="1">사용</option>                                            
-                                            <option th:value="0">미사용</option>
+                                        &nbsp; 회원분류<span style="color: red;"><sup>*</sup></span>
+                                        <select class="form-control" id="userCate" name="userCate" th:value="${item?.userCate}" aria-label="Default select example">
+                                            <option th:value="14">일반회원</option>
+                                            <option th:value="15">샵회원</option>
                                         </select>
                                     </div>
                                     <div class="col">
-                                        &nbsp; 순서<span style="color: red;"><sup>*</sup></span>
-                                        <input type="text" class="form-control"> 
+                                        &nbsp; 이름<span style="color: red;"><sup>*</sup></span>
+                                        <input type="text" class="form-control" id="userName" name="userName" th:value="${item?.userName}" placeholder="">
                                     </div>
-                                    <div class="col"></div>
-                                    <div class="col"></div>
+                                </div>
+                                <div class="row" style="margin-bottom: 1em;">
+									<div class="col">
+                                        &nbsp; 전화번호<span style="color: red;"><sup>*</sup></span>
+                                        <input type="text" class="form-control" id="userTel" name="userTel" th:value="${item?.userTel}" placeholder="">
+                                    </div>
+                                    <div class="col">
+                                        &nbsp; 이메일<span style="color: red;"><sup>*</sup></span>
+                                        <input type="text" class="form-control" id="userEmail" name="userEmail" th:value="${item?.userEmail}"> 
+                                    </div>
+                                    <div class="col">
+                                        &nbsp; 생일<span style="color: red;"><sup>*</sup></span>
+                                        <input type="text" class="form-control" id="userDob" name="userDob" th:value="${item?.userDob}" placeholder="">
+                                    </div>
+                                    <div class="col">
+                                        &nbsp; 성별<span style="color: red;"><sup>*</sup></span>
+                                        <select class="form-control" id="userGender" name="userGender" th:value="${item?.userGender}" aria-label="Default select example">
+                                            <option th:value="12">남성</option>
+                                            <option th:value="13">여성</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-bottom: 1em;">
+									<div class="col">
+                                        &nbsp; GPS<span style="color: red;"><sup>*</sup></span>
+                                        <input type="text" class="form-control" id="userGps" name="userGps" th:value="${item?.userGps}" placeholder="">
+                                    </div>
+                                    <div class="col">
+                                        &nbsp; IP<span style="color: red;"><sup>*</sup></span>
+                                        <input type="text" class="form-control" id="userIp" name="userIp" th:value="${item?.userIp}"> 
+                                    </div>
+                                    <div class="col">
+                                        &nbsp; 노쇼<span style="color: red;"><sup>*</sup></span>
+                                        <input type="text" class="form-control" id="noshow" name="noshow" th:value="${item?.noshow}" placeholder="">
+                                    </div>
+                                    <div class="col">
+                                        &nbsp; 블랙<span style="color: red;"><sup>*</sup></span>
+                                        <div class="form-group">
+                                            <select class="form-control" id="isBlack" name="isBlack" th:value="${item?.isBlack}" aria-label="Default select example">
+                                                <option th:value="0">N</option>
+                                                <option th:value="1">Y</option>
+                                            </select>
+                                        </div>
+                                    </div>                       
+                                </div>
+								<div class="row" style="margin-bottom: 1em;">
+                                    <div class="col">
+                                         &nbsp; 주소
+                                         <textarea class="form-control" id="userAddressCd" name="userAddressCd" th:value="${item?.userAddressCd}" rows="3"></textarea>
+                                    </div>
+                                    <div class="col">
+                                         &nbsp; 멤버노트
+                                         <textarea class="form-control" id="userNote" name="userNote" th:value="${item?.userNote}" rows="3"></textarea>
+                                    </div>                                                         
                                 </div>
                                 <div class="row" style="margin-bottom: 1em;">
                                     <div class="col">
-                                         &nbsp; 설명
-                                         <textarea class="form-control" id="cdDesc" name="cdDesc" rows="3" th:text="${item?.cdDesc}"></textarea>
+                                         &nbsp; 샵 노트
+                                         <textarea class="form-control" id="shopComment" name="shopComment" th:value="${item?.shopComment}" rows="3"></textarea>
                                     </div>
-                                    <div class="col"></div>                           
+                                    <div class="col">
+                                         &nbsp; 삭제
+                                         <div class="form-group">
+                                            <select class="form-control" id="delNy" name="delNy" th:value="${item?.delNy}" aria-label="Default select example">
+                                                <option value="0">N</option>
+                                                <option value="1">Y</option>
+                                            </select>
+                                        </div>
+                                    </div>                                                         
                                 </div>
-                                
                                 <div class="row" style="padding: 1em;">
                                     <div class="col" style="text-align: left;">
-                                        <button type="button" class="btn btn-outline-secondary"><a href="/code/CodeXdmList"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-ul" viewBox="0 0 16 16">
+                                        <button type="button" class="btn btn-outline-secondary"><a href="/member/MemberXdmList"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-ul" viewBox="0 0 16 16">
                                             <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5m-3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2m0 4a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
                                           </svg></a>
                                         </button>                                        
@@ -101,7 +134,7 @@
                                     </div>
                                 </div>
                             </div>
-                          </div>
+                      	</div>
                     </div>
                     
                 </div>

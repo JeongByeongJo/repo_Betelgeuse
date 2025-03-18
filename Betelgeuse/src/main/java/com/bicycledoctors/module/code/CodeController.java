@@ -5,12 +5,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.bicycledoctors.module.codegroup.CodeGroupService;
+
 
 @Controller
 public class CodeController {
 	
 	@Autowired
 	CodeService codeService;
+	
+	@Autowired
+	CodeGroupService codeGroupService;
 
 	@RequestMapping(value = "/code/CodeXdmList")
 	public String CodeXdmList(CodeVo vo, Model model) {
@@ -25,7 +30,8 @@ public class CodeController {
 	
 	@RequestMapping(value = "/code/CodeXdmForm")
 	public String CodeXdmForm(Model model) {
-		model.addAttribute("list", codeService.selectGroupList());
+//		model.addAttribute("list", codeService.selectGroupList());
+		model.addAttribute("list", codeGroupService.selectListWithoutPaging());
 		return "xdm/code/CodeXdmForm";
 	}
 	
@@ -37,7 +43,8 @@ public class CodeController {
 	
 	@RequestMapping(value = "/code/CodeXdmMfom")
 	public String CodeXdmMfom(Model model, CodeDto codeDto) {
-		model.addAttribute("list", codeService.selectGroupList());
+//		model.addAttribute("list", codeService.selectGroupList());
+		model.addAttribute("list", codeGroupService.selectListWithoutPaging());
 		model.addAttribute("item", codeService.selectOne(codeDto));
 		return "xdm/code/CodeXdmMfom";
 	}

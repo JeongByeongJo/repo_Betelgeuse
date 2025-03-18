@@ -15,6 +15,10 @@ public class CodeGroupService {
 		return codeGroupDao.selectList(vo);
 	}
 	
+	public List<CodeGroupDto> selectListWithoutPaging() {
+		return codeGroupDao.selectListWithoutPaging();
+	}
+	
 	public CodeGroupDto selectOne(CodeGroupDto codeGroupDto) {
 		return codeGroupDao.selectOne(codeGroupDto);
 	}

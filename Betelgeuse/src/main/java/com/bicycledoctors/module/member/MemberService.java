@@ -18,5 +18,13 @@ public class MemberService {
 	public int selectOneCount() {
 		return memberDao.selectOneCount();
 	}
+	
+	public MemberDto selectOne(MemberDto memberDto) {
+		return memberDao.selectOne(memberDto);
+	}
+	
+	public int update(MemberDto memberDto) {
+		return memberDao.update(memberDto);				
+	}
 
 }

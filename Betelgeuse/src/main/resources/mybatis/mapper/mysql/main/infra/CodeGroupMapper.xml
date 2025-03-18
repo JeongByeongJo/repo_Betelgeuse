@@ -30,6 +30,19 @@
 	) aa
 	limit #{rowNumToShow} offset #{startRnumForMysql}
 	</select>
+	
+	<select id="selectListWithoutPaging" resultMap="resultMapObj">
+	
+		select
+			a.cdgSeq
+			,a.cdgName
+		<include refid = "selectCommon"></include>	
+		order by a.cdgSeq desc
+	
+	</select>
+	
+	
+	
 	<select id="selectOne" resultMap="resultMapObj">
 		select
 			cdgSeq

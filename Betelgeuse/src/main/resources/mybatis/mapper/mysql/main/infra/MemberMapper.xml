@@ -68,4 +68,24 @@
 	    	and seq = #{seq}
 	</select>
 	
+	<update id="update">
+		update usercustomer set
+			userPassword = #{userPassword}
+		    ,userCate = #{userCate}
+		    ,userName = #{userName}
+		    ,userTel = #{userTel}
+		    ,userEmail = #{userEmail}
+		    ,userDob = #{userDob}
+		    ,userGender = #{userGender}
+		    ,userAddressCd = #{userAddressCd}
+		    ,userNote = #{userNote}
+		    ,userGps = #{userGps}
+		    ,userIp = #{userIp}
+		    ,shopComment = #{shopComment}
+		    ,noshow = #{noshow}
+		    ,isBlack = #{isBlack}
+		    ,delNy = #{delNy}
+		where 1=1
+			and seq = #{seq}
+	</update>
 </mapper>
