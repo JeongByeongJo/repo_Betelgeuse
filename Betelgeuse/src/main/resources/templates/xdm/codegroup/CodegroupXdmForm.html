@@ -103,7 +103,23 @@
                             </div>
                           </div>
                     </div>
-                    
+					
+                    <div class="modal" id="basicModal" name="basicModal">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">입력오류</h5>
+                                    <button type="button" id="cloxmo" name="cloxmo" class="close"><span>&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">형식에 맞게 입력해주세요.</div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" id="clomo" name="clomo">닫기</button>
+                                    <button type="button" id="savechanges" name="savechanges" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </form></div>
             </div>
@@ -111,28 +127,6 @@
         <!--**********************************
             Content body end
         ***********************************-->
-
-
-        <!--**********************************
-            Footer start
-        ***********************************-->
-        <!-- <div class="footer">
-            <div class="copyright">
-                <p>Copyright © Designed &amp; Developed by <a href="#" target="_blank">Quixkit</a> 2019</p>
-            </div>
-        </div> -->
-        <!--**********************************
-            Footer end
-        ***********************************-->
-
-        <!--**********************************
-           Support ticket button start
-        ***********************************-->
-
-        <!--**********************************
-           Support ticket button end
-        ***********************************-->
-
         
     </div>
     <!--**********************************
@@ -145,22 +139,40 @@
     <!-- Required vendors -->
     
     <script type="text/javascript">
-
+		
 		document.getElementById("btnsave").onclick = function() {
-			document.getElementById("form").submit();
+			if(document.getElementById("cdgName").value.trim() == null || document.getElementById("cdgName").value.trim() == "") {
+				//alert("알맞은 코드그룹명을 입력해");
+				document.getElementById("basicModal").style.display = 'block';
+				return false;
+			}
+			//document.getElementById("form").submit();
 		}
-			
+		
+		document.getElementById("clomo").onclick = function() {
+			document.getElementById("basicModal").style.display = 'none';
+			document.getElementById("cdgName").focus();
+		}
+		
+		document.getElementById("cloxmo").onclick = function() {
+			document.getElementById("basicModal").style.display = 'none';
+			document.getElementById("cdgName").focus();
+		}
+		
+		document.getElementById("savechanges").onclick = function() {
+			alert("savechanges");
+		}
+		
 	</script>
     
-    <script src="/xdm/template/FocusAdmin/assets//vendor/global/global.min.js"></script>
-    <script src="/xdm/template/FocusAdmin/assets//js/quixnav-init.js"></script>
-    <script src="/xdm/template/FocusAdmin/assets//js/custom.min.js"></script>
+    <script src="/xdm/template/FocusAdmin/assets/vendor/global/global.min.js"></script>
+    <script src="/xdm/template/FocusAdmin/assets/js/quixnav-init.js"></script>
+    <script src="/xdm/template/FocusAdmin/assets/js/custom.min.js"></script>
     
-
-
+	
     <!-- Datatable -->
-    <script src="/xdm/template/FocusAdmin/assets//vendor/datatables/js/jquery.dataTables.min.js"></script>
-    <script src="/xdm/template/FocusAdmin/assets//js/plugins-init/datatables.init.js"></script>
+    <script src="/xdm/template/FocusAdmin/assets/vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="/xdm/template/FocusAdmin/assets/js/plugins-init/datatables.init.js"></script>
 
 </body>
 
