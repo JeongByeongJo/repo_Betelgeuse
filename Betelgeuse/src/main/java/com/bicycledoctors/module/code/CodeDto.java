@@ -1,5 +1,8 @@
 package com.bicycledoctors.module.code;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CodeDto {
 	private String cdSeq;
 	private String cdName;
@@ -12,6 +15,9 @@ public class CodeDto {
 	private String codegroup_cdgSeq;
 	
 //	-----
+//	for cache
+	public static List<CodeDto> cachedCodeArrayList = new ArrayList<CodeDto>();
+	
 	public String getCdSeq() {
 		return cdSeq;
 	}
@@ -65,6 +71,12 @@ public class CodeDto {
 	}
 	public void setCdgName(String cdgName) {
 		this.cdgName = cdgName;
+	}
+	public static List<CodeDto> getCachedCodeArrayList() {
+		return cachedCodeArrayList;
+	}
+	public static void setCachedCodeArrayList(List<CodeDto> cachedCodeArrayList) {
+		CodeDto.cachedCodeArrayList = cachedCodeArrayList;
 	}
 	
 	

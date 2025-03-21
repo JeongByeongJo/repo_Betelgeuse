@@ -21,6 +21,7 @@
 		select
 			a.cdgSeq
 			,a.cdgName
+			,a.cdgNameEng
 			,(select count(aa.codegroup_cdgSeq) from code aa where 1 = 1 and aa.cdDelNy = 0 and aa.codegroup_cdgSeq = a.cdgSeq) as xcdSeqCount
 			,a.cdgUseNy
 			,a.cdgDelNy
@@ -47,6 +48,7 @@
 		select
 			cdgSeq
 			,cdgName
+			,cdgNameEng
 			,cdgUseNy
 			,cdgDelNy
 			,cdgDesc
@@ -59,10 +61,12 @@
 	<insert id="insert">
 		insert into codegroup (
 			cdgName
+			,cdgNameEng
 			,cdgUseNy
 			,cdgDesc
 		) values (
 			#{cdgName}
+			,#{cdgNameEng}
 			,#{cdgUseNy}
 			,#{cdgDesc}
 		)
@@ -74,6 +78,7 @@
 	<update id="update">
 		update codegroup set
 			cdgName = #{cdgName}
+			,cdgNameEng = #{cdgNameEng}
 			,cdgUseNy = #{cdgUseNy}
 			,cdgDesc = #{cdgDesc}
 		where

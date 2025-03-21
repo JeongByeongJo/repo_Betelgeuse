@@ -1,269 +1,183 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
-<div th:replace="~{xdm/include/head :: head}"></div>
+<div th:replace="~{xdm/include/headNice :: headNice}"></div>
+  <main id="main" class="main">
 
-        <!--**********************************
-            Content body start
-        ***********************************-->
-        <div class="content-body">
-            <div class="container-fluid">
-                <div class="row page-titles mx-0">
-                    <div class="col">
-                        <div class="welcome-text">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="javascript:void(0)">Page 1</a></li>
-                                <li class="breadcrumb-item"><a href="javascript:void(0)">Page 2</a></li>
-                                <li class="breadcrumb-item active"><a href="javascript:void(0)">Default</a></li>
-                            </ol>
-                            <h2>Code</h2>                           
-                        </div>
-                        <div class="row" style="margin-bottom: 1em; border-color: black;">
-                            <div class="col">                                    
-                                <div class="row" style="margin-bottom: 1em;">
-                                    <div class="col">
-                                        <select class="form-control" aria-label="Default select example">
-                                            <option selected>N</option>
-                                            <option value="1">Y</option>                            
-                                        </select>
-                                    </div>
-                                    <div class="col">
-                                        <select class="form-control" aria-label="Default select example">
-                                            <option selected>Y</option>
-                                            <option value="1">N</option>                            
-                                        </select>
-                                    </div>
-                                    <div class="col">
-                                        <select class="form-control" aria-label="Default select example">
-                                            <option selected>날짜</option>
-                                            <option value="1">등록일</option>                            
-                                            <option value="2">수정일</option>                            
-                                        </select>
-                                    </div>
-                                    <div class="col">                            
-                                        <input type="text" class="form-control" placeholder="2024-12-25">
-                                    </div>
-                                    <div class="col">
-                                        <input type="text" class="form-control" placeholder="2025-01-24">
-                                    </div>
-                                    <div class="col"></div>
-                                </div>
-                                <div class="row" style="margin-bottom: 1em;">
-                                    <div class="col">
-                                        <select class="form-control" aria-label="Default select example">
-                                            <option selected>검색구분</option>
-                                            <option value="1">코드그룹 코드</option>
-                                            <option value="2">코드그룹 이름</option>
-                                            <option value="3">코드</option>
-                                            <option value="4">대체 코드</option>
-                                            <option value="5">코드 이름</option>
-                                            <option value="5">코드 이름(영문)</option>
-                                        </select>
-                                    </div>
-                                    <div class="col">
-                                        <input type="text" class="form-control" placeholder="검색어">
-                                    </div>
-                                    <div class="col">
-                                        <div class="row">
-                                            <div class="col">
-                                                <button class="form-control" style="border-color: black;">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                            <div class="col" style="padding: 0ch;">
-                                                <button class="form-control" style="border-color: black;">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
-                                                        <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z"/>
-                                                        <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466"/>
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                            <div class="col"></div>
-                                            <div class="col"></div>
-                                            <div class="col"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col"></div>
-                                    <div class="col"></div>
-                                    <div class="col"></div>
-                                </div>
-                            </div>
-                        </div>
+    <div class="pagetitle">
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">page 1</a></li>
+          <li class="breadcrumb-item">page 2</li>
+          <li class="breadcrumb-item active">Default</li>
+        </ol>
+      </nav>
+      <h1 style="height: 50px;">CodeGroup</h1>
+    </div><!-- End Page Title -->
 
-
-                    </div>                    
+    <section class="section">
+        <form class="row g-3 needs-validation" novalidate>
+            <div class="col-md-2" style="height: 10px;">
+                
+                <select class="form-select" id="" >
+                  <option selected disabled value="">N</option>
+                  <option>아무거나</option>
+                </select>
+                <div class="invalid-feedback">
+                  항목중 하나를 선택 해주세요.
                 </div>
-                <!-- row -->
-                 <div class="card">
-                    <div class="card-body">
-                        <form name="formList" action="/code/CodeXdmUele" method="post" id="formList">
-							<input type="hidden" name="thisPage" th:value="${vo.thisPage}" default="1"/>
-							<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${vo.rowNumToShow}"/>
-                            <div class="row" style="margin-bottom: 1em;">
-                                <div class="col">
-                                    &nbsp; Total: <span th:text="${vo.totalRows}"></span>
-                                </div>
-                                <div class="col"></div>
-                                <div class="col"></div>
-                                <div class="col"></div>
-                                <div class="col"></div>
-                                <div class="col">
-                                    <!-- <select class="form-control" aria-label="Default select example">
-                                        <option selected>5</option>
-                                        <option value="1">10</option>
-                                        <option value="2">15</option>
-                                        <option value="3">20</option>
-                                    </select> -->
-                                </div>
-                            </div>
-                            <div class="row" style="margin-bottom: 1em;">                                
-                                <div class="col">
-                                    <div class="table-responsive">
-                                        <table class="table table-responsive-sm" style="text-align: center;">
-                                            <thead>
-                                                <tr>
-												<th scope="col">
-                                                    <div class="form-check" style="padding-bottom: 4ex;">
-                                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">                                                
-                                                    </div>
-                                                </th>
-                                                <th scope="col">#</th>
-                                                <th scope="col">사용</th>
-                                                <th scope="col">코드그룹 코드</th>
-                                                <th scope="col">코드그룹이름</th>
-                                                <th scope="col">코드</th>
-                                                <th scope="col">대체 코드</th>
-                                                <th scope="col">코드 이름</th>
-                                                <th scope="col">코드 이름(영문)</th>
-                                                <th scope="col">순서</th>
-                                                <th scope="col">등록일</th>
-                                                <th scope="col">수정일</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-												<tr th:if="${#lists.isEmpty(list)}" class="hover-action-trigger btn-reveal-trigger position-static">
-                                        		<td colspan="10">
-                                        			<p class="fs-0" style="padding-top: 12px;">There are no data!</p>
-                                        		</td>
-                                        	</tr>
-                                            <tr th:if="${!#lists.isEmpty(list)}" th:each ="list : ${list}">
-                                            <th scope="row"><div class="form-check" style="padding-bottom: 4ex;">
-                                                <input class="form-check-input" type="checkbox"  value="" id="flexCheckDefault">                                                
-                                                </div></th>
-                                            <td th:text="${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
-                                            <td th:text = "${list.cdUseNy}"></td>
-                                            <td th:text = "${list.cdgSeq}"></td>                                                
-                                            <td th:text = "${list.cdgName}"></td>
-                                            <td th:text = "${list.cdSeq}"></td>
-                                            <td></td>
-                                            <td><a th:href="@{/code/CodeXdmMfom(cdSeq=${list.cdSeq})}" th:text="${list.cdName}"></a></td>
-                                            <td th:text = "${list.cdNameEng}"></td>
-                                            <td>1</td>
-                                            <td></td>
-                                            <td></td>                                                
-                                            </tr>     
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>                               
-                            </div>
-                            <div class="row" style="margin-bottom: 1em;">
-                                <div class="col"></div> 
-                                <div class="col" style="align-items: center;">
-									<nav aria-label="Page navigation example">
-	                                    <ul class="pagination">
-	                                        <li class="page-item">
-											<li th:if="${vo.startPage gt vo.pageNumToShow}" class="page-item" style="cursor: pointer;">
-												<a class="page-link" href="javascript:goList(${vo.startPage - 1})" th:attr="onclick=|goList('${vo.startPage - 1}')|">
-													&laquo;
-												</a>
-											</li>
-											<li th:each="num: ${#numbers.sequence(vo.startPage, vo.endPage)}" th:classappend="${num eq vo.thisPage} ? active : ''" class="page-item" style="cursor: pointer;">
-												<a class="page-link" th:attr="onclick=|goList('${num}')|" th:text="${num}"><!-- ${i.index} --></a>
-											</li>
-											<li th:if="${vo.endPage ne vo.totalPages}" class="page-item" style="cursor: pointer;">
-												<a class="page-link" th:attr="onclick=|goList('${vo.endPage + 1}')|">
-													&raquo;
-												</a>
-											</li>
-	                                    </ul>
-	                                </nav> 
-                                </div>
-                                <div class="col"></div>                           
-                            </div>                                                               
-                            <div class="row" style="padding: 1em;">
-                                <div class="col" style="text-align: left;">
-                                    <button type="button" class="btn btn-danger"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-                                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
-                                        </svg></button>
-                                    <button type="button" class="btn btn-danger" id="btndelete" name="btndelete"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
-                                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
-                                        </svg></button>
-                                    
-                                </div>
-                                <div class="col" style="text-align: right;">
-                                    <button type="button" class="btn btn-primary"><span>U</span></button>
-                                    <button type="button" class="btn btn-success"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-excel" viewBox="0 0 16 16">
-                                        <path d="M5.884 6.68a.5.5 0 1 0-.768.64L7.349 10l-2.233 2.68a.5.5 0 0 0 .768.64L8 10.781l2.116 2.54a.5.5 0 0 0 .768-.641L8.651 10l2.233-2.68a.5.5 0 0 0-.768-.64L8 9.219l-2.116-2.54z"/>
-                                        <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
-                                        </svg></button>
-                                    <button type="button" class="btn btn-primary"><a href="/code/CodeXdmForm"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
-                                        </svg></a></button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div> 
+              </div>
+            <div class="col-md-2">
+                <select class="form-select" id="" >
+                    <option selected disabled value="">Y</option>
+                    <option>아무거나</option>
+                  </select>
+                  <div class="invalid-feedback">
+                    항목중 하나를 선택 해주세요.
+                  </div>
             </div>
-        </div>
-        <!--**********************************
-            Content body end
-        ***********************************-->
-
-
-        <!--**********************************
-            Footer start
-        ***********************************-->
-        <!-- <div class="footer">
-            <div class="copyright">
-                <p>Copyright © Designed &amp; Developed by <a href="#" target="_blank">Quixkit</a> 2019</p>
+            <div class="col-md-2">
+                <select class="form-select" id="" >
+                    <option selected disabled value="">날짜</option>
+                    <option>등록일</option>
+                    <option>수정일</option>
+                  </select>
+                  <div class="invalid-feedback">
+                    항목중 하나를 선택 해주세요.
+                  </div>
             </div>
-        </div> -->
-        <!--**********************************
-            Footer end
-        ***********************************-->
-
-        <!--**********************************
-           Support ticket button start
-        ***********************************-->
-
-        <!--**********************************
-           Support ticket button end
-        ***********************************-->
-
+            <div class="col-md-2">
+                <input type="text" class="form-control" id="validationCustom03" placeholder="2025-01-05" >
+                  <div class="invalid-feedback">
+                    코드를 입력해주세요.
+                  </div>
+            </div>
+            <div class="col-md-2">
+                <input type="text" class="form-control" id="validationCustom03" placeholder="2025-02-04" >
+                  <div class="invalid-feedback">
+                    코드를 입력해주세요.
+                  </div>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-2">
+                <select class="form-select" id="" >
+                    <option selected disabled value="">검색구분</option>
+                    <option>코드그룹 코드</option>
+                    <option>코드그룹 이름</option>
+                    <option>코드그룹 이름(영문)</option>
+                  </select>
+                  <div class="invalid-feedback">
+                    항목중 하나를 선택 해주세요.
+                  </div>
+            </div>
+            <div class="col-md-2">
+                <input type="text" class="form-control" id="validationCustom03" placeholder="검색어" >
+                  <div class="invalid-feedback">
+                    코드를 입력해주세요.
+                  </div>
+            </div>
+            <div class="col-md-8">
+                <button class="btn btn-outline-dark" type="button" ><i class="bi bi-search"></i></button>
+                <button class="btn btn-outline-dark" type="button" ><i class="bi bi-arrow-clockwise"></i></button>
+            </div>
         
-    </div>
-    <!--**********************************
-        Main wrapper end
-    ***********************************-->
+        <div class="col-lg-12">
+          <div class="card" >
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-10" style="height: 50px;"><h5 class="card-title-list">Total : 42</h5></div>
+                  <div class="col-md-2 select-col"><select class="form-select select-end">
+                    <option value="">5</option>
+                    <option value="">10</option>
+                    <option value="">15</option>
+                  </select>
+                </div>
+                </div>
+                </div>
 
-    <!--**********************************
-        Scripts
-    ***********************************-->
-    <!-- Required vendors -->
-    <script src="/xdm/template/FocusAdmin/assets/vendor/global/global.min.js"></script>
-    <script src="/xdm/template/FocusAdmin/assets/js/quixnav-init.js"></script>
-    <script src="/xdm/template/FocusAdmin/assets/js/custom.min.js"></script>
-    
-	<script type="text/javascript">
-		document.getElementById("btndelete").onclick = function() {
-			document.getElementById("formList").submit();
-		}				
-	</script>
-	
+              <!-- Table with stripped rows -->
+              <table class="table datatable">
+                <thead>
+                  <tr>
+                    
+                    <th data-sortable="false"  style="text-align: center; width: 100px;"><div class="checked"><input type="checkbox" class="form-check"></div></th>
+                    <th data-sortable="false" style="width: 10px; text-align: center;" >#</th>
+                    <th style="text-align: center;">사용</th>
+                    <th class="list-sort" style=" text-align: center;">코드그룹 코드</th>
+                    <th class="list-sort" style="text-align: center; ">코드그룹 이름</th>
+                    <th class="list-sort" style="text-align: center; ">코드</th>
+                    <th class="list-sort" style="text-align: center; ">대체 코드</th>
+                    <th class="list-sort" style="text-align: center; ">코드 이름</th>
+                    <th class="list-sort" style="text-align: center; ">코드 이름(영문)</th>
+                    <th class="list-sort" style="text-align: center;">순서</th>
+                    <th data-type="date" data-format="YYYY/DD/MM" class="list-sort" style="text-align: center;">등록일</th>
+                    <th data-type="data" data-format="YYYY/DD/MM" class="list-sort" style="text-align: center;">수정일</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${#lists.isEmpty(list)}" class="hover-action-trigger btn-reveal-trigger position-static">
+	               		<td colspan="10">
+	               			<p class="fs-0" style="padding-top: 12px;">There are no data!</p>
+	               		</td>
+	               	</tr>
+	                   <tr th:if="${!#lists.isEmpty(list)}" th:each ="list : ${list}">
+	                   <th><div class="checked"><input type="checkbox" class="form-check"></div></th>
+	                   <td th:text="${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
+                       <td th:text = "${list.cdUseNy}"></td>
+                       <td th:text = "${list.cdgSeq}"></td>                                                
+                       <td th:text = "${list.cdgName}"></td>
+                       <td th:text = "${list.cdSeq}"></td>
+                       <td></td>
+                       <td><a th:href="@{/code/CodeXdmMfom(cdSeq=${list.cdSeq})}" th:text="${list.cdName}"></a></td>
+                       <td th:text = "${list.cdNameEng}"></td>
+                       <td>1</td>
+                       <td></td>
+                       <td></td>                                              
+	                   </tr>
+                  </tbody>
+                  <tfoot>
+                   
+                  </tfoot>
+                  
+                  </table>
+                  <div class="row" >
+                    <nav aria-label="Page navigation example" style="display: flex; justify-content: center;">
+                    	<ul class="pagination">
+							<li class="page-item">
+							<li th:if="${vo.startPage gt vo.pageNumToShow}" class="page-item" style="cursor: pointer;">
+								<a class="page-link" href="javascript:goList(${vo.startPage - 1})" th:attr="onclick=|goList('${vo.startPage - 1}')|">
+									&laquo;
+								</a>
+							</li>
+							<li th:each="num: ${#numbers.sequence(vo.startPage, vo.endPage)}" th:classappend="${num eq vo.thisPage} ? active : ''" class="page-item" style="cursor: pointer;">
+								<a class="page-link" th:attr="onclick=|goList('${num}')|" th:text="${num}"><!-- ${i.index} --></a>
+							</li>
+							<li th:if="${vo.endPage ne vo.totalPages}" class="page-item" style="cursor: pointer;">
+								<a class="page-link" th:attr="onclick=|goList('${vo.endPage + 1}')|">
+									&raquo;
+								</a>
+							</li>
+                    	</ul>
+                    </nav>
+                    
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 padding-left">
+                  <button class="btn btn-danger">X</button>
+                  <button class="btn btn-danger"><i class="bi bi-trash"></i></button>
+                </div>
+                <div class="col-md-6 padding-right" style="display: flex; justify-content: end;">
+                    
+                    <button class="btn btn-success btn-right"><i class="bi bi-journal-x"></i></button>
+                  <a href="/code/CodeXdmForm" class="btn btn-primary"><i class="bi bi-plus-lg"></i></a>
+                </div>
+                </div>
+            </div>
+          </div>        
+    </section>
+
+  </main><!-- End #main -->
+<div th:replace="~{xdm/include/footerNice :: footerNice}"></div>
 	<script>
 		let form = document.querySelector("form[name=formList]");
 				
@@ -273,11 +187,5 @@
 		    form.submit();
 		}					
 	</script>
-
-    <!-- Datatable -->
-    <script src="/xdm/template/FocusAdmin/assets/vendor/datatables/js/jquery.dataTables.min.js"></script>
-    <script src="/xdm/template/FocusAdmin/assets/js/plugins-init/datatables.init.js"></script>
-
 </body>
-
 </html>

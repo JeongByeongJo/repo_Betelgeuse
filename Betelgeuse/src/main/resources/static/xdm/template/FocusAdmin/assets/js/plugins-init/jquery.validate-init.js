@@ -1,8 +1,20 @@
 jQuery(".form-valide").validate({
     rules: {
-        "val-username": {
+        "cdgNameEng": {
+            required: !0,
+            minlength: 2
+        },
+        "cdgName": {
+            required: !0,
+            minlength: 2
+        },
+        "cdNameEng": {
             required: !0,
             minlength: 3
+        },
+        "cdName": {
+            required: !0,
+            minlength: 2
         },
         "val-email": {
             required: !0,
@@ -16,7 +28,10 @@ jQuery(".form-valide").validate({
             required: !0,
             equalTo: "#val-password"
         },
-        "val-select2": {
+        "codegroup_cdgSeq": {
+            required: !0
+        },
+        "cdUseNy": {
             required: !0
         },
         "val-select2-multiple": {
@@ -59,9 +74,21 @@ jQuery(".form-valide").validate({
         }
     },
     messages: {
-        "val-username": {
-            required: "Please enter a username",
-            minlength: "Your username must consist of at least 3 characters"
+        "cdgNameEng": {
+            required: "Please enter a CodeGroupName",
+            minlength: "CodeGroupName must consist of at least 3 characters"
+        },
+        "cdgName": {
+            required: "코드그룹명을 입력해주세요.",
+            minlength: "두 글자 이상 입력해주세요."
+        },
+        "cdNameEng": {
+            required: "Please enter a CodeName",
+            minlength: "CodeName must consist of at least 3 characters"
+        },
+        "cdName": {
+            required: "코드명을 입력해주세요.",
+            minlength: "두 글자 이상 입력해주세요."
         },
         "val-email": "Please enter a valid email address",
         "val-password": {
@@ -73,7 +100,8 @@ jQuery(".form-valide").validate({
             minlength: "Your password must be at least 5 characters long",
             equalTo: "Please enter the same password as above"
         },
-        "val-select2": "Please select a value!",
+        "codegroup_cdgSeq": "코드그룹을 선택해주세요!",
+        "cdUseNy": "사용여부를 선택해주세요!",
         "val-select2-multiple": "Please select at least 2 values!",
         "val-suggestions": "What can we do to become better?",
         "val-skill": "Please select a skill!",

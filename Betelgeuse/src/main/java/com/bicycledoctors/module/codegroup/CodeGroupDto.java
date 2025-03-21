@@ -3,6 +3,7 @@ package com.bicycledoctors.module.codegroup;
 public class CodeGroupDto {
 	private String cdgSeq;
 	private String cdgName;
+	private String cdgNameEng;
 	private Integer cdgUseNy;
 	private Integer cdgDelNy;
 	private String cdgDesc;
@@ -43,6 +44,12 @@ public class CodeGroupDto {
 	}
 	public void setXcdSeqCount(String xcdSeqCount) {
 		this.xcdSeqCount = xcdSeqCount;
+	}
+	public String getCdgNameEng() {
+		return cdgNameEng;
+	}
+	public void setCdgNameEng(String cdgNameEng) {
+		this.cdgNameEng = cdgNameEng;
 	}
 	
 	

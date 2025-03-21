@@ -96,4 +96,16 @@
 		where
 			cdSeq = #{cdSeq}
 	</update>
+	
+	<select id="selectListCachedCodeArrayList" resultMap="resultMapObj">
+		SELECT 
+			cdSeq
+			, cdName
+			, codegroup_cdgSeq
+		FROM
+			code
+		WHERE 1=1
+			AND cdDelNy = 0
+		    AND cdUseNy = 1
+   	</select>
 </mapper>
