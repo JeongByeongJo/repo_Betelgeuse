@@ -36,7 +36,7 @@
                 </div>
                 <div class="col-md-3">
                   <label for="userCate" class="form-label">회원분류<sup>*</sup></label>
-                  <select class="form-control" id="userCate" name="userCate" th:value="${item?.userCate}">
+                  <select class="form-select" id="userCate" name="userCate" th:value="${item?.userCate}" aria-label="Default select example">
                       <option th:each="list : ${@codeService.selectListCachedCode(2)}" th:value="${list.cdSeq}" th:text="${list.cdName}" th:selected="${list.cdSeq} == ${item?.userCate}"></option>
                   </select>
                 </div>
@@ -46,7 +46,7 @@
                 </div>
                 <div class="col-md-3" style="height: 100px;">
                   <label for="userTel" class="form-label">전화번호<sup>*</sup></label>
-                  <input type="text" class="form-control" id="userTel" name="userTel" th:value="${item?.userTel}" required>
+                  <input type="text" class="form-control" id="userTel" name="userTel" th:value="${item?.userTel}" pattern="[0-9]{11}" required>
                 </div>
                 <div class="col-md-3">
                   <label for="userEmail" class="form-label">이메일<sup>*</sup></label>
@@ -58,7 +58,7 @@
                 </div>
                 <div class="col-md-3">
                 	<label for="userGender" class="form-label">성별<sup>*</sup></label>
-					<select class="form-control" id="userGender" name="userGender" th:value="${item?.userGender}">
+					<select class="form-select" id="userGender" name="userGender" th:value="${item?.userGender}">
                     	<option th:each="list : ${@codeService.selectListCachedCode(1)}" th:value="${list.cdSeq}" th:text="${list.cdName}" th:selected="${list.cdSeq} == ${item?.userGender}"></option>
                     </select>
                 </div>
@@ -76,7 +76,7 @@
                 </div>
                 <div class="col-md-3">
                   <label for="isBlack" class="form-label">블랙</label>
-                  <select class="form-control" id="isBlack" name="isBlack" th:value="${item?.isBlack}">
+                  <select class="form-select" id="isBlack" name="isBlack" th:value="${item?.isBlack}">
 	                  <option th:value="0">N</option>
 	                  <option th:value="1">Y</option>
                   </select>
@@ -95,7 +95,7 @@
                 </div>
                 <div class="col-md-6">
                 	<label for="delNy" class="form-label">삭제</label>
-	                <select class="form-control" id="delNy" name="delNy" th:value="${item?.delNy}" aria-label="Default select example">
+	                <select class="form-select" id="delNy" name="delNy" th:value="${item?.delNy}" aria-label="Default select example">
 	                    <option th:value="0">N</option>
 	                    <option th:value="1">Y</option>
 	                </select>
@@ -103,7 +103,7 @@
                 <div class="col-md-6">
                   <a href="/code/CodeXdmList" class="btn btn-outline-dark"><i class="bi bi-blockquote-right"></i></a></div>
                 <div class="col-md-6">
-                  <div style="display: flex;justify-content: end;"><button class="btn btn-primary" id="btnsave"><i class="bi bi-server"></i></button></div>
+                  <div style="display: flex;justify-content: end;"><button type="button" class="btn btn-primary" id="btnsave"><i class="bi bi-server"></i></button></div>
                 </div>
               </form><!-- End Custom Styled Validation -->
 
@@ -125,7 +125,7 @@
     document.getElementById("btnsave").onclick = function() {
 		document.getElementById("form").submit();
 	}
-			
+    
 	</script>
 
 </body>

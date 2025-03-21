@@ -106,12 +106,45 @@
   <div th:replace="~{xdm/include/footerNice :: footerNice}"></div>
 
     <script type="text/javascript">
+    
+    const input = document.getElementById("cdName");
+
+    input.addEventListener("input", updateValue);
+
+    function updateValue() {
+// 			alert("한글과 숫자로 넣어라 이놈아!!!");
+			var regExp = /^[ㄱ-ㅎ가-힣0-9]+$/
+    	if(!regExp.test(document.getElementById("cdName").value.trim())) {
+    		document.getElementById("cdName").classList.add("is-invalid");
+    		return false;
+		} else {
+    		document.getElementById("cdName").classList.remove("is-invalid");			
+		}
+    }
 
     document.getElementById("btnsave").onclick = function() {
+    	var regExp = /^[ㄱ-ㅎ가-힣0-9]+$/
+    		
+// 		if(!regExp.test(document.getElementById("cdName").value.trim())){
+			
+// 			document.getElementById("cdName").focus();
+// 			return false;
+// 		}
     	
-    	alert(document.getElementById("codegroup_cdgSeq").oninvalid());
-		
-// 		document.getElementById("form").submit();
+    	if(document.getElementById("codegroup_cdgSeq").value == null || document.getElementById("codegroup_cdgSeq").value == "") {
+    		document.getElementById("codegroup_cdgSeq").classList.add("is-invalid");
+    		return false;
+		} else {
+    		document.getElementById("codegroup_cdgSeq").classList.remove("is-invalid");			
+		}
+// 		if(document.getElementById("cdName").value.trim() == null || document.getElementById("cdName").value.trim() == "") {
+//     		document.getElementById("cdName").classList.add("is-invalid");
+// 			return false;
+// 		}
+		if(document.getElementById("cdNameEng").value.trim() == null || document.getElementById("cdNameEng").value.trim() == "") {
+			return false;
+		}		
+		document.getElementById("form").submit();
 	}
 			
 	</script>

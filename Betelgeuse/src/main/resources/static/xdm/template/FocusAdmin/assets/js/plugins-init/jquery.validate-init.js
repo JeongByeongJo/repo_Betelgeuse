@@ -1,3 +1,9 @@
+jQuery.validator.addMethod("laxEmail", function(value, element) {
+    // allow any non-whitespace characters as the host part
+    return this.optional( element ) || /^[ㄱ-ㅎ가-힣0-9]+$/.test( value );
+  }, "한글만넣어라.");
+
+
 jQuery(".form-valide").validate({
     rules: {
         "cdgNameEng": {
@@ -13,6 +19,7 @@ jQuery(".form-valide").validate({
             minlength: 3
         },
         "cdName": {
+            laxEmail: !0,
             required: !0,
             minlength: 2
         },
@@ -127,6 +134,8 @@ jQuery(".form-valide").validate({
         jQuery(e).closest(".form-group").removeClass("is-invalid"), jQuery(e).remove()
     },
 });
+
+
 
 
 jQuery(".form-valide-with-icon").validate({
