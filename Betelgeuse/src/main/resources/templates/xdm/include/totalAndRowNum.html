@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="totalAndRowNum">
+	<!-- totalAndRowNum s -->
+<!-- 	<div class="container-fluid px-0 mt-2"> -->
+		<div class="row">
+			<div class="col-9 col-md-10 col-xl-10 text-start pt-4" style="margin-top: 4px;">
+				<span class="align-middle" th:text="'Total: '+${vo.totalRows}"></span>
+			</div>
+			<div class="col-3 col-md-2 col-xl-2 text-end">
+				<select class="form-select form-select-sm" id="changeRowNum" name="changeRowNum">
+					<option value="5" th:selected="${vo.rowNumToShow eq 5}">5</option>
+					<option value="10" th:selected="${vo.rowNumToShow eq 10}">10</option>
+					<option value="30" th:selected="${vo.rowNumToShow eq 30}">30</option>
+					<option value="50" th:selected="${vo.rowNumToShow eq 50}">50</option>
+					<option value="80" th:selected="${vo.rowNumToShow eq 80}">80</option>
+					<option value="100" th:selected="${vo.rowNumToShow eq 100}">100</option>       
+				</select>
+			</div>
+		</div>
+<!-- 	</div> -->
+	<!-- totalAndRowNum e -->
+ </th:block>

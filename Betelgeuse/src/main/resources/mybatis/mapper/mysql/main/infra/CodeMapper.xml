@@ -10,7 +10,22 @@
 			code a
 			left join codegroup b on a.codegroup_cdgSeq = b.cdgSeq
 		where 1=1
-			and cdDelNy = 0
+		<if test="shUseNy != null and !shUseNy.equals('')">AND a.cdUseNy = #{shUseNy}</if>
+        <if test="shDelNy != null and !shDelNy.equals('')">AND a.cdDelNy = #{shDelNy}</if>
+<!-- 				
+				<choose>
+					<when test="shOptionDate == 1">AND a.regDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+					<when test="shOptionDate == 2">AND a.modDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+				</choose>
+ -->				
+        <choose>
+            <when test="shOption == 1">AND b.cdgSeq = #{shValue}</when>
+            <when test="shOption == 2">AND b.cdgName LIKE CONCAT('%',#{shValue},'%')</when>
+            <when test="shOption == 3">AND b.cdgNameEng LIKE CONCAT('%',#{shValue},'%')</when>
+            <when test="shOption == 4">AND a.cdSeq LIKE CONCAT('%',#{shValue},'%')</when>
+            <when test="shOption == 5">AND a.cdName LIKE CONCAT('%',#{shValue},'%')</when>
+            <when test="shOption == 6">AND a.cdNameEng LIKE CONCAT('%',#{shValue},'%')</when>
+        </choose>
     </sql>
     
     <select id="selectOneCount" resultType="Integer">
@@ -29,6 +44,7 @@
 			,a.cdDesc
 			,b.cdgSeq
 			,b.cdgName
+			,b.cdgNameEng
 		<include refid = "selectCommon"></include>
 		order by cdSeq desc
 	) aa

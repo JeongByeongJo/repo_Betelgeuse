@@ -12,94 +12,91 @@
           <li class="breadcrumb-item active">Default</li>
         </ol>
       </nav>
-      <h1 style="height: 50px;">CodeGroup</h1>
+      <h1 style="height: 50px;">Code</h1>
     </div><!-- End Page Title -->
 
     <section class="section">
-        <form class="row g-3 needs-validation" novalidate>
+        <form class="row g-3 needs-validation" id="formList" name="formList" method="post" novalidate>
             <div class="col-md-2" style="height: 10px;">
-                
-                <select class="form-select" id="" >
-                  <option selected disabled value="">N</option>
-                  <option>아무거나</option>
-                </select>
+                <select id="shDelNy" name="shDelNy" class="form-select form-select-sm">
+					<option value="" th:selected="${vo.shDelNy == null}">삭제여부</option>
+					<option value="1" th:selected="${vo.shDelNy == 1}">Y</option>
+					<option value="0" th:selected="${vo.shDelNy == 0}">N</option>            
+				</select>
                 <div class="invalid-feedback">
                   항목중 하나를 선택 해주세요.
                 </div>
               </div>
             <div class="col-md-2">
-                <select class="form-select" id="" >
-                    <option selected disabled value="">Y</option>
-                    <option>아무거나</option>
-                  </select>
+                <select name="shUseNy" id="shUseNy" class="form-select form-select-sm">
+					<option value="" th:selected="${vo.shUseNy == null}">사용여부</option>
+					<option value="1" th:selected="${vo.shUseNy == 1}">Y</option>
+					<option value="0" th:selected="${vo.shUseNy == 0}">N</option>
+				</select>
                   <div class="invalid-feedback">
                     항목중 하나를 선택 해주세요.
                   </div>
             </div>
             <div class="col-md-2">
-                <select class="form-select" id="" >
-                    <option selected disabled value="">날짜</option>
-                    <option>등록일</option>
-                    <option>수정일</option>
-                  </select>
+                <select id="shOptionDate" name="shOptionDate" class="form-select form-select-sm">
+					<option value="" th:selected="${vo.shOptionDate == null}">날짜</option>
+					<option value="1" th:selected="${vo.shOptionDate == 1}">등록일</option>
+					<option value="2" th:selected="${vo.shOptionDate == 2}">수정일</option>
+				</select>
                   <div class="invalid-feedback">
                     항목중 하나를 선택 해주세요.
                   </div>
             </div>
             <div class="col-md-2">
-                <input type="text" class="form-control" id="validationCustom03" placeholder="2025-01-05" >
-                  <div class="invalid-feedback">
-                    코드를 입력해주세요.
-                  </div>
+<!--                 <input type="text" id="shDateStart" name="shDateStart" th:value="${#strings.substring(vo.shDateStart, 0, 10)}" placeholder="시작일" class="form-control form-control-sm" autocomplete="off"> -->
+                <div class="invalid-feedback">
+                  코드를 입력해주세요.
+                </div>
             </div>
             <div class="col-md-2">
-                <input type="text" class="form-control" id="validationCustom03" placeholder="2025-02-04" >
-                  <div class="invalid-feedback">
-                    코드를 입력해주세요.
-                  </div>
+<!--                 <input type="text" id="shDateEnd" name="shDateEnd" th:value="${#strings.substring(vo.shDateEnd, 0, 10)}" placeholder="종료일" class="form-control form-control-sm" autocomplete="off"> -->
+                <div class="invalid-feedback">
+                  코드를 입력해주세요.
+                </div>
             </div>
             <div class="col-md-2"></div>
             <div class="col-md-2">
-                <select class="form-select" id="" >
-                    <option selected disabled value="">검색구분</option>
-                    <option>코드그룹 코드</option>
-                    <option>코드그룹 이름</option>
-                    <option>코드그룹 이름(영문)</option>
-                  </select>
-                  <div class="invalid-feedback">
-                    항목중 하나를 선택 해주세요.
-                  </div>
+                <select id="shOption" name="shOption" class="form-select form-select-sm">
+					<option value="" th:selected="${vo.shOption == null}">검색구분</option>
+					<option value="1" th:selected="${vo.shOption == 1}">코드그룹 코드</option>
+					<option value="2" th:selected="${vo.shOption == 2}">코드그룹 이름</option>
+					<option value="3" th:selected="${vo.shOption == 3}">코드그룹 이름 (영문)</option>
+					<option value="4" th:selected="${vo.shOption == 4}">코드</option>
+					<option value="5" th:selected="${vo.shOption == 5}">코드 이름</option>
+					<option value="6" th:selected="${vo.shOption == 6}">코드 이름 (영문)</option>
+				</select>
+                <div class="invalid-feedback">
+                  항목중 하나를 선택 해주세요.
+                </div>
             </div>
             <div class="col-md-2">
-                <input type="text" class="form-control" id="validationCustom03" placeholder="검색어" >
-                  <div class="invalid-feedback">
-                    코드를 입력해주세요.
-                  </div>
+                <input type="text" id="shValue" name="shValue" th:value="${vo.shValue}" onkeyup="enterkey()" placeholder="검색어" class="form-control form-control-sm">
+                <div class="invalid-feedback">
+                  코드를 입력해주세요.
+                </div>
             </div>
             <div class="col-md-8">
-                <button class="btn btn-outline-dark" type="button" ><i class="bi bi-search"></i></button>
-                <button class="btn btn-outline-dark" type="button" ><i class="bi bi-arrow-clockwise"></i></button>
+                <button type="button" id="btnSearch" class="btn btn-outline-dark"><i class="bi bi-search"></i></button>
+                <button type="button" id="btnReset" class="btn btn-outline-dark"><i class="bi bi-arrow-clockwise"></i></button>
             </div>
-        
+        <br>
         <div class="col-lg-12">
+        <input type="hidden" name="thisPage" th:value="${vo.thisPage}" default="1"/>
+		<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${vo.rowNumToShow}"/>
           <div class="card" >
             <div class="card-body">
-              <div class="row">
-                <div class="col-md-10" style="height: 50px;"><h5 class="card-title-list">Total : 42</h5></div>
-                  <div class="col-md-2 select-col"><select class="form-select select-end">
-                    <option value="">5</option>
-                    <option value="">10</option>
-                    <option value="">15</option>
-                  </select>
-                </div>
-                </div>
-                </div>
+            <div th:replace="~{xdm/include/totalAndRowNum :: totalAndRowNum}"></div>
+			</div>
 
               <!-- Table with stripped rows -->
-              <table class="table datatable">
+              <table class="table datatable" style="text-align: center;">
                 <thead>
                   <tr>
-                    
                     <th data-sortable="false"  style="text-align: center; width: 100px;"><div class="checked"><input type="checkbox" class="form-check"></div></th>
                     <th data-sortable="false" style="width: 10px; text-align: center;" >#</th>
                     <th style="text-align: center;">사용</th>
@@ -173,19 +170,40 @@
                 </div>
                 </div>
             </div>
-          </div>        
+          </div>    
+       </form>
     </section>
 
   </main><!-- End #main -->
 <div th:replace="~{xdm/include/footerNice :: footerNice}"></div>
+
 	<script>
 		let form = document.querySelector("form[name=formList]");
-				
+		
+		document.getElementById("btnSearch").onclick = function () {
+			form.action = "/code/CodeXdmList";
+			form.submit();
+		};
+		document.getElementById("btnReset").onclick = function () {
+			document.getElementById("shDelNy").value = null;
+			document.getElementById("shUseNy").value = null;
+			document.getElementById("shOption").value = null;
+			document.getElementById("shValue").value = null;
+			form.action = "/code/CodeXdmList";
+			form.submit();
+		};
+		
 		goList = function (thisPage) {
 		    document.querySelector("input[name=thisPage]").value = thisPage;
 		    form.action = "/code/CodeXdmList";
 		    form.submit();
-		}					
+		}
+		document.getElementById("changeRowNum").onchange = function () {
+		    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
+		    form.action = "/code/CodeXdmList";
+		    form.submit();
+		}
 	</script>
+	
 </body>
 </html>

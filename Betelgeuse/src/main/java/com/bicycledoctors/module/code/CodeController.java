@@ -18,7 +18,7 @@ public class CodeController {
 	CodeGroupService codeGroupService;
 
 	@RequestMapping(value = "/code/CodeXdmList")
-	public String CodeXdmList(CodeVo vo, Model model) {
+	public String CodeXdmList(CodeVo vo, Model model) throws Exception{
 		
 		vo.setParamsPaging(codeService.selectOneCount());
 		

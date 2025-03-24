@@ -46,10 +46,10 @@
                 
                 <div class="col-md-3" style="height: 100px;">
                   <label for="cdgUseNy" class="form-label">사용여부<sup>*</sup></label>
-                  <select class="form-select" id="cdgUseNy" name="cdgUseNy" th:value="${item?.cdgUseNy}">
+                  <select class="form-select" id="cdgUseNy" name="cdgUseNy" th:selected="${item?.cdgUseNy}">
                     <option value="">선택해주세요.</option>                                            
-                    <option th:value="1">사용</option>                                            
-                    <option th:value="0">미사용</option>
+                    <option value="1" th:selected="${item?.cdgUseNy == 1}" th:text="사용"></option>
+					<option value="0" th:selected="${item?.cdgUseNy == 0}" th:text="미사용"></option>
                   </select>
                 </div>
                 

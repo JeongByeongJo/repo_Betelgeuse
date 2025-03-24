@@ -9,7 +9,21 @@
 	    from
 			usercustomer
 		where 1=1
-			and delNy = 0
+		<if test="shUseNy != null and !shUseNy.equals('')">AND isBlack = #{shUseNy}</if>
+        <if test="shDelNy != null and !shDelNy.equals('')">AND delNy = #{shDelNy}</if>
+<!-- 				
+				<choose>
+					<when test="shOptionDate == 1">AND a.regDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+					<when test="shOptionDate == 2">AND a.modDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+				</choose>
+ -->				
+        <choose>
+            <when test="shOption == 1">AND seq = #{shValue}</when>
+            <when test="shOption == 2">AND userCate LIKE CONCAT('%',#{shValue},'%')</when>
+            <when test="shOption == 3">AND userId LIKE CONCAT('%',#{shValue},'%')</when>
+            <when test="shOption == 4">AND userName LIKE CONCAT('%',#{shValue},'%')</when>
+            <when test="shOption == 5">AND userGender LIKE CONCAT('%',#{shValue},'%')</when>
+        </choose>
     </sql>
 	
 	<select id="selectOneCount" resultType="Integer">

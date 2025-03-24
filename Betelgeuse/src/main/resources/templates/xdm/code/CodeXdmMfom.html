@@ -26,10 +26,11 @@
               <!-- Custom Styled Validation -->
               <form class="row g-3 needs-validation" action="/code/CodeXdmUpdt" method="post" id="form" novalidate>
                 <div class="col-md-3" style="height: 100px;">
+                <input type="hidden" name="cdSeq" th:value="${item?.cdSeq}">	
                   <label for="codegroup_cdgSeq" class="form-label">코드그룹<sup>*</sup></label>
                   <select class="form-select" id="codegroup_cdgSeq" name="codegroup_cdgSeq" required>
                     <option value="">선택하세요</option>
-	                <option th:each ="list : ${list}" th:value="${list.cdgSeq}" th:text="${list.cdgName}" th:selected="${list.cdgSeq == item?.codegroup_cdgSeq}" ></option>                                              
+	                <option th:each ="list : ${list}" th:value="${list.cdgSeq}" th:text="${list.cdgName}" th:selected="${list.cdgSeq == item?.codegroup_cdgSeq}"></option>                                              
                   </select>
                   <div class="invalid-feedback">
                     코드그룹을 선택 해주세요.
@@ -68,8 +69,8 @@
                   <label for="cdUseNy" class="form-label">사용여부<sup>*</sup></label>
                   <select class="form-select" id="cdUseNy" name="cdUseNy" th:value="${item?.cdUseNy}" required>
                     <option value="">선택하세요</option>
-                    <option th:value="1">사용</option>                                            
-                    <option th:value="0">미사용</option>
+                    <option value="1" th:selected="${item?.cdUseNy == 1}" th:text="사용"></option>
+					<option value="0" th:selected="${item?.cdUseNy == 0}" th:text="미사용"></option>
                   </select>
                   <div class="invalid-feedback">
                     항목중 하나를 선택 해주세요.

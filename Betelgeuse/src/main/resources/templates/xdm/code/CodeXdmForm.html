@@ -52,15 +52,15 @@
                 
                 <div class="col-md-3">
                   <label for="cdName" class="form-label">코드 이름<sup>*</sup></label>
-                  <input type="text" class="form-control" id="cdName" name="cdName" placeholder="한글,영대소문자,숫자" required>
-                  <div class="invalid-feedback">
+                  <input type="text" class="form-control" id="cdName" name="cdName" placeholder="한영,숫자" required>
+                  <div class="invalid-feedback" id="name-invalid-feedback">
                     코드이름을 입력해주세요.
                   </div>
                 </div>
                 <div class="col-md-3">
                   <label for="cdNameEng" class="form-label">코드이름 (영문)</label>
                   <input type="text" class="form-control" id="cdNameEng" name="cdNameEng" placeholder="영대소문자,숫자" required>
-                  <div class="invalid-feedback">
+                  <div class="invalid-feedback" id="nameeng-invalid-feedback">
                     코드이름(영문)을 입력하세요.
                   </div>
                 </div>
@@ -107,29 +107,35 @@
 
     <script type="text/javascript">
     
-    const input = document.getElementById("cdName");
+    const inputK = document.getElementById("cdName");
+    const inputEN = document.getElementById("cdNameEng");
 
-    input.addEventListener("input", updateValue);
+    inputK.addEventListener("input", updateValueK);
+    inputEN.addEventListener("input", updateValueEN);
 
-    function updateValue() {
-// 			alert("한글과 숫자로 넣어라 이놈아!!!");
-			var regExp = /^[ㄱ-ㅎ가-힣0-9]+$/
+    function updateValueK() {
+		let regExp = /^[A-Za-zㄱ-ㅎ가-힣0-9_]+$/
     	if(!regExp.test(document.getElementById("cdName").value.trim())) {
     		document.getElementById("cdName").classList.add("is-invalid");
+    		document.getElementById("name-invalid-feedback").innerText = "한영과 숫자만 입력해주세요";
     		return false;
 		} else {
-    		document.getElementById("cdName").classList.remove("is-invalid");			
+    		document.getElementById("cdName").classList.remove("is-invalid");
+		}
+    }
+    
+    function updateValueEN() {
+		let regExp = /^[A-Za-z0-9_]+$/
+    	if(!regExp.test(document.getElementById("cdNameEng").value.trim())) {
+    		document.getElementById("cdNameEng").classList.add("is-invalid");
+    		document.getElementById("nameeng-invalid-feedback").innerText = "알파벳과 숫자만 입력해주세요";
+    		return false;
+		} else {
+			document.getElementById("cdNameEng").classList.remove("is-invalid");
 		}
     }
 
     document.getElementById("btnsave").onclick = function() {
-    	var regExp = /^[ㄱ-ㅎ가-힣0-9]+$/
-    		
-// 		if(!regExp.test(document.getElementById("cdName").value.trim())){
-			
-// 			document.getElementById("cdName").focus();
-// 			return false;
-// 		}
     	
     	if(document.getElementById("codegroup_cdgSeq").value == null || document.getElementById("codegroup_cdgSeq").value == "") {
     		document.getElementById("codegroup_cdgSeq").classList.add("is-invalid");
@@ -137,13 +143,18 @@
 		} else {
     		document.getElementById("codegroup_cdgSeq").classList.remove("is-invalid");			
 		}
-// 		if(document.getElementById("cdName").value.trim() == null || document.getElementById("cdName").value.trim() == "") {
-//     		document.getElementById("cdName").classList.add("is-invalid");
-// 			return false;
-// 		}
-		if(document.getElementById("cdNameEng").value.trim() == null || document.getElementById("cdNameEng").value.trim() == "") {
+		if(document.getElementById("cdName").value.trim() == null || document.getElementById("cdName").value.trim() == "") {
+    		document.getElementById("cdName").classList.add("is-invalid");
 			return false;
+		} else {
+    		document.getElementById("cdName").classList.remove("is-invalid");
 		}		
+		if(document.getElementById("cdNameEng").value.trim() == null || document.getElementById("cdNameEng").value.trim() == "") {
+			document.getElementById("cdNameEng").classList.add("is-invalid");
+			return false;
+		} else {
+    		document.getElementById("cdNameEng").classList.remove("is-invalid");
+		}	
 		document.getElementById("form").submit();
 	}
 			

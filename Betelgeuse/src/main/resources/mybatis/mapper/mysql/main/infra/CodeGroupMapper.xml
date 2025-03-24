@@ -8,7 +8,19 @@
 	<sql id="selectCommon">	    
 	    from codegroup as a
 	    where 1=1
-	    and cdgDelNy = 0
+	    <if test="shUseNy != null and !shUseNy.equals('')">AND a.cdgUseNy = #{shUseNy}</if>
+        <if test="shDelNy != null and !shDelNy.equals('')">AND a.cdgDelNy = #{shDelNy}</if>
+<!-- 				
+				<choose>
+					<when test="shOptionDate == 1">AND a.regDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+					<when test="shOptionDate == 2">AND a.modDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+				</choose>
+ -->				
+        <choose>
+            <when test="shOption == 1">AND a.cdgSeq = #{shValue}</when>
+            <when test="shOption == 2">AND a.cdgName LIKE CONCAT('%',#{shValue},'%')</when>
+            <when test="shOption == 3">AND a.cdgNameEng LIKE CONCAT('%',#{shValue},'%')</when>
+        </choose>
     </sql>
     
     <select id="selectOneCount" resultType="Integer">

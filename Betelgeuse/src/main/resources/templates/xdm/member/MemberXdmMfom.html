@@ -77,8 +77,8 @@
                 <div class="col-md-3">
                   <label for="isBlack" class="form-label">블랙</label>
                   <select class="form-select" id="isBlack" name="isBlack" th:value="${item?.isBlack}">
-	                  <option th:value="0">N</option>
-	                  <option th:value="1">Y</option>
+	                <option value="0" th:selected="${item?.isBlack == 0}" th:text="N"></option>
+                    <option value="1" th:selected="${item?.isBlack == 1}" th:text="Y"></option>
                   </select>
                 </div>
                 <div class="col-md-6">
@@ -96,12 +96,12 @@
                 <div class="col-md-6">
                 	<label for="delNy" class="form-label">삭제</label>
 	                <select class="form-select" id="delNy" name="delNy" th:value="${item?.delNy}" aria-label="Default select example">
-	                    <option th:value="0">N</option>
-	                    <option th:value="1">Y</option>
-	                </select>
+					<option value="0" th:selected="${item?.delNy == 0}" th:text="N"></option>
+                    <option value="1" th:selected="${item?.delNy == 1}" th:text="Y"></option>
+                  </select>
                 </div>
                 <div class="col-md-6">
-                  <a href="/code/CodeXdmList" class="btn btn-outline-dark"><i class="bi bi-blockquote-right"></i></a></div>
+                  <a href="/member/MemberXdmList" class="btn btn-outline-dark"><i class="bi bi-blockquote-right"></i></a></div>
                 <div class="col-md-6">
                   <div style="display: flex;justify-content: end;"><button type="button" class="btn btn-primary" id="btnsave"><i class="bi bi-server"></i></button></div>
                 </div>
