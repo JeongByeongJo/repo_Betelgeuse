@@ -23,6 +23,9 @@ public class CodeService {
 	public CodeDto selectOne(CodeDto codeDto) {
 		return codeDao.selectOne(codeDto);
 	}
+	public CodeDto selectOne(CodeVo vo) {
+		return codeDao.selectOne(vo);
+	}
 	public int insert(CodeDto codeDto) {
 		return codeDao.insert(codeDto);				
 	}

@@ -23,33 +23,32 @@
               <h1 class="card-title" style="height: 100px;" >기본정보</h1>
 
               <!-- Custom Styled Validation -->
-              <form class="row g-3" action="/codegroup/CodegroupXdmUpdt" method="post" id="form">
+              <form class="row g-3" action="/codegroup/CodegroupXdmInst" method="post" id="form">
                 <div class="col-md-3" style="height: 100px;">
-               		<input type="hidden" name="cdgSeq" th:value="${item?.cdgSeq}">	
-                	<label for="cdgcode" class="form-label">코드그룹 코드 <sup>*</sup></label>
-                	<input type="text" class="form-control" id="cdgcode" value="" placeholder="자동생성" disabled th:value="${item?.cdgSeq}">
+                  <label for="validationCustom02" class="form-label">코드그룹 코드 <sup>*</sup></label>
+                  <input type="text" class="form-control" id="validationCustom02" value="" placeholder="자동생성" disabled>
                 </div>
       
                 <div class="col-md-3" style="height: 100px;">
-                  <label for="another" class="form-label">코드 (ANOTHER)</label>
-                  <input type="text" class="form-control" id="another" value="" placeholder="영대소문자,숫자">
+                  <label for="validationCustom02" class="form-label">코드 (ANOTHER)</label>
+                  <input type="text" class="form-control" id="validationCustom02" value="" placeholder="영대소문자,숫자">
                 </div>
                 <div class="col-md-3">
                   <label for="cdgName" class="form-label">코드그룹 이름 <sup>*</sup></label>
-                  <input type="text" class="form-control" id="cdgName" name="cdgName" placeholder="한글,영대문자,숫자" th:value="${item?.cdgName}">
+                  <input type="text" class="form-control" id="cdgName" name="cdgName" placeholder="한글,영대문자,숫자">
                 </div>
                 
                 <div class="col-md-3">
                   <label for="cdgNameEng" class="form-label">코드그룹 이름 (영문)</label>
-                  <input type="text" class="form-control" id="cdgNameEng" name="cdgNameEng" placeholder="영대소문자,숫자" th:value="${item?.cdgNameEng}">
+                  <input type="text" class="form-control" id="cdgNameEng" name="cdgNameEng" placeholder="영대소문자,숫자">
                 </div>
                 
                 <div class="col-md-3" style="height: 100px;">
                   <label for="cdgUseNy" class="form-label">사용여부<sup>*</sup></label>
-                  <select class="form-select" id="cdgUseNy" name="cdgUseNy" th:selected="${item?.cdgUseNy}">
+                  <select class="form-select" id="cdgUseNy" name="cdgUseNy">
                     <option value="">선택해주세요.</option>                                            
-                    <option value="1" th:selected="${item?.cdgUseNy == 1}" th:text="사용"></option>
-					<option value="0" th:selected="${item?.cdgUseNy == 0}" th:text="미사용"></option>
+                    <option th:value="1">사용</option>                                            
+                    <option th:value="0">미사용</option>
                   </select>
                 </div>
                 
@@ -63,7 +62,7 @@
                 <div class="col-md-6"></div>
                 <div class="col-md-6" style="height: 150px;">
                   <label for="cdgDesc" class="form-label">설명</label>
-                  <textarea class="form-control" id="cdgDesc" name="cdgDesc" th:text="${item?.cdgDesc}"></textarea>
+                  <textarea class="form-control" id="cdgDesc" name="cdgDesc"></textarea>
                 </div>
                 <div class="col-md-6"></div>
                 <div class="col-md-6">
@@ -71,9 +70,7 @@
                 <div class="col-md-6">
                   <div style="display: flex;justify-content: end;"><button class="btn btn-primary" id="btnsave"><i class="bi bi-server"></i></button></div>
                 </div>
-              </form>
-              
-              <!-- End Custom Styled Validation -->
+              </form><!-- End Custom Styled Validation -->
 
             </div>
           </div>
@@ -84,7 +81,7 @@
 	                  <div class="modal-header">
 	                      <h5 class="modal-title">입력오류</h5>
 	                  </div>
-	                  <div class="modal-body">형식에 맞게 입력해주세요.</div>
+	                  <div class="modal-body">올바른 값을 입력해주세요.</div>
 	                  <div class="modal-footer">
 	                      <button type="button" class="btn btn-secondary" id="clomo" name="clomo">닫기</button>
 	                      <button type="button" id="savechanges" name="savechanges" class="btn btn-primary">Save changes</button>

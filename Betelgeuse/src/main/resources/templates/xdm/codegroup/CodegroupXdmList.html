@@ -87,6 +87,7 @@
 		<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${vo.rowNumToShow}"/>
           <div class="card" >
             <div class="card-body">
+	          <input type="hidden" name="cdgSeq">
 			<div th:replace="~{xdm/include/totalAndRowNum :: totalAndRowNum}"></div>
             </div>
 
@@ -95,7 +96,7 @@
                 <thead>
                   <tr>
                     
-                    <th data-sortable="false"  style="text-align: center; width: 100px;"><div class="checked"><input type="checkbox" class="form-check"></div></th>
+                    <th data-sortable="false"  style="text-align: center; width: 100px;"><div class="checked"><input type="checkbox" class="form-check" name="allChk" onclick='selectAll(this)'/></div></th>
                     <th data-sortable="false" style="width: 10px; text-align: center;" >#</th>
                     <th style="text-align: center;">
                       사용
@@ -116,11 +117,11 @@
 	               		</td>
 	               	</tr>
 	                   <tr th:if="${!#lists.isEmpty(list)}" th:each ="list : ${list}">
-	                   <th><div class="checked"><input type="checkbox" class="form-check"></div></th>
+	                   <th><div class="checked"><input type="checkbox" class="form-check" name="eachChk" onclick='checkSelectAll()' th:value="${list.cdgSeq}" value=""/></div></th>
 	                   <td th:text="${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
 	                   <td th:text = "${list.cdgUseNy}"></td>
 	                   <td th:text = "${list.cdgSeq}"></td>
-	                   <td><a th:href="@{/codegroup/CodegroupXdmMfom(cdgSeq=${list.cdgSeq})}" th:text="${list.cdgName}"></a></td>
+	                   <td><a href="javascript:void(0);" th:text="${list.cdgName}" th:attr="onclick=|goForm('${list.cdgSeq}')|"></a></td>
 	                   <td th:text = "${list.cdgNameEng}"></td>
 	                   <td th:text = "${list.xcdSeqCount}"></td>
 	                   <td>1</td>
@@ -157,12 +158,12 @@
                   <div class="row">
                     <div class="col-md-6 padding-left">
                   <button class="btn btn-danger">X</button>
-                  <button class="btn btn-danger"><i class="bi bi-trash"></i></button>
+                  <button class="btn btn-danger" id="btnUele"><i class="bi bi-trash"></i></button>
                 </div>
                 <div class="col-md-6 padding-right" style="display: flex; justify-content: end;">
                     
                     <button class="btn btn-success btn-right"><i class="bi bi-journal-x"></i></button>
-                  <a href="/codegroup/CodegroupXdmForm" class="btn btn-primary"><i class="bi bi-plus-lg"></i></a>
+					<button type="button" id="btnForm" class="btn btn-primary"><i class="bi bi-plus-lg"></i></button>
                 </div>
                 </div>
             </div>
@@ -173,8 +174,9 @@
   </main><!-- End #main -->
 <div th:replace="~{xdm/include/footerNice :: footerNice}"></div>
 
-	<script>	
+	<script type="text/javascript">	
 		let form = document.querySelector("form[name=formList]");
+		let seq = document.querySelector("input[name=cdgSeq]");
 		
 		document.getElementById("btnSearch").onclick = function () {
 			form.action = "/codegroup/CodegroupXdmList";
@@ -199,6 +201,49 @@
 		    form.action = "/codegroup/CodegroupXdmList";
 		    form.submit();
 		}
+		
+		document.getElementById("btnForm").onclick = function () {
+		    goForm(0);
+		}
+		goForm = function (keyValue) {
+		    seq.value = keyValue;
+		    form.action = "/codegroup/CodegroupXdmForm";
+		    form.submit();
+		}
+		
+		document.getElementById("btnUele").onclick = function () {
+		    form.action = "/codegroup/CodegroupXdmUele";
+		    form.submit();
+		}
+		
+		
+		function checkSelectAll()  {
+			  // 전체 체크박스
+			  const checkboxes 
+			    = document.querySelectorAll('input[name="eachChk"]');
+			  // 선택된 체크박스
+			  const checked 
+			    = document.querySelectorAll('input[name="eachChk"]:checked');
+			  // select all 체크박스
+			  const selectAll 
+			    = document.querySelector('input[name="allChk"]');
+			  
+			  if(checkboxes.length === checked.length)  {
+			    selectAll.checked = true;
+			  }else {
+			    selectAll.checked = false;
+			  }
+
+			}
+
+			function selectAll(selectAll)  {
+			  const checkboxes 
+			     = document.getElementsByName('eachChk');
+			  
+			  checkboxes.forEach((checkbox) => {
+			    checkbox.checked = selectAll.checked
+			  })
+			}
 	</script>
 	
 </body>

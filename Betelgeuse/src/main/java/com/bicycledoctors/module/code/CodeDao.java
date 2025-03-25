@@ -10,6 +10,7 @@ public interface CodeDao {
 	public List<CodeDto> selectList(CodeVo vo);
 	public List<CodeDto> selectGroupList();
 	public CodeDto selectOne(CodeDto codeDto);
+	public CodeDto selectOne(CodeVo vo);
 	
 	public int insert(CodeDto codeDto);
 	public int update(CodeDto codeDto);

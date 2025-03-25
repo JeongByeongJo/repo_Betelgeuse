@@ -90,6 +90,7 @@
 		<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${vo.rowNumToShow}"/>
           <div class="card" >
             <div class="card-body">
+            <input type="hidden" name="cdSeq">
             <div th:replace="~{xdm/include/totalAndRowNum :: totalAndRowNum}"></div>
 			</div>
 
@@ -97,16 +98,16 @@
               <table class="table datatable" style="text-align: center;">
                 <thead>
                   <tr>
-                    <th data-sortable="false"  style="text-align: center; width: 100px;"><div class="checked"><input type="checkbox" class="form-check"></div></th>
+                    <th data-sortable="false"  style="text-align: center; width: 100px;"><div class="checked"><input type="checkbox" class="form-check" name="allChk" onclick='selectAll(this)'></div></th>
                     <th data-sortable="false" style="width: 10px; text-align: center;" >#</th>
                     <th style="text-align: center;">사용</th>
-                    <th class="list-sort" style=" text-align: center;">코드그룹 코드</th>
-                    <th class="list-sort" style="text-align: center; ">코드그룹 이름</th>
-                    <th class="list-sort" style="text-align: center; ">코드</th>
-                    <th class="list-sort" style="text-align: center; ">대체 코드</th>
-                    <th class="list-sort" style="text-align: center; ">코드 이름</th>
-                    <th class="list-sort" style="text-align: center; ">코드 이름(영문)</th>
-                    <th class="list-sort" style="text-align: center;">순서</th>
+                    <th class="list-sort">코드그룹 코드</th>
+                    <th class="list-sort">코드그룹 이름</th>
+                    <th class="list-sort">코드</th>
+                    <th class="list-sort">대체 코드</th>
+                    <th class="list-sort">코드 이름</th>
+                    <th class="list-sort">코드 이름(영문)</th>
+                    <th class="list-sort">순서</th>
                     <th data-type="date" data-format="YYYY/DD/MM" class="list-sort" style="text-align: center;">등록일</th>
                     <th data-type="data" data-format="YYYY/DD/MM" class="list-sort" style="text-align: center;">수정일</th>
                   </tr>
@@ -118,14 +119,15 @@
 	               		</td>
 	               	</tr>
 	                   <tr th:if="${!#lists.isEmpty(list)}" th:each ="list : ${list}">
-	                   <th><div class="checked"><input type="checkbox" class="form-check"></div></th>
+	                   <th><div class="checked"><input type="checkbox" class="form-check" name="eachChk" onclick='checkSelectAll()'></div></th>
 	                   <td th:text="${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
                        <td th:text = "${list.cdUseNy}"></td>
                        <td th:text = "${list.cdgSeq}"></td>                                                
                        <td th:text = "${list.cdgName}"></td>
                        <td th:text = "${list.cdSeq}"></td>
                        <td></td>
-                       <td><a th:href="@{/code/CodeXdmMfom(cdSeq=${list.cdSeq})}" th:text="${list.cdName}"></a></td>
+<!--                        <td><a th:href="@{/code/CodeXdmMfom(cdSeq=${list.cdSeq})}" th:text="${list.cdName}"></a></td> -->
+						<td class="ifcgName align-middle fw-semi-bold"><a href="javascript:void(0);" th:text="${list.cdName}" th:attr="onclick=|goForm('${list.cdSeq}')|"></a></td>
                        <td th:text = "${list.cdNameEng}"></td>
                        <td>1</td>
                        <td></td>
@@ -166,7 +168,8 @@
                 <div class="col-md-6 padding-right" style="display: flex; justify-content: end;">
                     
                     <button class="btn btn-success btn-right"><i class="bi bi-journal-x"></i></button>
-                  <a href="/code/CodeXdmForm" class="btn btn-primary"><i class="bi bi-plus-lg"></i></a>
+<!--                   <a href="/code/CodeXdmForm" class="btn btn-primary"><i class="bi bi-plus-lg"></i></a> -->
+                  <button type="button" id="btnForm" class="btn btn-primary"><i class="bi bi-plus-lg"></i></button>
                 </div>
                 </div>
             </div>
@@ -179,6 +182,19 @@
 
 	<script>
 		let form = document.querySelector("form[name=formList]");
+		let seq = document.querySelector("input[name=cdSeq]");
+		
+		document.getElementById("btnForm").onclick = function () {
+		    goForm(0);
+		}
+
+
+		goForm = function (keyValue) {
+		    seq.value = keyValue;
+		    form.action = "/code/CodeXdmForm";
+		    form.submit();
+		}
+		
 		
 		document.getElementById("btnSearch").onclick = function () {
 			form.action = "/code/CodeXdmList";
@@ -203,6 +219,35 @@
 		    form.action = "/code/CodeXdmList";
 		    form.submit();
 		}
+		
+		
+		function checkSelectAll()  {
+			  // 전체 체크박스
+			  const checkboxes 
+			    = document.querySelectorAll('input[name="eachChk"]');
+			  // 선택된 체크박스
+			  const checked 
+			    = document.querySelectorAll('input[name="eachChk"]:checked');
+			  // select all 체크박스
+			  const selectAll 
+			    = document.querySelector('input[name="allChk"]');
+			  
+			  if(checkboxes.length === checked.length)  {
+			    selectAll.checked = true;
+			  }else {
+			    selectAll.checked = false;
+			  }
+
+			}
+
+			function selectAll(selectAll)  {
+			  const checkboxes 
+			     = document.getElementsByName('eachChk');
+			  
+			  checkboxes.forEach((checkbox) => {
+			    checkbox.checked = selectAll.checked
+			  })
+			}
 	</script>
 	
 </body>

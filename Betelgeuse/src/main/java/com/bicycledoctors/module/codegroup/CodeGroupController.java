@@ -3,6 +3,7 @@ package com.bicycledoctors.module.codegroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 
@@ -24,7 +25,14 @@ public class CodeGroupController {
 	}
 	
 	@RequestMapping(value = "/codegroup/CodegroupXdmForm")
-	public String CodegroupXdmForm() {		
+	public String CodegroupXdmForm(@ModelAttribute("vo") CodeGroupVo vo, Model model) {
+		if (vo.getCdgSeq().equals("0") || vo.getCdgSeq().equals("")) {
+//			insert mode
+		} else {
+//			update mode
+			model.addAttribute("item", codeGroupService.selectOne(vo));
+		}
+		
 		return "xdm/codegroup/CodegroupXdmForm";
 	}
 	

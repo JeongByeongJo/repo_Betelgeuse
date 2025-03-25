@@ -23,6 +23,10 @@ public class CodeGroupService {
 		return codeGroupDao.selectOne(codeGroupDto);
 	}
 	
+	public CodeGroupDto selectOne(CodeGroupVo vo) {
+		return codeGroupDao.selectOne(vo);
+	}
+	
 	public int insert(CodeGroupDto codeGroupDto) {
 		return codeGroupDao.insert(codeGroupDto);
 	}
