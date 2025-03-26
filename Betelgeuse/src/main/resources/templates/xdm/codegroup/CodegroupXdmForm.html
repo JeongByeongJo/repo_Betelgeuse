@@ -57,7 +57,7 @@
                   <label for="validationCustom08" class="form-label">순서<sup>*</sup></label>
                   <input type="text" class="form-control" id="validationCustom08">
                   <div class="invalid-feedback">
-                    Please provide a valid zip.
+                    올바른 순서값을 입력해주세요.
                   </div>
                 </div>
                 <div class="col-md-6"></div>
@@ -69,7 +69,7 @@
                 <div class="col-md-6">
                   <a href="/codegroup/CodegroupXdmList" class="btn btn-outline-dark"><i class="bi bi-blockquote-right"></i></a>
                   <button class="btn btn-danger">X</button>
-                  <button type="button" class="btn btn-danger" id="btnUelete"><i class="bi bi-trash"></i></button>
+                  <button type="button" class="btn btn-danger" id="btnUelete" ><i class="bi bi-trash"></i></button>
                 </div>
                 <div class="col-md-6">
                   <div style="display: flex;justify-content: end;"><button class="btn btn-primary" id="btnSubmit"><i class="bi bi-server"></i></button></div>
@@ -80,34 +80,36 @@
 
             </div>
           </div>
-
-          <div class="modal" id="basicModal">
-	          <div class="modal-dialog" role="document">
-	              <div class="modal-content">
-	                  <div class="modal-header">
-	                      <h5 class="modal-title">입력오류</h5>
-	                  </div>
-	                  <div class="modal-body">형식에 맞게 입력해주세요.</div>
-	                  <div class="modal-footer">
-	                      <button type="button" class="btn btn-secondary" id="clomo" name="clomo">닫기</button>
-<!-- 	                      <button type="button" id="savechanges" name="savechanges" class="btn btn-primary">Save changes</button> -->
-	                  </div>
-	              </div>
-	          </div>
-	      </div>
+          
+		<div class="modal fade" id="modalAlert" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="modalAlertTitle">title</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body" id="modalAlertBody">
+						body
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-outline-secondary btn-sm btn_custom" data-bs-dismiss="modal" id="closeModal">닫힘</button>
+					</div>
+				</div>
+			</div>
+		</div>
 
 		<div class="modal" id="modalConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="modalConfirmTitle">title</h5>
-						<button type="button" class="btn-close" id="cfclomox" data-bs-dismiss="modal" aria-label="Close"></button>
+						<button type="button" class="btn-close" id="btnX" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
 					<div class="modal-body" id="modalConfirmBody">
 						body
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-outline-secondary" id="cfclomo" data-bs-dismiss="modal">닫힘</button>
+						<button type="button" class="btn btn-outline-secondary" id="btnClose" data-bs-dismiss="modal">닫힘</button>
 						<button type="button" class="btn btn-danger" name="" id="btnModalDelete"></button>
 						<button type="button" class="btn btn-danger" name="" id="btnModalUelete">삭제</button>
 					</div>
@@ -131,11 +133,12 @@
 	
 	function validationUpdt() {
 		if(document.getElementById("cdgName").value.trim() == null || document.getElementById("cdgName").value.trim() == "") {
-			document.getElementById("basicModal").style.display = 'block';
+			alertModal()
+			document.getElementById("cdgName").focus();
 			return false;
 		}
 		if(document.getElementById("cdgNameEng").value.trim() == null || document.getElementById("cdgNameEng").value.trim() == "") {
-			document.getElementById("basicModal").style.display = 'block';
+			alertModal()
 			return false;
 		}
 	}
@@ -151,20 +154,26 @@
 			form.submit();
 		}
 	}
-		
+	
+	function alertModal() {
+		document.querySelector("#modalAlertTitle").textContent = "입력오류";
+		document.querySelector("#modalAlertBody").textContent = "형식에 맞는 값을 입력해주세요";
+		$("#modalAlert").modal("show");
+	}
 		
 		
 		document.getElementById("btnUelete").onclick = function () {
-			document.querySelector("#modalConfirmTitle").textContent = "확 인";
+			document.querySelector("#modalAlertTitle").textContent = "확 인";
 			document.querySelector("#modalConfirmBody").textContent = "해당 데이터를 삭제하시겠습니까 ?";
 			document.querySelector("#btnModalUelete").style.display = '';
 			document.querySelector("#btnModalDelete").style.display = 'none';
 			document.getElementById("modalConfirm").style.display = 'block';
+			$("#modalConfirm").modal("show");
 		}
-		document.getElementById("cfclomox").onclick = function() {
+		document.getElementById("btnX").onclick = function() {
 			document.getElementById("modalConfirm").style.display = 'none';
 		}
-		document.getElementById("cfclomo").onclick = function() {
+		document.getElementById("btnClose").onclick = function() {
 			document.getElementById("modalConfirm").style.display = 'none';
 		}
 
@@ -173,8 +182,7 @@
 			form.submit();
 		}
 		
-		document.getElementById("clomo").onclick = function() {
-			document.getElementById("basicModal").style.display = 'none';
+		document.getElementById("closeModal").onclick = function() {
 			if(document.getElementById("cdgName").value.trim() == null || document.getElementById("cdgName").value.trim() == "") {
 				document.getElementById("cdgName").focus();
 				return false;
@@ -183,7 +191,6 @@
 				document.getElementById("cdgNameEng").focus();
 				return false;
 			}
-			document.getElementById("cdgName").focus();
 		}
 		
 		document.getElementById("savechanges").onclick = function() {

@@ -39,7 +39,7 @@ public class CodeGroupService {
 		return codeGroupDao.uelete(codeGroupDto);
 	}
 	
-	public int selectOneCount() {
-		return codeGroupDao.selectOneCount();
+	public int selectOneCount(CodeGroupVo vo) {
+		return codeGroupDao.selectOneCount(vo);
 	}
 }

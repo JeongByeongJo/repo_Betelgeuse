@@ -1,6 +1,7 @@
 package com.bicycledoctors.module.member;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,8 +16,8 @@ public class MemberService {
 		return memberDao.selectList(vo);
 	}
 	
-	public int selectOneCount() {
-		return memberDao.selectOneCount();
+	public int selectOneCount(MemberVo vo) {
+		return memberDao.selectOneCount(vo);
 	}
 	
 	public MemberDto selectOne(MemberDto memberDto) {
@@ -25,6 +26,10 @@ public class MemberService {
 	
 	public int update(MemberDto memberDto) {
 		return memberDao.update(memberDto);				
+	}
+	
+	public Map<String, Object> signinChk(MemberDto memberDto) {
+		return memberDao.signinChk(memberDto);
 	}
 
 }

@@ -87,7 +87,10 @@
                 </div>
                 <div class="col-md-6"></div>
                 <div class="col-md-6">
-                  <a href="/code/CodeXdmList" class="btn btn-outline-dark"><i class="bi bi-blockquote-right"></i></a></div>
+                  <a href="/code/CodeXdmList" class="btn btn-outline-dark"><i class="bi bi-blockquote-right"></i></a>
+                  <button class="btn btn-danger">X</button>
+                  <button type="button" class="btn btn-danger" id="btnUelete"><i class="bi bi-trash"></i></button>
+                </div>
                 <div class="col-md-6">
                   <div style="display: flex;justify-content: end;"><button class="btn btn-primary" id="btnSubmit"><i class="bi bi-server"></i></button></div>
                 </div>
@@ -95,7 +98,24 @@
 
             </div>
           </div>
-
+		<div class="modal" id="modalConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="modalConfirmTitle">title</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body" id="modalConfirmBody">
+						body
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">닫힘</button>
+						<button type="button" class="btn btn-danger" name="" id="btnModalDelete"></button>
+						<button type="button" class="btn btn-danger" name="" id="btnModalUelete">삭제</button>
+					</div>
+				</div>
+			</div>
+		</div>
           
 
         </div>
@@ -177,6 +197,20 @@
 			form.submit();
 		}
 	}
+	
+	document.getElementById("btnUelete").onclick = function () {
+		document.querySelector("#modalConfirmTitle").textContent = "확 인";
+		document.querySelector("#modalConfirmBody").textContent = "해당 데이터를 삭제하시겠습니까 ?";
+		document.querySelector("#btnModalUelete").style.display = '';
+		document.querySelector("#btnModalDelete").style.display = 'none';
+		$("#modalConfirm").modal("show");
+	}
+
+	document.getElementById("btnModalUelete").onclick = function () {
+		form.action = "/code/CodeXdmUele";
+		form.submit();
+	}
+	
 	</script>
 
 </body>

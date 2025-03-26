@@ -127,7 +127,7 @@ public class CodeGroupVo {
 		}
 		
 //		System.out.println("getThisPage():" + getThisPage());
-//		System.out.println("getTotalRows():" + getTotalRows());
+		System.out.println("getTotalRows():" + getTotalRows());
 //		System.out.println("getRowNumToShow():" + getRowNumToShow());
 //		System.out.println("getTotalPages():" + getTotalPages());
 //		System.out.println("getStartPage():" + getStartPage());

@@ -96,7 +96,7 @@
               <table class="table datatable" style="text-align: center;">
                 <thead>
                   <tr>
-                    <th data-sortable="false"  style="text-align: center; width: 100px;"><div class="checked"><input type="checkbox" class="form-check"></div></th>
+                    <th data-sortable="false"  style="text-align: center; width: 100px;"><div class="checked"><input type="checkbox" class="form-check" name="allChk" onclick='selectAll(this)'></div></th>
                     <th data-sortable="false" style="width: 10px; text-align: center;" >#</th>
                     <th class="list-sort" style="text-align: center;">회원분류</th>
                     <th class="list-sort" style="text-align: center;">ID</th>
@@ -117,7 +117,7 @@
 	               		</td>
 	               	</tr>
 	                   <tr th:if="${!#lists.isEmpty(list)}" th:each ="list : ${list}">
-	                   <th><div class="checked"><input type="checkbox" class="form-check"></div></th>
+	                   <th><div class="checked"><input type="checkbox" class="form-check" name="eachChk" onclick='checkSelectAll()'></div></th>
 	                   <td th:text="${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
                        <td th:text = "${@codeService.selectOneCachedCode(list.userCate)}"></td>
                        <td><a th:href="@{/member/MemberXdmMfom(seq=${list.seq})}" th:text="${list.userId}"></a></td>
@@ -201,6 +201,34 @@
 		    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
 		    form.action = "/member/MemberXdmList";
 		    form.submit();
+		}
+		
+		function checkSelectAll()  {
+			  // 전체 체크박스
+			  const checkboxes 
+			    = document.querySelectorAll('input[name="eachChk"]');
+			  // 선택된 체크박스
+			  const checked 
+			    = document.querySelectorAll('input[name="eachChk"]:checked');
+			  // select all 체크박스
+			  const selectAll 
+			    = document.querySelector('input[name="allChk"]');
+			  
+			  if(checkboxes.length === checked.length)  {
+			    selectAll.checked = true;
+			  }else {
+			    selectAll.checked = false;
+			  }
+
+			}
+
+		function selectAll(selectAll)  {
+		  const checkboxes 
+		     = document.getElementsByName('eachChk');
+		  
+		  checkboxes.forEach((checkbox) => {
+		    checkbox.checked = selectAll.checked
+		  })
 		}
 	</script>
 	

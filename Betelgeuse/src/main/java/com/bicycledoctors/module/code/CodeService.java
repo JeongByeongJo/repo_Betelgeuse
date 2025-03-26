@@ -35,8 +35,8 @@ public class CodeService {
 	public int uelete(CodeDto codeDto) {
 		return codeDao.uelete(codeDto);				
 	}
-	public int selectOneCount() {
-		return codeDao.selectOneCount();				
+	public int selectOneCount(CodeVo vo) {
+		return codeDao.selectOneCount(vo);				
 	}
 //	-----
 	

@@ -157,8 +157,8 @@
                   </div>
                   <div class="row">
                     <div class="col-md-6 padding-left">
-                  <button class="btn btn-danger">X</button>
-                  <button class="btn btn-danger" id="btnUele"><i class="bi bi-trash"></i></button>
+                  <button type="button" class="btn btn-danger">X</button>
+                  <button type="button" class="btn btn-danger" id="btnUelete"><i class="bi bi-trash"></i></button>
                 </div>
                 <div class="col-md-6 padding-right" style="display: flex; justify-content: end;">
                     
@@ -170,7 +170,24 @@
           </div>
           </form>       
     </section>
-
+		<div class="modal fade" id="modalConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="modalConfirmTitle">title</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body" id="modalConfirmBody">
+						body
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">닫힘</button>
+						<button type="button" class="btn btn-danger" name="" id="btnModalDelete"></button>
+						<button type="button" class="btn btn-danger" name="" id="btnModalUelete">삭제</button>
+					</div>
+				</div>
+			</div>
+		</div>
   </main><!-- End #main -->
 <div th:replace="~{xdm/include/footerNice :: footerNice}"></div>
 
@@ -211,10 +228,20 @@
 		    form.submit();
 		}
 		
-		document.getElementById("btnUele").onclick = function () {
-		    form.action = "/codegroup/CodegroupXdmUele";
-		    form.submit();
-		}
+// 		if(document.getElementById("btnUelete")){
+			document.getElementById("btnUelete").onclick = function () {
+				document.querySelector("#modalConfirmTitle").textContent = "확 인";
+				document.querySelector("#modalConfirmBody").textContent = "해당 데이터를 삭제하시겠습니까 ?";
+				document.querySelector("#btnModalUelete").style.display = '';
+				document.querySelector("#btnModalDelete").style.display = 'none';
+				$("#modalConfirm").modal("show");      	
+			}
+// 		}
+		
+// 		document.getElementById("btnModalUelete").onclick = function () {
+// 		    form.action = "/codegroup/CodegroupXdmUele";
+// 		    form.submit();
+// 		}
 		
 		
 		function checkSelectAll()  {

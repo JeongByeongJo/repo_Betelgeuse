@@ -17,6 +17,8 @@
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
+
+
   <!-- Vendor JS Files -->
   <script src="/xdm/template/NiceAdmin/assets/vendor/apexcharts/apexcharts.min.js"></script>
   <script src="/xdm/template/NiceAdmin/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -29,7 +31,30 @@
 
   <!-- Template Main JS File -->
   <script src="/xdm/template/NiceAdmin/assets/js/main.js"></script>
+	<script src="/xdm/template/NiceAdmin/assets/jquery/jquery-3.7.1.min.js"></script>
 
+<script type="text/javascript">
 
+$("#btnSignout").on("click", function(){
+	alert("d");
+	$.ajax({
+		async: true 
+		,cache: false
+		,type: "post"
+		,url: "/member/signoutXdmProc"
+		,data: {}
+		,success: function(response) {
+			if(response.rt == "success") {
+				location.href = "/member/signinXdmForm";
+			} else {
+				// by pass
+			}
+		}
+		,error : function(jqXHR, textStatus, errorThrown){
+			alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+		}
+	});
+});
+</script>
 
 </th:block>

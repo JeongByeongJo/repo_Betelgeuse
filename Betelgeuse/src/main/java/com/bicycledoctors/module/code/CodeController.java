@@ -21,7 +21,7 @@ public class CodeController {
 	@RequestMapping(value = "/code/CodeXdmList")
 	public String CodeXdmList(CodeVo vo, Model model) throws Exception{
 		
-		vo.setParamsPaging(codeService.selectOneCount());
+		vo.setParamsPaging(codeService.selectOneCount(vo));
 		
 		model.addAttribute("list", codeService.selectList(vo));
 		model.addAttribute("vo", vo);

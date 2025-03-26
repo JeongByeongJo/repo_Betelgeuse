@@ -102,4 +102,18 @@
 		where 1=1
 			and seq = #{seq}
 	</update>
+	
+	<select id="signinChk">
+		SELECT
+				seq
+				,userId
+			    ,userPassword
+			    ,userName
+			    ,delNy
+		    from
+		    	usercustomer
+		    where 1=1
+		    	and userId = #{userId}
+				<if test="userPassword != null and !userPassword.equals('')">AND userPassword = #{userPassword}</if>
+	</select>
 </mapper>

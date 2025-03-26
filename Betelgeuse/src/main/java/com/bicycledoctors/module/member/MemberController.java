@@ -1,11 +1,15 @@
 package com.bicycledoctors.module.member;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import jakarta.servlet.http.HttpSession;
 
 
 
@@ -17,7 +21,7 @@ public class MemberController {
 	
 	@RequestMapping(value = "/member/MemberXdmList")
 	public String MemberXdmList(MemberVo vo, Model model) {
-		vo.setParamsPaging(memberService.selectOneCount());
+		vo.setParamsPaging(memberService.selectOneCount(vo));
 		
 		model.addAttribute("list", memberService.selectList(vo));
 		model.addAttribute("vo", vo);
@@ -35,6 +39,35 @@ public class MemberController {
 		memberService.update(memberDto);
 		return "redirect:/member/MemberXdmList";
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/member/signinXdmProc")
+	public Map<String, Object> signinXdmProc(MemberDto dto, HttpSession httpSession) throws Exception {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		
+		Map<String, Object> rt = memberService.signinChk(dto);
+		if(rt != null) {
+			returnMap.put("rt", "success");
+		} else {
+			returnMap.put("rt", "fail");
+		}
+		return returnMap;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/member/signoutXdmProc")
+	public Map<String, Object> signoutXdmProc(HttpSession httpSession) throws Exception {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		returnMap.put("rt", "success");
+		return returnMap;
+	}
+	
+	@RequestMapping(value = "/member/signinXdmForm")
+	public String signinXdmForm() {
+		return "xdm/member/signinXdmForm";
+	}
+
+	
 	
 
 }
