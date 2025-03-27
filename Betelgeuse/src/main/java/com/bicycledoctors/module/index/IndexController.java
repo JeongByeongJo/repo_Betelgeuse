@@ -22,4 +22,9 @@ public class IndexController {
 	public String SignupUsrForm() {
 		return "usr/member/SignupUsrForm";
 	}
+	@RequestMapping(value = "/member/PasswordrecoveryUsrForm")
+	public String PasswordrecoveryUsrForm() {
+		return "usr/member/PasswordrecoveryUsrForm";
+	}
+	
 }

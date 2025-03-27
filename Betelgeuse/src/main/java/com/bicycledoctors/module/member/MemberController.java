@@ -45,12 +45,18 @@ public class MemberController {
 	public Map<String, Object> SigninXdmProc(MemberDto dto, HttpSession httpSession) throws Exception {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
-		Map<String, Object> rt = memberService.signinChk(dto);
-		if(rt != null) {
+		MemberDto rtMember = memberService.signinChk(dto);		
+		
+		if(rtMember != null) {
 			returnMap.put("rt", "success");
+			httpSession.setMaxInactiveInterval(60 * 30); 						// 60second * 30 = 30minute
+			httpSession.setAttribute("sessSeqXdm", rtMember.getSeq());
+			httpSession.setAttribute("sessIdXdm", rtMember.getUserId());
+			httpSession.setAttribute("sessNameXdm", rtMember.getUserName());
 		} else {
 			returnMap.put("rt", "fail");
 		}
+		
 		return returnMap;
 	}
 	
@@ -63,11 +69,26 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value = "/member/SigninXdmForm")
-	public String signinXdmForm() {
+	public String signinXdmForm(MemberVo vo, HttpSession httpSession) {
+		
 		return "xdm/member/signinXdmForm";
 	}
 	
 	
+	@ResponseBody
+	@RequestMapping(value = "/member/PswdfindXdmProc")
+	public Map<String, Object> PswdfindXdmProc(MemberDto dto, HttpSession httpSession) throws Exception {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		
+		MemberDto rt = memberService.pswdrecoveryChk(dto);
+		
+		if(rt != null) {
+			returnMap.put("rt", "success");
+		} else {
+			returnMap.put("rt", "fail");
+		}
+		return returnMap;
+	}
 
 	
 	

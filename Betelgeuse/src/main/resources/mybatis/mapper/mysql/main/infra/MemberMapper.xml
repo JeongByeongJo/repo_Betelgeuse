@@ -103,7 +103,7 @@
 			and seq = #{seq}
 	</update>
 	
-	<select id="signinChk">
+	<select id="signinChk" resultMap="resultMapObj">
 		SELECT
 				seq
 				,userId
@@ -115,5 +115,18 @@
 		    where 1=1
 		    	and userId = #{userId}
 				<if test="userPassword != null and !userPassword.equals('')">AND userPassword = #{userPassword}</if>
+	</select>
+	<select id="pswdrecoveryChk" resultMap="resultMapObj">
+		SELECT
+				seq
+				,userId
+			    ,userPassword
+			    ,userName
+			    ,userEmail
+			    ,delNy
+		    from
+		    	usercustomer
+		    where 1=1
+		    	and userEmail = #{userEmail}
 	</select>
 </mapper>

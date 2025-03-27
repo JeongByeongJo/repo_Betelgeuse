@@ -10,9 +10,11 @@ public interface MemberDao {
 	
 	public List<MemberDto> selectList(MemberVo vo);
 	public MemberDto selectOne(MemberDto memberDto);
+	public MemberDto selectOne(MemberVo membervo);
 	
 	public int update(MemberDto memberDto);
 	public int selectOneCount(MemberVo vo);
-	public Map<String, Object> signinChk(MemberDto memberDto);
+	public MemberDto signinChk(MemberDto memberDto);
+	public MemberDto pswdrecoveryChk(MemberDto memberDto);
 
 }
