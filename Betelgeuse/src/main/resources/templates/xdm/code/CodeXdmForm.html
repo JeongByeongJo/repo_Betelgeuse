@@ -129,37 +129,35 @@
     <script type="text/javascript">
     let seq = document.querySelector("input[name=cdSeq]");
     
-    var inputK = document.getElementById("cdName");
-    var inputEN = document.getElementById("cdNameEng");
-
-    inputK.addEventListener("input", updateValueK);
-    inputEN.addEventListener("input", updateValueEN);
-    
-    function updateValueK() {
-		let regExp = /^[A-Za-zㄱ-ㅎ가-힣0-9_]+$/
-    	if(!regExp.test(document.getElementById("cdName").value.trim())) {
-    		document.getElementById("cdName").classList.add("is-invalid");
-    		document.getElementById("name-invalid-feedback").innerText = "한영과 숫자만 입력해주세요";
-    		document.getElementById("btnSubmit").setAttribute("disabled", "");
-			return false;
+    $("#cdName").on("keyup", function(){
+    	let regExp = /^[A-Za-zㄱ-ㅎ가-힣0-9_]{2,}$/
+		$("#cdName").removeClass("is-invalid");
+		if(!regExp.test($("#cdName").val())) {
+			$("#cdName").removeClass("is-valid");
+			$("#cdName").addClass("is-invalid");
+			document.getElementById("name-invalid-feedback").innerText = "한영과 숫자만 입력해주세요";
+			document.getElementById("btnSubmit").setAttribute("disabled", "");
 		} else {
-    		document.getElementById("cdName").classList.remove("is-invalid");
+			$("#cdName").removeClass("is-invalid");
+			$("#cdName").addClass("is-valid");
 			document.getElementById("btnSubmit").removeAttribute("disabled", "");
 		}
-    }
-    
-    function updateValueEN() {
-		let regExp = /^[A-Za-z0-9_]+$/
-    	if(!regExp.test(document.getElementById("cdNameEng").value.trim())) {
-    		document.getElementById("cdNameEng").classList.add("is-invalid");
-    		document.getElementById("nameeng-invalid-feedback").innerText = "알파벳과 숫자만 입력해주세요";
-    		document.getElementById("btnSubmit").setAttribute("disabled", "");
-    		return false;
+	});
+    $("#cdNameEng").on("keyup", function(){
+    	let regExp = /^[A-Za-z0-9_]+$/
+		$("#cdNameEng").removeClass("is-invalid");
+		if(!regExp.test($("#cdNameEng").val())) {
+			$("#cdNameEng").removeClass("is-valid");
+			$("#cdNameEng").addClass("is-invalid");
+			document.getElementById("nameeng-invalid-feedback").innerText = "알파벳과 숫자만 입력해주세요";
+			document.getElementById("btnSubmit").setAttribute("disabled", "");
 		} else {
-			document.getElementById("cdNameEng").classList.remove("is-invalid");
+			$("#cdNameEng").removeClass("is-invalid");
+			$("#cdNameEng").addClass("is-valid");
 			document.getElementById("btnSubmit").removeAttribute("disabled", "");
 		}
-    }
+	});
+    
     
     function validationInst() {
 	    if(validationUpdt() == false) return false;

@@ -120,14 +120,13 @@
 	               	</tr>
 	                   <tr th:if="${!#lists.isEmpty(list)}" th:each ="list : ${list}">
 	                   <th><div class="checked"><input type="checkbox" class="form-check" name="eachChk" onclick='checkSelectAll()'></div></th>
-	                   <td th:text="${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
+	                   <td th:text = "${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
                        <td th:text = "${list.cdUseNy}"></td>
                        <td th:text = "${list.cdgSeq}"></td>                                                
                        <td th:text = "${list.cdgName}"></td>
                        <td th:text = "${list.cdSeq}"></td>
                        <td></td>
-<!--                        <td><a th:href="@{/code/CodeXdmMfom(cdSeq=${list.cdSeq})}" th:text="${list.cdName}"></a></td> -->
-						<td class="ifcgName align-middle fw-semi-bold"><a href="javascript:void(0);" th:text="${list.cdName}" th:attr="onclick=|goForm('${list.cdSeq}')|"></a></td>
+					   <td><a href="javascript:void(0);" th:text="${list.cdName}" th:attr="onclick=|goForm('${list.cdSeq}')|"></a></td>
                        <td th:text = "${list.cdNameEng}"></td>
                        <td>1</td>
                        <td></td>

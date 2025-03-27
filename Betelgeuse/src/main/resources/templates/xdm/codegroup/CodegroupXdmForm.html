@@ -162,40 +162,40 @@
 	}
 		
 		
-		document.getElementById("btnUelete").onclick = function () {
-			document.querySelector("#modalAlertTitle").textContent = "확 인";
-			document.querySelector("#modalConfirmBody").textContent = "해당 데이터를 삭제하시겠습니까 ?";
-			document.querySelector("#btnModalUelete").style.display = '';
-			document.querySelector("#btnModalDelete").style.display = 'none';
-			document.getElementById("modalConfirm").style.display = 'block';
-			$("#modalConfirm").modal("show");
-		}
-		document.getElementById("btnX").onclick = function() {
-			document.getElementById("modalConfirm").style.display = 'none';
-		}
-		document.getElementById("btnClose").onclick = function() {
-			document.getElementById("modalConfirm").style.display = 'none';
-		}
+	document.getElementById("btnUelete").onclick = function () {
+		document.querySelector("#modalAlertTitle").textContent = "확 인";
+		document.querySelector("#modalConfirmBody").textContent = "해당 데이터를 삭제하시겠습니까 ?";
+		document.querySelector("#btnModalUelete").style.display = '';
+		document.querySelector("#btnModalDelete").style.display = 'none';
+		document.getElementById("modalConfirm").style.display = 'block';
+		$("#modalConfirm").modal("show");
+	}
+	document.getElementById("btnX").onclick = function() {
+		document.getElementById("modalConfirm").style.display = 'none';
+	}
+	document.getElementById("btnClose").onclick = function() {
+		document.getElementById("modalConfirm").style.display = 'none';
+	}
 
-		document.getElementById("btnModalUelete").onclick = function () {
-			form.action = "/codegroup/CodegroupXdmUele";
-			form.submit();
+	document.getElementById("btnModalUelete").onclick = function () {
+		form.action = "/codegroup/CodegroupXdmUele";
+		form.submit();
+	}
+	
+	document.getElementById("closeModal").onclick = function() {
+		if(document.getElementById("cdgName").value.trim() == null || document.getElementById("cdgName").value.trim() == "") {
+			document.getElementById("cdgName").focus();
+			return false;
 		}
-		
-		document.getElementById("closeModal").onclick = function() {
-			if(document.getElementById("cdgName").value.trim() == null || document.getElementById("cdgName").value.trim() == "") {
-				document.getElementById("cdgName").focus();
-				return false;
-			}
-			if(document.getElementById("cdgNameEng").value.trim() == null || document.getElementById("cdgNameEng").value.trim() == "") {
-				document.getElementById("cdgNameEng").focus();
-				return false;
-			}
+		if(document.getElementById("cdgNameEng").value.trim() == null || document.getElementById("cdgNameEng").value.trim() == "") {
+			document.getElementById("cdgNameEng").focus();
+			return false;
 		}
-		
-		document.getElementById("savechanges").onclick = function() {
-			alert("savechanges");
-		}
+	}
+	
+	document.getElementById("savechanges").onclick = function() {
+		alert("savechanges");
+	}
 	</script>
 
 </body>

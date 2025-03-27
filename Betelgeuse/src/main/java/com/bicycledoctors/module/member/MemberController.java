@@ -41,8 +41,8 @@ public class MemberController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/member/signinXdmProc")
-	public Map<String, Object> signinXdmProc(MemberDto dto, HttpSession httpSession) throws Exception {
+	@RequestMapping(value = "/member/SigninXdmProc")
+	public Map<String, Object> SigninXdmProc(MemberDto dto, HttpSession httpSession) throws Exception {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
 		Map<String, Object> rt = memberService.signinChk(dto);
@@ -55,17 +55,19 @@ public class MemberController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/member/signoutXdmProc")
+	@RequestMapping(value = "/member/SignoutXdmProc")
 	public Map<String, Object> signoutXdmProc(HttpSession httpSession) throws Exception {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		returnMap.put("rt", "success");
 		return returnMap;
 	}
 	
-	@RequestMapping(value = "/member/signinXdmForm")
+	@RequestMapping(value = "/member/SigninXdmForm")
 	public String signinXdmForm() {
 		return "xdm/member/signinXdmForm";
 	}
+	
+	
 
 	
 	
