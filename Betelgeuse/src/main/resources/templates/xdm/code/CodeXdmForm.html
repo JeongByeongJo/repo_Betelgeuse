@@ -29,7 +29,7 @@
                 <input type="hidden" name="cdSeq" th:value="${item?.cdSeq}">	
                   <label for="codegroup_cdgSeq" class="form-label">코드그룹<sup>*</sup></label>
                   <select class="form-select" id="codegroup_cdgSeq" name="codegroup_cdgSeq" required>
-                    <option value="">선택하세요</option>
+<!--                     <option value="">선택하세요</option> -->
 	                <option th:each ="list : ${list}" th:value="${list.cdgSeq}" th:text="${list.cdgName}" th:selected="${list.cdgSeq == item?.codegroup_cdgSeq}"></option>                                              
                   </select>
                   <div class="invalid-feedback">
@@ -68,7 +68,7 @@
                 <div class="col-md-3" style="height: 100px;">
                   <label for="cdUseNy" class="form-label">사용여부<sup>*</sup></label>
                   <select class="form-select" id="cdUseNy" name="cdUseNy" th:value="${item?.cdUseNy}" required>
-                    <option value="">선택하세요</option>
+<!--                     <option value="">선택하세요</option> -->
                     <option value="1" th:selected="${item?.cdUseNy == 1}" th:text="사용"></option>
 					<option value="0" th:selected="${item?.cdUseNy == 0}" th:text="미사용"></option>
                   </select>
@@ -87,7 +87,7 @@
                 </div>
                 <div class="col-md-6"></div>
                 <div class="col-md-6">
-                  <a href="/code/CodeXdmList" class="btn btn-outline-dark"><i class="bi bi-blockquote-right"></i></a>
+                  <a href="/code/codeXdmList" class="btn btn-outline-dark"><i class="bi bi-blockquote-right"></i></a>
                   <button class="btn btn-danger">X</button>
                   <button type="button" class="btn btn-danger" id="btnUelete"><i class="bi bi-trash"></i></button>
                 </div>
@@ -187,11 +187,11 @@
 	document.getElementById("btnSubmit").onclick = function () {
 		if(seq.value == "0" || seq.value == "") {
 			if(validationInst() == false) return false;
-			form.action = "/code/CodeXdmInst";
+			form.action = "/code/codeXdmInst";
 			form.submit();
 		} else {
 			if(validationUpdt() == false) return false;
-			form.action = "/code/CodeXdmUpdt";
+			form.action = "/code/codeXdmUpdt";
 			form.submit();
 		}
 	}
@@ -205,7 +205,7 @@
 	}
 
 	document.getElementById("btnModalUelete").onclick = function () {
-		form.action = "/code/CodeXdmUele";
+		form.action = "/code/codeXdmUele";
 		form.submit();
 	}
 	

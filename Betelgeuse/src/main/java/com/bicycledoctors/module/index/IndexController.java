@@ -6,7 +6,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class IndexController {
 
-	@RequestMapping(value = "/index/Home")
+	@RequestMapping(value = "/xdm/index")
+	public String xdmIndex() {
+		return "xdm/index/index";
+	}
+	@RequestMapping(value = "/index")
 	public String Home() {
 		return "usr/index/home";
 	}
@@ -18,12 +22,12 @@ public class IndexController {
 	public String signinUsrForm() {
 		return "usr/member/SigninUsrForm";
 	}
-	@RequestMapping(value = "/member/SignupUsrForm")
-	public String SignupUsrForm() {
+	@RequestMapping(value = "/member/signupUsrForm")
+	public String signupUsrForm() {
 		return "usr/member/SignupUsrForm";
 	}
-	@RequestMapping(value = "/member/PasswordrecoveryUsrForm")
-	public String PasswordrecoveryUsrForm() {
+	@RequestMapping(value = "/member/passwordrecoveryUsrForm")
+	public String passwordrecoveryUsrForm() {
 		return "usr/member/PasswordrecoveryUsrForm";
 	}
 	

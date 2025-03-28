@@ -48,7 +48,7 @@
 
           <!-- Logo -->
           <header class="navbar px-0 pb-4 mt-n2 mt-sm-0 mb-2 mb-md-3 mb-lg-4">
-            <a class="navbar-brand pt-0" href="/index/Home">
+            <a class="navbar-brand pt-0" href="/index">
               <span class="d-flex flex-shrink-0 text-primary rtl-flip me-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="35" height="34">
                 <path d="M34.5 16.894v10.731c0 3.506-2.869 6.375-6.375 6.375H17.5h-.85C7.725 33.575.5 26.138.5 17c0-9.35 7.65-17 17-17s17 7.544 17 16.894z" fill="currentColor"/>
@@ -67,7 +67,7 @@
           <h1 class="h2 mt-auto">로 그 인</h1>
           <div class="nav fs-sm mb-4">
             계정이 없으십니까?
-            <a class="nav-link text-decoration-underline p-0 ms-2" href="/member/SignupUsrForm">계정만들기</a>
+            <a class="nav-link text-decoration-underline p-0 ms-2" href="/member/signupUsrForm">계정만들기</a>
           </div>
 
           <!-- Form -->
@@ -93,7 +93,7 @@
                 <label for="rememberId" class="form-check-label">ID 기억하기</label>
               </div>
               <div class="nav">
-                <a class="nav-link animate-underline p-0" href="/member/PasswordrecoveryUsrForm">
+                <a class="nav-link animate-underline p-0" href="/member/passwordrecoveryUsrForm">
                   <span class="animate-target">비밀번호 찾기</span>
                 </a>
               </div>
@@ -172,7 +172,7 @@ function loginLogic (){
 		,cache: false
 		,type: "post"
 		/* ,dataType:"json" */
-		,url: "/member/SigninXdmProc"
+		,url: "/member/signinUsrProc"
 		/* ,data : $("#formLogin").serialize() */
 		,data : { "userId" : $("#userId").val(), "userPassword" : $("#userPassword").val()}
 		,success: function(response) {

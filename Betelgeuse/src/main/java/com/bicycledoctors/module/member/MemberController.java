@@ -19,8 +19,8 @@ public class MemberController {
 	@Autowired
 	MemberService memberService;
 	
-	@RequestMapping(value = "/member/MemberXdmList")
-	public String MemberXdmList(MemberVo vo, Model model) {
+	@RequestMapping(value = "/member/memberXdmList")
+	public String memberXdmList(MemberVo vo, Model model) {
 		vo.setParamsPaging(memberService.selectOneCount(vo));
 		
 		model.addAttribute("list", memberService.selectList(vo));
@@ -28,21 +28,21 @@ public class MemberController {
 		return "xdm/member/MemberXdmList";
 	}
 	
-	@RequestMapping(value = "/member/MemberXdmMfom")
-	public String MemberXdmMfom(Model model, MemberDto memberDto) {
+	@RequestMapping(value = "/member/memberXdmMfom")
+	public String memberXdmMfom(Model model, MemberDto memberDto) {
 		model.addAttribute("item", memberService.selectOne(memberDto));
 		return "xdm/member/MemberXdmMfom";
 	}
 	
-	@RequestMapping(value = "/member/MemberXdmUpdt")
-	public String requestMethodName(MemberDto memberDto) {
+	@RequestMapping(value = "/member/memberXdmUpdt")
+	public String memberXdmUpdt(MemberDto memberDto) {
 		memberService.update(memberDto);
-		return "redirect:/member/MemberXdmList";
+		return "redirect:/member/memberXdmList";
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/member/SigninXdmProc")
-	public Map<String, Object> SigninXdmProc(MemberDto dto, HttpSession httpSession) throws Exception {
+	@RequestMapping(value = "/member/signinXdmProc")
+	public Map<String, Object> signinXdmProc(MemberDto dto, HttpSession httpSession) throws Exception {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
 		MemberDto rtMember = memberService.signinChk(dto);		
@@ -59,25 +59,64 @@ public class MemberController {
 		
 		return returnMap;
 	}
+	@ResponseBody
+	@RequestMapping(value = "/member/signinUsrProc")
+	public Map<String, Object> signinUsrProc(MemberDto dto, HttpSession httpSession) throws Exception {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		
+		MemberDto rtMember = memberService.signinChk(dto);		
+		
+		if(rtMember != null) {
+			returnMap.put("rt", "success");
+			httpSession.setMaxInactiveInterval(60 * 30); 						// 60second * 30 = 30minute
+			httpSession.setAttribute("sessSeqUsr", rtMember.getSeq());
+			httpSession.setAttribute("sessIdUsr", rtMember.getUserId());
+			httpSession.setAttribute("sessNameUsr", rtMember.getUserName());
+		} else {
+			returnMap.put("rt", "fail");
+		}
+		
+		return returnMap;
+	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/member/SignoutXdmProc")
+	@RequestMapping(value = "/member/signoutXdmProc")
 	public Map<String, Object> signoutXdmProc(HttpSession httpSession) throws Exception {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
+		httpSession.setAttribute("sessSeqXdm", null);
+		httpSession.setAttribute("sessIdXdm", null);
+		httpSession.setAttribute("sessNameXdm", null);
+		returnMap.put("rt", "success");
+		return returnMap;
+	}
+	@ResponseBody
+	@RequestMapping(value = "/member/signoutUsrProc")
+	public Map<String, Object> signoutUsrProc(HttpSession httpSession) throws Exception {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		httpSession.setAttribute("sessSeqUsr", null);
+		httpSession.setAttribute("sessIdUsr", null);
+		httpSession.setAttribute("sessNameUsr", null);
 		returnMap.put("rt", "success");
 		return returnMap;
 	}
 	
-	@RequestMapping(value = "/member/SigninXdmForm")
-	public String signinXdmForm(MemberVo vo, HttpSession httpSession) {
-		
-		return "xdm/member/signinXdmForm";
+	@RequestMapping(value = "/member/signinXdmForm")
+	public String signinXdmForm(MemberVo vo, HttpSession httpSession) {		
+		return "xdm/member/SigninXdmForm";
+	}
+	@RequestMapping(value = "/member/signinUsrForm")
+	public String signinUsrForm(MemberVo vo, HttpSession httpSession) {		
+		return "usr/member/SigninUsrForm";
+	}
+	@RequestMapping(value = "/member/userInfosettingUsrForm")
+	public String userInfosettingUsrForm(MemberVo vo, HttpSession httpSession) {		
+		return "usr/member/account-settings";
 	}
 	
 	
 	@ResponseBody
-	@RequestMapping(value = "/member/PswdfindXdmProc")
-	public Map<String, Object> PswdfindXdmProc(MemberDto dto, HttpSession httpSession) throws Exception {
+	@RequestMapping(value = "/member/pswdfindXdmProc")
+	public Map<String, Object> pswdfindXdmProc(MemberDto dto, HttpSession httpSession) throws Exception {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
 		MemberDto rt = memberService.pswdrecoveryChk(dto);

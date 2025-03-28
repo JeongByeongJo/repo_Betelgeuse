@@ -25,7 +25,7 @@
               <!-- Custom Styled Validation -->
               <form class="row g-3" method="post" id="form" name="form">
                 <div class="col-md-3" style="height: 100px;">
-               		<input type="hidden" name="cdgSeq" th:value="${item?.cdgSeq}">	
+               		<input type="hidden" name="cdgSeq" th:value="${item?.cdgSeq}">
                 	<label for="cdgcode" class="form-label">코드그룹 코드 <sup>*</sup></label>
                 	<input type="text" class="form-control" id="cdgcode" value="" placeholder="자동생성" disabled th:value="${item?.cdgSeq}">
                 </div>
@@ -52,7 +52,8 @@
 					<option value="0" th:selected="${item?.cdgUseNy == 0}" th:text="미사용"></option>
                   </select>
                 </div>
-                
+<!--                 <input type="hidden" name="cdgInstDate" id="cdgInstDate"> -->
+<!--                 <input type="hidden" name="cdgUpdtDate" id="cdgUpdtDate"> -->
                 <div class="col-md-3">
                   <label for="validationCustom08" class="form-label">순서<sup>*</sup></label>
                   <input type="text" class="form-control" id="validationCustom08">
@@ -67,7 +68,7 @@
                 </div>
                 <div class="col-md-6"></div>
                 <div class="col-md-6">
-                  <a href="/codegroup/CodegroupXdmList" class="btn btn-outline-dark"><i class="bi bi-blockquote-right"></i></a>
+                  <a href="/codegroup/codegroupXdmList" class="btn btn-outline-dark"><i class="bi bi-blockquote-right"></i></a>
                   <button class="btn btn-danger">X</button>
                   <button type="button" class="btn btn-danger" id="btnUelete" ><i class="bi bi-trash"></i></button>
                 </div>
@@ -146,11 +147,12 @@
 	document.getElementById("btnSubmit").onclick = function () {
 		if(seq.value == "0" || seq.value == "") {
 			if(validationInst() == false) return false;
-			form.action = "/codegroup/CodegroupXdmInst";
+			form.action = "/codegroup/codegroupXdmInst";
 			form.submit();
 		} else {
 			if(validationUpdt() == false) return false;
-			form.action = "/codegroup/CodegroupXdmUpdt";
+// 			alert(new Date());
+			form.action = "/codegroup/codegroupXdmUpdt";
 			form.submit();
 		}
 	}
@@ -170,15 +172,9 @@
 		document.getElementById("modalConfirm").style.display = 'block';
 		$("#modalConfirm").modal("show");
 	}
-	document.getElementById("btnX").onclick = function() {
-		document.getElementById("modalConfirm").style.display = 'none';
-	}
-	document.getElementById("btnClose").onclick = function() {
-		document.getElementById("modalConfirm").style.display = 'none';
-	}
 
 	document.getElementById("btnModalUelete").onclick = function () {
-		form.action = "/codegroup/CodegroupXdmUele";
+		form.action = "/codegroup/codegroupXdmUele";
 		form.submit();
 	}
 	

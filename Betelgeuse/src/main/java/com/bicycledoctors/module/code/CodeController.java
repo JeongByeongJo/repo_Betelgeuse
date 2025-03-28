@@ -18,8 +18,8 @@ public class CodeController {
 	@Autowired
 	CodeGroupService codeGroupService;
 
-	@RequestMapping(value = "/code/CodeXdmList")
-	public String CodeXdmList(CodeVo vo, Model model) throws Exception{
+	@RequestMapping(value = "/code/codeXdmList")
+	public String codeXdmList(CodeVo vo, Model model) throws Exception{
 		
 		vo.setParamsPaging(codeService.selectOneCount(vo));
 		
@@ -29,8 +29,8 @@ public class CodeController {
 		return "xdm/code/CodeXdmList";
 	}
 	
-	@RequestMapping(value = "/code/CodeXdmForm")
-	public String CodeXdmForm(@ModelAttribute("vo") CodeVo vo, Model model) {
+	@RequestMapping(value = "/code/codeXdmForm")
+	public String codeXdmForm(@ModelAttribute("vo") CodeVo vo, Model model) {
 //		model.addAttribute("list", codeService.selectGroupList());
 		model.addAttribute("list", codeGroupService.selectListWithoutPaging());
 		
@@ -44,28 +44,28 @@ public class CodeController {
 		return "xdm/code/CodeXdmForm";
 	}
 	
-	@RequestMapping(value = "/code/CodeXdmInst")
-	public String CodeXdmInst(CodeDto codeDto) {
+	@RequestMapping(value = "/code/codeXdmInst")
+	public String codeXdmInst(CodeDto codeDto) {
 		codeService.insert(codeDto);
 		return "redirect:/code/CodeXdmList";
 	}
 	
-	@RequestMapping(value = "/code/CodeXdmMfom")
-	public String CodeXdmMfom(Model model, CodeDto codeDto) {
+	@RequestMapping(value = "/code/codeXdmMfom")
+	public String codeXdmMfom(Model model, CodeDto codeDto) {
 //		model.addAttribute("list", codeService.selectGroupList());
 		model.addAttribute("list", codeGroupService.selectListWithoutPaging());
 		model.addAttribute("item", codeService.selectOne(codeDto));
 		return "xdm/code/CodeXdmMfom";
 	}
 	
-	@RequestMapping(value = "/code/CodeXdmUpdt")
-	public String CodeXdmUpdt(CodeDto codeDto) {
+	@RequestMapping(value = "/code/codeXdmUpdt")
+	public String codeXdmUpdt(CodeDto codeDto) {
 		codeService.update(codeDto);
-		return "redirect:/code/CodeXdmList";
+		return "redirect:/code/codeXdmList";
 	}
-	@RequestMapping(value = "/code/CodeXdmUele")
-	public String CodeXdmUele(CodeDto codeDto) {
+	@RequestMapping(value = "/code/codeXdmUele")
+	public String codeXdmUele(CodeDto codeDto) {
 		codeService.uelete(codeDto);
-		return "redirect:/code/CodeXdmList";
+		return "redirect:/code/codeXdmList";
 	}
 }

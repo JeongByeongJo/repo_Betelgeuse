@@ -13,8 +13,11 @@ public class CodeGroupController {
 	@Autowired
 	CodeGroupService codeGroupService;
 	
-	@RequestMapping(value = "/codegroup/CodegroupXdmList")
-	public String CodegroupXdmList(CodeGroupVo vo, Model model) throws Exception {
+	@RequestMapping(value = "/codegroup/codegroupXdmList")
+	public String codegroupXdmList(CodeGroupVo vo, Model model) throws Exception {
+		
+		System.out.println("vo.getShDateStart():" + vo.getShDateStart());
+		System.out.println("vo.getShDateEnd()" + vo.getShDateEnd());
 		
 		vo.setParamsPaging(codeGroupService.selectOneCount(vo));
 		
@@ -24,8 +27,8 @@ public class CodeGroupController {
 		return "xdm/codegroup/CodegroupXdmList";
 	}
 	
-	@RequestMapping(value = "/codegroup/CodegroupXdmForm")
-	public String CodegroupXdmForm(@ModelAttribute("vo") CodeGroupVo vo, Model model) {
+	@RequestMapping(value = "/codegroup/codegroupXdmForm")
+	public String codegroupXdmForm(@ModelAttribute("vo") CodeGroupVo vo, Model model) {
 		if (vo.getCdgSeq().equals("0") || vo.getCdgSeq().equals("")) {
 //			insert mode
 		} else {
@@ -36,28 +39,28 @@ public class CodeGroupController {
 		return "xdm/codegroup/CodegroupXdmForm";
 	}
 	
-	@RequestMapping(value = "/codegroup/CodegroupXdmMfom")
-	public String CodegroupXdmMfom(Model model, CodeGroupDto codeGroupDto) {
+	@RequestMapping(value = "/codegroup/codegroupXdmMfom")
+	public String codegroupXdmMfom(Model model, CodeGroupDto codeGroupDto) {
 		model.addAttribute("item", codeGroupService.selectOne(codeGroupDto));
 		return "xdm/codegroup/CodegroupXdmMfom";
 	}
 	
-	@RequestMapping(value = "/codegroup/CodegroupXdmInst")
-	public String CodegroupXdmInst(CodeGroupDto codeGroupDto) {
+	@RequestMapping(value = "/codegroup/codegroupXdmInst")
+	public String codegroupXdmInst(CodeGroupDto codeGroupDto) {
 		codeGroupService.insert(codeGroupDto);
-		return "redirect:/codegroup/CodegroupXdmList";
+		return "redirect:/codegroup/codegroupXdmList";
 	}
 	
-	@RequestMapping(value = "/codegroup/CodegroupXdmUpdt")
-	public String CodegroupXdmUpdt(CodeGroupDto codeGroupDto) {
+	@RequestMapping(value = "/codegroup/codegroupXdmUpdt")
+	public String codegroupXdmUpdt(CodeGroupDto codeGroupDto) {
 		codeGroupService.update(codeGroupDto);
-		return "redirect:/codegroup/CodegroupXdmList";
+		return "redirect:/codegroup/codegroupXdmList";
 	}
 	
-	@RequestMapping(value = "/codegroup/CodegroupXdmUele")
-	public String CodegroupXdmUele(CodeGroupDto codeGroupDto) {
+	@RequestMapping(value = "/codegroup/codegroupXdmUele")
+	public String codegroupXdmUele(CodeGroupDto codeGroupDto) {
 		codeGroupService.uelete(codeGroupDto);
-		return "redirect:/codegroup/CodegroupXdmList";
+		return "redirect:/codegroup/codegroupXdmList";
 	}
 
 }

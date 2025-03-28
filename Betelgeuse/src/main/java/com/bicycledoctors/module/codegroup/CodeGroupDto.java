@@ -6,6 +6,8 @@ public class CodeGroupDto {
 	private String cdgNameEng;
 	private Integer cdgUseNy;
 	private Integer cdgDelNy;
+	private String cdgInstDate;
+	private String cdgUpdtDate;
 	private String cdgDesc;
 	private String xcdSeqCount;
 //	-----
@@ -50,6 +52,18 @@ public class CodeGroupDto {
 	}
 	public void setCdgNameEng(String cdgNameEng) {
 		this.cdgNameEng = cdgNameEng;
+	}
+	public String getCdgInstDate() {
+		return cdgInstDate;
+	}
+	public void setCdgInstDate(String cdgInstDate) {
+		this.cdgInstDate = cdgInstDate;
+	}
+	public String getCdgUpdtDate() {
+		return cdgUpdtDate;
+	}
+	public void setCdgUpdtDate(String cdgUpdtDate) {
+		this.cdgUpdtDate = cdgUpdtDate;
 	}
 	
 	

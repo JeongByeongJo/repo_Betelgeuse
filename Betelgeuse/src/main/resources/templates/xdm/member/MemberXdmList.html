@@ -120,7 +120,7 @@
 	                   <th><div class="checked"><input type="checkbox" class="form-check" name="eachChk" onclick='checkSelectAll()'></div></th>
 	                   <td th:text="${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
                        <td th:text = "${@codeService.selectOneCachedCode(list.userCate)}"></td>
-                       <td><a th:href="@{/member/MemberXdmMfom(seq=${list.seq})}" th:text="${list.userId}"></a></td>
+                       <td><a th:href="@{/member/memberXdmMfom(seq=${list.seq})}" th:text="${list.userId}"></a></td>
                        <td th:text = "${list.userName}"></td>
                        <td th:text = "${@codeService.selectOneCachedCode(list.userGender)}"></td>
                        <td th:text = "${list.userTel}"></td>
@@ -180,7 +180,7 @@
 		let form = document.querySelector("form[name=formList]");
 		
 		document.getElementById("btnSearch").onclick = function () {
-			form.action = "/member/MemberXdmList";
+			form.action = "/member/memberXdmList";
 			form.submit();
 		};
 		document.getElementById("btnReset").onclick = function () {
@@ -188,18 +188,18 @@
 			document.getElementById("shUseNy").value = null;
 			document.getElementById("shOption").value = null;
 			document.getElementById("shValue").value = null;
-			form.action = "/member/MemberXdmList";
+			form.action = "/member/memberXdmList";
 			form.submit();
 		};
 		
 		goList = function (thisPage) {
 		    document.querySelector("input[name=thisPage]").value = thisPage;
-		    form.action = "/member/MemberXdmList";
+		    form.action = "/member/memberXdmList";
 		    form.submit();
 		}
 		document.getElementById("changeRowNum").onchange = function () {
 		    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
-		    form.action = "/member/MemberXdmList";
+		    form.action = "/member/memberXdmList";
 		    form.submit();
 		}
 		

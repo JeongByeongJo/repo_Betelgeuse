@@ -24,7 +24,7 @@
               <h1 class="card-title" style="height: 100px;" >기본정보</h1>
 
               <!-- Custom Styled Validation -->
-              <form class="row g-3 needs-validation" action="/member/MemberXdmUpdt" method="post" id="form" novalidate>
+              <form class="row g-3 needs-validation" action="/member/memberXdmUpdt" method="post" id="form" novalidate>
                 <div class="col-md-3" style="height: 100px;">
                 <input type="hidden" name="seq" th:value="${item?.seq}">
                   <label for="userId" class="form-label">ID<sup>*</sup></label>
@@ -101,7 +101,7 @@
                   </select>
                 </div>
                 <div class="col-md-6">
-                  <a href="/member/MemberXdmList" class="btn btn-outline-dark"><i class="bi bi-blockquote-right"></i></a></div>
+                  <a href="/member/memberXdmList" class="btn btn-outline-dark"><i class="bi bi-blockquote-right"></i></a></div>
                 <div class="col-md-6">
                   <div style="display: flex;justify-content: end;"><button type="button" class="btn btn-primary" id="btnsave"><i class="bi bi-server"></i></button></div>
                 </div>

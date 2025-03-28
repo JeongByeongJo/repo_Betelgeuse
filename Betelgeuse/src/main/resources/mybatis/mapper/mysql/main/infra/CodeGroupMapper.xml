@@ -10,12 +10,12 @@
 	    where 1=1
 	    <if test="shUseNy != null and !shUseNy.equals('')">AND a.cdgUseNy = #{shUseNy}</if>
         <if test="shDelNy != null and !shDelNy.equals('')">AND a.cdgDelNy = #{shDelNy}</if>
-<!-- 				
+				
 				<choose>
-					<when test="shOptionDate == 1">AND a.regDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when>
-					<when test="shOptionDate == 2">AND a.modDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+<!-- 					<when test="shOptionDate == 1">AND a.cdgInstDate BETWEEN #{shDateStart} AND #{shDateEnd}</when> -->
+<!-- 					<when test="shOptionDate == 2">AND a.cdgUpdtDate BETWEEN #{shDateStart} AND #{shDateEnd}</when> -->
 				</choose>
- -->				
+				
         <choose>
             <when test="shOption == 1">AND a.cdgSeq = #{shValue}</when>
             <when test="shOption == 2">AND a.cdgName LIKE CONCAT('%',#{shValue},'%')</when>
@@ -37,6 +37,8 @@
 			,(select count(aa.codegroup_cdgSeq) from code aa where 1 = 1 and aa.cdDelNy = 0 and aa.codegroup_cdgSeq = a.cdgSeq) as xcdSeqCount
 			,a.cdgUseNy
 			,a.cdgDelNy
+			,a.cdgInstDate
+			,a.cdgUpdtDate
 			,a.cdgDesc
 		<include refid = "selectCommon"></include>	
 		order by a.cdgSeq desc
@@ -63,6 +65,8 @@
 			,cdgNameEng
 			,cdgUseNy
 			,cdgDelNy
+			,cdgInstDate
+			,cdgUpdtDate
 			,cdgDesc
 		from
 			codegroup
@@ -75,11 +79,13 @@
 			cdgName
 			,cdgNameEng
 			,cdgUseNy
+			,cdgInstDate
 			,cdgDesc
 		) values (
 			#{cdgName}
 			,#{cdgNameEng}
 			,#{cdgUseNy}
+			,CURRENT_TIMESTAMP
 			,#{cdgDesc}
 		)
 		<selectKey resultType="String" keyProperty="cdgSeq" order="AFTER">
@@ -92,6 +98,7 @@
 			cdgName = #{cdgName}
 			,cdgNameEng = #{cdgNameEng}
 			,cdgUseNy = #{cdgUseNy}
+			,cdgUpdtDate = CURRENT_TIMESTAMP
 			,cdgDesc = #{cdgDesc}
 		where
 			cdgSeq = #{cdgSeq}

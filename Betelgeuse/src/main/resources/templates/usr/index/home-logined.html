@@ -193,7 +193,7 @@
               <i class="fi-user animate-target"></i>
             </a>
             <ul class="dropdown-menu dropdown-menu-end" style="--fn-dropdown-spacer: .5rem">
-              <li><span class="h6 dropdown-header">[[${session.sessNameXdm}]]</span></li>
+              <li><span class="h6 dropdown-header">[[${session.sessNameUsr}]]</span></li>
               <li>
                 <a class="dropdown-item" href="account-profile.html">
                   <i class="fi-user opacity-75 me-2"></i>
@@ -225,7 +225,7 @@
                 </a>
               </li>
               <li>
-                <a class="dropdown-item" href="account-settings.html">
+                <a class="dropdown-item" href="/member/userInfosettingUsrForm">
                   <i class="fi-settings opacity-75 me-2"></i>
                   계정설정
                 </a>
@@ -537,11 +537,11 @@
 			async: true 
 			,cache: false
 			,type: "post"
-			,url: "/member/SignoutXdmProc"
+			,url: "/member/signoutUsrProc"
 			,data: {}
 			,success: function(response) {
 				if(response.rt == "success") {
-					location.href = "/member/SigninUsrForm";
+					location.href = "/member/signinUsrForm";
 				} else {
 					// by pass
 				}

@@ -207,13 +207,13 @@
 
 		goForm = function (keyValue) {
 		    seq.value = keyValue;
-		    form.action = "/code/CodeXdmForm";
+		    form.action = "/code/codeXdmForm";
 		    form.submit();
 		}
 		
 		
 		document.getElementById("btnSearch").onclick = function () {
-			form.action = "/code/CodeXdmList";
+			form.action = "/code/codeXdmList";
 			form.submit();
 		};
 		document.getElementById("btnReset").onclick = function () {
@@ -221,18 +221,18 @@
 			document.getElementById("shUseNy").value = null;
 			document.getElementById("shOption").value = null;
 			document.getElementById("shValue").value = null;
-			form.action = "/code/CodeXdmList";
+			form.action = "/code/codeXdmList";
 			form.submit();
 		};
 		
 		goList = function (thisPage) {
 		    document.querySelector("input[name=thisPage]").value = thisPage;
-		    form.action = "/code/CodeXdmList";
+		    form.action = "/code/codeXdmList";
 		    form.submit();
 		}
 		document.getElementById("changeRowNum").onchange = function () {
 		    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
-		    form.action = "/code/CodeXdmList";
+		    form.action = "/code/codeXdmList";
 		    form.submit();
 		}
 		
