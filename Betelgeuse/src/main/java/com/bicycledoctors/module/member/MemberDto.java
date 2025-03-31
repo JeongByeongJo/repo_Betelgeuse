@@ -18,6 +18,8 @@ public class MemberDto {
 	private Integer noshow;
 	private Integer isBlack;
 	private Integer delNy;
+	private String userInstDate;
+	private String userUpdtDate;
 //	-----
 	public String getSeq() {
 		return seq;
@@ -120,6 +122,18 @@ public class MemberDto {
 	}
 	public void setUserCate(String userCate) {
 		this.userCate = userCate;
+	}
+	public String getUserInstDate() {
+		return userInstDate;
+	}
+	public void setUserInstDate(String userInstDate) {
+		this.userInstDate = userInstDate;
+	}
+	public String getUserUpdtDate() {
+		return userUpdtDate;
+	}
+	public void setUserUpdtDate(String userUpdtDate) {
+		this.userUpdtDate = userUpdtDate;
 	}
 	
 }

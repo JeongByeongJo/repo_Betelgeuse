@@ -48,13 +48,13 @@
                   </div>
             </div>
             <div class="col-md-2">
-<!--                 <input type="text" id="shDateStart" name="shDateStart" th:value="${#strings.substring(vo.shDateStart, 0, 10)}" placeholder="시작일" class="form-control form-control-sm" autocomplete="off"> -->
+                <input type="text" id="shDateStart" name="shDateStart" th:value="${#strings.substring(vo.shDateStart, 0, 10)}" placeholder="시작일" class="form-control form-control-sm" autocomplete="off">
                 <div class="invalid-feedback">
                   코드를 입력해주세요.
                 </div>
             </div>
             <div class="col-md-2">
-<!--                 <input type="text" id="shDateEnd" name="shDateEnd" th:value="${#strings.substring(vo.shDateEnd, 0, 10)}" placeholder="종료일" class="form-control form-control-sm" autocomplete="off"> -->
+                <input type="text" id="shDateEnd" name="shDateEnd" th:value="${#strings.substring(vo.shDateEnd, 0, 10)}" placeholder="종료일" class="form-control form-control-sm" autocomplete="off">
                 <div class="invalid-feedback">
                   코드를 입력해주세요.
                 </div>
@@ -88,11 +88,11 @@
         <div class="col-lg-12">
         <input type="hidden" name="thisPage" th:value="${vo.thisPage}" default="1"/>
 		<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${vo.rowNumToShow}"/>
-          <div class="card" >
+          <div class="card">
             <div class="card-body">
             <input type="hidden" name="cdSeq">
             <div th:replace="~{xdm/include/totalAndRowNum :: totalAndRowNum}"></div>
-			</div>
+			
 
               <!-- Table with stripped rows -->
               <table class="table datatable" style="text-align: center;">
@@ -126,11 +126,11 @@
                        <td th:text = "${list.cdgName}"></td>
                        <td th:text = "${list.cdSeq}"></td>
                        <td></td>
-					   <td><a href="javascript:void(0);" th:text="${list.cdName}" th:attr="onclick=|goForm('${list.cdSeq}')|"></a></td>
+					   <td><a href = "javascript:void(0);" th:text="${list.cdName}" th:attr="onclick=|goForm('${list.cdSeq}')|"></a></td>
                        <td th:text = "${list.cdNameEng}"></td>
                        <td>1</td>
-                       <td></td>
-                       <td></td>                                              
+                       <td th:text = "${list.cdInstDate}"></td>
+                       <td th:text = "${list.cdUpdtDate}"></td>                                              
 	                   </tr>
                   </tbody>
                   <tfoot>
@@ -171,6 +171,7 @@
                   <button type="button" id="btnForm" class="btn btn-primary"><i class="bi bi-plus-lg"></i></button>
                 </div>
                 </div>
+                </div>
             </div>
           </div>    
        </form>
@@ -200,6 +201,30 @@
 		let form = document.querySelector("form[name=formList]");
 		let seq = document.querySelector("input[name=cdSeq]");
 		
+		$.datetimepicker.setLocale('ko');
+		$(window).on("load", function () {
+			$(function(){
+				 $('#shDateStart').datetimepicker({
+				  format:'Y-m-d',
+				  onShow:function( ct ){
+				   this.setOptions({
+				    maxDate:$('#shDateEnd').val()?$('#shDateEnd').val():false
+				   })
+				  },
+				  timepicker:false
+				 });
+				 $('#shDateEnd').datetimepicker({
+				  format:'Y-m-d',
+				  onShow:function( ct ){
+				   this.setOptions({
+				    minDate:$('#shDateStart').val()?$('#shDateStart').val():false
+				   })
+				  },
+				  timepicker:false
+				 });
+			});
+	    });
+		
 		document.getElementById("btnForm").onclick = function () {
 		    goForm(0);
 		}
@@ -217,12 +242,7 @@
 			form.submit();
 		};
 		document.getElementById("btnReset").onclick = function () {
-			document.getElementById("shDelNy").value = null;
-			document.getElementById("shUseNy").value = null;
-			document.getElementById("shOption").value = null;
-			document.getElementById("shValue").value = null;
-			form.action = "/code/codeXdmList";
-			form.submit();
+			location = "/code/codeXdmList";
 		};
 		
 		goList = function (thisPage) {

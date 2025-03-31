@@ -11,6 +11,8 @@ public class CodeDto {
 	private String cdgName;
 	private Integer cdUseNy;
 	private Integer cdDelNy;
+	private String cdInstDate;
+	private String cdUpdtDate;
 	private String cdDesc;
 	private String codegroup_cdgSeq;
 	
@@ -77,6 +79,18 @@ public class CodeDto {
 	}
 	public static void setCachedCodeArrayList(List<CodeDto> cachedCodeArrayList) {
 		CodeDto.cachedCodeArrayList = cachedCodeArrayList;
+	}
+	public String getCdInstDate() {
+		return cdInstDate;
+	}
+	public void setCdInstDate(String cdInstDate) {
+		this.cdInstDate = cdInstDate;
+	}
+	public String getCdUpdtDate() {
+		return cdUpdtDate;
+	}
+	public void setCdUpdtDate(String cdUpdtDate) {
+		this.cdUpdtDate = cdUpdtDate;
 	}
 	
 	

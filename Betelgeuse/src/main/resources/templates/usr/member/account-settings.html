@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="light" data-pwa="true">
+<html lang="en" data-bs-theme="light" data-pwa="true" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
 
@@ -187,7 +187,7 @@
               <img src="/usr/template/Finder/assets/img/account/avatar-sm.jpg" class="hover-effect-target position-absolute top-0 start-0 w-100 h-100 object-fit-cover" alt="Avatar">
             </a>
             <ul class="dropdown-menu dropdown-menu-end" style="--fn-dropdown-spacer: .5rem">
-              <li><span class="h6 dropdown-header">Michael Williams</span></li>
+              <li><span class="h6 dropdown-header">[[${session.sessNameUsr}]]</span></li>
               <li>
                 <a class="dropdown-item" href="account-profile.html">
                   <i class="fi-user opacity-75 me-2"></i>
@@ -262,7 +262,7 @@
                     <img src="/usr/template/Finder/assets/img/account/avatar.jpg" alt="Avatar">
                   </div>
                   <div class="pt-lg-3 ps-3 ps-lg-0">
-                    <h6 class="mb-1">Michael Williams</h6>
+                    <h6 class="mb-1">[[${session.sessNameUsr}]]</h6>
                     <p class="fs-sm mb-0">m.williams@example.com</p>
                   </div>
                 </div>
@@ -345,10 +345,11 @@
 
                   <!-- Settings form -->
                   <form class="needs-validation" novalidate>
+                  <input type="hidden" name="cdSeq" th:value="${session.sessSeqUsr}">
                     <div class="row row-cols-1 row-cols-sm-2 g-4 mb-4">
                       <div class="col position-relative">
                         <label for="fn" class="form-label fs-base">성 함 *</label>
-                        <input type="text" class="form-control form-control-lg" id="fn" value=" " required>
+                        <input type="text" class="form-control form-control-lg" id="userId" name="userId" th:value="${item?.userName}" value=" " required>
                         <div class="invalid-tooltip bg-transparent p-0">이름을 입력해주세요!</div>
                       </div>
                       <div class="col position-relative">
@@ -364,7 +365,7 @@
                       </div>
                       <div class="col position-relative">
                         <label for="email" class="form-label d-flex align-items-center fs-base">이메일 | Email * <span class="badge text-danger bg-danger-subtle ms-2">Verify email</span></label>
-                        <input type="email" class="form-control form-control-lg" id="email" value=" " required>
+                        <input type="email" class="form-control form-control-lg" id="userEmail" th:value="${item?.userEmail}" required>
                         <div class="invalid-tooltip bg-transparent p-0">유효한 이메일주소를 입력해주세요!</div>
                       </div>
                       <div class="col position-relative">

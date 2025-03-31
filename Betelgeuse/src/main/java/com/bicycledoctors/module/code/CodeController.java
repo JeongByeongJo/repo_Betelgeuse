@@ -1,5 +1,8 @@
 package com.bicycledoctors.module.code;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,9 +23,21 @@ public class CodeController {
 
 	@RequestMapping(value = "/code/codeXdmList")
 	public String codeXdmList(CodeVo vo, Model model) throws Exception{
+		LocalDate now = LocalDate.now();        // 포맷 정의        
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");        // 포맷 적용        
+		String formatedNow = now.format(formatter);        // 결과 출력 
+		
+		if (vo.getShDateStart() != null || vo.getShDateEnd() != null) {
+			vo.setShDateStart(vo.getShDateStart() + " 00:00:00");
+			vo.setShDateEnd(vo.getShDateEnd() + " 23:59:59");
+		}
 		
 		vo.setParamsPaging(codeService.selectOneCount(vo));
 		
+		if (vo.getShDateStart() == null || vo.getShDateEnd() == null) {
+			vo.setShDateStart(formatedNow);
+			vo.setShDateEnd(formatedNow);
+		}
 		model.addAttribute("list", codeService.selectList(vo));
 		model.addAttribute("vo", vo);
 		

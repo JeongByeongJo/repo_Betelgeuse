@@ -26,6 +26,7 @@
               <form class="row g-3" method="post" id="form" name="form">
                 <div class="col-md-3" style="height: 100px;">
                		<input type="hidden" name="cdgSeq" th:value="${item?.cdgSeq}">
+               		<input type="hidden" name="cdUpdtDate" >	               		
                 	<label for="cdgcode" class="form-label">코드그룹 코드 <sup>*</sup></label>
                 	<input type="text" class="form-control" id="cdgcode" value="" placeholder="자동생성" disabled th:value="${item?.cdgSeq}">
                 </div>
@@ -52,8 +53,6 @@
 					<option value="0" th:selected="${item?.cdgUseNy == 0}" th:text="미사용"></option>
                   </select>
                 </div>
-<!--                 <input type="hidden" name="cdgInstDate" id="cdgInstDate"> -->
-<!--                 <input type="hidden" name="cdgUpdtDate" id="cdgUpdtDate"> -->
                 <div class="col-md-3">
                   <label for="validationCustom08" class="form-label">순서<sup>*</sup></label>
                   <input type="text" class="form-control" id="validationCustom08">

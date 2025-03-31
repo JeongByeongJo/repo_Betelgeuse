@@ -12,8 +12,8 @@
         <if test="shDelNy != null and !shDelNy.equals('')">AND a.cdgDelNy = #{shDelNy}</if>
 				
 				<choose>
-<!-- 					<when test="shOptionDate == 1">AND a.cdgInstDate BETWEEN #{shDateStart} AND #{shDateEnd}</when> -->
-<!-- 					<when test="shOptionDate == 2">AND a.cdgUpdtDate BETWEEN #{shDateStart} AND #{shDateEnd}</when> -->
+					<when test="shOptionDate == 1">AND a.cdgInstDate BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+					<when test="shOptionDate == 2">AND a.cdgUpdtDate BETWEEN #{shDateStart} AND #{shDateEnd}</when>
 				</choose>
 				
         <choose>

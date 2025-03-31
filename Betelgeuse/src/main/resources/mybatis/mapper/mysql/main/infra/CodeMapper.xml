@@ -12,12 +12,10 @@
 		where 1=1
 		<if test="shUseNy != null and !shUseNy.equals('')">AND a.cdUseNy = #{shUseNy}</if>
         <if test="shDelNy != null and !shDelNy.equals('')">AND a.cdDelNy = #{shDelNy}</if>
-<!-- 				
 				<choose>
-					<when test="shOptionDate == 1">AND a.regDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when>
-					<when test="shOptionDate == 2">AND a.modDateTime BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+					<when test="shOptionDate == 1">AND a.cdInstDate BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+					<when test="shOptionDate == 2">AND a.cdUpdtDate BETWEEN #{shDateStart} AND #{shDateEnd}</when>
 				</choose>
- -->				
         <choose>
             <when test="shOption == 1">AND b.cdgSeq = #{shValue}</when>
             <when test="shOption == 2">AND b.cdgName LIKE CONCAT('%',#{shValue},'%')</when>
@@ -41,6 +39,8 @@
 			,a.cdNameEng
 			,a.cdUseNy
 			,a.cdDelNy
+			,a.cdInstDate
+			,a.cdUpdtDate
 			,a.cdDesc
 			,b.cdgSeq
 			,b.cdgName
@@ -81,12 +81,14 @@
 			cdName
 			,cdNameEng
 			,cdUseNy
+			,cdInstDate
 			,cdDesc
 			,codegroup_cdgSeq
 		) values (
 			#{cdName}
 			,#{cdNameEng}
 			,#{cdUseNy}
+			,CURRENT_TIMESTAMP
 			,#{cdDesc}
 			,#{codegroup_cdgSeq}
 		)
@@ -100,6 +102,7 @@
 			cdName = #{cdName}
 			,cdNameEng = #{cdNameEng}
 			,cdUseNy = #{cdUseNy}
+			,cdUpdtDate = CURRENT_TIMESTAMP
 			,cdDesc = #{cdDesc}
 			,codegroup_cdgSeq = #{codegroup_cdgSeq}
 		where

@@ -48,13 +48,13 @@
                   </div>
             </div>
             <div class="col-md-2">
-<!--                 <input type="text" id="shDateStart" name="shDateStart" th:value="${#strings.substring(vo.shDateStart, 0, 10)}" placeholder="시작일" class="form-control form-control-sm" autocomplete="off"> -->
+                <input type="text" id="shDateStart" name="shDateStart" th:value="${#strings.substring(vo.shDateStart, 0, 10)}" placeholder="시작일" class="form-control form-control-sm" autocomplete="off">
                 <div class="invalid-feedback">
                   코드를 입력해주세요.
                 </div>
             </div>
             <div class="col-md-2">
-<!--                 <input type="text" id="shDateEnd" name="shDateEnd" th:value="${#strings.substring(vo.shDateEnd, 0, 10)}" placeholder="종료일" class="form-control form-control-sm" autocomplete="off"> -->
+                <input type="text" id="shDateEnd" name="shDateEnd" th:value="${#strings.substring(vo.shDateEnd, 0, 10)}" placeholder="종료일" class="form-control form-control-sm" autocomplete="off">
                 <div class="invalid-feedback">
                   코드를 입력해주세요.
                 </div>
@@ -127,8 +127,8 @@
                        <td th:text = "${list.userEmail}"></td>                                                
                        <td th:text = "${list.noshow}"></td>
                        <td>1</td>
-                       <td></td>
-                       <td></td>
+                       <td th:text = "${list.userInstDate}"></td>
+                       <td th:text = "${list.userUpdtDate}"></td>
 	                   </tr>
                   </tbody>
                   <tfoot>
@@ -179,17 +179,36 @@
 	<script>
 		let form = document.querySelector("form[name=formList]");
 		
+		$.datetimepicker.setLocale('ko');
+		$(window).on("load", function () {
+			$(function(){
+				 $('#shDateStart').datetimepicker({
+				  format:'Y-m-d',
+				  onShow:function( ct ){
+				   this.setOptions({
+				    maxDate:$('#shDateEnd').val()?$('#shDateEnd').val():false
+				   })
+				  },
+				  timepicker:false
+				 });
+				 $('#shDateEnd').datetimepicker({
+				  format:'Y-m-d',
+				  onShow:function( ct ){
+				   this.setOptions({
+				    minDate:$('#shDateStart').val()?$('#shDateStart').val():false
+				   })
+				  },
+				  timepicker:false
+				 });
+			});
+	    });
+		
 		document.getElementById("btnSearch").onclick = function () {
 			form.action = "/member/memberXdmList";
 			form.submit();
 		};
 		document.getElementById("btnReset").onclick = function () {
-			document.getElementById("shDelNy").value = null;
-			document.getElementById("shUseNy").value = null;
-			document.getElementById("shOption").value = null;
-			document.getElementById("shValue").value = null;
-			form.action = "/member/memberXdmList";
-			form.submit();
+			location = "/member/memberXdmList";
 		};
 		
 		goList = function (thisPage) {

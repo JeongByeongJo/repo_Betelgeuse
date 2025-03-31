@@ -1,8 +1,10 @@
 package com.bicycledoctors.module.member;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
-
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,16 +14,30 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import jakarta.servlet.http.HttpSession;
 
 
-
 @Controller
 public class MemberController {
+
 	
 	@Autowired
 	MemberService memberService;
 	
 	@RequestMapping(value = "/member/memberXdmList")
 	public String memberXdmList(MemberVo vo, Model model) {
+		LocalDate now = LocalDate.now();        // 포맷 정의        
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");        // 포맷 적용        
+		String formatedNow = now.format(formatter);        // 결과 출력        
+		
+		if (vo.getShDateStart() != null || vo.getShDateEnd() != null) {
+				vo.setShDateStart(vo.getShDateStart() + " 00:00:00");
+				vo.setShDateEnd(vo.getShDateEnd() + " 23:59:59");
+		}
+		
 		vo.setParamsPaging(memberService.selectOneCount(vo));
+		
+		if (vo.getShDateStart() == null || vo.getShDateEnd() == null) {
+			vo.setShDateStart(formatedNow);
+			vo.setShDateEnd(formatedNow);
+		}
 		
 		model.addAttribute("list", memberService.selectList(vo));
 		model.addAttribute("vo", vo);
@@ -109,7 +125,9 @@ public class MemberController {
 		return "usr/member/SigninUsrForm";
 	}
 	@RequestMapping(value = "/member/userInfosettingUsrForm")
-	public String userInfosettingUsrForm(MemberVo vo, HttpSession httpSession) {		
+	public String userInfosettingUsrForm(MemberDto memberDto, Model model, HttpSession httpSession) {
+		memberDto.setSeq((String)httpSession.getAttribute("sessSeqUsr"));
+		model.addAttribute("item", memberService.selectOne(memberDto));
 		return "usr/member/account-settings";
 	}
 	

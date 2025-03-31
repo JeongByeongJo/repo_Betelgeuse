@@ -48,13 +48,15 @@
                   </div>
             </div>
             <div class="col-md-2">
-                <input type="text" id="shDateStart" name="shDateStart" th:value="${vo.shDateStart}" placeholder="시작일" class="form-control form-control-sm" autocomplete="off">
+<!--                 <input type="text" id="shDateStart" name="shDateStart" th:value="${#vo.shDateStart}" placeholder="시작일" class="form-control form-control-sm" autocomplete="off"> -->
+                <input type="text" id="shDateStart" name="shDateStart" th:value="${#strings.substring(vo.shDateStart, 0, 10)}" placeholder="시작일" class="form-control form-control-sm" autocomplete="off">
                 <div class="invalid-feedback">
                   시작일을 입력해주세요.
                 </div>
             </div>
             <div class="col-md-2">
-                <input type="text" id="shDateEnd" name="shDateEnd" th:value="${vo.shDateEnd}" placeholder="종료일" class="form-control form-control-sm" autocomplete="off">
+<!--                 <input type="text" id="shDateEnd" name="shDateEnd" th:value="${#vo.shDateEnd}" placeholder="종료일" class="form-control form-control-sm" autocomplete="off"> -->
+                <input type="text" id="shDateEnd" name="shDateEnd" th:value="${#strings.substring(vo.shDateEnd, 0, 10)}" placeholder="종료일" class="form-control form-control-sm" autocomplete="off">
                 <div class="invalid-feedback">
                   종료일을 입력해주세요.
                 </div>
@@ -121,7 +123,7 @@
 	                   <td th:text = "${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
 	                   <td th:text = "${list.cdgUseNy}"></td>
 	                   <td th:text = "${list.cdgSeq}"></td>
-	                   <td><a href="javascript:void(0);" th:text="${list.cdgName}" th:attr="onclick=|goForm('${list.cdgSeq}')|"></a></td>
+	                   <td><a href = "javascript:void(0);" th:text="${list.cdgName}" th:attr="onclick=|goForm('${list.cdgSeq}')|"></a></td>
 	                   <td th:text = "${list.cdgNameEng}"></td>
 	                   <td th:text = "${list.xcdSeqCount}"></td>
 	                   <td>1</td>
@@ -196,23 +198,36 @@
 		let seq = document.querySelector("input[name=cdgSeq]");
 		
 		$.datetimepicker.setLocale('ko');
-		
-		$("#shDateStart").datetimepicker();
-		$("#shDateEnd").datetimepicker();
+		$(window).on("load", function () {
+			$(function(){
+				 $('#shDateStart').datetimepicker({
+				  format:'Y-m-d',
+				  onShow:function( ct ){
+				   this.setOptions({
+				    maxDate:$('#shDateEnd').val()?$('#shDateEnd').val():false
+				   })
+				  },
+				  timepicker:false
+				 });
+				 $('#shDateEnd').datetimepicker({
+				  format:'Y-m-d',
+				  onShow:function( ct ){
+				   this.setOptions({
+				    minDate:$('#shDateStart').val()?$('#shDateStart').val():false
+				   })
+				  },
+				  timepicker:false
+				 });
+			});
+	    });
 		
 		document.getElementById("btnSearch").onclick = function () {
 			form.action = "/codegroup/codegroupXdmList";
 			form.submit();
 		};
+		
 		document.getElementById("btnReset").onclick = function () {
-			document.getElementById("shDelNy").value = null;
-			document.getElementById("shUseNy").value = null;
-			document.getElementById("shOption").value = null;
-			document.getElementById("shValue").value = null;
-			document.getElementById("shDateStart").value = Date.now();
-			document.getElementById("shDateEnd").value = Date.now();
-			form.action = "/codegroup/codegroupXdmList";
-			form.submit();
+			location = "/codegroup/codegroupXdmList";
 		};
 		
 		goList = function (thisPage) {
