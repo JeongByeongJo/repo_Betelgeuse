@@ -4,18 +4,20 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
-import org.mybatis.spring.SqlSessionTemplate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.bicycledoctors.common.base.BaseController;
+
 import jakarta.servlet.http.HttpSession;
 
 
 @Controller
-public class MemberController {
+public class MemberController extends BaseController {
 
 	
 	@Autowired
@@ -23,21 +25,9 @@ public class MemberController {
 	
 	@RequestMapping(value = "/member/memberXdmList")
 	public String memberXdmList(MemberVo vo, Model model) {
-		LocalDate now = LocalDate.now();        // 포맷 정의        
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");        // 포맷 적용        
-		String formatedNow = now.format(formatter);        // 결과 출력        
-		
-		if (vo.getShDateStart() != null || vo.getShDateEnd() != null) {
-				vo.setShDateStart(vo.getShDateStart() + " 00:00:00");
-				vo.setShDateEnd(vo.getShDateEnd() + " 23:59:59");
-		}
+		utildatetime(vo);
 		
 		vo.setParamsPaging(memberService.selectOneCount(vo));
-		
-		if (vo.getShDateStart() == null || vo.getShDateEnd() == null) {
-			vo.setShDateStart(formatedNow);
-			vo.setShDateEnd(formatedNow);
-		}
 		
 		model.addAttribute("list", memberService.selectList(vo));
 		model.addAttribute("vo", vo);

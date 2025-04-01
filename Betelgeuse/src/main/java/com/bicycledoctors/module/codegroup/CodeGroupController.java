@@ -1,7 +1,5 @@
-package com.bicycledoctors.module.codegroup;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+package com.bicycledoctors.module.codegroup;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,33 +7,22 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.bicycledoctors.common.base.BaseController;
+
 
 @Controller
-public class CodeGroupController {
+public class CodeGroupController extends BaseController {
 	
 	@Autowired
 	CodeGroupService codeGroupService;
 	
 	@RequestMapping(value = "/codegroup/codegroupXdmList")
 	public String codegroupXdmList(CodeGroupVo vo, Model model) throws Exception {
-		LocalDate now = LocalDate.now();        // 포맷 정의        
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");        // 포맷 적용        
-		String formatedNow = now.format(formatter);        // 결과 출력        
 		
-		if (vo.getShDateStart() != null || vo.getShDateEnd() != null) {
-			vo.setShDateStart(vo.getShDateStart() + " 00:00:00");
-			vo.setShDateEnd(vo.getShDateEnd() + " 23:59:59");
-		}
-		
-//		System.out.println("vo.getShDateStart(): " + vo.getShDateStart());
-//		System.out.println("vo.getShDateEnd(): " + vo.getShDateEnd());
+		utildatetime(vo);
 		
 		vo.setParamsPaging(codeGroupService.selectOneCount(vo));
 		
-		if (vo.getShDateStart() == null || vo.getShDateEnd() == null) {
-			vo.setShDateStart(formatedNow);
-			vo.setShDateEnd(formatedNow);
-		}
 		model.addAttribute("list", codeGroupService.selectList(vo));
 		model.addAttribute("vo", vo);
 		
