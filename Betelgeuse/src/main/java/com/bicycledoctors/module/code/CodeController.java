@@ -50,7 +50,7 @@ public class CodeController extends BaseController {
 	@RequestMapping(value = "/code/codeXdmInst")
 	public String codeXdmInst(CodeDto codeDto) {
 		codeService.insert(codeDto);
-		return "redirect:/code/CodeXdmList";
+		return "redirect:/code/codeXdmList";
 	}
 	
 	@RequestMapping(value = "/code/codeXdmMfom")

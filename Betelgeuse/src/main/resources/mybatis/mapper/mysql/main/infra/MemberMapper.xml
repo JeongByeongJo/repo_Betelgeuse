@@ -9,7 +9,7 @@
 	    from
 			usercustomer
 		where 1=1
-		<if test="shUseNy != null and !shUseNy.equals('')">AND isBlack = #{shUseNy}</if>
+		<if test="shUseNy != null and !shUseNy.equals('')">AND isBlack = #{shBlackNy}</if>
         <if test="shDelNy != null and !shDelNy.equals('')">AND delNy = #{shDelNy}</if>
 				<choose>
 					<when test="shOptionDate == 1">AND userInstDate BETWEEN #{shDateStart} AND #{shDateEnd}</when>
@@ -81,7 +81,36 @@
 	    where 1=1
 	    	and seq = #{seq}
 	</select>
-	
+	<insert id="insert">
+		insert into usercustomer (
+			userId
+		    ,userPassword
+		    ,userCate
+		    ,userName
+		    ,userTel
+		    ,userEmail
+		    ,userDob
+		    ,userGender
+		    ,isBlack
+		    ,delNy
+		    ,userInstDate
+		) values (
+			#{userId}
+			,#{userPassword}
+			,3
+			,#{userName}
+			,#{userTel}
+			,#{userEmail}
+			,#{userDob}
+			,#{userGender}
+			,0
+			,0
+			,CURRENT_TIMESTAMP
+		)
+		<selectKey resultType="String" keyProperty="seq" order="AFTER">
+			SELECT last_insert_id()
+		</selectKey>
+	</insert>
 	<update id="update">
 		update usercustomer set
 			userPassword = #{userPassword}
@@ -104,7 +133,7 @@
 			and seq = #{seq}
 	</update>
 	
-	<select id="signinChk" resultMap="resultMapObj">
+	<select id="selectOneIdChk" resultMap="resultMapObj">
 		SELECT
 				seq
 				,userId

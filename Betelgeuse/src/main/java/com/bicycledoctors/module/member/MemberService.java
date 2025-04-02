@@ -27,12 +27,15 @@ public class MemberService {
 		return memberDao.selectOne(memberVo);
 	}
 	
+	public int insert(MemberDto memberDto) {
+		return memberDao.insert(memberDto);				
+	}
 	public int update(MemberDto memberDto) {
 		return memberDao.update(memberDto);				
 	}
 	
-	public MemberDto signinChk(MemberDto memberDto) {
-		return memberDao.signinChk(memberDto);
+	public MemberDto selectOneIdChk(MemberDto memberDto) {
+		return memberDao.selectOneIdChk(memberDto);
 	}
 	public MemberDto pswdrecoveryChk(MemberDto memberDto) {
 		return memberDao.pswdrecoveryChk(memberDto);

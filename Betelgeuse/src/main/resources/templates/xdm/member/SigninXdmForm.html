@@ -49,7 +49,7 @@
             <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
               <div class="d-flex justify-content-center py-4">
-                <a href="/xdm/index" class="logo d-flex align-items-center w-auto">
+                <a href="/xdm/indexXdm" class="logo d-flex align-items-center w-auto">
                   <img src="assets/img/logo.png" alt="">
                   <span class="d-none d-lg-block">NiceAdmin</span>
                 </a>
@@ -70,14 +70,14 @@
                       <label for="userId" class="form-label">ID</label>
                       <div class="input-group has-validation">
                         
-                        <input type="text" name="userId" class="form-control" id="userId" th:value="tony1" required>
+                        <input type="text" name="userId" class="form-control" id="userId" th:value="admin" required>
                         <div class="invalid-feedback">ID를 입력해주세요.</div>
                       </div>
                     </div>
 
                     <div class="col-12">
                       <label for="userPassword" class="form-label">Password</label>
-                      <input type="password" name="userPassword" class="form-control" id="userPassword" th:value="12" required>
+                      <input type="password" name="userPassword" class="form-control" id="userPassword" th:value="qwer" required>
                       <div class="invalid-feedback">비밀번호를 입력해주세요.</div>
                     </div>
 
@@ -151,7 +151,7 @@ function loginLogic (){
 		,success: function(response) {
 			if(response.rt == "success") {
 // 				alert("ㅇ?");
-				location.href = "/xdm/index";
+				location.href = "/xdm/indexXdm";
 // 				if(response.changePwd == "true") {
 // 					location.href = "/v1/infra/member/expiredPwdUsrForm";
 // 				} else {

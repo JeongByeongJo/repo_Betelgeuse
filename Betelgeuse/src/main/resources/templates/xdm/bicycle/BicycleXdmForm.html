@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{xdm/include/headNice :: headNice}"></div>
+
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">page 1</a></li>
+          <li class="breadcrumb-item">page 2</li>
+          <li class="breadcrumb-item active">Default</li>
+        </ol>
+      </nav>
+      <h1>Code</h1>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+      <div class="row">
+        
+        <div class="col-lg-12">
+          <div class="card" >
+            <div class="card-body">
+              <h1 class="card-title" style="height: 100px;" >기본정보</h1>
+
+              <!-- Custom Styled Validation -->
+              <form class="row g-3 needs-validation" method="post" id="form" novalidate>
+                <div class="col-md-3" style="height: 100px;">
+                <input type="hidden" name="cdSeq" th:value="${item?.cdSeq}">	
+                  <label for="codegroup_cdgSeq" class="form-label">코드그룹<sup>*</sup></label>
+                  <select class="form-select" id="codegroup_cdgSeq" name="codegroup_cdgSeq" required>
+<!--                     <option value="">선택하세요</option> -->
+	                <option th:each ="list : ${list}" th:value="${list.cdgSeq}" th:text="${list.cdgName}" th:selected="${list.cdgSeq == item?.codegroup_cdgSeq}"></option>                                              
+                  </select>
+                  <div class="invalid-feedback">
+                    코드그룹을 선택 해주세요.
+                  </div>
+                </div>
+                <div class="col-md-9">
+                  
+                </div>
+                <div class="col-md-3" style="height: 100px;">
+                  <label for="code" class="form-label">코드<sup>*</sup></label>
+                  <input type="text" class="form-control" id="code" value="" placeholder="자동생성" th:value="${item?.cdSeq}" required disabled>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <label for="another" class="form-label">코드 (ANOTHER)</label>
+                  <input type="text" class="form-control" id="another" placeholder="영대문자,숫자">
+                </div>
+                
+                <div class="col-md-3">
+                  <label for="cdName" class="form-label">코드 이름<sup>*</sup></label>
+                  <input type="text" class="form-control" id="cdName" name="cdName" placeholder="한글,영대소문자,숫자" th:value="${item?.cdName}" required>
+                  <div class="invalid-feedback" id="name-invalid-feedback">
+                    코드이름을 입력해주세요.
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <label for="cdNameEng" class="form-label">코드이름 (영문)</label>
+                  <input type="text" class="form-control" id="cdNameEng" name="cdNameEng" placeholder="영대소문자,숫자" th:value="${item?.cdNameEng}" required>
+                  <div class="invalid-feedback" id="nameeng-invalid-feedback">
+                    코드이름(영문)을 입력하세요.
+                  </div>
+                </div>
+                <div class="col-md-3" style="height: 100px;">
+                  <label for="cdUseNy" class="form-label">사용여부<sup>*</sup></label>
+                  <select class="form-select" id="cdUseNy" name="cdUseNy" th:value="${item?.cdUseNy}" required>
+<!--                     <option value="">선택하세요</option> -->
+                    <option value="1" th:selected="${item?.cdUseNy == 1}" th:text="사용"></option>
+					<option value="0" th:selected="${item?.cdUseNy == 0}" th:text="미사용"></option>
+                  </select>
+                  <div class="invalid-feedback">
+                    항목중 하나를 선택 해주세요.
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <label for="asc" class="form-label">순서<sup>*</sup></label>
+                  <input type="text" class="form-control" id="asc">
+                </div>
+                <div class="col-md-6"></div>
+                <div class="col-md-6" style="height: 150px;">
+                  <label for="cdDesc" class="form-label">설명</label>
+                  <textarea class="form-control" id="cdDesc" name="cdDesc" th:text="${item?.cdDesc}"></textarea>
+                </div>
+                <div class="col-md-6"></div>
+                <div class="col-md-6">
+                  <a href="/code/codeXdmList" class="btn btn-outline-dark"><i class="bi bi-blockquote-right"></i></a>
+                  <button class="btn btn-danger">X</button>
+                  <button type="button" class="btn btn-danger" id="btnUelete"><i class="bi bi-trash"></i></button>
+                </div>
+                <div class="col-md-6">
+                  <div style="display: flex;justify-content: end;"><button class="btn btn-primary" id="btnSubmit"><i class="bi bi-server"></i></button></div>
+                </div>
+              </form><!-- End Custom Styled Validation -->
+
+            </div>
+          </div>
+		<div class="modal" id="modalConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="modalConfirmTitle">title</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body" id="modalConfirmBody">
+						body
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">닫힘</button>
+						<button type="button" class="btn btn-danger" name="" id="btnModalDelete"></button>
+						<button type="button" class="btn btn-danger" name="" id="btnModalUelete">삭제</button>
+					</div>
+				</div>
+			</div>
+		</div>
+          
+
+        </div>
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+  <div th:replace="~{xdm/include/footerNice :: footerNice}"></div>
+
+    <script type="text/javascript">
+    let seq = document.querySelector("input[name=cdSeq]");
+    
+    $("#cdName").on("keyup", function(){
+    	let regExp = /^[A-Za-zㄱ-ㅎ가-힣0-9_]{2,}$/
+		$("#cdName").removeClass("is-invalid");
+		if(!regExp.test($("#cdName").val())) {
+			$("#cdName").removeClass("is-valid");
+			$("#cdName").addClass("is-invalid");
+			document.getElementById("name-invalid-feedback").innerText = "한영과 숫자만 입력해주세요";
+			document.getElementById("btnSubmit").setAttribute("disabled", "");
+		} else {
+			$("#cdName").removeClass("is-invalid");
+			$("#cdName").addClass("is-valid");
+			document.getElementById("btnSubmit").removeAttribute("disabled", "");
+		}
+	});
+    $("#cdNameEng").on("keyup", function(){
+    	let regExp = /^[A-Za-z0-9_]+$/
+		$("#cdNameEng").removeClass("is-invalid");
+		if(!regExp.test($("#cdNameEng").val())) {
+			$("#cdNameEng").removeClass("is-valid");
+			$("#cdNameEng").addClass("is-invalid");
+			document.getElementById("nameeng-invalid-feedback").innerText = "알파벳과 숫자만 입력해주세요";
+			document.getElementById("btnSubmit").setAttribute("disabled", "");
+		} else {
+			$("#cdNameEng").removeClass("is-invalid");
+			$("#cdNameEng").addClass("is-valid");
+			document.getElementById("btnSubmit").removeAttribute("disabled", "");
+		}
+	});
+    
+    
+    function validationInst() {
+	    if(validationUpdt() == false) return false;
+	    if(document.getElementById("codegroup_cdgSeq").value == null || document.getElementById("codegroup_cdgSeq").value == "") {
+    		document.getElementById("codegroup_cdgSeq").classList.add("is-invalid");
+    		return false;
+		} else {
+    		document.getElementById("codegroup_cdgSeq").classList.remove("is-invalid");			
+		}
+		if(document.getElementById("cdName").value.trim() == null || document.getElementById("cdName").value.trim() == "") {
+    		document.getElementById("cdName").classList.add("is-invalid");
+			return false;
+		} else {
+    		document.getElementById("cdName").classList.remove("is-invalid");
+		}		
+		if(document.getElementById("cdNameEng").value.trim() == null || document.getElementById("cdNameEng").value.trim() == "") {
+			document.getElementById("cdNameEng").classList.add("is-invalid");
+			return false;
+		} else {
+    		document.getElementById("cdNameEng").classList.remove("is-invalid");
+		}	
+	}
+	
+	function validationUpdt() {		
+	}
+
+	document.getElementById("btnSubmit").onclick = function () {
+		if(seq.value == "0" || seq.value == "") {
+			if(validationInst() == false) return false;
+			form.action = "/code/codeXdmInst";
+			form.submit();
+		} else {
+			if(validationUpdt() == false) return false;
+			form.action = "/code/codeXdmUpdt";
+			form.submit();
+		}
+	}
+	
+	document.getElementById("btnUelete").onclick = function () {
+		document.querySelector("#modalConfirmTitle").textContent = "확 인";
+		document.querySelector("#modalConfirmBody").textContent = "해당 데이터를 삭제하시겠습니까 ?";
+		document.querySelector("#btnModalUelete").style.display = '';
+		document.querySelector("#btnModalDelete").style.display = 'none';
+		$("#modalConfirm").modal("show");
+	}
+
+	document.getElementById("btnModalUelete").onclick = function () {
+		form.action = "/code/codeXdmUele";
+		form.submit();
+	}
+	
+	</script>
+
+</body>
+
+</html>

@@ -5,6 +5,8 @@ import com.bicycledoctors.common.base.BaseVo;
 public class MemberVo extends BaseVo{
 	
 	private String seq;
+	
+	private Integer shBlackNy = 0;
 //	-----
 
 	public String getSeq() {
@@ -14,5 +16,14 @@ public class MemberVo extends BaseVo{
 	public void setSeq(String seq) {
 		this.seq = seq;
 	}
+
+	public Integer getShBlackNy() {
+		return shBlackNy;
+	}
+
+	public void setShBlackNy(Integer shBlackNy) {
+		this.shBlackNy = shBlackNy;
+	}
+
 	
 }

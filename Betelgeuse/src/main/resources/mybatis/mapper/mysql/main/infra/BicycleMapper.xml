@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bicycledoctors.module.bicycle.BicycleDao">
+	
+	<resultMap type="com.bicycledoctors.module.bicycle.BicycleDto" id="resultMapObj"></resultMap>
+	
+	<sql id="selectCommon">	    
+	    from
+			bicycle as a
+			left join usercustomer b on a.userCustomer_seq = b.seq
+		where 1=1
+        <if test="shDelNy != null and !shDelNy.equals('')">AND a.delNy = #{shDelNy}</if>
+<!-- 		<if test="shUseNy != null and !shUseNy.equals('')">AND a.useNy = #{shUseNy}</if> -->
+				<choose>
+					<when test="shOptionDate == 1">AND a.cdInstDate BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+					<when test="shOptionDate == 2">AND a.cdUpdtDate BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+				</choose>
+        <choose>
+            <when test="shOption == 1">AND b.userId = #{shValue}</when>
+            <when test="shOption == 2">AND b.userName LIKE CONCAT('%',#{shValue},'%')</when>
+            <when test="shOption == 3">AND a.bicycleName LIKE CONCAT('%',#{shValue},'%')</when>
+        </choose>
+    </sql>
+    
+    <select id="selectOneCount" resultType="Integer">
+    	select count(*)
+    	 <include refid = "selectCommon"></include>
+    </select>
+
+	<select id="selectList" resultMap="resultMapObj">
+	select aa.* from (
+		SELECT 
+			a.seq,
+		    a.bicycleName,
+		    a.bicycleCateCd,
+		    a.bicycleBrandCd,
+		    a.bicycleModel,
+		    a.bicycleYears,
+		    a.bicycleMiles,
+		    a.bicycleSN,
+		    a.drivetrainBrandCd,
+		    a.drivetrainModel,
+		    a.brakeBrandCd,
+		    a.isElectDrivetrain,
+		    a.isDiskBrakes,
+		    a.isHydrauric,
+		    a.isInternal,
+		    a.wheelBrandCd,
+		    a.wheelModel,
+		    a.bicycleDescribe,
+		    a.isInspectingNy,
+		    a.isRepairingNy,
+		    a.delNy,
+		    a.instDate,
+		    a.updtDate,
+		    a.userCustomer_seq,
+			b.userID,
+			b.userName
+		<include refid = "selectCommon"></include>
+		order by seq desc
+	) aa
+	limit #{rowNumToShow} offset #{startRnumForMysql}
+	</select>
+	
+	<select id="selectGroupList" resultMap="resultMapObj">
+		select
+			cdgSeq
+			,cdgName
+		from
+			codegroup
+		where 1=1			
+		order by cdgSeq desc
+	</select>
+	
+	<select id="selectOne" resultMap="resultMapObj">
+		select
+			cdSeq
+			,cdName
+			,cdNameEng
+			,cdUseNy
+			,cdDelNy
+			,cdDesc
+			,codegroup_cdgSeq
+		from
+			code
+		where 1=1
+			and cdSeq = #{cdSeq}
+	</select>
+	
+	<insert id="insert">
+		insert into bicycle (
+			bicycleName,
+		    bicycleCateCd,
+		    bicycleBrandCd,
+		    bicycleModel,
+		    bicycleYears,
+		    bicycleMiles,
+		    bicycleSN,
+		    drivetrainBrandCd,
+		    drivetrainModel,
+		    brakeBrandCd,
+		    isElectDrivetrain,
+		    isDiskBrakes,
+		    isHydrauric,
+		    isInternal,
+		    wheelBrandCd,
+		    wheelModel,
+		    bicycleDescribe,
+		    delNy,
+		    instDate,
+		    userCustomer_seq
+		) values (
+			#{bicycleName}
+			,#{bicycleCateCd}
+			,#{bicycleBrandCd}
+			,#{bicycleModel}
+			,#{bicycleYears}
+			,#{bicycleMiles}
+			,#{bicycleSN}
+			,#{drivetrainBrandCd}
+			,#{drivetrainModel}
+			,#{brakeBrandCd}
+			,#{isElectDrivetrain}
+			,#{isDiskBrakes}
+			,#{isHydrauric}
+			,#{isInternal}
+			,#{wheelBrandCd}
+			,#{wheelModel}
+			,#{bicycleDescribe}
+			,0
+			,CURRENT_TIMESTAMP
+			,#{userCustomer_seq}
+		)
+		<selectKey resultType="String" keyProperty="seq" order="AFTER">
+			SELECT last_insert_id()
+		</selectKey>
+	</insert>
+	
+	<update id="update">
+		update code set
+			cdName = #{cdName}
+			,cdNameEng = #{cdNameEng}
+			,cdUseNy = #{cdUseNy}
+			,cdUpdtDate = CURRENT_TIMESTAMP
+			,cdDesc = #{cdDesc}
+			,codegroup_cdgSeq = #{codegroup_cdgSeq}
+		where
+			cdSeq = #{cdSeq}
+	</update>
+	
+	<update id="uelete">
+		update code set
+			cdDelNy = 1
+		where
+			cdSeq = #{cdSeq}
+	</update>
+	
+	<select id="selectListCachedCodeArrayList" resultMap="resultMapObj">
+		SELECT 
+			cdSeq
+			, cdName
+			, codegroup_cdgSeq
+		FROM
+			code
+		WHERE 1=1
+			AND cdDelNy = 0
+		    AND cdUseNy = 1
+   	</select>
+</mapper>

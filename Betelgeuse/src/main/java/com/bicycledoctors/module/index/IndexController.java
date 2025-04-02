@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class IndexController {
 
-	@RequestMapping(value = "/xdm/index")
+	@RequestMapping(value = "/xdm/indexXdm")
 	public String xdmIndex() {
 		return "xdm/index/index";
 	}

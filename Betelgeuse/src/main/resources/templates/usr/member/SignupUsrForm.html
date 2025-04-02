@@ -69,21 +69,21 @@
             <a class="nav-link text-decoration-underline p-0 ms-2" href="/member/signinUsrForm">로그인</a>
           </div>
           <div class="nav fs-sm mb-4 d-lg-none">
-            <span class="me-2">Uncertain about creating an account?</span>
-            <a class="nav-link text-decoration-underline p-0" href="#benefits" data-bs-toggle="offcanvas" aria-controls="benefits">Explore the Benefits</a>
+            <span class="me-2">계정 만들기가 고민되세요?</span>
+            <a class="nav-link text-decoration-underline p-0" href="#benefits" data-bs-toggle="offcanvas" aria-controls="benefits">회원가입을 하시면..</a>
           </div>
 
           <!-- Form -->
-          <form class="needs-validation" id="form" novalidate>
+          <form class="needs-validation" id="form" name="form" novalidate>
             <div class="position-relative mb-4">
               <label for="userId" class="form-label">아이디 | ID<span style="color: red;"> *</span></label>
-              <input type="text" class="form-control form-control-lg" id="userId" placeholder="아이디" required>
+              <input type="text" class="form-control form-control-lg" id="userId" name="userId" placeholder="아이디" required>
               <div class="invalid-tooltip bg-transparent py-0">사용할 아이디를 입력해주세요.</div>
             </div>
             <div class="position-relative mb-4">
               <label for="userPassword" class="form-label">비밀번호 | Password<span style="color: red;"> *</span></label>
               <div class="password-toggle">
-                <input type="password" class="form-control form-control-lg" id="userPassword" minlength="8" placeholder="최소 8자리 이상의 비밀번호를 입력해주세요." required>
+                <input type="password" class="form-control form-control-lg" id="userPassword" name="userPassword" placeholder="최소 8자리 이상의 비밀번호를 입력해주세요." required>
                 <div class="invalid-tooltip bg-transparent py-0">8자리 이상의 비밀번호를 만들어주세요.</div>
                 <label class="password-toggle-button fs-lg" aria-label="Show/hide password">
                   <input type="checkbox" class="btn-check">
@@ -92,25 +92,31 @@
             </div>
             <div class="position-relative mb-4">
               <label for="userName" class="form-label">성 명 | Full Name<span style="color: red;"> *</span></label>
-              <input type="text" class="form-control form-control-lg" id="userName" minlength="2" placeholder="이름을 적어주세요." required>
+              <input type="text" class="form-control form-control-lg" id="userName" name="userName" placeholder="이름을 적어주세요." required>
               <div class="invalid-tooltip bg-transparent py-0">이름을 적어주세요.</div>
             </div>
+            <div class="position-relative mb-4">
+              <label for="userTel" class="form-label">휴대전화번호 | CellPhone Number<span style="color: red;"> *</span></label>
+              <input type="tel" class="form-control form-control-lg" id="userTel" name="userTel" data-input-format='{"numericOnly": true, "delimiters": [" ", "- ", " ", "- ", " " ], "blocks": [3, 0, 4, 0, 4]}' placeholder="전화번호 적어주세요." required>
+              <div class="invalid-tooltip bg-transparent py-0">전화번호를 적어주세요.</div>
+            </div>
             <div class="form-check form-check-inline mb-4">
-              <input type="radio" class="form-check-input" id="userGender" value="1" name="radio-inline">
+              <input type="radio" class="form-check-input" id="userGender" name="userGender" value="1">
               <label for="ex-radio-5" class="form-check-label">남 성</label>
             </div>
             <div class="form-check form-check-inline mb-4">
-              <input type="radio" class="form-check-input" id="userGender" value="2" name="radio-inline">
+              <input type="radio" class="form-check-input" id="" value="2">
               <label for="ex-radio-6" class="form-check-label">여 성</label>
-            </div><br>
+            </div>
+            <br>
             <label for="date-1" class="form-label">생년월일 | Date of birth</label>
             <div class="position-relative mb-4">
-              <input type="text" class="form-control form-icon-end" id="userDob" data-datepicker placeholder="Choose date">
+              <input type="text" class="form-control form-icon-end" id="userDob" name="userDob" data-datepicker placeholder="Choose date">
               <i class="fi-calendar position-absolute top-50 end-0 translate-middle-y me-3"></i>
             </div>
             <div class="position-relative mb-4">
               <label for="userEmail" class="form-label">이메일 | Email<span style="color: red;"> *</span></label>
-              <input type="email" class="form-control form-control-lg" id="userEmail" placeholder="이메일 주소" required>
+              <input type="email" class="form-control form-control-lg" id="userEmail" name="userEmail" placeholder="이메일 주소" required>
               <div class="invalid-tooltip bg-transparent py-0">유효한 이메일주소를 입력해주세요.</div>
             </div>
             <div class="d-flex flex-column gap-2 mb-4">
@@ -272,22 +278,66 @@
         </div>
       </div>
     </main>
+    <div class="modal fade" id="modalAlert" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modalAlertTitle">title</h5>
+					<button type="button" id="xclose" name="xclose" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body" id="modalAlertBody">
+					body
+				</div>
+				<div class="modal-footer">
+					<button type="button" id="cclose" name="cclose" class="btn btn-outline-secondary btn-sm btn_custom" data-bs-dismiss="modal">닫힘</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<script src="/xdm/template/NiceAdmin/assets/jquery/jquery-3.7.1.min.js"></script>
+	
 <script type="text/javascript">
 var form = document.getElementById("form")
 
-$("#userId").on("keyup", function(){
-		$("#userId").removeClass("is-invalid");
-		if($("#userId").val() == null || $("#userId").val() =="") {
-			$("#userId").removeClass("is-valid");
-			$("#userId").addClass("is-invalid");
-		} else {
-			$("#userId").removeClass("is-invalid");
-			$("#userId").addClass("is-valid");
+function idChkLogic (){
+// 	if(validation() == false) return false;
+	$.ajax({
+		async: true 
+		,cache: false
+		,type: "post"
+		,url: "/member/idChkUsrProc"
+		,data : { "userId" : $("#userId").val()}
+		,success: function(response) {
+			if(response.rt == "success") {
+				document.getElementById("modalAlertTitle").innerText = "중복된 아이디입니다.";
+		 		document.getElementById("modalAlertBody").innerText = "다른 아이디를 사용해주세요!";
+		 		$("#modalAlert").modal("show");
+		 		$("#userId").addClass("is-invalid");
+		 		$("#cclose").on("click", function(){$("#userId").focus()});
+		 		$("#xclose").on("click", function(){$("#userId").focus()});
+		 		return false;
+			} else {
+		 		//by pass
+			}
 		}
-});
+		,error : function(jqXHR, textStatus, errorThrown){
+			alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+		}
+	});
+}
+
+// $("#userId").on("keyup", function(){
+// 		$("#userId").removeClass("is-invalid");
+// 		if($("#userId").val() == null || $("#userId").val() =="") {
+// 			$("#userId").removeClass("is-valid");
+// 			$("#userId").addClass("is-invalid");
+// 		} else {
+// 			$("#userId").removeClass("is-invalid");
+// 			$("#userId").addClass("is-valid");
+// 		}
+// });
 $("#userPassword").on("keyup", function(){
-	let regExp = /^[A-Za-zㄱ-ㅎ가-힣0-9@$!%*?&#.~_-]{4,}$/
+	let regExp = /^[A-Za-zㄱ-ㅎ가-힣0-9@$!%*?&#.~_-]{4,}$/;
 	$("#userPassword").removeClass("is-invalid");
 	if(!regExp.test($("#userPassword").val())) {
 		$("#userPassword").addClass("is-invalid");
@@ -303,6 +353,15 @@ $("#userName").on("keyup", function(){
 			$("#userName").removeClass("is-invalid");		
 		}
 });
+$("#userTel").on("keyup", function(){
+	let regExp = /^\d{3} - \d{3,4} - \d{4}$/;
+	$("#userTel").removeClass("is-invalid");
+	if(!regExp.test($("#userTel").val())) {
+		$("#userTel").addClass("is-invalid");
+	} else {
+		$("#userTel").removeClass("is-invalid");		
+	}
+});
 $("#userEmail").on("keyup", function(){
 	let regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/
 	$("#userEmail").removeClass("is-invalid");
@@ -313,31 +372,37 @@ $("#userEmail").on("keyup", function(){
 	}
 });
 $("#btnSignUp").on("click", function(){
+	idChkLogic ();
 	if($("#userId").val() == null || $("#userId").val() =="") {
 		$("#userId").addClass("is-invalid");
+		return false;
 	} else {
-		$("#userId").removeClass("is-invalid");		
+		$("#userId").removeClass("is-invalid");
 	}
 	if($("#userPassword").val() == null || $("#userPassword").val() =="") {
 		$("#userPassword").addClass("is-invalid");
+		return false;
 	} else {
 		$("#userPassword").removeClass("is-invalid");		
 	}
 	if($("#userName").val() == null || $("#userName").val() =="") {
 		$("#userName").addClass("is-invalid");
+		return false;
 	} else {
 		$("#userName").removeClass("is-invalid");		
 	}
 	if($("#userEmail").val() == null || $("#userEmail").val() =="") {
 		$("#userEmail").addClass("is-invalid");
+		return false;
 	} else {
 		$("#userEmail").removeClass("is-invalid");		
 	}
-	
-// 	form.action = "";
-// 	form.submit();
+	document.getElementById("form").action = "/member/memberUsrInst";
+	document.getElementById("form").submit();
 });
 </script>
+	<script src="/usr/template/Finder/assets/vendor/cleave.js/dist/cleave.min.js"></script>
+    <script src="/usr/template/Finder/assets/vendor/choices.js/public/assets/scripts/choices.min.js"></script>
     <script src="/usr/template/Finder/assets/vendor/flatpickr/dist/flatpickr.min.js"></script>
     <!-- Bootstrap + Theme scripts -->
     <script src="/usr/template/Finder/assets/js/theme.min.js"></script>
