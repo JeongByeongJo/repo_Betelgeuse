@@ -33,6 +33,12 @@ public class MemberService {
 	public int update(MemberDto memberDto) {
 		return memberDao.update(memberDto);				
 	}
+	public int pwUpdate(MemberDto memberDto) {
+		return memberDao.pwUpdate(memberDto);				
+	}
+	public int uelete(MemberDto memberDto) {
+		return memberDao.uelete(memberDto);				
+	}
 	
 	public MemberDto selectOneIdChk(MemberDto memberDto) {
 		return memberDao.selectOneIdChk(memberDto);

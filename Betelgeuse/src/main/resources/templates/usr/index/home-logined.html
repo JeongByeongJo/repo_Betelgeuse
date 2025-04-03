@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="light" data-pwa="true" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" data-bs-theme="light" data-pwa="true" xmlns:th="http://www.thymeleaf.org">
   <div th:replace="~{usr/include/LoginedHead :: LoginedHead}"></div>
 
 
@@ -137,26 +137,6 @@
 
  <div th:replace="~{usr/include/LoginedFooter :: LoginedFooter}"></div>
     
-    <script type="text/javascript">
-	$("#btnSignout").on("click", function(){
-		$.ajax({
-			async: true 
-			,cache: false
-			,type: "post"
-			,url: "/member/signoutUsrProc"
-			,data: {}
-			,success: function(response) {
-				if(response.rt == "success") {
-					location.href = "/member/signinUsrForm";
-				} else {
-					// by pass
-				}
-			}
-			,error : function(jqXHR, textStatus, errorThrown){
-				alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
-			}
-		});
-	});
-	</script>
+    
   </body>
 </html>

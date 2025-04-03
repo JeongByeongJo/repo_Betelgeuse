@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<th:block th:fragment="LoginedHead">
+<th:block th:fragment="LogoutedHead">
 <head>
     <meta charset="utf-8">
 
@@ -55,7 +55,7 @@
         </button>
 
         <!-- Navbar brand (Logo) -->
-        <a class="navbar-brand py-1 py-md-2 py-xl-1 me-2 me-sm-n4 me-md-n5 me-lg-0" href="/index/home-logined">
+        <a class="navbar-brand py-1 py-md-2 py-xl-1 me-2 me-sm-n4 me-md-n5 me-lg-0" href="home.html">
           <span class="d-none d-sm-flex flex-shrink-0 text-primary rtl-flip me-2">
             <svg xmlns="http://www.w3.org/2000/svg" width="35" height="34"><path d="M34.5 16.894v10.731c0 3.506-2.869 6.375-6.375 6.375H17.5h-.85C7.725 33.575.5 26.138.5 17c0-9.35 7.65-17 17-17s17 7.544 17 16.894z" fill="currentColor"/><g fill-rule="evenodd"><path d="M17.5 13.258c-3.101 0-5.655 2.554-5.655 5.655s2.554 5.655 5.655 5.655 5.655-2.554 5.655-5.655-2.554-5.655-5.655-5.655zm-9.433 5.655c0-5.187 4.246-9.433 9.433-9.433s9.433 4.246 9.433 9.433a9.36 9.36 0 0 1-1.569 5.192l2.397 2.397a1.89 1.89 0 0 1 0 2.671 1.89 1.89 0 0 1-2.671 0l-2.397-2.397a9.36 9.36 0 0 1-5.192 1.569c-5.187 0-9.433-4.246-9.433-9.433z" fill="#000" fill-opacity=".05"/><g fill="#fff"><path d="M17.394 10.153c-3.723 0-6.741 3.018-6.741 6.741s3.018 6.741 6.741 6.741 6.741-3.018 6.741-6.741-3.018-6.741-6.741-6.741zM7.347 16.894A10.05 10.05 0 0 1 17.394 6.847 10.05 10.05 0 0 1 27.44 16.894 10.05 10.05 0 0 1 17.394 26.94 10.05 10.05 0 0 1 7.347 16.894z"/><path d="M23.025 22.525c.645-.645 1.692-.645 2.337 0l3.188 3.188c.645.645.645 1.692 0 2.337s-1.692.645-2.337 0l-3.187-3.187c-.645-.646-.645-1.692 0-2.337z"/></g></g><path d="M23.662 14.663c2.112 0 3.825-1.713 3.825-3.825s-1.713-3.825-3.825-3.825-3.825 1.713-3.825 3.825 1.713 3.825 3.825 3.825z" fill="#fff"/><path fill-rule="evenodd" d="M23.663 8.429a2.41 2.41 0 0 0-2.408 2.408 2.41 2.41 0 0 0 2.408 2.408 2.41 2.41 0 0 0 2.408-2.408 2.41 2.41 0 0 0-2.408-2.408zm-5.242 2.408c0-2.895 2.347-5.242 5.242-5.242s5.242 2.347 5.242 5.242-2.347 5.242-5.242 5.242-5.242-2.347-5.242-5.242z" fill="currentColor"/></svg>
           </span>
@@ -71,10 +71,10 @@
           <div class="offcanvas-body pt-2 pb-4 py-lg-0 mx-lg-auto">
             <ul class="navbar-nav position-relative">
               <li class="nav-item py-lg-2 me-lg-n2 me-xl-0">
-                <a class="nav-link" href="/index/home-logined">홈</a>
+                <a class="nav-link" href="/index">홈</a>
               </li>
               <li class="nav-item py-lg-2 me-lg-n2 me-xl-0">
-                <a class="nav-link" href="/bicycle/bicycleUsrForm">자전거 등록하기</a>
+                <a class="nav-link" href="/bicycle/bicycleUsrInst">자전거 등록하기</a>
               </li>
               <li class="nav-item py-lg-2 me-lg-n2 me-xl-0">
                 <a class="nav-link" href="listings-bikeshop.html">점검 & 정비</a>
@@ -184,63 +184,16 @@
           </div>
 
           <!-- Log in button -->
-          <!-- <a class="btn btn-outline-secondary animate-slide-end me-2" href="account-signin.html" aria-label="Sign in to account">
+          <a class="btn btn-outline-secondary animate-slide-end me-2" href="/member/signinUsrForm" aria-label="Sign in to account">
             <i class="fi-log-in fs-base animate-target mx-n2 me-xl-2"></i>
             <span class="d-none d-xl-inline">로그인</span>
-          </a> -->
+          </a>
 
           <!-- Sign up / Register button  -->
-          <div class="dropdown">
-            <a class="btn btn-icon btn-outline-secondary fs-lg border-0 animate-shake me-2" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="My account">
-              <i class="fi-user animate-target"></i>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end" style="--fn-dropdown-spacer: .5rem">
-              <li><span class="h6 dropdown-header">[[${session.sessNameUsr}]]</span></li>
-              <li>
-                <a class="dropdown-item" href="account-profile.html">
-                  <i class="fi-user opacity-75 me-2"></i>
-                  내 정보
-                </a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="account-listings.html">
-                  <i class="fi-layers opacity-75 me-2"></i>
-                  내 자전거
-                </a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="account-reviews.html">
-                  <i class="fi-star opacity-75 me-2"></i>
-                  내가 작성한 리뷰
-                </a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="account-favorites.html">
-                  <i class="fi-heart opacity-75 me-2"></i>
-                  즐겨찾기
-                </a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="account-payment.html">
-                  <i class="fi-credit-card opacity-75 me-2"></i>
-                  Payment details
-                </a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="/member/userInfosettingUsrForm">
-                  <i class="fi-settings opacity-75 me-2"></i>
-                  계정설정
-                </a>
-              </li>
-              <li><hr class="dropdown-divider"></li>
-              <li>
-                <a class="dropdown-item" id="btnSignout" name="btnSignout" href="javascript:void(0);">
-                  <i class="fi-log-out opacity-75 me-2"></i>
-                  로그아웃
-                </a>
-              </li>
-            </ul>
-          </div>
+          <a class="btn btn-primary animate-shake" href="/member/signupUsrForm">
+            <i class="fi-user fs-base animate-target ms-n1 me-1 me-sm-2"></i>
+            회원가입
+          </a>
         </div>
       </div>
     </header>

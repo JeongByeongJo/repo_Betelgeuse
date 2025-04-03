@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-<th:block th:fragment="LoginedFooter">
-
+<th:block th:fragment="LogoutedFooter">
 
     <!-- Page footer -->
     <footer class="footer bg-body pt-5" data-bs-theme="dark">
@@ -133,56 +132,13 @@
     </div>
 
 	<script src="/xdm/template/NiceAdmin/assets/jquery/jquery-3.7.1.min.js"></script>
-	
+
     <!-- Vendor scripts -->
-    <script src="/usr/template/Finder/assets/vendor/swiper/swiper-bundle.min.js"></script>
     <script src="/usr/template/Finder/assets/vendor/cleave.js/dist/cleave.min.js"></script>
+    <script src="/usr/template/Finder/assets/vendor/swiper/swiper-bundle.min.js"></script>
     <script src="/usr/template/Finder/assets/vendor/choices.js/public/assets/scripts/choices.min.js"></script>
     <script src="/usr/template/Finder/assets/vendor/flatpickr/dist/flatpickr.min.js"></script>
 
     <!-- Bootstrap + Theme scripts -->
     <script src="/usr/template/Finder/assets/js/theme.min.js"></script>
-    
-    <script type="text/javascript">
-	$("#btnSignout").on("click", function(){
-		$.ajax({
-			async: true 
-			,cache: false
-			,type: "post"
-			,url: "/member/signoutUsrProc"
-			,data: {}
-			,success: function(response) {
-				if(response.rt == "success") {
-					location.href = "/index";
-// 					location.href = "/member/signinUsrForm";
-				} else {
-					// by pass
-				}
-			}
-			,error : function(jqXHR, textStatus, errorThrown){
-				alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
-			}
-		});
-	});
-	$("#signout").on("click", function(){
-		$.ajax({
-			async: true 
-			,cache: false
-			,type: "post"
-			,url: "/member/signoutUsrProc"
-			,data: {}
-			,success: function(response) {
-				if(response.rt == "success") {
-					location.href = "/index";
-// 					location.href = "/member/signinUsrForm";
-				} else {
-					// by pass
-				}
-			}
-			,error : function(jqXHR, textStatus, errorThrown){
-				alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
-			}
-		});
-	});
-	</script>
 </th:block>

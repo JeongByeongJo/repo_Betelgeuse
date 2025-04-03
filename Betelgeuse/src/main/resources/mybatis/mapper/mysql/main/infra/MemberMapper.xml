@@ -159,4 +159,19 @@
 		    where 1=1
 		    	and userEmail = #{userEmail}
 	</select>
+	
+	<update id="pwUpdate">
+		update usercustomer set
+			userPassword = #{userPassword}
+		    ,userUpdtDate = CURRENT_TIMESTAMP
+		where 1=1
+			and seq = #{seq}
+	</update>
+	<update id="uelete">
+		update usercustomer set
+			delNy = 1
+		    ,userUpdtDate = CURRENT_TIMESTAMP
+		where 1=1
+			and seq = #{seq}
+	</update>
 </mapper>

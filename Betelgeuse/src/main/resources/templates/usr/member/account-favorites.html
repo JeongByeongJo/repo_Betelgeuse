@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ko" data-bs-theme="light" data-pwa="true">
+    
+    <div th:replace="~{usr/include/LoginedHead :: LoginedHead}"></div>
+
+    <!-- Page content -->
+    <main class="content-wrapper">
+      <div class="container pt-4 pt-sm-5 pb-5 mb-xxl-3">
+        <div class="row pt-2 pt-sm-0 pt-lg-2 pb-2 pb-sm-3 pb-md-4 pb-lg-5">
+
+
+          <!-- Sidebar navigation that turns into offcanvas on screens < 992px wide (lg breakpoint) -->
+          <aside class="col-lg-3" style="margin-top: -105px">
+            <div class="offcanvas-lg offcanvas-start sticky-lg-top pe-lg-3 pe-xl-4" id="accountSidebar">
+              <div class="d-none d-lg-block" style="height: 105px"></div>
+
+              <!-- Header -->
+              <div class="offcanvas-header d-lg-block py-3 p-lg-0">
+                <div class="d-flex flex-row flex-lg-column align-items-center align-items-lg-start">
+                  <div class="flex-shrink-0 bg-body-secondary border rounded-circle overflow-hidden" style="width: 64px; height: 64px">
+                    <img src="assets/img/account/avatar.jpg" alt="Avatar">
+                  </div>
+                  <div class="pt-lg-3 ps-3 ps-lg-0">
+                    <h6 class="mb-1">[[${session.sessNameUsr}]]</h6>
+<!--                     <p class="fs-sm mb-0">m.williams@example.com</p> -->
+                  </div>
+                </div>
+                <button type="button" class="btn-close d-lg-none" data-bs-dismiss="offcanvas" data-bs-target="#accountSidebar" aria-label="Close"></button>
+              </div>
+
+              <!-- Body (Navigation) -->
+              <div class="offcanvas-body d-block pt-2 pt-lg-4 pb-lg-0">
+                <nav class="list-group list-group-borderless">
+                  <a class="list-group-item list-group-item-action d-flex align-items-center" href="account-profile.html">
+                    <i class="fi-user fs-base opacity-75 me-2"></i>
+                    내 정보
+                  </a>
+                  <a class="list-group-item list-group-item-action d-flex align-items-center" href="account-listings.html">
+                    <i class="fi-bicycle fs-lg me-2"></i>
+                    내 자전거
+                  </a>
+                  <a class="list-group-item list-group-item-action d-flex align-items-center" href="account-reviews.html">
+                    <i class="fi-star fs-base opacity-75 me-2"></i>
+                    내가 작성한 리뷰
+                  </a>
+                  <a class="list-group-item list-group-item-action d-flex align-items-center active" aria-current="page" href="account-favorites.html">
+                    <i class="fi-heart fs-base opacity-75 me-2"></i>
+                    즐겨찾기
+                  </a>
+                  <a class="list-group-item list-group-item-action d-flex align-items-center" href="account-payment.html">
+                    <i class="fi-credit-card fs-base opacity-75 me-2"></i>
+                    Payment details
+                  </a>
+                  <a class="list-group-item list-group-item-action d-flex align-items-center" href="account-settings.html">
+                    <i class="fi-settings fs-base opacity-75 me-2"></i>
+                    계정 설정
+                  </a>
+                  <a class="list-group-item list-group-item-action d-flex align-items-center" href="help-topics-v1.html">
+                    <i class="fi-help-circle fs-base opacity-75 me-2"></i>
+                    Help center
+                  </a>
+                </nav>
+                <nav class="list-group list-group-borderless pt-3">
+                  <a class="list-group-item list-group-item-action d-flex align-items-center" href="account-signin.html">
+                    <i class="fi-log-out fs-base opacity-75 me-2"></i>
+                    로그아웃
+                  </a>
+                </nav>
+              </div>
+            </div>
+          </aside>
+
+
+          <!-- Account favorites content -->
+          <div class="col-lg-9">
+
+            <!-- Heading + Action buttons -->
+            <div class="d-flex align-items-center justify-content-between pb-2 pb-lg-3 mb-3">
+              <h1 class="h2 mb-0 me-3">즐겨찾기</h1>
+              <div class="nav flex-row flex-nowrap gap-4">
+                <a class="nav-link position-relative px-0 me-sm-2" href="#!">
+                  <i class="fi-share-2 fs-base me-2"></i>
+                  <span class="hover-effect-underline stretched-link">공유하기 <span class="d-none d-sm-inline">favorites</span></span>
+                </a>
+                <a class="nav-link position-relative text-danger px-0" href="#!">
+                  <i class="fi-trash fs-base me-2"></i>
+                  <span class="hover-effect-underline stretched-link">모두 삭제하기</span>
+                </a>
+              </div>
+            </div>
+
+
+            <!-- Listings (Grid) -->
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 g-md-3 g-lg-4">
+
+              <!-- Item -->
+              <div class="col">
+                <article class="card hover-effect-opacity h-100">
+                  <div class="card-img-top position-relative bg-body-tertiary overflow-hidden">
+                    <div class="swiper z-2" data-swiper='{
+                      "pagination": {
+                        "el": ".swiper-pagination"
+                      },
+                      "navigation": {
+                        "prevEl": ".btn-prev",
+                        "nextEl": ".btn-next"
+                      },
+                      "breakpoints": {
+                        "991": {
+                          "allowTouchMove": false
+                        }
+                      }
+                    }'>
+                      <a class="swiper-wrapper" href="single-entry-real-estate.html">
+                        <div class="swiper-slide">
+                          <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
+                            <img src="assets/img/listings/bd/1731905799997173.jpg" alt="Image">
+                            <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
+                          </div>
+                        </div>
+                        <div class="swiper-slide">
+                          <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
+                            <img src="assets/img/listings/bd/1731905809524829.jpg" alt="Image">
+                            <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
+                          </div>
+                        </div>
+                        <div class="swiper-slide">
+                          <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
+                            <img src="assets/img/listings/bd/1731905825460932.jpg" alt="Image">
+                            <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
+                          </div>
+                        </div>
+                      </a>
+                      <div class="d-flex flex-column gap-2 align-items-start position-absolute top-0 start-0 z-1 pt-1 pt-sm-0 ps-1 ps-sm-0 mt-2 mt-sm-3 ms-2 ms-sm-3">
+                        <span class="badge text-bg-info d-inline-flex align-items-center">
+                          Verified
+                          <i class="fi-shield ms-1"></i>
+                        </span>
+                        <span class="badge text-bg-primary">New</span>
+                      </div>
+                      <div class="position-absolute top-0 end-0 z-1 hover-effect-target opacity-0 pt-1 pt-sm-0 pe-1 pe-sm-0 mt-2 mt-sm-3 me-2 me-sm-3">
+                        <button type="button" class="btn btn-sm btn-icon btn-light bg-light border-0 rounded-circle animate-pulse" aria-label="Remove from wishlist">
+                          <i class="fi-heart-filled text-danger animate-target fs-sm"></i>
+                        </button>
+                      </div>
+                      <div class="position-absolute top-50 start-0 z-1 translate-middle-y d-none d-lg-block hover-effect-target opacity-0 ms-3">
+                        <button type="button" class="btn btn-sm btn-prev btn-icon btn-light bg-light rounded-circle animate-slide-start" aria-label="Prev">
+                          <i class="fi-chevron-left fs-lg animate-target"></i>
+                        </button>
+                      </div>
+                      <div class="position-absolute top-50 end-0 z-1 translate-middle-y d-none d-lg-block hover-effect-target opacity-0 me-3">
+                        <button type="button" class="btn btn-sm btn-next btn-icon btn-light bg-light rounded-circle animate-slide-end" aria-label="Next">
+                          <i class="fi-chevron-right fs-lg animate-target"></i>
+                        </button>
+                      </div>
+                      <div class="swiper-pagination bottom-0 mb-2" data-bs-theme="light"></div>
+                    </div>
+                  </div>
+                  <div class="card-body p-4 pb-3">
+                    <div class="h5 mb-2">섭바이크</div>
+                    <h3 class="fs-sm fw-normal text-body mb-2">                    
+                        서울 중랑구 용마산로136가길 2 1층<br>02-978-0719                    
+                    </h3>                  
+                  </div>
+                  <div class="card-footer gap-2 border-0 bg-transparent pt-0 pb-0 px-3 mt-n1">
+                    <div class="row px-2">
+                      <div class="col-4">
+                        <a class="btn btn-outline-secondary mb-3" href="#collapseExample" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample">
+                          영업시간
+                        </a>
+                      </div>
+                    </div>
+                    <div class="row px-2">
+                      <div class="col">
+                        <div class="collapse" id="collapseExample">
+                          <ul class="list-unstyled align-items-start small">
+                            <li>월요일 13:00 ~ 20:00</li>
+                            <li>화,수,목,금,토 10:30 ~ 20:00</li>
+                            <li>일요일 휴무</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              </div>
+
+              <!-- Item -->
+              <div class="col">
+                <article class="card hover-effect-opacity h-100">
+                  <div class="card-img-top position-relative bg-body-tertiary overflow-hidden">
+                    <div class="swiper z-2" data-swiper='{
+                      "pagination": {
+                        "el": ".swiper-pagination"
+                      },
+                      "navigation": {
+                        "prevEl": ".btn-prev",
+                        "nextEl": ".btn-next"
+                      },
+                      "breakpoints": {
+                        "991": {
+                          "allowTouchMove": false
+                        }
+                      }
+                    }'>
+                      <a class="swiper-wrapper" href="single-entry-real-estate.html">
+                        <div class="swiper-slide">
+                          <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
+                            <img src="assets/img/listings/bd/bkeland.jpg" alt="Image">
+                            <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
+                          </div>
+                        </div>
+                        <div class="swiper-slide">
+                          <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
+                            <img src="assets/img/listings/bd/bkeland1.jpg" alt="Image">
+                            <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
+                          </div>
+                        </div>
+                        <div class="swiper-slide">
+                          <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
+                            <img src="assets/img/listings/bd/bkelande.jpeg" alt="Image">
+                            <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
+                          </div>
+                        </div>
+                      </a>
+                      <div class="d-flex flex-column gap-2 align-items-start position-absolute top-0 start-0 z-1 pt-1 pt-sm-0 ps-1 ps-sm-0 mt-2 mt-sm-3 ms-2 ms-sm-3">
+                        <span class="badge text-bg-primary">New</span>
+                      </div>
+                      <div class="position-absolute top-0 end-0 z-1 hover-effect-target opacity-0 pt-1 pt-sm-0 pe-1 pe-sm-0 mt-2 mt-sm-3 me-2 me-sm-3">
+                        <button type="button" class="btn btn-sm btn-icon btn-light bg-light border-0 rounded-circle animate-pulse" aria-label="Remove from wishlist">
+                          <i class="fi-heart-filled text-danger animate-target fs-sm"></i>
+                        </button>
+                      </div>
+                      <div class="position-absolute top-50 start-0 z-1 translate-middle-y d-none d-lg-block hover-effect-target opacity-0 ms-3">
+                        <button type="button" class="btn btn-sm btn-prev btn-icon btn-light bg-light rounded-circle animate-slide-start" aria-label="Prev">
+                          <i class="fi-chevron-left fs-lg animate-target"></i>
+                        </button>
+                      </div>
+                      <div class="position-absolute top-50 end-0 z-1 translate-middle-y d-none d-lg-block hover-effect-target opacity-0 me-3">
+                        <button type="button" class="btn btn-sm btn-next btn-icon btn-light bg-light rounded-circle animate-slide-end" aria-label="Next">
+                          <i class="fi-chevron-right fs-lg animate-target"></i>
+                        </button>
+                      </div>
+                      <div class="swiper-pagination bottom-0 mb-2" data-bs-theme="light"></div>
+                    </div>
+                  </div>
+                  <div class="card-body p-4 pb-3">
+                    <div class="h5 mb-2">바이크랜드</div>
+                    <h3 class="fs-sm fw-normal text-body mb-2">                    
+                        서울시 중랑구 동일로 717<br>02-492-5501                    
+                    </h3>                  
+                  </div>
+                  <div class="card-footer gap-2 border-0 bg-transparent pt-0 pb-0 px-3 mt-n1">
+                    <div class="row px-2">
+                      <div class="col-4">
+                        <a class="btn btn-outline-secondary mb-3" href="#collapsebklnd" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapsebklnd">
+                          영업시간
+                        </a>
+                      </div>
+                    </div>
+                    <div class="row px-2">
+                      <div class="col">
+                        <div class="collapse" id="collapsebklnd">
+                          <ul class="list-unstyled align-items-start small">
+                            <li>월,수,목,금,토,일 09:30 ~ 18:00</li>
+                            <li>화요일 휴무</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>                   
+                  </div>
+                </article>
+              </div>
+
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+<div th:replace="~{usr/include/LoginedFooter :: LoginedFooter}"></div>
+
+  </body>
+</html>
