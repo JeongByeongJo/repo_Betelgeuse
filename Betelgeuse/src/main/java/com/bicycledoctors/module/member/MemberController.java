@@ -188,7 +188,17 @@ public class MemberController extends BaseController {
 		return returnMap;
 	}
 
-	
-	
+	@RequestMapping(value = "/member/userProfileUsrForm")
+	public String userProfileUsrForm(MemberDto memberDto, Model model, HttpSession httpSession) {
+		memberDto.setSeq((String)httpSession.getAttribute("sessSeqUsr"));
+		model.addAttribute("item", memberService.selectOne(memberDto));
+		return "usr/member/account-profile";
+	}
+	@RequestMapping(value = "/member/userBicycleUsrForm")
+	public String userBicycleUsrForm(MemberDto memberDto, Model model, HttpSession httpSession) {
+		memberDto.setSeq((String)httpSession.getAttribute("sessSeqUsr"));
+		model.addAttribute("item", memberService.selectOne(memberDto));
+		return "usr/member/account-profile";
+	}
 
 }
