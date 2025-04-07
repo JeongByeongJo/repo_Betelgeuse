@@ -145,6 +145,20 @@ public class MemberController extends BaseController {
 		}
 		return returnMap;
 	}
+	@ResponseBody
+	@RequestMapping(value = "/member/emailChkUsrProc")
+	public Map<String, Object> emailChkUsrProc(MemberDto dto) throws Exception {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		
+		MemberDto rtMember = memberService.selectOneEmailChk(dto);		
+		
+		if(rtMember != null) {
+			returnMap.put("rt", "success");
+		} else {
+			returnMap.put("rt", "fail");
+		}
+		return returnMap;
+	}
 	
 	@ResponseBody
 	@RequestMapping(value = "/member/pwChkUsrProc")
@@ -199,6 +213,12 @@ public class MemberController extends BaseController {
 		memberDto.setSeq((String)httpSession.getAttribute("sessSeqUsr"));
 		model.addAttribute("item", memberService.selectOne(memberDto));
 		return "usr/member/account-profile";
+	}
+	@RequestMapping(value = "/member/userBicycleUsrList")
+	public String userBicycleUsrList(MemberDto memberDto, Model model, HttpSession httpSession) {
+		memberDto.setSeq((String)httpSession.getAttribute("sessSeqUsr"));
+		model.addAttribute("item", memberService.selectOne(memberDto));
+		return "usr/member/account-listings";
 	}
 
 }

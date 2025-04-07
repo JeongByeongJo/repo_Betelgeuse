@@ -78,7 +78,7 @@
             <div class="position-relative mb-4">
               <label for="userId" class="form-label">아이디 | ID<span style="color: red;"> *</span></label>
               <input type="text" class="form-control form-control-lg" id="userId" name="userId" placeholder="아이디" required>
-              <div class="invalid-tooltip bg-transparent py-0">사용할 아이디를 입력해주세요.</div>
+              <div class="invalid-tooltip bg-transparent py-0" id="userIdInvalid">사용할 아이디를 입력해주세요.</div>
             </div>
             <div class="position-relative mb-4">
               <label for="userPassword" class="form-label">비밀번호 | Password<span style="color: red;"> *</span></label>
@@ -100,6 +100,11 @@
               <input type="tel" class="form-control form-control-lg" id="userTel" name="userTel" data-input-format='{"numericOnly": true, "delimiters": [" ", "- ", " ", "- ", " " ], "blocks": [3, 0, 4, 0, 4]}' placeholder="전화번호 적어주세요." required>
               <div class="invalid-tooltip bg-transparent py-0">전화번호를 적어주세요.</div>
             </div>
+            <div class="position-relative mb-4">
+              <label for="userEmail" class="form-label">이메일 | Email<span style="color: red;"> *</span></label>
+              <input type="email" class="form-control form-control-lg" id="userEmail" name="userEmail" placeholder="이메일 주소" required>
+              <div class="invalid-tooltip bg-transparent py-0" id="userEmailInvalid">유효한 이메일주소를 입력해주세요.</div>
+            </div>
             <div class="form-check form-check-inline mb-4">
               <input type="radio" class="form-check-input" id="userGender" name="userGender" value="1">
               <label for="ex-radio-5" class="form-check-label">남 성</label>
@@ -113,11 +118,6 @@
             <div class="position-relative mb-4">
               <input type="text" class="form-control form-icon-end" id="userDob" name="userDob" data-datepicker placeholder="Choose date">
               <i class="fi-calendar position-absolute top-50 end-0 translate-middle-y me-3"></i>
-            </div>
-            <div class="position-relative mb-4">
-              <label for="userEmail" class="form-label">이메일 | Email<span style="color: red;"> *</span></label>
-              <input type="email" class="form-control form-control-lg" id="userEmail" name="userEmail" placeholder="이메일 주소" required>
-              <div class="invalid-tooltip bg-transparent py-0">유효한 이메일주소를 입력해주세요.</div>
             </div>
             <div class="d-flex flex-column gap-2 mb-4">
               <div class="form-check">
@@ -326,77 +326,210 @@ function idChkLogic (){
 	});
 }
 
-// $("#userId").on("keyup", function(){
+$("#userId").on("blur", function(){
+	$("#userId").removeClass("is-valid");
+	if($("#userId").val() == null || $("#userId").val() =="") {
+		document.getElementById("userIdInvalid").innerText = "사용할 아이디를 입력해주세요.";
+		$("#userId").addClass("is-invalid");
+ 		$("#userId").focus();
+ 		return false;
+	} else {
 // 		$("#userId").removeClass("is-invalid");
-// 		if($("#userId").val() == null || $("#userId").val() =="") {
-// 			$("#userId").removeClass("is-valid");
-// 			$("#userId").addClass("is-invalid");
-// 		} else {
-// 			$("#userId").removeClass("is-invalid");
-// 			$("#userId").addClass("is-valid");
-// 		}
-// });
+		$.ajax({
+			async: true 
+			,cache: false
+			,type: "post"
+			,url: "/member/idChkUsrProc"
+			,data : { "userId" : $("#userId").val()}
+			,success: function(response) {
+				if(response.rt == "success") {
+					document.getElementById("userIdInvalid").innerText = "중복된 아이디입니다.";
+			 		$("#userId").addClass("is-invalid");
+			 		$("#userId").focus();
+			 		return false;
+				} else {
+					$("#userId").removeClass("is-invalid");
+					$("#userId").addClass("is-valid");					
+			 		//by pass
+				}
+			}
+			,error : function(jqXHR, textStatus, errorThrown){
+				alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+			}
+		});
+	}
+});
+
+
+$("#userEmail").on("blur", function(){
+	$("#userEmail").removeClass("is-valid");
+	if($("#userEmail").val() == null || $("#userEmail").val() =="") {
+		document.getElementById("userEmailInvalid").innerText = "사용할 이메일 주소를 입력해주세요.";
+		$("#userEmail").addClass("is-invalid");
+ 		$("#userEmail").focus();
+		return false;
+	} else {
+		let regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/
+// 		$("#userEmail").removeClass("is-invalid");
+		if(!regExp.test($("#userEmail").val())) {
+			document.getElementById("userEmailInvalid").innerText = "유효한 이메일 주소를 입력해주세요.";
+			$("#userEmail").addClass("is-invalid");
+			$("#userEmail").focus();
+			return false;
+		} else {
+			$.ajax({
+				async: true 
+				,cache: false
+				,type: "post"
+				,url: "/member/emailChkUsrProc"
+				,data : { "userEmail" : $("#userEmail").val()}
+				,success: function(response) {
+					if(response.rt == "success") {
+						document.getElementById("userEmailInvalid").innerText = "중복된 이메일입니다.";
+				 		$("#userEmail").addClass("is-invalid");
+				 		$("#userEmail").focus();
+				 		return false;
+					} else {
+						$("#userEmail").removeClass("is-invalid");
+						$("#userEmail").addClass("is-valid");
+				 		//by pass
+					}
+				}
+				,error : function(jqXHR, textStatus, errorThrown){
+					alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+				}
+			});
+		}
+	}
+});
+
 $("#userPassword").on("keyup", function(){
+	$("#userPassword").removeClass("is-valid");
 	let regExp = /^[A-Za-zㄱ-ㅎ가-힣0-9@$!%*?&#.~_-]{4,}$/;
-	$("#userPassword").removeClass("is-invalid");
 	if(!regExp.test($("#userPassword").val())) {
 		$("#userPassword").addClass("is-invalid");
+		return false;
 	} else {
 		$("#userPassword").removeClass("is-invalid");		
+		$("#userPassword").addClass("is-valid");
 	}
 });
+
 $("#userName").on("keyup", function(){
-		$("#userName").removeClass("is-invalid");
-		if($("#userName").val() == null || $("#userName").val() =="") {
-			$("#userName").addClass("is-invalid");
-		} else {
-			$("#userName").removeClass("is-invalid");		
-		}
-});
-$("#userTel").on("keyup", function(){
-	let regExp = /^\d{3} - \d{3,4} - \d{4}$/;
-	$("#userTel").removeClass("is-invalid");
-	if(!regExp.test($("#userTel").val())) {
-		$("#userTel").addClass("is-invalid");
-	} else {
-		$("#userTel").removeClass("is-invalid");		
-	}
-});
-$("#userEmail").on("keyup", function(){
-	let regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/
-	$("#userEmail").removeClass("is-invalid");
-	if(!regExp.test($("#userEmail").val())) {
-		$("#userEmail").addClass("is-invalid");
-	} else {
-		$("#userEmail").removeClass("is-invalid");		
-	}
-});
-$("#btnSignUp").on("click", function(){
-	idChkLogic ();
-	if($("#userId").val() == null || $("#userId").val() =="") {
-		$("#userId").addClass("is-invalid");
-		return false;
-	} else {
-		$("#userId").removeClass("is-invalid");
-	}
-	if($("#userPassword").val() == null || $("#userPassword").val() =="") {
-		$("#userPassword").addClass("is-invalid");
-		return false;
-	} else {
-		$("#userPassword").removeClass("is-invalid");		
-	}
+	$("#userName").removeClass("is-valid");
 	if($("#userName").val() == null || $("#userName").val() =="") {
 		$("#userName").addClass("is-invalid");
 		return false;
 	} else {
 		$("#userName").removeClass("is-invalid");		
+		$("#userName").addClass("is-valid");
 	}
-	if($("#userEmail").val() == null || $("#userEmail").val() =="") {
-		$("#userEmail").addClass("is-invalid");
+});
+
+$("#userTel").on("keyup", function(){
+	$("#userTel").removeClass("is-valid");
+	let regExp = /^\d{3} - \d{3,4} - \d{4}$/;
+	if(!regExp.test($("#userTel").val())) {
+		$("#userTel").addClass("is-invalid");
 		return false;
 	} else {
-		$("#userEmail").removeClass("is-invalid");		
+		$("#userTel").removeClass("is-invalid");		
+		$("#userTel").addClass("is-valid");
 	}
+});
+function chkIdDuplicate() {
+	let result = false;
+	$.ajax({
+		async: false 
+		,cache: false
+		,type: "post"
+		,url: "/member/idChkUsrProc"
+		,data : { "userId" : $("#userId").val()}
+		,success: function(response) {
+			if(response.rt == "success") {
+				document.getElementById("userIdInvalid").innerText = "중복된 아이디입니다.";
+		 		$("#userId").addClass("is-invalid");
+		 		$("#userId").focus();
+			} else {
+				result = true;
+			}
+		}
+		,error : function(jqXHR, textStatus, errorThrown){
+			alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);			
+		}
+	});
+	return result;
+}
+
+function chkEmailDuplicate() {
+	let result = false;
+	$.ajax({
+		async: false 
+		,cache: false
+		,type: "post"
+		,url: "/member/emailChkUsrProc"
+		,data : { "userEmail" : $("#userEmail").val()}
+		,success: function(response) {
+			if(response.rt == "success") {
+			} else {
+		 		result = true;
+				
+			}
+		}
+		,error : function(jqXHR, textStatus, errorThrown){
+			alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+		}
+	});
+	return result;
+}
+
+function validation() {
+	if($("#userId").val() == null || $("#userId").val() =="") {
+ 		return false;
+	} 
+	
+	const isIdDuplicate = chkIdDuplicate();
+    if (!isIdDuplicate) {
+    	document.getElementById("modalAlertTitle").innerText = "중복된 아이디입니다.";
+ 		document.getElementById("modalAlertBody").innerText = "다른 아이디를 사용해주세요!";
+ 		$("#modalAlert").modal("show");
+ 		$("#userId").addClass("is-invalid");
+ 		$("#cclose").on("click", function(){$("#userId").focus()});
+ 		$("#xclose").on("click", function(){$("#userId").focus()});
+        return false;
+    }
+	
+	if($("#userEmail").val() == null || $("#userEmail").val() =="") {
+		return false;
+	} 
+	let regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/
+	if(!regExp.test($("#userEmail").val())) {
+		return false;
+	} 
+	if($("#userName").val() == null || $("#userName").val() =="") {
+		return false;
+	} 
+	if($("#userEmail").val() == null || $("#userEmail").val() =="") {
+		return false;
+	}
+	
+	const isEmailDuplicate = chkEmailDuplicate();
+    if (!isEmailDuplicate) {
+    	document.getElementById("modalAlertTitle").innerText = "중복된 이메일입니다.";
+ 		document.getElementById("modalAlertBody").innerText = "다른 이메일 주소를 사용해주세요!";
+ 		$("#modalAlert").modal("show");
+ 		$("#userEmail").addClass("is-invalid");
+ 		$("#cclose").on("click", function(){$("#userEmail").focus()});
+ 		$("#xclose").on("click", function(){$("#userEmail").focus()});
+        return false;
+    }
+	return true;
+};
+
+$("#btnSignUp").on("click", function(){
+	idChkLogic ();
+	if(validation() == false) return false;
+	
 	document.getElementById("form").action = "/member/memberUsrInst";
 	document.getElementById("form").submit();
 });

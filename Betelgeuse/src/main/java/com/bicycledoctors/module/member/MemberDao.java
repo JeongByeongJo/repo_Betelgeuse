@@ -18,6 +18,7 @@ public interface MemberDao {
 	public int uelete(MemberDto memberDto);
 	public int selectOneCount(MemberVo vo);
 	public MemberDto selectOneIdChk(MemberDto memberDto);
+	public MemberDto selectOneEmailChk(MemberDto memberDto);
 	public MemberDto pswdrecoveryChk(MemberDto memberDto);
 
 }
