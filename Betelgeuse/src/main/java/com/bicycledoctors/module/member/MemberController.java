@@ -97,6 +97,8 @@ public class MemberController extends BaseController {
 	
 	@RequestMapping(value = "/member/memberUsrInst")
 	public String memberUsrInst(MemberDto memberDto) {
+		memberDto.setUserPassword(encodeBcrypt(memberDto.getUserPassword(), 10));
+		System.out.println(memberDto.getUserPassword());
 		memberService.insert(memberDto);
 		return "redirect:/member/signinUsrForm";
 	}
@@ -106,16 +108,29 @@ public class MemberController extends BaseController {
 	public Map<String, Object> signinUsrProc(MemberDto dto, HttpSession httpSession) throws Exception {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
-		MemberDto rtMember = memberService.selectOneIdChk(dto);		
-
-		if(rtMember != null) {
-			returnMap.put("rt", "success");
-			httpSession.setMaxInactiveInterval(60 * 30); 						// 60second * 30 = 30minute
-			httpSession.setAttribute("sessSeqUsr", rtMember.getSeq());
-			httpSession.setAttribute("sessIdUsr", rtMember.getUserId());
-			httpSession.setAttribute("sessNameUsr", rtMember.getUserName());
+		MemberDto rtMemberId = memberService.selectOneId(dto);
+		if(Integer.valueOf(rtMemberId.getSeq()) > 11) {
+			if(rtMemberId != null && matchesBcrypt(dto.getUserPassword(), rtMemberId.getUserPassword(), 10)) {
+				returnMap.put("rt", "success");
+				httpSession.setMaxInactiveInterval(60 * 30); 						// 60second * 30 = 30minute
+				httpSession.setAttribute("sessSeqUsr", rtMemberId.getSeq());
+				httpSession.setAttribute("sessIdUsr", rtMemberId.getUserId());
+				httpSession.setAttribute("sessNameUsr", rtMemberId.getUserName());
+			} else {
+				returnMap.put("rt", "fail");
+			}
 		} else {
-			returnMap.put("rt", "fail");
+			MemberDto rtMember = memberService.selectOneIdChk(dto);
+			
+			if(rtMember != null) {
+				returnMap.put("rt", "success");
+				httpSession.setMaxInactiveInterval(60 * 30); 						// 60second * 30 = 30minute
+				httpSession.setAttribute("sessSeqUsr", rtMember.getSeq());
+				httpSession.setAttribute("sessIdUsr", rtMember.getUserId());
+				httpSession.setAttribute("sessNameUsr", rtMember.getUserName());
+			} else {
+				returnMap.put("rt", "fail");
+			}
 		}
 		return returnMap;
 	}

@@ -43,6 +43,9 @@ public class MemberService {
 	public MemberDto selectOneIdChk(MemberDto memberDto) {
 		return memberDao.selectOneIdChk(memberDto);
 	}
+	public MemberDto selectOneId(MemberDto memberDto) {
+		return memberDao.selectOneId(memberDto);
+	}
 	public MemberDto selectOneEmailChk(MemberDto memberDto) {
 		return memberDao.selectOneEmailChk(memberDto);
 	}

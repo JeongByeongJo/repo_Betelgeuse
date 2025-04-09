@@ -146,6 +146,18 @@
 		    	and userId = #{userId}
 				<if test="userPassword != null and !userPassword.equals('')">AND userPassword = #{userPassword}</if>
 	</select>
+	<select id="selectOneId" resultMap="resultMapObj">
+		SELECT
+				seq
+				,userId
+			    ,userPassword
+			    ,userName
+			    ,delNy
+		    from
+		    	usercustomer
+		    where 1=1
+		    	and userId = #{userId}
+	</select>
 	
 	<select id="selectOneEmailChk" resultMap="resultMapObj">
 		SELECT

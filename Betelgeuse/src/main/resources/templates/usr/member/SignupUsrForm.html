@@ -110,7 +110,7 @@
               <label for="ex-radio-5" class="form-check-label">남 성</label>
             </div>
             <div class="form-check form-check-inline mb-4">
-              <input type="radio" class="form-check-input" id="" value="2">
+              <input type="radio" class="form-check-input" id="" name="userGender" value="2">
               <label for="ex-radio-6" class="form-check-label">여 성</label>
             </div>
             <br>
@@ -281,15 +281,15 @@
     <div class="modal fade" id="modalAlert" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
-				<div class="modal-header">
+				<div class="modal-header" style="background-color: lightcoral;">
 					<h5 class="modal-title" id="modalAlertTitle">title</h5>
 					<button type="button" id="xclose" name="xclose" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body" id="modalAlertBody">
 					body
 				</div>
-				<div class="modal-footer">
-					<button type="button" id="cclose" name="cclose" class="btn btn-outline-secondary btn-sm btn_custom" data-bs-dismiss="modal">닫힘</button>
+				<div class="modal-footer" style="padding: 2%;">
+					<button type="button" id="cclose" name="cclose" class="btn btn-outline-secondary" data-bs-dismiss="modal">닫힘</button>
 				</div>
 			</div>
 		</div>
@@ -298,33 +298,6 @@
 	
 <script type="text/javascript">
 var form = document.getElementById("form")
-
-function idChkLogic (){
-// 	if(validation() == false) return false;
-	$.ajax({
-		async: true 
-		,cache: false
-		,type: "post"
-		,url: "/member/idChkUsrProc"
-		,data : { "userId" : $("#userId").val()}
-		,success: function(response) {
-			if(response.rt == "success") {
-				document.getElementById("modalAlertTitle").innerText = "중복된 아이디입니다.";
-		 		document.getElementById("modalAlertBody").innerText = "다른 아이디를 사용해주세요!";
-		 		$("#modalAlert").modal("show");
-		 		$("#userId").addClass("is-invalid");
-		 		$("#cclose").on("click", function(){$("#userId").focus()});
-		 		$("#xclose").on("click", function(){$("#userId").focus()});
-		 		return false;
-			} else {
-		 		//by pass
-			}
-		}
-		,error : function(jqXHR, textStatus, errorThrown){
-			alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
-		}
-	});
-}
 
 $("#userId").on("blur", function(){
 	$("#userId").removeClass("is-valid");
@@ -485,6 +458,7 @@ function chkEmailDuplicate() {
 
 function validation() {
 	if($("#userId").val() == null || $("#userId").val() =="") {
+		$("#userId").focus();
  		return false;
 	} 
 	
@@ -500,18 +474,14 @@ function validation() {
     }
 	
 	if($("#userEmail").val() == null || $("#userEmail").val() =="") {
+		$("#userEmail").focus();
 		return false;
 	} 
 	let regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/
 	if(!regExp.test($("#userEmail").val())) {
+		$("#userEmail").focus();
 		return false;
 	} 
-	if($("#userName").val() == null || $("#userName").val() =="") {
-		return false;
-	} 
-	if($("#userEmail").val() == null || $("#userEmail").val() =="") {
-		return false;
-	}
 	
 	const isEmailDuplicate = chkEmailDuplicate();
     if (!isEmailDuplicate) {
@@ -523,11 +493,16 @@ function validation() {
  		$("#xclose").on("click", function(){$("#userEmail").focus()});
         return false;
     }
+    
+    if($("#userName").val() == null || $("#userName").val() =="") {
+		$("#userName").focus();
+		return false;
+	} 
+    
 	return true;
 };
 
 $("#btnSignUp").on("click", function(){
-	idChkLogic ();
 	if(validation() == false) return false;
 	
 	document.getElementById("form").action = "/member/memberUsrInst";
