@@ -98,7 +98,6 @@ public class MemberController extends BaseController {
 	@RequestMapping(value = "/member/memberUsrInst")
 	public String memberUsrInst(MemberDto memberDto) {
 		memberDto.setUserPassword(encodeBcrypt(memberDto.getUserPassword(), 10));
-		System.out.println(memberDto.getUserPassword());
 		memberService.insert(memberDto);
 		return "redirect:/member/signinUsrForm";
 	}
