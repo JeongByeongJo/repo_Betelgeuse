@@ -31,6 +31,8 @@
     <link rel="stylesheet" href="/usr/template/Finder/assets/icons/finder-icons.min.css">
 
     <!-- Vendor styles -->
+    <link rel="stylesheet" href="/usr/template/Finder/assets/vendor/leaflet/dist/leaflet.css">
+    <link rel="stylesheet" href="/usr/template/Finder/assets/vendor/glightbox/dist/css/glightbox.min.css">
     <link rel="stylesheet" href="/usr/template/Finder/assets/vendor/swiper/swiper-bundle.min.css">
     <link rel="stylesheet" href="/usr/template/Finder/assets/vendor/choices.js/public/assets/styles/choices.min.css">
     <link rel="stylesheet" href="/usr/template/Finder/assets/vendor/flatpickr/dist/flatpickr.min.css">
@@ -44,7 +46,214 @@
 
   <!-- Body -->
   <body>
-
+<!-- Filters offcanvas -->
+    <!-- Appointment booking offcanvas -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="bookAppointment">
+      <div class="offcanvas-header pt-3">
+        <h5 class="offcanvas-title">점검&정비 예약하기</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#bookAppointment-1" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body d-block pt-0">
+        <div class="col">
+          <label class="form-label fs-base">점검 & 정비 선택</label>
+          <select class="form-select form-select-lg" data-select multiple aria-label="gear select">
+            <option value=""></option>
+            <option value="Drivetrain">구동계</option>
+            <option value="Brakes">브레이크</option>
+            <option value="Shocks">샥</option>
+            <option value="Wheelset">휠셋</option>
+            <option value="Pedals">페달</option>
+            <option value="Cockpit">콕핏(핸들바,헤드셋 등)</option>
+            <option value="Components">기타 컴포넌트</option>
+            <option value="Expendables">소모품 관리</option>
+          </select>
+        </div>
+        <div class="d-flex gap-4 pb-2 mb-1">
+          <!-- <div class="form-check">
+            <label class="form-check-label">
+              <input type="checkbox" class="form-check-input" name="visit-method">
+              점 검
+            </label>
+          </div>
+          <div class="form-check">
+            <label class="form-check-label">
+              <input type="checkbox" class="form-check-input" name="visit-method">
+              정 비
+            </label>
+          </div> -->
+        </div>
+        <div class="btn-group w-100" role="group" aria-label="Date/time selection">
+          <input type="radio" class="btn-check" name="visit-day" id="visit-day-1" checked>
+          <label class="btn btn-outline-info w-100 px-2" for="visit-day-1">Mon, 11</label>
+          <input type="radio" class="btn-check" name="visit-day" id="visit-day-2" checked>
+          <label class="btn btn-outline-info w-100 px-2" for="visit-day-2">Tue, 12</label>
+          <input type="radio" class="btn-check" name="visit-day" id="visit-day-3">
+          <label class="btn btn-outline-info w-100 px-2" for="visit-day-3">Wed, 13</label>
+          <button type="button" class="btn btn-icon btn-outline-info flex-grow-0 px-2" aria-label="Next">
+            <i class="fi-chevron-right fs-lg"></i>
+          </button>
+        </div>
+        <div class="row row-cols-4 g-2 pt-4 pb-2">
+          <div class="col">
+            <input type="radio" class="btn-check" name="visit-time" id="visit-time-1">
+            <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-1">10:00</label>
+          </div>
+          <div class="col">
+            <input type="radio" class="btn-check" name="visit-time" id="visit-time-2">
+            <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-2">10:30</label>
+          </div>
+          <div class="col">
+            <input type="radio" class="btn-check" name="visit-time" id="visit-time-3">
+            <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-3">11:00</label>
+          </div>
+          <div class="col">
+            <input type="radio" class="btn-check" name="visit-time" id="visit-time-4">
+            <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-4">11:30</label>
+          </div>
+          <div class="col">
+            <input type="radio" class="btn-check" name="visit-time" id="visit-time-5">
+            <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-5">12:00</label>
+          </div>
+          <div class="col">
+            <input type="radio" class="btn-check" name="visit-time" id="visit-time-6" checked>
+            <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-6">12:30</label>
+          </div>
+          <div class="col">
+            <input type="radio" class="btn-check" name="visit-time" id="visit-time-7">
+            <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-7">13:00</label>
+          </div>
+          <div class="col">
+            <input type="radio" class="btn-check" name="visit-time" id="visit-time-8">
+            <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-8">13:30</label>
+          </div>
+          <div class="col">
+            <input type="radio" class="btn-check" name="visit-time" id="visit-time-9">
+            <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-9">14:00</label>
+          </div>
+          <div class="col">
+            <input type="radio" class="btn-check" name="visit-time" id="visit-time-10">
+            <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-10">14:30</label>
+          </div>
+          <div class="col">
+            <input type="radio" class="btn-check" name="visit-time" id="visit-time-11">
+            <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-11">15:00</label>
+          </div>
+          <div class="col">
+            <input type="radio" class="btn-check" name="visit-time" id="visit-time-12">
+            <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-12">15:30</label>
+          </div>
+        </div>
+        <button type="button" class="btn btn-lg btn-primary w-100 mt-4" data-bs-toggle="modal" data-bs-target="#modalId">
+          <i class="fi-clock fs-lg me-2 ms-n1"></i>
+          Next appointment 12:30, Tue, 12
+        </button>
+      </div>
+    </div>
+    <div class="modal fade" id="modalId" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">예약하기</h5>
+            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <p>Modal body content goes here.</p>
+          </div>
+          <div class="modal-footer flex-column flex-sm-row align-items-stretch">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+            <button type="button" class="btn btn-primary">예약하기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="reviewForm" data-bs-backdrop="static" tabindex="-1" aria-labelledby="reviewFormLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <form class="modal-content needs-validation" novalidate>
+          <div class="modal-header border-0">
+            <h5 class="modal-title" id="reviewFormLabel">리뷰를 남겨주세요.</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body pb-3 pt-0">
+            <div class="mb-3">
+              <label for="review-name" class="form-label">성함 <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="review-name" required>
+              <div class="invalid-feedback">성함을 입력해주세요!</div>
+              <small class="form-text">리뷰에 사용될 이름입니다.</small>
+            </div>
+            <div class="mb-3">
+              <label for="review-email" class="form-label">이메일 <span class="text-danger">*</span></label>
+              <input type="email" class="form-control" id="review-email" required>
+              <div class="invalid-feedback">유효한 이메일 주소를 입력해주세요!</div>
+              <small class="form-text">리뷰작성 외에 이메일주소를 사용하지 않습니다.</small>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">별점 <span class="text-danger">*</span></label>
+              <select class="form-select" data-select='{
+                "placeholderValue": "Select rating",
+                "choices": [
+                  {
+                    "value": "",
+                    "label": "Select rating",
+                    "placeholder": true
+                  },
+                  {
+                    "value": "1",
+                    "label": "<span class=\"visually-hidden\">1 star</span>",
+                    "customProperties": {
+                      "icon": "<span class=\"d-flex gap-1 py-1\"><i class=\"fi-star-filled text-warning\"></i></span>",
+                      "selected": "1 star"
+                    }
+                  },
+                  {
+                    "value": "2",
+                    "label": "<span class=\"visually-hidden\">2 stars</span>",
+                    "customProperties": {
+                      "icon": "<span class=\"d-flex gap-1 py-1\"><i class=\"fi-star-filled text-warning\"></i><i class=\"fi-star-filled text-warning\"></i></span>",
+                      "selected": "2 stars"
+                    }
+                  },
+                  {
+                    "value": "3",
+                    "label": "<span class=\"visually-hidden\">3 stars</span>",
+                    "customProperties": {
+                      "icon": "<span class=\"d-flex gap-1 py-1\"><i class=\"fi-star-filled text-warning\"></i><i class=\"fi-star-filled text-warning\"></i><i class=\"fi-star-filled text-warning\"></i></span>",
+                      "selected": "3 stars"
+                    }
+                  },
+                  {
+                    "value": "4",
+                    "label": "<span class=\"visually-hidden\">4 stars</span>",
+                    "customProperties": {
+                      "icon": "<span class=\"d-flex gap-1 py-1\"><i class=\"fi-star-filled text-warning\"></i><i class=\"fi-star-filled text-warning\"></i><i class=\"fi-star-filled text-warning\"></i><i class=\"ci-star-filled text-warning\"></i></span>",
+                      "selected": "4 stars"
+                    }
+                  },
+                  {
+                    "value": "5",
+                    "label": "<span class=\"visually-hidden\">5 stars</span>",
+                    "customProperties": {
+                      "icon": "<span class=\"d-flex gap-1 py-1\"><i class=\"fi-star-filled text-warning\"></i><i class=\"fi-star-filled text-warning\"></i><i class=\"fi-star-filled text-warning\"></i><i class=\"fi-star-filled text-warning\"></i><i class=\"ci-star-filled text-warning\"></i></span>",
+                      "selected": "5 stars"
+                    }
+                  }
+                ]
+              }' data-select-template="true" aria-label="Rating select" required></select>
+              <div class="invalid-feedback">별점을 메겨주세요!</div>
+            </div>
+            <div>
+              <label class="form-label" for="review-text">리뷰 <span class="text-danger">*</span></label>
+              <textarea class="form-control" rows="4" id="review-text" required></textarea>
+              <div class="invalid-feedback">리뷰를 적어주세요!</div>
+              <!-- <small class="form-text">Your review must be at least 50 characters.</small> -->
+            </div>
+          </div>
+          <div class="modal-footer flex-nowrap gap-3 border-0 px-4">
+            <button type="reset" class="btn btn-secondary w-100 m-0" data-bs-dismiss="modal">취소</button>
+            <button type="submit" class="btn btn-primary w-100 m-0">리뷰 작성</button>
+          </div>
+        </form>
+      </div>
+    </div>
     <!-- Navigation bar (Page header) -->
     <header class="navbar navbar-expand-lg bg-body navbar-sticky sticky-top z-fixed px-0" data-sticky-element>
       <div class="container">
@@ -77,7 +286,10 @@
                 <a class="nav-link" href="/bicycle/bicycleUsrForm">자전거 등록하기</a>
               </li>
               <li class="nav-item py-lg-2 me-lg-n2 me-xl-0">
-                <a class="nav-link" href="listings-bikeshop.html">점검 & 정비</a>
+                <a class="nav-link" href="/shop/shopaddlocationUsrForm">매장 등록하기</a>
+              </li>
+              <li class="nav-item py-lg-2 me-lg-n2 me-xl-0">
+                <a class="nav-link" href="/shop/shopUsrList">점검 & 정비</a>
               </li>
               <li class="nav-item dropdown py-lg-2 me-lg-n1 me-xl-0">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-trigger="hover" data-bs-auto-close="outside" aria-expanded="false">Pages</a>

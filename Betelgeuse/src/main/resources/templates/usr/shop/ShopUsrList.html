@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="ko" data-bs-theme="light" data-pwa="true" xmlns:th="http://www.thymeleaf.org">
+  <div th:replace="~{usr/include/LoginedHead :: LoginedHead}"></div>
+
+    <!-- Page content -->
+    <main class="content-wrapper d-lg-flex">
+      <div class="d-lg-flex flex-grow-1">
+
+        <!-- Interactive map that turns into offcanvas on screens < 992px wide (lg breakpoint) -->
+        <div class="map-section">
+          <div class="offcanvas-lg offcanvas-start d-flex flex-column w-100 h-100" id="map">
+            <div class="offcanvas-body position-relative h-100 p-0">
+              <button type="button" class="btn btn-icon btn-outline-secondary bg-body shadow position-absolute top-0 z-5 mt-2 d-lg-none" style="right: 0; margin-right: 8px; z-index: 500" data-bs-dismiss="offcanvas" data-bs-target="#map" aria-label="Close">
+                <i class="fi-close fs-lg"></i>
+              </button>
+
+              <!-- In order to make the map look like in the demo site add following property "tileLayer": "https://api.maptiler.com/maps/pastel/{z}/{x}/{y}.png?key=YOUR_MAPTILER_API_KEY", "tileSize": 512 and "zoomOffset": -1 to [data-map] attribute -->
+              <div class="position-absolute top-0 start-0 w-100 h-100 bg-body-tertiary" data-map='{
+                "zoom": 15,
+                "templates": {
+                  "marker": "<div class=\"map-marker\"><i class=\"fi-map-pin-filled text-primary fs-4\"></i><span class=\"map-marker-price\">${{price}}</span></div>",
+                  "popup": "<div class=\"card bg-transparent border-0\" data-bs-theme=\"light\"><div class=\"card-img-top position-relative bg-body-tertiary overflow-hidden\"><div class=\"ratio d-block\" style=\"--fn-aspect-ratio: calc(248 / 362 * 100%)\"><img src=\"{{image}}\" alt=\"Image\"></div></div><div class=\"card-body p-3\"><div class=\"h5 mb-2\">${{price}}</div><h3 class=\"fs-sm fw-normal text-body mb-2\"><a class=\"stretched-link text-body\" href=\"single-entry-real-estate.html\">{{address}}</a></h3><div class=\"h6 fs-sm mb-0\">{{area}} sq.m</div></div><div class=\"card-footer d-flex gap-2 border-0 bg-transparent pt-0 pb-3 px-3 mt-n1\"><div class=\"d-flex align-items-center fs-sm gap-1 me-1\">{{bedrooms}}<i class=\"fi-bed-single fs-base text-secondary-emphasis\"></i></div><div class=\"d-flex align-items-center fs-sm gap-1 me-1\">{{bathrooms}}<i class=\"fi-shower fs-base text-secondary-emphasis\"></i></div><div class=\"d-flex align-items-center fs-sm gap-1 me-1\">{{garage}}<i class=\"fi-car-garage fs-base text-secondary-emphasis\"></i></div></div></div>"
+                }
+              }' data-map-markers="assets/json/map-real-estate.json"></div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Listings with filters -->
+        <div class="listings-section px-3 px-lg-4 pe-xxl-5">
+
+          <!-- Sticky filters -->
+          <div class="sticky-top bg-body mb-2 mb-sm-1">
+            <div class="d-md-none" style="height: 64px;  margin-top: -64px"></div>
+            <div class="d-none d-md-block d-lg-none" style="height: 72px;  margin-top: -72px"></div>
+            <div class="d-none d-lg-block" style="height: 76px; margin-top: -76px"></div>
+            <div class="d-flex gap-2 gap-sm-3 py-2 py-sm-3">
+              <div class="position-relative" style="width: 500px">
+                <i class="fi-map-pin position-absolute top-50 start-0 translate-middle-y z-1 ms-3"></i>
+                <input type="search" class="form-control form-icon-start" value="New York, Brooklyn" placeholder="Search for location">
+              </div>
+              <div class="flex-shrink-0 d-none d-md-block" style="width: 140px">
+                <div class="position-relative">
+                  <i class="fi-navigation position-absolute top-50 start-0 translate-middle-y z-1 ms-3"></i>
+                  <select class="form-select form-icon-start bg-transparent" data-select='{
+                    "classNames": {
+                      "containerInner": ["form-select", "form-icon-start", "bg-transparent"]
+                    }
+                  }' aria-label="Location radius select">
+                    <option value="">Any radius</option>
+                    <option value="5 mi" selected>5 mi</option>
+                    <option value="10 mi">10 mi</option>
+                    <option value="20 mi">20 mi</option>
+                    <option value="30 mi">30 mi</option>
+                    <option value="40 mi">40 mi</option>
+                    <option value="50 mi">50 mi</option>
+                  </select>
+                </div>
+              </div>
+              <div class="position-relative" style="width: 180px">
+                <input type="text" class="form-control form-icon-end" id="date-1" data-datepicker placeholder="Choose date">
+                <i class="fi-calendar position-absolute top-50 end-0 translate-middle-y me-3"></i>
+              </div>
+
+              <!-- Map offcanvas toggle button visible on screens < 992px wide (lg breakpoint) -->
+              <button type="button" class="btn btn-outline-dark pe-3 d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#map" aria-controls="map">
+                <i class="fi-map fs-base me-2 ms-n1"></i>
+                <span class="d-none d-sm-inline">Show on map</span>
+                <span class="d-sm-none">Map</span>
+              </button>
+
+              <!-- Filters offcanvas toggle button -->
+              <div class="position-relative">
+                <button type="button" class="btn btn-icon btn-dark" data-bs-toggle="offcanvas" data-bs-target="#filters" aria-controls="filters" aria-label="Toogle filters">
+                  <i class="fi-sliders fs-base"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- Sort selector -->
+          <div class="d-flex align-items-center gap-2 gap-sm-3 mb-3">
+            <div class="fs-sm text-nowrap">Showing 156 results</div>
+            <div class="position-relative ms-auto" style="width: 150px">
+              <i class="fi-sort position-absolute top-50 start-0 translate-middle-y z-2"></i>
+              <select class="form-select border-0 rounded-0 ps-4 pe-1" data-select='{
+                "removeItemButton": false,
+                "classNames": {
+                  "containerInner": ["form-select", "border-0", "rounded-0", "ps-4", "pe-1"]
+                }
+              }'>
+              <option value="Distance Asc">거리순</option>
+              <option value="Hit Desc">조회순</option>
+              <option value="Recommend Asc">추천순</option>
+              <option value="Updated">업데이트순</option>
+              </select>
+            </div>
+          </div>
+
+
+          <!-- Listings grid -->
+          <div class="row row-cols-1 row-cols-sm-2 g-4">
+
+            <!-- Listing -->
+            <div class="col">
+              <article class="card hover-effect-opacity h-100" data-map-bind-to-marker="1">
+                <div class="card-img-top position-relative bg-body-tertiary overflow-hidden">
+                  <div class="swiper z-2" data-swiper='{
+                    "pagination": {
+                      "el": ".swiper-pagination"
+                    },
+                    "navigation": {
+                      "prevEl": ".btn-prev",
+                      "nextEl": ".btn-next"
+                    },
+                    "breakpoints": {
+                      "991": {
+                        "allowTouchMove": false
+                      }
+                    }
+                  }'>
+                    <a class="swiper-wrapper" href="/shop/shopUsrView">
+                      <div class="swiper-slide">
+                        <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
+                          <img src="/usr/template/Finder/assets/img/listings/bd/1731905799997173.jpg" alt="Image">
+                          <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
+                        </div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
+                          <img src="/usr/template/Finder/assets/img/listings/bd/1731905809524829.jpg" alt="Image">
+                          <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
+                        </div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
+                          <img src="/usr/template/Finder/assets/img/listings/bd/1731905825460932.jpg" alt="Image">
+                          <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
+                        </div>
+                      </div>
+                    </a>
+                    <div class="d-flex flex-column gap-2 align-items-start position-absolute top-0 start-0 z-1 pt-1 pt-sm-0 ps-1 ps-sm-0 mt-2 mt-sm-3 ms-2 ms-sm-3">
+                      <span class="badge text-bg-info d-inline-flex align-items-center">
+                        Verified
+                        <i class="fi-shield ms-1"></i>
+                      </span>
+                      <span class="badge text-bg-primary">New</span>
+                    </div>
+                    <div class="position-absolute top-0 end-0 z-1 hover-effect-target opacity-0 pt-1 pt-sm-0 pe-1 pe-sm-0 mt-2 mt-sm-3 me-2 me-sm-3">
+                      <button type="button" class="btn btn-sm btn-icon btn-light bg-light border-0 rounded-circle animate-pulse" aria-label="Add to wishlist">
+                        <i class="fi-heart animate-target fs-sm"></i>
+                      </button>
+                    </div>
+                    <div class="position-absolute top-50 start-0 z-1 translate-middle-y d-none d-lg-block hover-effect-target opacity-0 ms-3">
+                      <button type="button" class="btn btn-sm btn-prev btn-icon btn-light bg-light rounded-circle animate-slide-start" aria-label="Prev">
+                        <i class="fi-chevron-left fs-lg animate-target"></i>
+                      </button>
+                    </div>
+                    <div class="position-absolute top-50 end-0 z-1 translate-middle-y d-none d-lg-block hover-effect-target opacity-0 me-3">
+                      <button type="button" class="btn btn-sm btn-next btn-icon btn-light bg-light rounded-circle animate-slide-end" aria-label="Next">
+                        <i class="fi-chevron-right fs-lg animate-target"></i>
+                      </button>
+                    </div>
+                    <div class="swiper-pagination bottom-0 mb-2" data-bs-theme="light"></div>
+                  </div>
+                </div>
+                <div class="card-body p-4 pb-3">
+                  <div class="h5 mb-2">섭바이크</div>
+                  <h3 class="fs-sm fw-normal text-body mb-2">                    
+                      서울 중랑구 용마산로136가길 2 1층<br>02-978-0719                    
+                  </h3>                  
+                </div>
+                <div class="card-footer gap-2 border-0 bg-transparent pt-0 pb-0 px-3 mt-n1">
+                  <div class="row px-2">
+                    <div class="col-4">
+                      <a class="btn btn-outline-secondary mb-3" href="#collapseExample" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        영업시간
+                      </a>
+                    </div>
+                    <div class="col-1"></div>
+                    <div class="col-5 px-4">
+                      <button type="button" class="btn btn-outline-primary" data-bs-toggle="offcanvas" data-bs-target="#bookAppointment" aria-controls="bookAppointment">
+                        점검&정비 예약하기
+                      </button>
+                    </div>
+                  </div>
+                  <div class="row px-2">
+                    <div class="col">
+                      <div class="collapse" id="collapseExample">
+                        <ul class="list-unstyled align-items-start small">
+                          <li>월요일 13:00 ~ 20:00</li>
+                          <li>화,수,목,금,토 10:30 ~ 20:00</li>
+                          <li>일요일 휴무</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            </div>
+
+            <!-- Listing -->
+            <div class="col">
+              <article class="card hover-effect-opacity h-100" data-map-bind-to-marker="2">
+                <div class="card-img-top position-relative bg-body-tertiary overflow-hidden">
+                  <div class="swiper z-2" data-swiper='{
+                    "pagination": {
+                      "el": ".swiper-pagination"
+                    },
+                    "navigation": {
+                      "prevEl": ".btn-prev",
+                      "nextEl": ".btn-next"
+                    },
+                    "breakpoints": {
+                      "991": {
+                        "allowTouchMove": false
+                      }
+                    }
+                  }'>
+                    <a class="swiper-wrapper" href="single-entry-real-estate.html">
+                      <div class="swiper-slide">
+                        <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
+                          <img src="/usr/template/Finder/assets/img/listings/bd/bkeland.jpg" alt="Image">
+                          <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
+                        </div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
+                          <img src="/usr/template/Finder/assets/img/listings/bd/bkeland1.jpg" alt="Image">
+                          <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
+                        </div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
+                          <img src="/usr/template/Finder/assets/img/listings/bd/bkelande.jpeg" alt="Image">
+                          <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
+                        </div>
+                      </div>
+                    </a>
+                    <div class="d-flex flex-column gap-2 align-items-start position-absolute top-0 start-0 z-1 pt-1 pt-sm-0 ps-1 ps-sm-0 mt-2 mt-sm-3 ms-2 ms-sm-3">
+                      <span class="badge text-bg-primary">New</span>
+                    </div>
+                    <div class="position-absolute top-0 end-0 z-1 hover-effect-target opacity-0 pt-1 pt-sm-0 pe-1 pe-sm-0 mt-2 mt-sm-3 me-2 me-sm-3">
+                      <button type="button" class="btn btn-sm btn-icon btn-light bg-light border-0 rounded-circle animate-pulse" aria-label="Add to wishlist">
+                        <i class="fi-heart animate-target fs-sm"></i>
+                      </button>
+                    </div>
+                    <div class="position-absolute top-50 start-0 z-1 translate-middle-y d-none d-lg-block hover-effect-target opacity-0 ms-3">
+                      <button type="button" class="btn btn-sm btn-prev btn-icon btn-light bg-light rounded-circle animate-slide-start" aria-label="Prev">
+                        <i class="fi-chevron-left fs-lg animate-target"></i>
+                      </button>
+                    </div>
+                    <div class="position-absolute top-50 end-0 z-1 translate-middle-y d-none d-lg-block hover-effect-target opacity-0 me-3">
+                      <button type="button" class="btn btn-sm btn-next btn-icon btn-light bg-light rounded-circle animate-slide-end" aria-label="Next">
+                        <i class="fi-chevron-right fs-lg animate-target"></i>
+                      </button>
+                    </div>
+                    <div class="swiper-pagination bottom-0 mb-2" data-bs-theme="light"></div>
+                  </div>
+                </div>
+                <div class="card-body p-4 pb-3">
+                  <div class="h5 mb-2">바이크랜드</div>
+                  <h3 class="fs-sm fw-normal text-body mb-2">                    
+                      서울시 중랑구 동일로 717<br>02-492-5501                    
+                  </h3>                  
+                </div>
+                <div class="card-footer gap-2 border-0 bg-transparent pt-0 pb-0 px-3 mt-n1">
+                  <div class="row px-2">
+                    <div class="col-4">
+                      <a class="btn btn-outline-secondary mb-3" href="#collapsebklnd" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapsebklnd">
+                        영업시간
+                      </a>
+                    </div>
+                    <div class="col-1"></div>
+                    <div class="col-5 px-4">
+                      <button type="button" class="btn btn-outline-primary" data-bs-toggle="offcanvas" data-bs-target="#bookAppointment" aria-controls="bookAppointment">
+                        점검&정비 예약하기
+                      </button>
+                    </div>
+                  </div>
+                  <div class="row px-2">
+                    <div class="col">
+                      <div class="collapse" id="collapsebklnd">
+                        <ul class="list-unstyled align-items-start small">
+                          <li>월,수,목,금,토,일 09:30 ~ 18:00</li>
+                          <li>화요일 휴무</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>                   
+                </div>
+              </article>
+            </div>
+
+            <!-- Listing -->
+            <div class="col">
+              <article class="card hover-effect-opacity h-100" data-map-bind-to-marker="3">
+                <div class="card-img-top position-relative bg-body-tertiary overflow-hidden">
+                  <div class="swiper z-2" data-swiper='{
+                    "pagination": {
+                      "el": ".swiper-pagination"
+                    },
+                    "navigation": {
+                      "prevEl": ".btn-prev",
+                      "nextEl": ".btn-next"
+                    },
+                    "breakpoints": {
+                      "991": {
+                        "allowTouchMove": false
+                      }
+                    }
+                  }'>
+                    <a class="swiper-wrapper" href="single-entry-real-estate.html">
+                      <div class="swiper-slide">
+                        <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
+                          <img src="/usr/template/Finder/assets/img/listings/real-estate/03.jpg" alt="Image">
+                          <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
+                        </div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
+                          <img src="/usr/template/Finder/assets/img/listings/real-estate/03.jpg" alt="Image">
+                          <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
+                        </div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
+                          <img src="/usr/template/Finder/assets/img/listings/real-estate/03.jpg" alt="Image">
+                          <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
+                        </div>
+                      </div>
+                    </a>
+                    <div class="d-flex flex-column gap-2 align-items-start position-absolute top-0 start-0 z-1 pt-1 pt-sm-0 ps-1 ps-sm-0 mt-2 mt-sm-3 ms-2 ms-sm-3">
+                      <span class="badge text-bg-info">Featured</span>
+                      <span class="badge text-bg-primary">New</span>
+                    </div>
+                    <div class="position-absolute top-0 end-0 z-1 hover-effect-target opacity-0 pt-1 pt-sm-0 pe-1 pe-sm-0 mt-2 mt-sm-3 me-2 me-sm-3">
+                      <button type="button" class="btn btn-sm btn-icon btn-light bg-light border-0 rounded-circle animate-pulse" aria-label="Add to wishlist">
+                        <i class="fi-heart animate-target fs-sm"></i>
+                      </button>
+                    </div>
+                    <div class="position-absolute top-50 start-0 z-1 translate-middle-y d-none d-lg-block hover-effect-target opacity-0 ms-3">
+                      <button type="button" class="btn btn-sm btn-prev btn-icon btn-light bg-light rounded-circle animate-slide-start" aria-label="Prev">
+                        <i class="fi-chevron-left fs-lg animate-target"></i>
+                      </button>
+                    </div>
+                    <div class="position-absolute top-50 end-0 z-1 translate-middle-y d-none d-lg-block hover-effect-target opacity-0 me-3">
+                      <button type="button" class="btn btn-sm btn-next btn-icon btn-light bg-light rounded-circle animate-slide-end" aria-label="Next">
+                        <i class="fi-chevron-right fs-lg animate-target"></i>
+                      </button>
+                    </div>
+                    <div class="swiper-pagination bottom-0 mb-2" data-bs-theme="light"></div>
+                  </div>
+                </div>
+                <div class="card-body p-3">
+                  <div class="h5 mb-2">$1,890</div>
+                  <h3 class="fs-sm fw-normal text-body mb-2">
+                    <a class="stretched-link text-body" href="single-entry-real-estate.html">3811 Ditmars Blvd Astoria, NY 11105</a>
+                  </h3>
+                  <div class="h6 fs-sm mb-0">75 sq.m</div>
+                </div>
+                <div class="card-footer d-flex gap-2 border-0 bg-transparent pt-0 pb-3 px-3 mt-n1">
+                  <div class="d-flex align-items-center fs-sm gap-1 me-1">
+                    2<i class="fi-bed-single fs-base text-secondary-emphasis"></i>
+                  </div>
+                  <div class="d-flex align-items-center fs-sm gap-1 me-1">
+                    1<i class="fi-shower fs-base text-secondary-emphasis"></i>
+                  </div>
+                  <div class="d-flex align-items-center fs-sm gap-1 me-1">
+                    1<i class="fi-car-garage fs-base text-secondary-emphasis"></i>
+                  </div>
+                </div>
+              </article>
+            </div>
+
+            <!-- Listing -->
+            <div class="col">
+              <article class="card hover-effect-opacity h-100" data-map-bind-to-marker="4">
+                <div class="card-img-top position-relative bg-body-tertiary overflow-hidden">
+                  <div class="swiper z-2" data-swiper='{
+                    "pagination": {
+                      "el": ".swiper-pagination"
+                    },
+                    "navigation": {
+                      "prevEl": ".btn-prev",
+                      "nextEl": ".btn-next"
+                    },
+                    "breakpoints": {
+                      "991": {
+                        "allowTouchMove": false
+                      }
+                    }
+                  }'>
+                    <a class="swiper-wrapper" href="single-entry-real-estate.html">
+                      <div class="swiper-slide">
+                        <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
+                          <img src="/usr/template/Finder/assets/img/listings/real-estate/04.jpg" alt="Image">
+                          <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
+                        </div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
+                          <img src="/usr/template/Finder/assets/img/listings/real-estate/04.jpg" alt="Image">
+                          <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
+                        </div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
+                          <img src="/usr/template/Finder/assets/img/listings/real-estate/04.jpg" alt="Image">
+                          <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
+                        </div>
+                      </div>
+                    </a>
+                    <div class="position-absolute top-0 end-0 z-1 hover-effect-target opacity-0 pt-1 pt-sm-0 pe-1 pe-sm-0 mt-2 mt-sm-3 me-2 me-sm-3">
+                      <button type="button" class="btn btn-sm btn-icon btn-light bg-light border-0 rounded-circle animate-pulse" aria-label="Add to wishlist">
+                        <i class="fi-heart animate-target fs-sm"></i>
+                      </button>
+                    </div>
+                    <div class="position-absolute top-50 start-0 z-1 translate-middle-y d-none d-lg-block hover-effect-target opacity-0 ms-3">
+                      <button type="button" class="btn btn-sm btn-prev btn-icon btn-light bg-light rounded-circle animate-slide-start" aria-label="Prev">
+                        <i class="fi-chevron-left fs-lg animate-target"></i>
+                      </button>
+                    </div>
+                    <div class="position-absolute top-50 end-0 z-1 translate-middle-y d-none d-lg-block hover-effect-target opacity-0 me-3">
+                      <button type="button" class="btn btn-sm btn-next btn-icon btn-light bg-light rounded-circle animate-slide-end" aria-label="Next">
+                        <i class="fi-chevron-right fs-lg animate-target"></i>
+                      </button>
+                    </div>
+                    <div class="swiper-pagination bottom-0 mb-2" data-bs-theme="light"></div>
+                  </div>
+                </div>
+                <div class="card-body p-3">
+                  <div class="h5 mb-2">$1,170</div>
+                  <h3 class="fs-sm fw-normal text-body mb-2">
+                    <a class="stretched-link text-body" href="single-entry-real-estate.html">67-04 Myrtle Ave Glendale, NY 11385</a>
+                  </h3>
+                  <div class="h6 fs-sm mb-0">42 sq.m</div>
+                </div>
+                <div class="card-footer d-flex gap-2 border-0 bg-transparent pt-0 pb-3 px-3 mt-n1">
+                  <div class="d-flex align-items-center fs-sm gap-1 me-1">
+                    1<i class="fi-bed-single fs-base text-secondary-emphasis"></i>
+                  </div>
+                  <div class="d-flex align-items-center fs-sm gap-1 me-1">
+                    1<i class="fi-shower fs-base text-secondary-emphasis"></i>
+                  </div>
+                  <div class="d-flex align-items-center fs-sm gap-1 me-1">
+                    0<i class="fi-car-garage fs-base text-secondary-emphasis"></i>
+                  </div>
+                </div>
+              </article>
+            </div>
+
+            <!-- Listing -->
+            <div class="col">
+              <article class="card hover-effect-opacity h-100" data-map-bind-to-marker="5">
+                <div class="card-img-top position-relative bg-body-tertiary overflow-hidden">
+                  <div class="swiper z-2" data-swiper='{
+                    "pagination": {
+                      "el": ".swiper-pagination"
+                    },
+                    "navigation": {
+                      "prevEl": ".btn-prev",
+                      "nextEl": ".btn-next"
+                    },
+                    "breakpoints": {
+                      "991": {
+                        "allowTouchMove": false
+                      }
+                    }
+                  }'>
+                    <a class="swiper-wrapper" href="single-entry-real-estate.html">
+                      <div class="swiper-slide">
+                        <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
+                          <img src="/usr/template/Finder/assets/img/listings/real-estate/05.jpg" alt="Image">
+                          <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
+                        </div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
+                          <img src="/usr/template/Finder/assets/img/listings/real-estate/05.jpg" alt="Image">
+                          <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
+                        </div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
+                          <img src="/usr/template/Finder/assets/img/listings/real-estate/05.jpg" alt="Image">
+                          <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
+                        </div>
+                      </div>
+                    </a>
+                    <div class="d-flex flex-column gap-2 align-items-start position-absolute top-0 start-0 z-1 pt-1 pt-sm-0 ps-1 ps-sm-0 mt-2 mt-sm-3 ms-2 ms-sm-3">
+                      <span class="badge text-bg-info d-inline-flex align-items-center">
+                        Verified
+                        <i class="fi-shield ms-1"></i>
+                      </span>
+                    </div>
+                    <div class="position-absolute top-0 end-0 z-1 hover-effect-target opacity-0 pt-1 pt-sm-0 pe-1 pe-sm-0 mt-2 mt-sm-3 me-2 me-sm-3">
+                      <button type="button" class="btn btn-sm btn-icon btn-light bg-light border-0 rounded-circle animate-pulse" aria-label="Add to wishlist">
+                        <i class="fi-heart animate-target fs-sm"></i>
+                      </button>
+                    </div>
+                    <div class="position-absolute top-50 start-0 z-1 translate-middle-y d-none d-lg-block hover-effect-target opacity-0 ms-3">
+                      <button type="button" class="btn btn-sm btn-prev btn-icon btn-light bg-light rounded-circle animate-slide-start" aria-label="Prev">
+                        <i class="fi-chevron-left fs-lg animate-target"></i>
+                      </button>
+                    </div>
+                    <div class="position-absolute top-50 end-0 z-1 translate-middle-y d-none d-lg-block hover-effect-target opacity-0 me-3">
+                      <button type="button" class="btn btn-sm btn-next btn-icon btn-light bg-light rounded-circle animate-slide-end" aria-label="Next">
+                        <i class="fi-chevron-right fs-lg animate-target"></i>
+                      </button>
+                    </div>
+                    <div class="swiper-pagination bottom-0 mb-2" data-bs-theme="light"></div>
+                  </div>
+                </div>
+                <div class="card-body p-3">
+                  <div class="h5 mb-2">$1,250</div>
+                  <h3 class="fs-sm fw-normal text-body mb-2">
+                    <a class="stretched-link text-body" href="single-entry-real-estate.html">444 Park Ave, Brooklyn, NY 11205</a>
+                  </h3>
+                  <div class="h6 fs-sm mb-0">54 sq.m</div>
+                </div>
+                <div class="card-footer d-flex gap-2 border-0 bg-transparent pt-0 pb-3 px-3 mt-n1">
+                  <div class="d-flex align-items-center fs-sm gap-1 me-1">
+                    1<i class="fi-bed-single fs-base text-secondary-emphasis"></i>
+                  </div>
+                  <div class="d-flex align-items-center fs-sm gap-1 me-1">
+                    1<i class="fi-shower fs-base text-secondary-emphasis"></i>
+                  </div>
+                  <div class="d-flex align-items-center fs-sm gap-1 me-1">
+                    0<i class="fi-car-garage fs-base text-secondary-emphasis"></i>
+                  </div>
+                </div>
+              </article>
+            </div>
+
+            <!-- Listing -->
+            <div class="col">
+              <article class="card hover-effect-opacity h-100" data-map-bind-to-marker="6">
+                <div class="card-img-top position-relative bg-body-tertiary overflow-hidden">
+                  <div class="swiper z-2" data-swiper='{
+                    "pagination": {
+                      "el": ".swiper-pagination"
+                    },
+                    "navigation": {
+                      "prevEl": ".btn-prev",
+                      "nextEl": ".btn-next"
+                    },
+                    "breakpoints": {
+                      "991": {
+                        "allowTouchMove": false
+                      }
+                    }
+                  }'>
+                    <a class="swiper-wrapper" href="single-entry-real-estate.html">
+                      <div class="swiper-slide">
+                        <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
+                          <img src="/usr/template/Finder/assets/img/listings/real-estate/06.jpg" alt="Image">
+                          <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
+                        </div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
+                          <img src="/usr/template/Finder/assets/img/listings/real-estate/06.jpg" alt="Image">
+                          <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
+                        </div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
+                          <img src="/usr/template/Finder/assets/img/listings/real-estate/06.jpg" alt="Image">
+                          <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
+                        </div>
+                      </div>
+                    </a>
+                    <div class="d-flex flex-column gap-2 align-items-start position-absolute top-0 start-0 z-1 pt-1 pt-sm-0 ps-1 ps-sm-0 mt-2 mt-sm-3 ms-2 ms-sm-3">
+                      <span class="badge text-bg-primary">New</span>
+                    </div>
+                    <div class="position-absolute top-0 end-0 z-1 hover-effect-target opacity-0 pt-1 pt-sm-0 pe-1 pe-sm-0 mt-2 mt-sm-3 me-2 me-sm-3">
+                      <button type="button" class="btn btn-sm btn-icon btn-light bg-light border-0 rounded-circle animate-pulse" aria-label="Add to wishlist">
+                        <i class="fi-heart animate-target fs-sm"></i>
+                      </button>
+                    </div>
+                    <div class="position-absolute top-50 start-0 z-1 translate-middle-y d-none d-lg-block hover-effect-target opacity-0 ms-3">
+                      <button type="button" class="btn btn-sm btn-prev btn-icon btn-light bg-light rounded-circle animate-slide-start" aria-label="Prev">
+                        <i class="fi-chevron-left fs-lg animate-target"></i>
+                      </button>
+                    </div>
+                    <div class="position-absolute top-50 end-0 z-1 translate-middle-y d-none d-lg-block hover-effect-target opacity-0 me-3">
+                      <button type="button" class="btn btn-sm btn-next btn-icon btn-light bg-light rounded-circle animate-slide-end" aria-label="Next">
+                        <i class="fi-chevron-right fs-lg animate-target"></i>
+                      </button>
+                    </div>
+                    <div class="swiper-pagination bottom-0 mb-2" data-bs-theme="light"></div>
+                  </div>
+                </div>
+                <div class="card-body p-3">
+                  <div class="h5 mb-2">$2,750</div>
+                  <h3 class="fs-sm fw-normal text-body mb-2">
+                    <a class="stretched-link text-body" href="single-entry-real-estate.html">929 Hart St, Brooklyn, NY 11237</a>
+                  </h3>
+                  <div class="h6 fs-sm mb-0">108 sq.m</div>
+                </div>
+                <div class="card-footer d-flex gap-2 border-0 bg-transparent pt-0 pb-3 px-3 mt-n1">
+                  <div class="d-flex align-items-center fs-sm gap-1 me-1">
+                    3<i class="fi-bed-single fs-base text-secondary-emphasis"></i>
+                  </div>
+                  <div class="d-flex align-items-center fs-sm gap-1 me-1">
+                    2<i class="fi-shower fs-base text-secondary-emphasis"></i>
+                  </div>
+                  <div class="d-flex align-items-center fs-sm gap-1 me-1">
+                    1<i class="fi-car-garage fs-base text-secondary-emphasis"></i>
+                  </div>
+                </div>
+              </article>
+            </div>
+
+            <!-- Listing -->
+            <div class="col">
+              <article class="card hover-effect-opacity h-100" data-map-bind-to-marker="7">
+                <div class="card-img-top position-relative bg-body-tertiary overflow-hidden">
+                  <div class="swiper z-2" data-swiper='{
+                    "pagination": {
+                      "el": ".swiper-pagination"
+                    },
+                    "navigation": {
+                      "prevEl": ".btn-prev",
+                      "nextEl": ".btn-next"
+                    },
+                    "breakpoints": {
+                      "991": {
+                        "allowTouchMove": false
+                      }
+                    }
+                  }'>
+                    <a class="swiper-wrapper" href="single-entry-real-estate.html">
+                      <div class="swiper-slide">
+                        <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
+                          <img src="/usr/template/Finder/assets/img/listings/real-estate/07.jpg" alt="Image">
+                          <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
+                        </div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
+                          <img src="/usr/template/Finder/assets/img/listings/real-estate/07.jpg" alt="Image">
+                          <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
+                        </div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
+                          <img src="/usr/template/Finder/assets/img/listings/real-estate/07.jpg" alt="Image">
+                          <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
+                        </div>
+                      </div>
+                    </a>
+                    <div class="position-absolute top-0 end-0 z-1 hover-effect-target opacity-0 pt-1 pt-sm-0 pe-1 pe-sm-0 mt-2 mt-sm-3 me-2 me-sm-3">
+                      <button type="button" class="btn btn-sm btn-icon btn-light bg-light border-0 rounded-circle animate-pulse" aria-label="Add to wishlist">
+                        <i class="fi-heart animate-target fs-sm"></i>
+                      </button>
+                    </div>
+                    <div class="position-absolute top-50 start-0 z-1 translate-middle-y d-none d-lg-block hover-effect-target opacity-0 ms-3">
+                      <button type="button" class="btn btn-sm btn-prev btn-icon btn-light bg-light rounded-circle animate-slide-start" aria-label="Prev">
+                        <i class="fi-chevron-left fs-lg animate-target"></i>
+                      </button>
+                    </div>
+                    <div class="position-absolute top-50 end-0 z-1 translate-middle-y d-none d-lg-block hover-effect-target opacity-0 me-3">
+                      <button type="button" class="btn btn-sm btn-next btn-icon btn-light bg-light rounded-circle animate-slide-end" aria-label="Next">
+                        <i class="fi-chevron-right fs-lg animate-target"></i>
+                      </button>
+                    </div>
+                    <div class="swiper-pagination bottom-0 mb-2" data-bs-theme="light"></div>
+                  </div>
+                </div>
+                <div class="card-body p-3">
+                  <div class="h5 mb-2">$1,490</div>
+                  <h3 class="fs-sm fw-normal text-body mb-2">
+                    <a class="stretched-link text-body" href="single-entry-real-estate.html">123 Bedford Avenue, Brooklyn, NY 11211</a>
+                  </h3>
+                  <div class="h6 fs-sm mb-0">80 sq.m</div>
+                </div>
+                <div class="card-footer d-flex gap-2 border-0 bg-transparent pt-0 pb-3 px-3 mt-n1">
+                  <div class="d-flex align-items-center fs-sm gap-1 me-1">
+                    2<i class="fi-bed-single fs-base text-secondary-emphasis"></i>
+                  </div>
+                  <div class="d-flex align-items-center fs-sm gap-1 me-1">
+                    1<i class="fi-shower fs-base text-secondary-emphasis"></i>
+                  </div>
+                  <div class="d-flex align-items-center fs-sm gap-1 me-1">
+                    1<i class="fi-car-garage fs-base text-secondary-emphasis"></i>
+                  </div>
+                </div>
+              </article>
+            </div>
+
+            <!-- Listing -->
+            <div class="col">
+              <article class="card hover-effect-opacity h-100" data-map-bind-to-marker="8">
+                <div class="card-img-top position-relative bg-body-tertiary overflow-hidden">
+                  <div class="swiper z-2" data-swiper='{
+                    "pagination": {
+                      "el": ".swiper-pagination"
+                    },
+                    "navigation": {
+                      "prevEl": ".btn-prev",
+                      "nextEl": ".btn-next"
+                    },
+                    "breakpoints": {
+                      "991": {
+                        "allowTouchMove": false
+                      }
+                    }
+                  }'>
+                    <a class="swiper-wrapper" href="single-entry-real-estate.html">
+                      <div class="swiper-slide">
+                        <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
+                          <img src="/usr/template/Finder/assets/img/listings/real-estate/08.jpg" alt="Image">
+                          <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
+                        </div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
+                          <img src="/usr/template/Finder/assets/img/listings/real-estate/08.jpg" alt="Image">
+                          <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
+                        </div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
+                          <img src="/usr/template/Finder/assets/img/listings/real-estate/08.jpg" alt="Image">
+                          <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
+                        </div>
+                      </div>
+                    </a>
+                    <div class="d-flex flex-column gap-2 align-items-start position-absolute top-0 start-0 z-1 pt-1 pt-sm-0 ps-1 ps-sm-0 mt-2 mt-sm-3 ms-2 ms-sm-3">
+                      <span class="badge text-bg-info d-inline-flex align-items-center">
+                        Verified
+                        <i class="fi-shield ms-1"></i>
+                      </span>
+                      <span class="badge text-bg-primary">New</span>
+                    </div>
+                    <div class="position-absolute top-0 end-0 z-1 hover-effect-target opacity-0 pt-1 pt-sm-0 pe-1 pe-sm-0 mt-2 mt-sm-3 me-2 me-sm-3">
+                      <button type="button" class="btn btn-sm btn-icon btn-light bg-light border-0 rounded-circle animate-pulse" aria-label="Add to wishlist">
+                        <i class="fi-heart animate-target fs-sm"></i>
+                      </button>
+                    </div>
+                    <div class="position-absolute top-50 start-0 z-1 translate-middle-y d-none d-lg-block hover-effect-target opacity-0 ms-3">
+                      <button type="button" class="btn btn-sm btn-prev btn-icon btn-light bg-light rounded-circle animate-slide-start" aria-label="Prev">
+                        <i class="fi-chevron-left fs-lg animate-target"></i>
+                      </button>
+                    </div>
+                    <div class="position-absolute top-50 end-0 z-1 translate-middle-y d-none d-lg-block hover-effect-target opacity-0 me-3">
+                      <button type="button" class="btn btn-sm btn-next btn-icon btn-light bg-light rounded-circle animate-slide-end" aria-label="Next">
+                        <i class="fi-chevron-right fs-lg animate-target"></i>
+                      </button>
+                    </div>
+                    <div class="swiper-pagination bottom-0 mb-2" data-bs-theme="light"></div>
+                  </div>
+                </div>
+                <div class="card-body p-3">
+                  <div class="h5 mb-2">$1,560</div>
+                  <h3 class="fs-sm fw-normal text-body mb-2">
+                    <a class="stretched-link text-body" href="single-entry-real-estate.html">124 Maple Street, Brooklyn, NY 11211</a>
+                  </h3>
+                  <div class="h6 fs-sm mb-0">50 sq.m</div>
+                </div>
+                <div class="card-footer d-flex gap-2 border-0 bg-transparent pt-0 pb-3 px-3 mt-n1">
+                  <div class="d-flex align-items-center fs-sm gap-1 me-1">
+                    1<i class="fi-bed-single fs-base text-secondary-emphasis"></i>
+                  </div>
+                  <div class="d-flex align-items-center fs-sm gap-1 me-1">
+                    1<i class="fi-shower fs-base text-secondary-emphasis"></i>
+                  </div>
+                  <div class="d-flex align-items-center fs-sm gap-1 me-1">
+                    1<i class="fi-car-garage fs-base text-secondary-emphasis"></i>
+                  </div>
+                </div>
+              </article>
+            </div>
+
+            <!-- Listing -->
+            <div class="col">
+              <article class="card hover-effect-opacity h-100" data-map-bind-to-marker="9">
+                <div class="card-img-top position-relative bg-body-tertiary overflow-hidden">
+                  <div class="swiper z-2" data-swiper='{
+                    "pagination": {
+                      "el": ".swiper-pagination"
+                    },
+                    "navigation": {
+                      "prevEl": ".btn-prev",
+                      "nextEl": ".btn-next"
+                    },
+                    "breakpoints": {
+                      "991": {
+                        "allowTouchMove": false
+                      }
+                    }
+                  }'>
+                    <a class="swiper-wrapper" href="single-entry-real-estate.html">
+                      <div class="swiper-slide">
+                        <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
+                          <img src="/usr/template/Finder/assets/img/listings/real-estate/09.jpg" alt="Image">
+                          <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
+                        </div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
+                          <img src="/usr/template/Finder/assets/img/listings/real-estate/09.jpg" alt="Image">
+                          <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
+                        </div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
+                          <img src="/usr/template/Finder/assets/img/listings/real-estate/09.jpg" alt="Image">
+                          <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
+                        </div>
+                      </div>
+                    </a>
+                    <div class="position-absolute top-0 end-0 z-1 hover-effect-target opacity-0 pt-1 pt-sm-0 pe-1 pe-sm-0 mt-2 mt-sm-3 me-2 me-sm-3">
+                      <button type="button" class="btn btn-sm btn-icon btn-light bg-light border-0 rounded-circle animate-pulse" aria-label="Add to wishlist">
+                        <i class="fi-heart animate-target fs-sm"></i>
+                      </button>
+                    </div>
+                    <div class="position-absolute top-50 start-0 z-1 translate-middle-y d-none d-lg-block hover-effect-target opacity-0 ms-3">
+                      <button type="button" class="btn btn-sm btn-prev btn-icon btn-light bg-light rounded-circle animate-slide-start" aria-label="Prev">
+                        <i class="fi-chevron-left fs-lg animate-target"></i>
+                      </button>
+                    </div>
+                    <div class="position-absolute top-50 end-0 z-1 translate-middle-y d-none d-lg-block hover-effect-target opacity-0 me-3">
+                      <button type="button" class="btn btn-sm btn-next btn-icon btn-light bg-light rounded-circle animate-slide-end" aria-label="Next">
+                        <i class="fi-chevron-right fs-lg animate-target"></i>
+                      </button>
+                    </div>
+                    <div class="swiper-pagination bottom-0 mb-2" data-bs-theme="light"></div>
+                  </div>
+                </div>
+                <div class="card-body p-3">
+                  <div class="h5 mb-2">$3,860</div>
+                  <h3 class="fs-sm fw-normal text-body mb-2">
+                    <a class="stretched-link text-body" href="single-entry-real-estate.html">212 Harrison Street, Brooklyn, NY 11240</a>
+                  </h3>
+                  <div class="h6 fs-sm mb-0">130 sq.m</div>
+                </div>
+                <div class="card-footer d-flex gap-2 border-0 bg-transparent pt-0 pb-3 px-3 mt-n1">
+                  <div class="d-flex align-items-center fs-sm gap-1 me-1">
+                    3<i class="fi-bed-single fs-base text-secondary-emphasis"></i>
+                  </div>
+                  <div class="d-flex align-items-center fs-sm gap-1 me-1">
+                    2<i class="fi-shower fs-base text-secondary-emphasis"></i>
+                  </div>
+                  <div class="d-flex align-items-center fs-sm gap-1 me-1">
+                    2<i class="fi-car-garage fs-base text-secondary-emphasis"></i>
+                  </div>
+                </div>
+              </article>
+            </div>
+
+            <!-- Listing -->
+            <div class="col">
+              <article class="card hover-effect-opacity h-100" data-map-bind-to-marker="10">
+                <div class="card-img-top position-relative bg-body-tertiary overflow-hidden">
+                  <div class="swiper z-2" data-swiper='{
+                    "pagination": {
+                      "el": ".swiper-pagination"
+                    },
+                    "navigation": {
+                      "prevEl": ".btn-prev",
+                      "nextEl": ".btn-next"
+                    },
+                    "breakpoints": {
+                      "991": {
+                        "allowTouchMove": false
+                      }
+                    }
+                  }'>
+                    <a class="swiper-wrapper" href="single-entry-real-estate.html">
+                      <div class="swiper-slide">
+                        <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
+                          <img src="/usr/template/Finder/assets/img/listings/real-estate/10.jpg" alt="Image">
+                          <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
+                        </div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
+                          <img src="/usr/template/Finder/assets/img/listings/real-estate/10.jpg" alt="Image">
+                          <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
+                        </div>
+                      </div>
+                      <div class="swiper-slide">
+                        <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
+                          <img src="/usr/template/Finder/assets/img/listings/real-estate/10.jpg" alt="Image">
+                          <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
+                        </div>
+                      </div>
+                    </a>
+                    <div class="position-absolute top-0 end-0 z-1 hover-effect-target opacity-0 pt-1 pt-sm-0 pe-1 pe-sm-0 mt-2 mt-sm-3 me-2 me-sm-3">
+                      <button type="button" class="btn btn-sm btn-icon btn-light bg-light border-0 rounded-circle animate-pulse" aria-label="Add to wishlist">
+                        <i class="fi-heart animate-target fs-sm"></i>
+                      </button>
+                    </div>
+                    <div class="position-absolute top-50 start-0 z-1 translate-middle-y d-none d-lg-block hover-effect-target opacity-0 ms-3">
+                      <button type="button" class="btn btn-sm btn-prev btn-icon btn-light bg-light rounded-circle animate-slide-start" aria-label="Prev">
+                        <i class="fi-chevron-left fs-lg animate-target"></i>
+                      </button>
+                    </div>
+                    <div class="position-absolute top-50 end-0 z-1 translate-middle-y d-none d-lg-block hover-effect-target opacity-0 me-3">
+                      <button type="button" class="btn btn-sm btn-next btn-icon btn-light bg-light rounded-circle animate-slide-end" aria-label="Next">
+                        <i class="fi-chevron-right fs-lg animate-target"></i>
+                      </button>
+                    </div>
+                    <div class="swiper-pagination bottom-0 mb-2" data-bs-theme="light"></div>
+                  </div>
+                </div>
+                <div class="card-body p-3">
+                  <div class="h5 mb-2">$2,950</div>
+                  <h3 class="fs-sm fw-normal text-body mb-2">
+                    <a class="stretched-link text-body" href="single-entry-real-estate.html">456 Court Street, Brooklyn, NY 11231</a>
+                  </h3>
+                  <div class="h6 fs-sm mb-0">96 sq.m</div>
+                </div>
+                <div class="card-footer d-flex gap-2 border-0 bg-transparent pt-0 pb-3 px-3 mt-n1">
+                  <div class="d-flex align-items-center fs-sm gap-1 me-1">
+                    3<i class="fi-bed-single fs-base text-secondary-emphasis"></i>
+                  </div>
+                  <div class="d-flex align-items-center fs-sm gap-1 me-1">
+                    1<i class="fi-shower fs-base text-secondary-emphasis"></i>
+                  </div>
+                  <div class="d-flex align-items-center fs-sm gap-1 me-1">
+                    1<i class="fi-car-garage fs-base text-secondary-emphasis"></i>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+
+          <!-- Pagination -->
+          <nav class="pt-3 mt-3" aria-label="Listings pagination">
+            <ul class="pagination pagination-lg justify-content-center">
+              <li class="page-item active" aria-current="page">
+                <span class="page-link">
+                  1
+                  <span class="visually-hidden">(current)</span>
+                </span>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#!">2</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#!">3</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#!">4</a>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#!">5</a>
+              </li>
+              <li class="page-item">
+                <span class="page-link px-2 pe-none">...</span>
+              </li>
+              <li class="page-item">
+                <a class="page-link" href="#!">16</a>
+              </li>
+            </ul>
+          </nav>
+
+          <!-- Footer -->
+          <footer class="text-center pt-4 pt-md-5">
+            <hr class="pb-4">
+            <a class="d-inline-flex align-items-center text-dark-emphasis text-decoration-none mb-4" href="home-real-estate.html">
+              <span class="flex-shrink-0 text-primary rtl-flip me-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="34"><path d="M34.5 16.894v10.731c0 3.506-2.869 6.375-6.375 6.375H17.5h-.85C7.725 33.575.5 26.138.5 17c0-9.35 7.65-17 17-17s17 7.544 17 16.894z" fill="currentColor"></path><g fill-rule="evenodd"><path d="M17.5 13.258c-3.101 0-5.655 2.554-5.655 5.655s2.554 5.655 5.655 5.655 5.655-2.554 5.655-5.655-2.554-5.655-5.655-5.655zm-9.433 5.655c0-5.187 4.246-9.433 9.433-9.433s9.433 4.246 9.433 9.433a9.36 9.36 0 0 1-1.569 5.192l2.397 2.397a1.89 1.89 0 0 1 0 2.671 1.89 1.89 0 0 1-2.671 0l-2.397-2.397a9.36 9.36 0 0 1-5.192 1.569c-5.187 0-9.433-4.246-9.433-9.433z" fill="#000" fill-opacity=".05"></path><g fill="#fff"><path d="M17.394 10.153c-3.723 0-6.741 3.018-6.741 6.741s3.018 6.741 6.741 6.741 6.741-3.018 6.741-6.741-3.018-6.741-6.741-6.741zM7.347 16.894A10.05 10.05 0 0 1 17.394 6.847 10.05 10.05 0 0 1 27.44 16.894 10.05 10.05 0 0 1 17.394 26.94 10.05 10.05 0 0 1 7.347 16.894z"></path><path d="M23.025 22.525c.645-.645 1.692-.645 2.337 0l3.188 3.188c.645.645.645 1.692 0 2.337s-1.692.645-2.337 0l-3.187-3.187c-.645-.646-.645-1.692 0-2.337z"></path></g></g><path d="M23.662 14.663c2.112 0 3.825-1.713 3.825-3.825s-1.713-3.825-3.825-3.825-3.825 1.713-3.825 3.825 1.713 3.825 3.825 3.825z" fill="#fff"></path><path fill-rule="evenodd" d="M23.663 8.429a2.41 2.41 0 0 0-2.408 2.408 2.41 2.41 0 0 0 2.408 2.408 2.41 2.41 0 0 0 2.408-2.408 2.41 2.41 0 0 0-2.408-2.408zm-5.242 2.408c0-2.895 2.347-5.242 5.242-5.242s5.242 2.347 5.242 5.242-2.347 5.242-5.242 5.242-5.242-2.347-5.242-5.242z" fill="currentColor"></path></svg>
+              </span>
+              <span class="fs-4 fw-semibold">Finder</span>
+            </a>
+            <ul class="list-inline justify-content-center gap-2">
+              <li class="me-3">
+                <div class="position-relative d-flex align-items-center">
+                  <i class="fi-mail fs-lg text-body me-2"></i>
+                  <a class="text-dark-emphasis text-decoration-none hover-effect-underline stretched-link" href="mailto:contact@example.com">contact@example.com</a>
+                </div>
+              </li>
+              <li>
+                <div class="position-relative d-flex align-items-center">
+                  <i class="fi-phone-call fs-lg text-body me-2"></i>
+                  <a class="text-dark-emphasis text-decoration-none hover-effect-underline stretched-link" href="tel:+15053753082">+1&nbsp;50&nbsp;537&nbsp;53&nbsp;082</a>
+                </div>
+              </li>
+            </ul>
+            <div class="d-flex justify-content-center pt-2 mt-3">
+              <a class="btn btn-icon fs-base btn-outline-secondary border-0" href="#!" data-bs-toggle="tooltip" data-bs-template='<div class="tooltip fs-xs mb-n2" role="tooltip"><div class="tooltip-inner bg-transparent text-body opacity-75 p-0"></div></div>' title="Instagram" aria-label="Follow us on Instagram">
+                <i class="fi-instagram"></i>
+              </a>
+              <a class="btn btn-icon fs-base btn-outline-secondary border-0" href="#!" data-bs-toggle="tooltip" data-bs-template='<div class="tooltip fs-xs mb-n2" role="tooltip"><div class="tooltip-inner bg-transparent text-body opacity-75 p-0"></div></div>' title="Facebook" aria-label="Follow us on Facebook">
+                <i class="fi-facebook"></i>
+              </a>
+              <a class="btn btn-icon fs-base btn-outline-secondary border-0" href="#!" data-bs-toggle="tooltip" data-bs-template='<div class="tooltip fs-xs mb-n2" role="tooltip"><div class="tooltip-inner bg-transparent text-body opacity-75 p-0"></div></div>' title="X (Twitter)" aria-label="Follow us on X (Twitter)">
+                <i class="fi-x"></i>
+              </a>
+            </div>
+            <div class="py-4">
+              <p class="text-body-secondary fs-sm mb-0 mb-sm-2">&copy; All rights reserved. Made by <a class="text-body fw-medium text-decoration-none hover-effect-underline" href="#" target="_blank" rel="noreferrer">JeongByeongJo</a></p>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </main>
+
+
+    <!-- Back to top button -->
+    <div class="floating-buttons position-fixed top-50 end-0 z-sticky me-3 me-xl-4 pb-4">
+      <a class="btn-scroll-top btn btn-sm bg-body border-0 rounded-pill shadow animate-slide-end" href="#top">
+        Top
+        <i class="fi-arrow-right fs-base ms-1 me-n1 animate-target"></i>
+        <span class="position-absolute top-0 start-0 w-100 h-100 border rounded-pill z-0"></span>
+        <svg class="position-absolute top-0 start-0 w-100 h-100 z-1" viewBox="0 0 62 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x=".75" y=".75" width="60.5" height="30.5" rx="15.25" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"/>
+        </svg>
+      </a>
+    </div>
+
+
+    <!-- Vendor scripts -->
+    <script src="/usr/template/Finder/assets/vendor/leaflet/dist/leaflet.js"></script>
+    <script src="/usr/template/Finder/assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="/usr/template/Finder/assets/vendor/choices.js/public/assets/scripts/choices.min.js"></script>
+    <script src="/usr/template/Finder/assets/vendor/flatpickr/dist/flatpickr.min.js"></script>
+
+    <!-- Bootstrap + Theme scripts -->
+    <script src="/usr/template/Finder/assets/js/theme.min.js"></script>
+
+    <!-- Page specific scripts -->
+    <script>
+
+      // Dynamically update count number of selected items inside filter dropdown
+      window.onload = () => {
+        updateFilterCount('typeCount')
+        updateFilterCount('typeCountOffcanvas')
+      }
+
+      const updateFilterCount = (countId) => {
+        const checkedCheckboxes = document.querySelectorAll(`[data-count-id="${countId}"]:checked`)
+        const countElement = document.getElementById(countId)
+        if (checkedCheckboxes.length > 0) {
+            countElement.textContent = '(' + checkedCheckboxes.length + ')'
+        } else {
+            countElement.textContent = ''
+        }
+      }
+    </script>
+  </body>
+</html>
