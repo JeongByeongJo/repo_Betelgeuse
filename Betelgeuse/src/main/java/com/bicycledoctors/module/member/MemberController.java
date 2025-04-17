@@ -201,6 +201,12 @@ public class MemberController extends BaseController {
 		return "usr/member/account-settings";
 	}
 	
+	@RequestMapping(value = "/member/memberUsrUpdt")
+	public String memberUsrUpdt(MemberDto memberDto) {
+		memberService.updateInfo(memberDto);
+		return "redirect:/member/userInfosettingUsrForm";
+	}
+	
 	@ResponseBody
 	@RequestMapping(value = "/member/pswdfindUsrProc")
 	public Map<String, Object> pswdfindUsrProc(MemberDto dto, HttpSession httpSession) throws Exception {

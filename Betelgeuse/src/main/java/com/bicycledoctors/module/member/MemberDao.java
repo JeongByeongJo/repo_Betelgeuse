@@ -14,6 +14,7 @@ public interface MemberDao {
 	
 	public int insert(MemberDto memberDto);
 	public int update(MemberDto memberDto);
+	public int updateInfo(MemberDto memberDto);
 	public int pwUpdate(MemberDto memberDto);
 	public int uelete(MemberDto memberDto);
 	public int selectOneCount(MemberVo vo);

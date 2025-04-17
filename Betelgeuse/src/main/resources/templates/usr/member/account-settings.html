@@ -102,12 +102,12 @@
                 <div class="vstack gap-4">
 
                   <!-- Settings form -->
-                  <form class="needs-validation" novalidate>
-                  <input type="hidden" name="cdSeq" th:value="${session.sessSeqUsr}">
+                  <form class="needs-validation" id="formInfo" novalidate>
+                  <input type="hidden" name="seq" th:value="${session.sessSeqUsr}">
                     <div class="row row-cols-1 row-cols-sm-2 g-4 mb-4">
                       <div class="col position-relative">
                         <label for="fn" class="form-label fs-base">성 함 *</label>
-                        <input type="text" class="form-control form-control-lg" id="userId" name="userId" th:value="${item?.userName}" value=" " required>
+                        <input type="text" class="form-control form-control-lg" id="userName" name="userName" th:value="${item?.userName}" value=" " required>
                         <div class="invalid-tooltip bg-transparent p-0">이름을 입력해주세요!</div>
                       </div>
                       <div class="col position-relative">
@@ -128,10 +128,10 @@
                       </div>
                       <div class="col position-relative">
                         <label for="phone" class="form-label d-flex align-items-center fs-base">전화번호 * <span class="badge bg-success ms-2">Verified</span></label>
-                        <input type="tel" class="form-control form-control-lg" id="userTel" th:value="${item?.userTel}" data-input-format='{"numericOnly": true, "delimiters": [" ", "- ", " ", "- ", " "], "blocks": [3, 0, 4, 0, 4]}' value=" " placeholder="___- ____-____" required>
+                        <input type="tel" class="form-control form-control-lg" id="userTel" name="userTel" th:value="${item?.userTel}" data-input-format='{"numericOnly": true, "delimiters": [" ", "- ", " ", "- ", " "], "blocks": [3, 0, 4, 0, 4]}' value=" " placeholder="___- ____-____" required>
                         <div class="invalid-tooltip bg-transparent p-0">유효한 전화번호를 입력해주세요!</div>
                       </div>
-                      <div class="col">
+                      <div class="col position-relative">
                         <label class="form-label fs-base">관심 정비분야</label>
                         <select class="form-select form-select-lg" data-select multiple aria-label="gear select">
                           <option value="">관심 정비분야 선택</option>
@@ -142,26 +142,65 @@
                           <option value="Italian">소모품 주기관리</option>
                         </select>
                       </div>
-                      <div class="col">
+                      <div class="col position-relative">
                         <label for="birth-date" class="form-label fs-base">생년월일</label>
                         <div class="position-relative">
-                          <input type="text" class="form-control form-control-lg form-icon-end" id="userDob" th:value="${item?.userDob}" data-datepicker placeholder="날짜를 선택해주세요.">
+                          <input type="text" class="form-control form-control-lg form-icon-end" id="userDob" name="userDob" th:value="${item?.userDob}" data-datepicker placeholder="날짜를 선택해주세요.">
                           <i class="fi-calendar fs-lg position-absolute top-50 end-0 translate-middle-y me-3"></i>
                         </div>
                       </div>
+                    <div class="col position-relative">
+                      <label for="userZip" class="form-label fs-base">주 소 *</label>
+                      <input type="text" class="form-control form-control-lg" id="userZip" name="userZip" th:value="${item?.userZip}" placeholder="우편번호">
+                    </div>
+                    <div class="col position-relative" style="padding-top: 3.5ex">
+					  <input type="button" class="btn btn-lg btn-dark" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
+                    
+                    </div>
+                    <div class="col position-relative">
+                      <label for="userAddress1" class="form-label fs-base">도로명 주소 </label>
+					<input type="text" class="form-control form-control-lg" id="userAddress1" name="userAddress1" th:value="${item?.userAddress1}" placeholder="도로명주소">
+                    
+                    </div>
+                    <div class="col position-relative">
+                      <label for="userAddress2" class="form-label fs-base">지번 주소 </label>
+					<input type="text" class="form-control form-control-lg" id="userAddress2" name="userAddress2" th:value="${item?.userAddress2}" placeholder="지번주소">
+                    
+                    </div>
+                    <div class="col position-relative">
+					<input type="text" class="form-control form-control-lg" id="userAddress3" name="userAddress3" th:value="${item?.userAddress3}" placeholder="상세주소">
+                    
+                    </div>
+                    <div class="col position-relative">
+					<input type="text" class="form-control form-control-lg" id="userAddress4" name="userAddress4" th:value="${item?.userAddress4}" placeholder="참고항목">
+                    
+                    </div>
                     </div>
                     <div class="position-relative mb-4">
-                      <label for="address" class="form-label fs-base">주 소 *</label>
-                      <input type="text" class="form-control form-control-lg" id="address" value=" " required>
+<span id="guide" style="color:#999;display:none"></span>
+<input type="hidden" id="userLatitude" name="userLatitude" th:value="${item?.userLatitude}" placeholder="위도">
+<input type="hidden" id="userLongitude" name="userLongitude" th:value="${item?.userLongitude}" placeholder="경도">
                       <div class="invalid-tooltip bg-transparent p-0">주소를 입력해주세요!</div>
                     </div>
+<div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
+					<div class="position-relative mb-4">
+					</div>
+					<div class="position-relative mb-4">
+					
+					</div>
+					<div class="position-relative mb-4">
+					
+					</div>
+					<div class="position-relative mb-4">
+					
+					</div>
                     <div class="pb-2 mb-4">
                       <label for="user-info" class="form-label fs-base">메모</label>
                       <textarea class="form-control form-control-lg bg-transparent" id="user-info" rows="6"> </textarea>
                     </div>
                     <div class="d-flex gap-3">
-                      <a class="btn btn-lg btn-secondary" href="account-profile.html">취소</a>
-                      <button type="submit" class="btn btn-lg btn-dark">저장하기</button>
+                      <a class="btn btn-lg btn-secondary" href="/member/userInfosettingUsrForm">취소</a>
+                      <button type="button" id="btnUpdt" class="btn btn-lg btn-dark">저장하기</button>
                     </div>
                   </form>
                 </div>
@@ -270,8 +309,95 @@
 		</div>
 
 <div th:replace="~{usr/include/LoginedFooter :: LoginedFooter}"></div>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f7d210607aa49a67c830e2baeb80358f&libraries=services"></script>
+
+<script>
+    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+        mapOption = {
+            center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
+            level: 5 // 지도의 확대 레벨
+        };
+
+    //지도를 미리 생성
+    var map = new daum.maps.Map(mapContainer, mapOption);
+    //주소-좌표 변환 객체를 생성
+    var geocoder = new daum.maps.services.Geocoder();
+    //마커를 미리 생성
+    var marker = new daum.maps.Marker({
+        position: new daum.maps.LatLng(37.537187, 127.005476),
+        map: map
+    });
+</script>
+
+<script>
+    //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
+    function sample4_execDaumPostcode() {
+    	
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var roadAddr = data.roadAddress; // 도로명 주소 변수
+                var extraRoadAddr = ''; // 참고 항목 변수
+
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraRoadAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if(extraRoadAddr !== ''){
+                    extraRoadAddr = ' (' + extraRoadAddr + ')';
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('userZip').value = data.zonecode;
+                document.getElementById("userAddress1").value = roadAddr;
+                document.getElementById("userAddress2").value = data.jibunAddress;
+                
+                // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+                if(roadAddr !== ''){
+                    document.getElementById("userAddress4").value = extraRoadAddr;
+                } else {
+                    document.getElementById("userAddress4").value = '';
+                }
+                
+                geocoder.addressSearch(data.roadAddress, function(results, status) {
+                    // 정상적으로 검색이 완료됐으면
+                    if (status === daum.maps.services.Status.OK) {
+
+                        var result = results[0]; //첫번째 결과의 값을 활용
+
+                        // 해당 주소에 대한 좌표를 받아서
+                        var coords = new daum.maps.LatLng(result.y, result.x);
+                        // 지도를 보여준다.
+                        mapContainer.style.display = "block";
+                        map.relayout();
+                        // 지도 중심을 변경한다.
+                        map.setCenter(coords);
+                        // 마커를 결과값으로 받은 위치로 옮긴다.
+                        marker.setPosition(coords)
+	                    document.getElementById("userLatitude").value = coords.getLat();;
+	                    document.getElementById("userLongitude").value = coords.getLng();;
+                        
+                    }
+                });
+
+            }
+        }).open();
+    }
+</script>
+
 
 <script type="text/javascript">
+var formInfo = document.getElementById("formInfo")
 var form = document.getElementById("pwForm")
 
 $("#btnpwChange").on("click", function(){
@@ -312,6 +438,11 @@ $("#btnUelete").on("click", function(){
 		document.querySelector("#btnModalDelete").style.display = 'none';
 		$("#modalConfirm").modal("show");
 
+});
+
+$("#btnUpdt").on("click", function(){
+	formInfo.action = "/member/memberUsrUpdt";
+	formInfo.submit();
 });
 
 $("#btnModalUelete").on("click", function(){

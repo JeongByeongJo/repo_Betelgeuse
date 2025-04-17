@@ -10,9 +10,14 @@ public class MemberDto {
 	private String userPassword;
 	private String userDob;
 	private Integer userGender;
-	private String userAddressCd;
+	private String userZip;
+	private String userAddress1;
+	private String userAddress2;
+	private String userAddress3;
+	private String userAddress4;
+	private String userLatitude;
+	private String userLongitude;
 	private String userNote;
-	private String userGps;
 	private String userIp;
 	private String shopComment;
 	private Integer noshow;
@@ -27,11 +32,23 @@ public class MemberDto {
 	public void setSeq(String seq) {
 		this.seq = seq;
 	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 	public String getUserName() {
 		return userName;
 	}
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+	public String getUserCate() {
+		return userCate;
+	}
+	public void setUserCate(String userCate) {
+		this.userCate = userCate;
 	}
 	public String getUserTel() {
 		return userTel;
@@ -63,23 +80,53 @@ public class MemberDto {
 	public void setUserGender(Integer userGender) {
 		this.userGender = userGender;
 	}
-	public String getUserAddressCd() {
-		return userAddressCd;
+	public String getUserZip() {
+		return userZip;
 	}
-	public void setUserAddressCd(String userAddressCd) {
-		this.userAddressCd = userAddressCd;
+	public void setUserZip(String userZip) {
+		this.userZip = userZip;
+	}
+	public String getUserAddress1() {
+		return userAddress1;
+	}
+	public void setUserAddress1(String userAddress1) {
+		this.userAddress1 = userAddress1;
+	}
+	public String getUserAddress2() {
+		return userAddress2;
+	}
+	public void setUserAddress2(String userAddress2) {
+		this.userAddress2 = userAddress2;
+	}
+	public String getUserAddress3() {
+		return userAddress3;
+	}
+	public void setUserAddress3(String userAddress3) {
+		this.userAddress3 = userAddress3;
+	}
+	public String getUserAddress4() {
+		return userAddress4;
+	}
+	public void setUserAddress4(String userAddress4) {
+		this.userAddress4 = userAddress4;
+	}
+	public String getUserLatitude() {
+		return userLatitude;
+	}
+	public void setUserLatitude(String userLatitude) {
+		this.userLatitude = userLatitude;
+	}
+	public String getUserLongitude() {
+		return userLongitude;
+	}
+	public void setUserLongitude(String userLongitude) {
+		this.userLongitude = userLongitude;
 	}
 	public String getUserNote() {
 		return userNote;
 	}
 	public void setUserNote(String userNote) {
 		this.userNote = userNote;
-	}
-	public String getUserGps() {
-		return userGps;
-	}
-	public void setUserGps(String userGps) {
-		this.userGps = userGps;
 	}
 	public String getUserIp() {
 		return userIp;
@@ -110,18 +157,6 @@ public class MemberDto {
 	}
 	public void setDelNy(Integer delNy) {
 		this.delNy = delNy;
-	}
-	public String getUserId() {
-		return userId;
-	}
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-	public String getUserCate() {
-		return userCate;
-	}
-	public void setUserCate(String userCate) {
-		this.userCate = userCate;
 	}
 	public String getUserInstDate() {
 		return userInstDate;

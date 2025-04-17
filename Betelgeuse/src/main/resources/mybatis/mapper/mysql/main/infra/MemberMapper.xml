@@ -41,9 +41,14 @@
 		    ,userEmail
 		    ,userDob
 		    ,userGender
-		    ,userAddressCd
+		    ,userZip
+		    ,userAddress1
+		    ,userAddress2
+		    ,userAddress3
+		    ,userAddress4
+		    ,userLatitude
+		    ,userLongitude
 		    ,userNote
-		    ,userGps
 		    ,userIp
 		    ,shopComment
 		    ,noshow
@@ -68,9 +73,14 @@
 		    ,userEmail
 		    ,userDob
 		    ,userGender
-		    ,userAddressCd
+		    ,userZip
+		    ,userAddress1
+		    ,userAddress2
+		    ,userAddress3
+		    ,userAddress4
+		    ,userLatitude
+		    ,userLongitude
 		    ,userNote
-		    ,userGps
 		    ,userIp
 		    ,shopComment
 		    ,noshow
@@ -113,21 +123,45 @@
 	</insert>
 	<update id="update">
 		update usercustomer set
-			userPassword = #{userPassword}
-		    ,userCate = #{userCate}
+		    userCate = #{userCate}
 		    ,userName = #{userName}
 		    ,userTel = #{userTel}
 		    ,userEmail = #{userEmail}
 		    ,userDob = #{userDob}
 		    ,userGender = #{userGender}
-		    ,userAddressCd = #{userAddressCd}
+		    ,userZip = #{userZip}
+		    ,userAddress1 = #{userAddress1}
+		    ,userAddress2 = #{userAddress2}
+		    ,userAddress3 = #{userAddress3}
+		    ,userAddress4 = #{userAddress4}
+		    ,userLatitude = #{userLatitude}
+		    ,userLongitude = #{userLongitude}
 		    ,userNote = #{userNote}
-		    ,userGps = #{userGps}
 		    ,userIp = #{userIp}
 		    ,shopComment = #{shopComment}
 		    ,noshow = #{noshow}
 		    ,isBlack = #{isBlack}
 		    ,delNy = #{delNy}
+		    ,userUpdtDate = CURRENT_TIMESTAMP
+		where 1=1
+			and seq = #{seq}
+	</update>
+	<update id="updateInfo">
+		update usercustomer set
+		    userName = #{userName}
+		    ,userTel = #{userTel}
+		    ,userEmail = #{userEmail}
+		    ,userDob = #{userDob}
+		    ,userZip = #{userZip}
+		    ,userAddress1 = #{userAddress1}
+		    ,userAddress2 = #{userAddress2}
+		    ,userAddress3 = #{userAddress3}
+		    ,userAddress4 = #{userAddress4}
+		    ,userLatitude = #{userLatitude}
+		    ,userLongitude = #{userLongitude}
+		    ,userNote = #{userNote}
+		    ,userIp = #{userIp}
+		    ,shopComment = #{shopComment}
 		    ,userUpdtDate = CURRENT_TIMESTAMP
 		where 1=1
 			and seq = #{seq}
