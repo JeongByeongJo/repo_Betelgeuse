@@ -150,7 +150,6 @@
 		update usercustomer set
 		    userName = #{userName}
 		    ,userTel = #{userTel}
-		    ,userEmail = #{userEmail}
 		    ,userDob = #{userDob}
 		    ,userZip = #{userZip}
 		    ,userAddress1 = #{userAddress1}
@@ -160,8 +159,6 @@
 		    ,userLatitude = #{userLatitude}
 		    ,userLongitude = #{userLongitude}
 		    ,userNote = #{userNote}
-		    ,userIp = #{userIp}
-		    ,shopComment = #{shopComment}
 		    ,userUpdtDate = CURRENT_TIMESTAMP
 		where 1=1
 			and seq = #{seq}

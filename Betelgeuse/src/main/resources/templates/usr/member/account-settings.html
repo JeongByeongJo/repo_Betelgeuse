@@ -168,10 +168,12 @@
                     
                     </div>
                     <div class="col position-relative">
+                      <label for="userAddress3" class="form-label fs-base">상세 주소 </label>
 					<input type="text" class="form-control form-control-lg" id="userAddress3" name="userAddress3" th:value="${item?.userAddress3}" placeholder="상세주소">
                     
                     </div>
                     <div class="col position-relative">
+                      <label for="userAddress4" class="form-label fs-base">참고항목</label>
 					<input type="text" class="form-control form-control-lg" id="userAddress4" name="userAddress4" th:value="${item?.userAddress4}" placeholder="참고항목">
                     
                     </div>
@@ -180,23 +182,11 @@
 <span id="guide" style="color:#999;display:none"></span>
 <input type="hidden" id="userLatitude" name="userLatitude" th:value="${item?.userLatitude}" placeholder="위도">
 <input type="hidden" id="userLongitude" name="userLongitude" th:value="${item?.userLongitude}" placeholder="경도">
-                      <div class="invalid-tooltip bg-transparent p-0">주소를 입력해주세요!</div>
+<div id="map" style="width:970px;height:300px;margin-top:10px;display:none"></div>
                     </div>
-<div id="map" style="width:300px;height:300px;margin-top:10px;display:none"></div>
-					<div class="position-relative mb-4">
-					</div>
-					<div class="position-relative mb-4">
-					
-					</div>
-					<div class="position-relative mb-4">
-					
-					</div>
-					<div class="position-relative mb-4">
-					
-					</div>
                     <div class="pb-2 mb-4">
                       <label for="user-info" class="form-label fs-base">메모</label>
-                      <textarea class="form-control form-control-lg bg-transparent" id="user-info" rows="6"> </textarea>
+                      <textarea class="form-control form-control-lg bg-transparent" id="userNote" name="userNote" rows="6"> </textarea>
                     </div>
                     <div class="d-flex gap-3">
                       <a class="btn btn-lg btn-secondary" href="/member/userInfosettingUsrForm">취소</a>
