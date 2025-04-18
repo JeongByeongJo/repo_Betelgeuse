@@ -1,6 +1,5 @@
 package com.bicycledoctors.module.member;
 
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bicycledoctors.common.base.BaseController;
+import com.bicycledoctors.module.mail.MailService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -21,6 +21,9 @@ public class MemberController extends BaseController {
 	
 	@Autowired
 	MemberService memberService;
+	
+	@Autowired
+	MailService mailService;
 	
 	@RequestMapping(value = "/member/memberXdmList")
 	public String memberXdmList(MemberVo vo, Model model) {
@@ -99,6 +102,21 @@ public class MemberController extends BaseController {
 	public String memberUsrInst(MemberDto memberDto) {
 		memberDto.setUserPassword(encodeBcrypt(memberDto.getUserPassword(), 10));
 		memberService.insert(memberDto);
+		
+		Thread thread = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				try {
+					mailService.sendMailWelcome(memberDto);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		thread.start();
+		
 		return "redirect:/member/signinUsrForm";
 	}
 	

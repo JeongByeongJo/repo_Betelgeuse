@@ -64,126 +64,41 @@
           <div class="col-lg-7">
             <h1 class="h3 pb-sm-1 pb-md-2">매장 위치를 저장해주세요.</h1>
             <div class="row row-cols-1 row-cols-sm-2 g-3 g-sm-4 mb-3 mb-md-4">
-              <div class="col">
-                <label class="form-label">Country *</label>
-                <select class="form-select form-select-lg" data-select='{
-                  "classNames": {
-                    "containerInner": ["form-select", "form-select-lg"]
-                  },
-                  "searchEnabled": true
-                }' aria-label="Country select" required>
-                  <option value="">Select country</option>
-                  <optgroup label="Africa">
-                    <option value="Nigeria">Nigeria</option>
-                    <option value="South Africa">South Africa</option>
-                    <option value="Kenya">Kenya</option>
-                    <option value="Egypt">Egypt</option>
-                    <option value="Ethiopia">Ethiopia</option>
-                  </optgroup>
-                  <optgroup label="Asia">
-                    <option value="China">China</option>
-                    <option value="India">India</option>
-                    <option value="Japan">Japan</option>
-                    <option value="South Korea">South Korea</option>
-                    <option value="Saudi Arabia">Saudi Arabia</option>
-                  </optgroup>
-                  <optgroup label="Europe">
-                    <option value="Germany">Germany</option>
-                    <option value="France">France</option>
-                    <option value="United Kingdom">United Kingdom</option>
-                    <option value="Italy">Italy</option>
-                    <option value="Spain">Spain</option>
-                  </optgroup>
-                  <optgroup label="North America">
-                    <option value="United States" selected>United States</option>
-                    <option value="Canada">Canada</option>
-                    <option value="Mexico">Mexico</option>
-                    <option value="Jamaica">Jamaica</option>
-                    <option value="Costa Rica">Costa Rica</option>
-                  </optgroup>
-                  <optgroup label="South America">
-                    <option value="Brazil">Brazil</option>
-                    <option value="Argentina">Argentina</option>
-                    <option value="Colombia">Colombia</option>
-                    <option value="Chile">Chile</option>
-                    <option value="Peru">Peru</option>
-                  </optgroup>
-                  <optgroup label="Oceania">
-                    <option value="Australia">Australia</option>
-                    <option value="New Zealand">New Zealand</option>
-                    <option value="Papua New Guinea">Papua New Guinea</option>
-                    <option value="Fiji">Fiji</option>
-                    <option value="Solomon Islands">Solomon Islands</option>
-                  </optgroup>
-                </select>
-              </div>
-              <div class="col">
-                <label class="form-label">City *</label>
-                <select class="form-select form-select-lg" data-select='{
-                  "classNames": {
-                    "containerInner": ["form-select", "form-select-lg"]
-                  },
-                  "searchEnabled": true
-                }' aria-label="City select" required>
-                  <option value="">Select city</option>
-                  <option value="New York" selected>New York</option>
-                  <option value="Los Angeles">Los Angeles</option>
-                  <option value="Chicago">Chicago</option>
-                  <option value="Houston">Houston</option>
-                  <option value="Phoenix">Phoenix</option>
-                  <option value="Philadelphia">Philadelphia</option>
-                  <option value="San Antonio">San Antonio</option>
-                  <option value="San Diego">San Diego</option>
-                  <option value="Dallas">Dallas</option>
-                  <option value="San Jose">San Jose</option>
-                  <option value="Austin">Austin</option>
-                  <option value="Jacksonville">Jacksonville</option>
-                </select>
-              </div>
-              <div class="col">
-                <label class="form-label">District *</label>
-                <select class="form-select form-select-lg" data-select='{
-                  "classNames": {
-                    "containerInner": ["form-select", "form-select-lg"]
-                  }
-                }' aria-label="District select" required>
-                  <option value="">Select district</option>
-                  <option value="Manhattan">Manhattan</option>
-                  <option value="Brooklyn" selected>Brooklyn</option>
-                  <option value="The Bronx">The Bronx</option>
-                  <option value="Staten Island">Staten Island</option>
-                </select>
-              </div>
-              <div class="col">
-                <label for="zip" class="form-label">Zip code *</label>
-                <input type="text" class="form-control form-control-lg" id="zip" placeholder="Enter zip code" value="11237" required>
-              </div>
-            </div>
-            <label for="address" class="form-label">Address line *</label>
-            <input type="text" class="form-control form-control-lg" id="address" placeholder="Enter address" value="929 Hart Street" required>
-            <h2 class="h3 pt-5 pb-sm-1 pb-md-2">매장 위치 태그를 지정해주세요.</h2>
-            <div class="mb-3 mb-md-4">
-              <label for="area-search" class="form-label">매장 인근 행정구역을 지정해주시면 검색 및 매장 노출에 도움이 됩니다. *</label>
-              <div class="position-relative">
-                <i class="fi-search position-absolute top-50 start-0 translate-middle-y fs-lg text-body-emphasis ms-3"></i>
-                <input type="password" class="form-control form-control-lg form-icon-start" id="area-search" placeholder="Search area where you provide your services">
-              </div>
-            </div>
-            <label class="form-label pb-1 pb-md-0 mb-md-3">점검, 정비 고객들이 아래의 구역에서 찾아옵니다.*</label>
-            <div class="d-flex flex-wrap gap-2">
-              <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill">
-                <i class="fi-close fs-sm ms-n1 me-1"></i>
-                Brooklyn
-              </button>
-              <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill">
-                <i class="fi-close fs-sm ms-n1 me-1"></i>
-                Manhattan
-              </button>
-              <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill">
-                <i class="fi-close fs-sm ms-n1 me-1"></i>
-                Staten Island
-              </button>
-            </div>
+              <div class="col position-relative">
+                      <label for="userZip" class="form-label fs-base">주 소 *</label>
+                      <input type="text" class="form-control form-control-lg" id="userZip" name="userZip" th:value="${item?.userZip}" placeholder="우편번호">
+                    </div>
+                    <div class="col position-relative" style="padding-top: 3.5ex">
+					  <input type="button" class="btn btn-lg btn-dark" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
+                    
+                    </div>
+                    <div class="col position-relative">
+                      <label for="userAddress1" class="form-label fs-base">도로명 주소 </label>
+					<input type="text" class="form-control form-control-lg" id="userAddress1" name="userAddress1" th:value="${item?.userAddress1}" placeholder="도로명주소">
+                    
+                    </div>
+                    <div class="col position-relative">
+                      <label for="userAddress2" class="form-label fs-base">지번 주소 </label>
+					<input type="text" class="form-control form-control-lg" id="userAddress2" name="userAddress2" th:value="${item?.userAddress2}" placeholder="지번주소">
+                    
+                    </div>
+                    <div class="col position-relative">
+                      <label for="userAddress3" class="form-label fs-base">상세 주소 </label>
+					<input type="text" class="form-control form-control-lg" id="userAddress3" name="userAddress3" th:value="${item?.userAddress3}" placeholder="상세주소">
+                    
+                    </div>
+                    <div class="col position-relative">
+                      <label for="userAddress4" class="form-label fs-base">참고항목</label>
+					<input type="text" class="form-control form-control-lg" id="userAddress4" name="userAddress4" th:value="${item?.userAddress4}" placeholder="참고항목">
+                    
+                    </div>
+                    </div>
+                    <div class="position-relative mb-4">
+<span id="guide" style="color:#999;display:none"></span>
+<input type="hidden" id="userLatitude" name="userLatitude" th:value="${item?.userLatitude}" placeholder="위도">
+<input type="hidden" id="userLongitude" name="userLongitude" th:value="${item?.userLongitude}" placeholder="경도">
+<div id="map" style="width:750px;height:300px;margin-top:10px;display:none"></div>
+                    </div>
 
             <!-- Next step button -->
             <div class="pt-5">
@@ -204,6 +119,92 @@
     </main>
     
  <div th:replace="~{usr/include/LoginedFooter :: LoginedFooter}"></div>
+
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f7d210607aa49a67c830e2baeb80358f&libraries=services"></script>
+
+<script>
+    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+        mapOption = {
+            center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
+            level: 5 // 지도의 확대 레벨
+        };
+
+    //지도를 미리 생성
+    var map = new daum.maps.Map(mapContainer, mapOption);
+    //주소-좌표 변환 객체를 생성
+    var geocoder = new daum.maps.services.Geocoder();
+    //마커를 미리 생성
+    var marker = new daum.maps.Marker({
+        position: new daum.maps.LatLng(37.537187, 127.005476),
+        map: map
+    });
+</script>
+
+<script>
+    //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
+    function sample4_execDaumPostcode() {
+    	
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var roadAddr = data.roadAddress; // 도로명 주소 변수
+                var extraRoadAddr = ''; // 참고 항목 변수
+
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraRoadAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if(extraRoadAddr !== ''){
+                    extraRoadAddr = ' (' + extraRoadAddr + ')';
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('userZip').value = data.zonecode;
+                document.getElementById("userAddress1").value = roadAddr;
+                document.getElementById("userAddress2").value = data.jibunAddress;
+                
+                // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+                if(roadAddr !== ''){
+                    document.getElementById("userAddress4").value = extraRoadAddr;
+                } else {
+                    document.getElementById("userAddress4").value = '';
+                }
+                
+                geocoder.addressSearch(data.roadAddress, function(results, status) {
+                    // 정상적으로 검색이 완료됐으면
+                    if (status === daum.maps.services.Status.OK) {
+
+                        var result = results[0]; //첫번째 결과의 값을 활용
+
+                        // 해당 주소에 대한 좌표를 받아서
+                        var coords = new daum.maps.LatLng(result.y, result.x);
+                        // 지도를 보여준다.
+                        mapContainer.style.display = "block";
+                        map.relayout();
+                        // 지도 중심을 변경한다.
+                        map.setCenter(coords);
+                        // 마커를 결과값으로 받은 위치로 옮긴다.
+                        marker.setPosition(coords)
+	                    document.getElementById("userLatitude").value = coords.getLat();;
+	                    document.getElementById("userLongitude").value = coords.getLng();;
+                        
+                    }
+                });
+
+            }
+        }).open();
+    }
+</script>
 
   </body>
 </html>

@@ -167,4 +167,26 @@
 			AND cdDelNy = 0
 		    AND cdUseNy = 1
    	</select>
+   	
+   	<select id="selectListMyBicycle" resultMap="resultMapObj">
+   	SELECT 
+			a.seq,
+		    a.bicycleName,
+		    a.bicycleBrandCd,
+		    a.bicycleModel,
+		    a.bicycleMiles,
+		    a.bicycleSN,
+		    a.drivetrainBrandCd,
+		    a.drivetrainModel,
+		    a.isInspectingNy,
+		    a.isRepairingNy,
+		    a.delNy,
+		    a.instDate,
+		    a.updtDate,
+		    a.userCustomer_seq,
+			b.userID,
+			b.userName
+		<include refid = "selectCommon"></include>
+		order by seq desc
+   	</select>
 </mapper>
