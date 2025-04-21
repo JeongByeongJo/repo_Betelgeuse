@@ -17,6 +17,7 @@ public class BicycleController extends BaseController{
 	@Autowired
 	BicycleService bicycleService;
 	
+	
 	@RequestMapping(value = "/bicycle/bicycleXdmList")
 	public String bicycleXdmList(Model model, BicycleVo vo) {
 		
@@ -31,7 +32,14 @@ public class BicycleController extends BaseController{
 	}
 	
 	@RequestMapping(value = "/bicycle/bicycleUsrForm")
-	public String bicycleUsrForm(BicycleDto dto, HttpSession httpSession) {
+	public String bicycleUsrForm(BicycleDto dto, Model model, HttpSession httpSession) {
+		if (dto.getBikeSeq().equals("0") || dto.getBikeSeq().equals("")) {
+//			insert mode
+		} else {
+//			update mode
+			model.addAttribute("item", bicycleService.selectOne(dto));
+		}
+		
 		return "usr/bicycle/BicycleUsrForm";
 	}
 	
@@ -39,7 +47,13 @@ public class BicycleController extends BaseController{
 	public String bicycleUsrInst(BicycleDto dto, HttpSession httpSession) {
 		dto.setUserCustomer_seq((String)httpSession.getAttribute("sessSeqUsr"));
 		bicycleService.insert(dto);
-		return "redirect:/index";
+		return "redirect:/index/home-logined";
+	}
+	@RequestMapping(value = "/bicycle/bicycleUsrUpdt")
+	public String bicycleUsrUpdt(BicycleDto dto, HttpSession httpSession) {
+//		dto.setUserCustomer_seq((String)httpSession.getAttribute("sessSeqUsr"));
+		bicycleService.update(dto);
+		return "redirect:/index/home-logined";
 	}
 
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="light" data-pwa="true">
+<html lang="ko" data-bs-theme="light" data-pwa="true" xmlns:th="http://www.thymeleaf.org">
    <div th:replace="~{usr/include/LoginedHead :: LoginedHead}"></div>
 
 
@@ -18,11 +18,11 @@
               <div class="offcanvas-header d-lg-block py-3 p-lg-0">
                 <div class="d-flex flex-row flex-lg-column align-items-center align-items-lg-start">
                   <div class="flex-shrink-0 bg-body-secondary border rounded-circle overflow-hidden" style="width: 64px; height: 64px">
-                    <img src="assets/img/account/avatar.jpg" alt="Avatar">
+                    <img src="/usr/template/Finder/assets/img/account/avatar.jpg" alt="Avatar">
                   </div>
                   <div class="pt-lg-3 ps-3 ps-lg-0">
-                    <h6 class="mb-1">Michael Williams</h6>
-                    <p class="fs-sm mb-0">m.williams@example.com</p>
+                    <h6 class="mb-1">[[${session.sessNameUsr}]]</h6>
+<!--                     <p class="fs-sm mb-0">m.williams@example.com</p> -->
                   </div>
                 </div>
                 <button type="button" class="btn-close d-lg-none" data-bs-dismiss="offcanvas" data-bs-target="#accountSidebar" aria-label="Close"></button>
@@ -73,8 +73,8 @@
 
           <!-- Account listings content -->
           <div class="col-lg-9">
+<form id="formList" name="formList" method="post">
             <h1 class="h2 pb-2 pb-lg-3">내 자전거</h1>
-
             <!-- Nav pills -->
             <div class="nav overflow-x-auto mb-2">
               <ul class="nav nav-pills flex-nowrap gap-2 pb-2 mb-1" role="tablist">
@@ -127,6 +127,8 @@
                 <div class="vstack gap-4" id="publishedSelection">
 
                   <!-- Item -->
+                 <th:block th:each="list : ${list}">
+                 <input type="hidden" id="bikeSeq" name="bikeSeq" th:value="${list.bikeSeq}">
                   <div class="d-sm-flex align-items-center">
                     <div class="d-inline-flex position-relative z-2 pt-1 pb-2 ps-2 p-sm-0 ms-2 ms-sm-0 me-sm-2">
                       <div class="form-check position-relative z-1 fs-lg m-0">
@@ -138,7 +140,7 @@
                       <div class="row g-0">
                         <div class="col-sm-4 col-md-3 rounded overflow-hidden pb-2 pb-sm-0 pe-sm-2">
                           <a class="position-relative d-flex h-100 bg-body-tertiary" href="#!" style="min-height: 174px">
-                            <img src="assets/img/add-item/bd/IMG_4871.JPG" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" alt="Image">
+                            <img src="/usr/template/Finder/assets/img/add-item/bd/IMG_4871.JPG" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" alt="Image">
                             <div class="ratio d-none d-sm-block"  style="--fn-aspect-ratio: calc(180 / 240 * 100%)"></div>
                             <div class="ratio ratio-16x9 d-sm-none"></div>
                           </a>
@@ -146,12 +148,13 @@
                         <div class="col-sm-8 col-md-9 align-self-center">
                           <div class="card-body d-flex justify-content-between p-3 py-sm-4 ps-sm-2 ps-md-3 pe-md-4 mt-n1 mt-sm-0">
                             <div class="position-relative pe-3">
-                              <div class="h5 mb-2">Look 795 Light RS</div>
-                              <div class="h6 fs-sm mb-0 opacity-75">Campanolo SuperRecord</div>
-                              <div class="h6 fs-sm mb-0 opacity-75">Campanolo Bora Ultra 50</div>
+                              <div class="h2 mb-2"><span th:text="${list.bicycleName}"></span></div>
+                              <div class="h5 mb-2"><span th:text="${@codeService.selectOneCachedCodeEng(list.bicycleBrandCd)}"></span> <span th:text="${list.bicycleModel}"></span></div>
+                              <div class="h6 fs-sm mb-0 opacity-75"><span th:text="${@codeService.selectOneCachedCodeEng(list.drivetrainBrandCd)}"></span> <span th:text="${list.drivetrainModel}"></span></div>
+                              <div class="h6 fs-sm mb-0 opacity-75"><span th:text="${@codeService.selectOneCachedCodeEng(list.wheelBrandCd)}"></span> <span th:text="${list.wheelModel}"></span></div>
                             </div>
                             <div class="text-end">
-                              <div class="fs-xs text-body-secondary mb-3">최근 점검&정비: 2025/05/06</div>
+                              <div class="fs-xs text-body-secondary mb-3">최근 점검&정비: <span th:text="${list.updtDate}"></span>2025/05/06</div>
                               <div class="d-flex justify-content-end gap-2 mb-3">                            
                                 <div class="dropdown">
                                   <button type="button" class="btn btn-icon btn-outline-secondary" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Settings">
@@ -159,7 +162,7 @@
                                   </button>
                                   <ul class="dropdown-menu dropdown-menu-end">
                                     <li>
-                                      <a class="dropdown-item" href="#!">
+                                      <a class="dropdown-item" href = "javascript:void(0);" th:attr="onclick=|goForm('${list.bikeSeq}')|">
                                         <i class="fi-edit opacity-75 me-2"></i>
                                         수정하기
                                       </a>
@@ -199,8 +202,9 @@
                           </div>
                         </div>
                       </div>
-                    </B>
+                    </article>
                   </div>
+                 </th:block>
 
                   <!-- Item -->
                   <div class="d-sm-flex align-items-center">
@@ -214,7 +218,7 @@
                       <div class="row g-0">
                         <div class="col-sm-4 col-md-3 rounded overflow-hidden pb-2 pb-sm-0 pe-sm-2">
                           <a class="position-relative d-flex h-100 bg-body-tertiary" href="#!" style="min-height: 174px">
-                            <img src="assets/img/add-item/bd/IMG_4871.JPG" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" alt="Image">
+                            <img src="/usr/template/Finder/assets/img/add-item/bd/IMG_4871.JPG" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" alt="Image">
                             <div class="ratio d-none d-sm-block"  style="--fn-aspect-ratio: calc(180 / 240 * 100%)"></div>
                             <div class="ratio ratio-16x9 d-sm-none"></div>
                           </a>
@@ -278,88 +282,6 @@
                     </article>
                   </div>
 
-                  <!-- Item -->
-                  <!-- <div class="d-sm-flex align-items-center">
-                    <div class="d-inline-flex position-relative z-2 pt-1 pb-2 ps-2 p-sm-0 ms-2 ms-sm-0 me-sm-2">
-                      <div class="form-check position-relative z-1 fs-lg m-0">
-                        <input type="checkbox" class="form-check-input">
-                      </div>
-                      <span class="position-absolute top-0 start-0 w-100 h-100 bg-body border rounded d-sm-none"></span>
-                    </div>
-                    <article class="card w-100">
-                      <div class="d-sm-none" style="margin-top: -44px"></div>
-                      <div class="row g-0">
-                        <div class="col-sm-4 col-md-3 rounded overflow-hidden pb-2 pb-sm-0 pe-sm-2">
-                          <a class="position-relative d-flex h-100 bg-body-tertiary" href="#!" style="min-height: 174px">
-                            <img src="assets/img/listings/real-estate/06.jpg" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" alt="Image">
-                            <div class="ratio d-none d-sm-block"  style="--fn-aspect-ratio: calc(180 / 240 * 100%)"></div>
-                            <div class="ratio ratio-16x9 d-sm-none"></div>
-                          </a>
-                        </div>
-                        <div class="col-sm-8 col-md-9 align-self-center">
-                          <div class="card-body d-flex justify-content-between p-3 py-sm-4 ps-sm-2 ps-md-3 pe-md-4 mt-n1 mt-sm-0">
-                            <div class="position-relative pe-3">
-                              <span class="badge text-body-emphasis bg-body-secondary mb-2">For sale</span>
-                              <div class="h5 mb-2">$375,000</div>
-                              <a class="stretched-link d-block fs-sm text-body text-decoration-none mb-2" href="#!">929 Hart St,Brooklyn, NY 11237</a>
-                              <div class="h6 fs-sm mb-0">108 sq.m</div>
-                            </div>
-                            <div class="text-end">
-                              <div class="fs-xs text-body-secondary mb-3">Created: 19/05/2024</div>
-                              <div class="d-flex justify-content-end gap-2 mb-3">
-                                <button type="button" class="btn btn-outline-secondary">Statistics</button>
-                                <div class="dropdown">
-                                  <button type="button" class="btn btn-icon btn-outline-secondary" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Settings">
-                                    <i class="fi-settings fs-base"></i>
-                                  </button>
-                                  <ul class="dropdown-menu dropdown-menu-end">
-                                    <li>
-                                      <a class="dropdown-item" href="#!">
-                                        <i class="fi-edit opacity-75 me-2"></i>
-                                        Edit
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a class="dropdown-item" href="#!">
-                                        <i class="fi-zap fs-base opacity-75 me-2"></i>
-                                        Promote
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a class="dropdown-item" href="#!">
-                                        <i class="fi-archive opacity-75 me-2"></i>
-                                        Move to archive
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a class="dropdown-item text-danger" href="#!">
-                                        <i class="fi-trash opacity-75 me-2"></i>
-                                        Delete
-                                      </a>
-                                    </li>
-                                  </ul>
-                                </div>
-                              </div>
-                              <ul class="list-unstyled flex-row flex-wrap justify-content-end fs-sm mb-0">
-                                <li class="d-flex align-items-center me-2 me-md-3">
-                                  <i class="fi-eye fs-base me-1"></i>
-                                  392
-                                </li>
-                                <li class="d-flex align-items-center me-2 me-md-3">
-                                  <i class="fi-heart fs-base me-1"></i>
-                                  7
-                                </li>
-                                <li class="d-flex align-items-center">
-                                  <i class="fi-phone-incoming fs-base me-1"></i>
-                                  4
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </article>
-                  </div> -->
                 </div>
               </div>
 
@@ -432,18 +354,6 @@
                                         수정하기
                                       </a>
                                     </li>
-                                    <!-- <li>
-                                      <a class="dropdown-item" href="#!">
-                                        <i class="fi-zap fs-base opacity-75 me-2"></i>
-                                        Promote
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a class="dropdown-item" href="#!">
-                                        <i class="fi-archive opacity-75 me-2"></i>
-                                        Move to archive
-                                      </a>
-                                    </li> -->
                                     <li>
                                       <a class="dropdown-item text-danger" href="#!">
                                         <i class="fi-trash opacity-75 me-2"></i>
@@ -469,89 +379,6 @@
                       </div>
                     </article>
                   </div>
-
-                  <!-- Item -->
-                  <!-- <div class="d-sm-flex align-items-center">
-                    <div class="d-inline-flex position-relative z-2 pt-1 pb-2 ps-2 p-sm-0 ms-2 ms-sm-0 me-sm-2">
-                      <div class="form-check position-relative z-1 fs-lg m-0">
-                        <input type="checkbox" class="form-check-input">
-                      </div>
-                      <span class="position-absolute top-0 start-0 w-100 h-100 bg-body border rounded d-sm-none"></span>
-                    </div>
-                    <article class="card w-100">
-                      <div class="d-sm-none" style="margin-top: -44px"></div>
-                      <div class="row g-0">
-                        <div class="col-sm-4 col-md-3 rounded overflow-hidden pb-2 pb-sm-0 pe-sm-2">
-                          <a class="position-relative d-flex h-100 bg-body-tertiary" href="#!" style="min-height: 174px">
-                            <img src="assets/img/listings/real-estate/04.jpg" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" alt="Image">
-                            <div class="ratio d-none d-sm-block"  style="--fn-aspect-ratio: calc(180 / 240 * 100%)"></div>
-                            <div class="ratio ratio-16x9 d-sm-none"></div>
-                          </a>
-                        </div>
-                        <div class="col-sm-8 col-md-9 align-self-center">
-                          <div class="card-body d-flex justify-content-between p-3 py-sm-4 ps-sm-2 ps-md-3 pe-md-4 mt-n1 mt-sm-0">
-                            <div class="position-relative pe-3">
-                              <span class="badge text-body-emphasis bg-body-secondary mb-2">For rent</span>
-                              <div class="h5 mb-2">$1,430</div>
-                              <a class="stretched-link d-block fs-sm text-body text-decoration-none mb-2" href="#!">67-04 Myrtle Ave Glendale, NY 11385</a>
-                              <div class="h6 fs-sm mb-0">62 sq.m</div>
-                            </div>
-                            <div class="text-end">
-                              <div class="fs-xs text-body-secondary mb-3">Created: 09/11/2024</div>
-                              <div class="d-flex justify-content-end gap-2 mb-3">
-                                <button type="button" class="btn btn-outline-dark">Publish</button>
-                                <div class="dropdown">
-                                  <button type="button" class="btn btn-icon btn-outline-secondary" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Settings">
-                                    <i class="fi-settings fs-base"></i>
-                                  </button>
-                                  <ul class="dropdown-menu dropdown-menu-end">
-                                    <li>
-                                      <a class="dropdown-item" href="#!">
-                                        <i class="fi-edit opacity-75 me-2"></i>
-                                        Edit
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a class="dropdown-item" href="#!">
-                                        <i class="fi-zap fs-base opacity-75 me-2"></i>
-                                        Promote
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a class="dropdown-item" href="#!">
-                                        <i class="fi-archive opacity-75 me-2"></i>
-                                        Move to archive
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a class="dropdown-item text-danger" href="#!">
-                                        <i class="fi-trash opacity-75 me-2"></i>
-                                        Delete
-                                      </a>
-                                    </li>
-                                  </ul>
-                                </div>
-                              </div>
-                              <ul class="list-unstyled flex-row flex-wrap justify-content-end fs-sm mb-0">
-                                <li class="d-flex align-items-center me-2 me-md-3">
-                                  <i class="fi-eye fs-base me-1"></i>
-                                  0
-                                </li>
-                                <li class="d-flex align-items-center me-2 me-md-3">
-                                  <i class="fi-heart fs-base me-1"></i>
-                                  0
-                                </li>
-                                <li class="d-flex align-items-center">
-                                  <i class="fi-phone-incoming fs-base me-1"></i>
-                                  0
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </article>
-                  </div> -->
                 </div>
               </div>
 
@@ -561,6 +388,7 @@
                 <h2 class="h6 pt-2 mb-2">점검&정비중인 자전거가 없습니다.</h2>
               </div>
             </div>
+            </form>
           </div>
         </div>
       </div>
@@ -568,5 +396,14 @@
 
 
     <div th:replace="~{usr/include/LoginedFooter :: LoginedFooter}"></div>
+<script type="text/javascript">
+let form = document.querySelector("form[name=formList]");
+let seq = document.querySelector("input[name=bikeSeq]");
 
+goForm = function (keyValue) {
+    seq.value = keyValue;
+    form.action = "/bicycle/bicycleUsrForm";
+    form.submit();
+}
+</script>
 </html>

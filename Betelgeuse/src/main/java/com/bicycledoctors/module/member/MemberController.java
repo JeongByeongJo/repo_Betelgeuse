@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bicycledoctors.common.base.BaseController;
+import com.bicycledoctors.module.bicycle.BicycleDto;
+import com.bicycledoctors.module.bicycle.BicycleService;
 import com.bicycledoctors.module.mail.MailService;
 
 import jakarta.servlet.http.HttpSession;
@@ -24,6 +26,9 @@ public class MemberController extends BaseController {
 	
 	@Autowired
 	MailService mailService;
+	
+	@Autowired
+	BicycleService bicycleService;
 	
 	@RequestMapping(value = "/member/memberXdmList")
 	public String memberXdmList(MemberVo vo, Model model) {
@@ -253,9 +258,12 @@ public class MemberController extends BaseController {
 		return "usr/member/account-profile";
 	}
 	@RequestMapping(value = "/member/userBicycleUsrList")
-	public String userBicycleUsrList(MemberDto memberDto, Model model, HttpSession httpSession) {
+	public String userBicycleUsrList(MemberDto memberDto, Model model, HttpSession httpSession, BicycleDto bicycleDto) {
 		memberDto.setSeq((String)httpSession.getAttribute("sessSeqUsr"));
 		model.addAttribute("item", memberService.selectOne(memberDto));
+		bicycleDto.setUserCustomer_seq((String)httpSession.getAttribute("sessSeqUsr"));
+		System.out.println(memberDto.getSeq());
+		model.addAttribute("list", bicycleService.selectOneList(bicycleDto));
 		return "usr/member/account-listings";
 	}
 

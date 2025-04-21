@@ -31,7 +31,7 @@
 	<select id="selectList" resultMap="resultMapObj">
 	select aa.* from (
 		SELECT 
-			a.seq,
+			a.bikeSeq,
 		    a.bicycleName,
 		    a.bicycleCateCd,
 		    a.bicycleBrandCd,
@@ -74,18 +74,74 @@
 	</select>
 	
 	<select id="selectOne" resultMap="resultMapObj">
-		select
-			cdSeq
-			,cdName
-			,cdNameEng
-			,cdUseNy
-			,cdDelNy
-			,cdDesc
-			,codegroup_cdgSeq
-		from
-			code
+		SELECT 
+			a.bikeSeq,
+		    a.bicycleName,
+		    a.bicycleCateCd,
+		    a.bicycleBrandCd,
+		    a.bicycleModel,
+		    a.bicycleYears,
+		    a.bicycleMiles,
+		    a.bicycleSN,
+		    a.drivetrainBrandCd,
+		    a.drivetrainModel,
+		    a.brakeBrandCd,
+		    a.isElectDrivetrain,
+		    a.isDiskBrakes,
+		    a.isHydrauric,
+		    a.isInternal,
+		    a.wheelBrandCd,
+		    a.wheelModel,
+		    a.bicycleDescribe,
+		    a.isInspectingNy,
+		    a.isRepairingNy,
+		    a.delNy,
+		    a.instDate,
+		    a.updtDate,
+		    a.userCustomer_seq,
+		    b.seq,
+			b.userID,
+			b.userName
+ 		from
+			bicycle as a
+			left join usercustomer b on a.userCustomer_seq = b.seq
 		where 1=1
-			and cdSeq = #{cdSeq}
+			and a.bikeSeq = #{bikeSeq}
+	</select>
+	<select id="selectOneList" resultMap="resultMapObj">
+		SELECT 
+			a.bikeSeq,
+		    a.bicycleName,
+		    a.bicycleCateCd,
+		    a.bicycleBrandCd,
+		    a.bicycleModel,
+		    a.bicycleYears,
+		    a.bicycleMiles,
+		    a.bicycleSN,
+		    a.drivetrainBrandCd,
+		    a.drivetrainModel,
+		    a.brakeBrandCd,
+		    a.isElectDrivetrain,
+		    a.isDiskBrakes,
+		    a.isHydrauric,
+		    a.isInternal,
+		    a.wheelBrandCd,
+		    a.wheelModel,
+		    a.bicycleDescribe,
+		    a.isInspectingNy,
+		    a.isRepairingNy,
+		    a.delNy,
+		    a.instDate,
+		    a.updtDate,
+		    a.userCustomer_seq,
+		    b.seq,
+			b.userID,
+			b.userName
+ 		from
+			bicycle as a
+			left join usercustomer b on a.userCustomer_seq = b.seq
+		where 1=1
+			and a.userCustomer_seq = #{userCustomer_seq}
 	</select>
 	
 	<insert id="insert">
@@ -139,14 +195,25 @@
 	
 	<update id="update">
 		update code set
-			cdName = #{cdName}
-			,cdNameEng = #{cdNameEng}
-			,cdUseNy = #{cdUseNy}
-			,cdUpdtDate = CURRENT_TIMESTAMP
-			,cdDesc = #{cdDesc}
-			,codegroup_cdgSeq = #{codegroup_cdgSeq}
+			bicycleName = #{bicycleName},
+		    bicycleCateCd = #{bicycleCateCd},
+		    bicycleBrandCd = #{bicycleBrandCd},
+		    bicycleModel = #{bicycleModel},
+		    bicycleYears = #{bicycleYears},
+		    bicycleMiles = #{bicycleMiles},
+		    bicycleSN = #{bicycleSN},
+		    drivetrainBrandCd = #{drivetrainBrandCd},
+		    drivetrainModel = #{drivetrainModel},
+		    brakeBrandCd = #{brakeBrandCd},
+		    isElectDrivetrain = #{isElectDrivetrain},
+		    isDiskBrakes = #{isDiskBrakes},
+		    isHydrauric = #{isHydrauric},
+		    isInternal = #{isInternal},
+		    wheelBrandCd = #{wheelBrandCd},
+		    wheelMode = #{wheelMode},
+		    bicycleDescribe = #{bicycleDescribe},
 		where
-			cdSeq = #{cdSeq}
+			bikeSeq = #{bikeSeq}
 	</update>
 	
 	<update id="uelete">
@@ -170,7 +237,7 @@
    	
    	<select id="selectListMyBicycle" resultMap="resultMapObj">
    	SELECT 
-			a.seq,
+			a.bikeSeq,
 		    a.bicycleName,
 		    a.bicycleBrandCd,
 		    a.bicycleModel,

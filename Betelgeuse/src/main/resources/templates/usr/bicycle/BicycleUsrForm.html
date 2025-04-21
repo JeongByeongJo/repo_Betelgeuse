@@ -18,6 +18,7 @@
            <h1 class="h2">자전거 등록하기</h1>
 		<form id="form">
 		<input type="hidden" id="userCustomer_seq" th:value="${session.sessSeqUsr}">
+		<input type="hidden" id="bikeSeq" name="bikeSeq" th:value="${item?.bikeSeq}">
             <!-- Photos / videos -->
             <section class="position-relative bg-body rounded p-4 mt-4">
               <div class="position-relative z-1 pb-md-2 px-md-2">
@@ -115,9 +116,10 @@
                 <h2 class="h4 mb-3 mb-sm-4">기본정보</h2>
                 <div class="mb-3 mb-md-4">
                   <label class="form-label pb-1 mb-2">자전거 종류 *</label>
+           		  <input type="hidden" id="bicycleCateCd" name="bicycleCateCd" th:value="${item?.bicycleCateCd}">
                   <div class="nav nav-pills row row-cols-2 row-cols-sm-3 row-cols-md-5 gap-0 g-3">
                     <div class="col">
-                      <input type="radio" class="btn-check" id="road" name="body">
+                      <input type="radio" class="btn-check" id="road" name="body" th:value="5" th:checked = "${item?.bicycleCateCd} == 5">
                       <label class="nav-link flex-column w-100 align-items-center gap-2 rounded p-3" for="road">
                         <span class="ratio d-block" style="--fn-aspect-ratio: calc(62 / 100 * 100%); max-width: 124px">
                           <img src="/usr/template/Finder/assets/img/add-item/bd/road.JPG" alt="Road">
@@ -126,7 +128,7 @@
                       </label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" id="hardtail" name="body">
+                      <input type="radio" class="btn-check" id="hardtail" name="body" th:value="6" th:checked = "${item?.bicycleCateCd} == 6">
                       <label class="nav-link flex-column w-100 align-items-center gap-2 rounded p-3" for="hardtail">
                         <span class="ratio d-block" style="--fn-aspect-ratio: calc(62 / 100 * 100%); max-width: 124px">
                           <img src="/usr/template/Finder/assets/img/add-item/bd/hardtail.JPG" alt="Hardtail">
@@ -135,7 +137,7 @@
                       </label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" id="fullsuspension" name="body">
+                      <input type="radio" class="btn-check" id="fullsuspension" name="body" th:value="7" th:checked = "${item?.bicycleCateCd} == 7">
                       <label class="nav-link flex-column w-100 align-items-center gap-2 rounded p-3" for="fullsuspension">
                         <span class="ratio d-block" style="--fn-aspect-ratio: calc(62 / 100 * 100%); max-width: 124px">
                           <img src="/usr/template/Finder/assets/img/add-item/bd/fullsuspension.JPG" alt="Fullsuspension">
@@ -144,7 +146,7 @@
                       </label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" id="track" name="body">
+                      <input type="radio" class="btn-check" id="track" name="body" th:value="8" th:checked = "${item?.bicycleCateCd} == 8">
                       <label class="nav-link flex-column w-100 align-items-center gap-2 rounded p-3" for="track">
                         <span class="ratio d-block" style="--fn-aspect-ratio: calc(62 / 100 * 100%); max-width: 124px">
                           <img src="/usr/template/Finder/assets/img/add-item/bd/track.JPG" alt="Track">
@@ -153,7 +155,7 @@
                       </label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" id="triathlon" name="body">
+                      <input type="radio" class="btn-check" id="triathlon" name="body" th:value="9" th:checked = "${item?.bicycleCateCd} == 9">
                       <label class="nav-link flex-column w-100 align-items-center gap-2 rounded p-3" for="triathlon">
                         <span class="ratio d-block" style="--fn-aspect-ratio: calc(62 / 100 * 100%); max-width: 124px">
                           <img src="/usr/template/Finder/assets/img/add-item/bd/triathlon.JPG" alt="Triathlon,TT">
@@ -162,7 +164,7 @@
                       </label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" id="folding" name="body">
+                      <input type="radio" class="btn-check" id="folding" name="body" th:value="10" th:checked = "${item?.bicycleCateCd} == 10">
                       <label class="nav-link flex-column w-100 align-items-center gap-2 rounded p-3" for="folding">
                         <span class="ratio d-block" style="--fn-aspect-ratio: calc(62 / 100 * 100%); max-width: 124px">
                           <img src="/usr/template/Finder/assets/img/add-item/bd/folding.JPG" alt="folding">
@@ -171,7 +173,7 @@
                       </label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" id="bicycle" name="body">
+                      <input type="radio" class="btn-check" id="etcBicycle" name="body" th:value="11" th:checked = "${item?.bicycleCateCd} == 11">
                       <label class="nav-link flex-column w-100 align-items-center gap-2 rounded p-3" for="bicycle">
                         <span class="ratio d-block" style="--fn-aspect-ratio: calc(62 / 100 * 100%); max-width: 124px">
                           <img src="/usr/template/Finder/assets/img/add-item/bd/bicycle.JPG" alt="bicycle">
@@ -184,98 +186,60 @@
                 <div class="row row-cols-1 row-cols-sm-2 g-3 g-md-4 mb-3 mb-md-4">
                   <div class="col">
                     <label class="form-label">자전거 브랜드 *</label>
-                    <select class="form-select form-select-lg" id="bicycleBrandCd" name="bicycleBrandCd" data-select='{
+                    <select class="form-select form-select-lg" id="bicycleBrandCd" name="bicycleBrandCd" th:value="${item?.bicycleBrandCd}" data-select='{
                       "classNames": {
                         "containerInner": ["form-select", "form-select-lg"]
                       },
                       "searchEnabled": true
                     }' aria-label="Car brand select" required>
-                      <option th:each="list : ${@codeService.selectListCachedCode(4)}" th:value="${list.cdSeq}" th:text="${list.cdName}"></option>
+                      <option value="">Select Brand</option>
+                      <option th:each="list : ${@codeService.selectListCachedCode(4)}" th:value="${list.cdSeq}" th:text="${list.cdName}" th:selected="${list.cdSeq} == ${item?.bicycleBrandCd}"></option>
                     </select>
                   </div>
                   <div class="col">
                     <label for="bicycleModel" class="form-label">자전거 모델명 *</label>
-                    <input type="text" class="form-control form-control-lg" id="bicycleModel" name="bicycleModel" placeholder="자전거 모델명" required>
+                    <input type="text" class="form-control form-control-lg" id="bicycleModel" name="bicycleModel" placeholder="자전거 모델명" th:value="${item?.bicycleModel}" required>
                   </div>
                 </div>
                 <div class="row row-cols-1 row-cols-sm-2 g-3 g-md-4 mb-3 mb-md-4">
                   <div class="col">
                     <label class="form-label">모델연식 *</label>
-                    <select class="form-select form-select-lg" id="bicycleYears" name="bicycleYears" data-select='{
+                    <select class="form-select form-select-lg" id="bicycleYears" name="bicycleYears" th:value="${item?.bicycleYears}" data-select='{
                       "classNames": {
                         "containerInner": ["form-select", "form-select-lg"]
                       }
                     }' aria-label="Manufacturing year select" required>
                       <option value="">Select year</option>
-                      <option value="2025">2025</option>
-                      <option value="2024">2024</option>
-                      <option value="2023">2023</option>
-                      <option value="2022">2022</option>
-                      <option value="2021">2021</option>
-                      <option value="2020">2020</option>
-                      <option value="2019">2019</option>
-                      <option value="2018">2018</option>
-                      <option value="2017">2017</option>
-                      <option value="2016">2016</option>
-                      <option value="2015">~2015</option>
+                      <option th:value="2025" th:selected="${item?.bicycleYears} == 2025">2025</option>
+                      <option th:value="2024" th:selected="${item?.bicycleYears} == 2024">2024</option>
+                      <option th:value="2023" th:selected="${item?.bicycleYears} == 2023">2023</option>
+                      <option th:value="2022" th:selected="${item?.bicycleYears} == 2022">2022</option>
+                      <option th:value="2021" th:selected="${item?.bicycleYears} == 2021">2021</option>
+                      <option th:value="2020" th:selected="${item?.bicycleYears} == 2020">2020</option>
+                      <option th:value="2019" th:selected="${item?.bicycleYears} == 2019">2019</option>
+                      <option th:value="2018" th:selected="${item?.bicycleYears} == 2018">2018</option>
+                      <option th:value="2017" th:selected="${item?.bicycleYears} == 2017">2017</option>
+                      <option th:value="2016" th:selected="${item?.bicycleYears} == 2016">2016</option>
+                      <option th:value="2015" th:selected="${item?.bicycleYears} == 2015">~2015</option>
                     </select>
                   </div>
                   <div class="col">
                     <label for="mileage" class="form-label">마일리지 *</label>
-                    <input type="text" class="form-control form-control-lg" id="bicycleMiles" name="bicycleMiles" placeholder="K meter" required>
+                    <input type="text" class="form-control form-control-lg" id="bicycleMiles" name="bicycleMiles" th:value="${item?.bicycleMiles}" placeholder="K meter" required>
                   </div>
                 </div>                
-                <div class="row row-cols-1 row-cols-sm-2 g-3 g-md-4 mb-3 mb-md-4">
-                  <div class="col">
-                    <label class="form-label">지역-시,도 *</label>
-                    <select class="form-select form-select-lg" data-select='{
-                      "classNames": {
-                        "containerInner": ["form-select", "form-select-lg"]
-                      },
-                      "searchEnabled": true
-                    }' aria-label="Location select" required>
-                      <option value="">Select location</option>
-                      <option value="Seoul" selected>서울특별시</option>
-                      <option value="Inchon">인천시</option>
-                      <option value="Pusan">부산시</option>
-                      <option value="Daegu">대구시</option>
-                      <option value="Gwangju">광주시</option>
-                      <option value="Daejeon">대전시</option>
-                      <option value="San Antonio">San Antonio</option>
-                      <option value="San Diego">San Diego</option>
-                      <option value="Dallas">Dallas</option>
-                      <option value="San Jose">San Jose</option>
-                    </select>
-                  </div>
-                  <div class="col">
-                    <label class="form-label">지역-구</label>
-                    <select class="form-select form-select-lg" data-select='{
-                      "classNames": {
-                        "containerInner": ["form-select", "form-select-lg"]
-                      }
-                    }' aria-label="Radius select">
-                      <option value="">Select location</option>
-                      <option value="Seoul">중구</option>
-                      <option value="Inchon">종로구</option>
-                      <option value="Pusan">용산구</option>
-                      <option value="Daegu">강남구</option>
-                      <option value="Gwangju" selected>중랑구</option>
-                      <option value="Daejeon">노원구</option>
-                    </select>
-                  </div>
-                </div>
                 <div class="bg-body-tertiary rounded p-4">
                   <div class="row">
                     <div class="col">
                       <h6 class="mb-2">자전거의 이름(별명)을 저장해주세요.</h6>
                       <div class="d-flex gap-2" style="max-width: 354px">
-                        <input type="text" class="form-control" id="bicycleName" name="bicycleName" placeholder="이름(별명) 입력">
+                        <input type="text" class="form-control" id="bicycleName" name="bicycleName" th:value="${item?.bicycleName}" placeholder="이름(별명) 입력">
                       </div>
                     </div>
                     <div class="col">
                       <h6 class="mb-2">자전거의 시리얼넘버를 저장하세요.</h6>
                       <div class="d-flex gap-2" style="max-width: 354px">
-                        <input type="text" class="form-control" id="bicycleSN" name="bicycleSN" placeholder="S/N code">
+                        <input type="text" class="form-control" id="bicycleSN" name="bicycleSN" th:value="${item?.bicycleSN}" placeholder="S/N code">
                         <button type="button" class="btn btn-icon btn-dark" aria-label="Camera">
                           <i class="fi-camera fs-base"></i>
                         </button>
@@ -296,39 +260,41 @@
                 <div class="row row-cols-1 row-cols-sm-2 g-3 g-md-4 mb-3 mb-md-4">
                   <div class="col">
                     <label class="form-label">구동계 브랜드 *</label>
-                    <select class="form-select form-select-lg" id="drivetrainBrandCd" name="drivetrainBrandCd" data-select='{
+                    <select class="form-select form-select-lg" id="drivetrainBrandCd" name="drivetrainBrandCd" th:value="${item?.drivetrainBrandCd}" data-select='{
                       "classNames": {
                         "containerInner": ["form-select", "form-select-lg"]
                       }
                     }' aria-label="Drive type select" required>
-                      <option th:each="list : ${@codeService.selectListCachedCode(5)}" th:value="${list.cdSeq}" th:text="${list.cdName}"></option>
+                      <option value="">Select Brand</option>
+                      <option th:each="list : ${@codeService.selectListCachedCode(5)}" th:value="${list.cdSeq}" th:text="${list.cdName}" th:selected="${list.cdSeq} == ${item?.drivetrainBrandCd}"></option>
                     </select>
                   </div>
                   <div class="col">
                     <label class="form-label">구동계 모델명 *</label>
-                    <input type="text" class="form-control form-control-lg" id="drivetrainModel" name="drivetrainModel" placeholder="구동계 모델명" required>
+                    <input type="text" class="form-control form-control-lg" id="drivetrainModel" name="drivetrainModel" th:value="${item?.drivetrainModel}" placeholder="구동계 모델명" required>
                   </div>
                   <div class="col">
                     <label class="form-label">브레이크 브랜드 *</label>
-                    <select class="form-select form-select-lg" id="brakeBrandCd" name="brakeBrandCd" data-select='{
+                    <select class="form-select form-select-lg" id="brakeBrandCd" name="brakeBrandCd" th:value="${item?.brakeBrandCd}" data-select='{
                       "classNames": {
                         "containerInner": ["form-select", "form-select-lg"]
                       }
                     }' aria-label="Transmission select" required>
-                      <option th:each="list : ${@codeService.selectListCachedCode(7)}" th:value="${list.cdSeq}" th:text="${list.cdName}"></option>
+                      <option value="">Select Brand</option>
+                      <option th:each="list : ${@codeService.selectListCachedCode(7)}" th:value="${list.cdSeq}" th:text="${list.cdName}" th:selected="${list.cdSeq} == ${item?.brakeBrandCd}"></option>
                     </select>
                   </div>
                   <div class="col pt-3">
                     <div class="row">
                       <div class="col">
                         <div class="form-check form-switch">
-                          <input type="checkbox" class="form-check-input" role="switch" id="isElectDrivetrain">
+                          <input type="checkbox" class="form-check-input" role="switch" id="isElectDrivetrain" name="isElectDrivetrain" th:checked="${#strings.equals(item?.isElectDrivetrain, 'on')}">
                           <label for="isElectDrivetrain" class="form-check-label">전동 구동계</label>
                         </div>
                       </div>
                       <div class="col">
                         <div class="form-check form-switch">
-                          <input type="checkbox" class="form-check-input" role="switch" id="isDiskBrakes">
+                          <input type="checkbox" class="form-check-input" role="switch" id="isDiskBrakes" name="isDiskBrakes" th:value="${item?.isDiskBrakes}">
                           <label for="isDiskBrakes" class="form-check-label">디스크 브레이크</label>
                         </div>
                       </div>                      
@@ -336,13 +302,13 @@
                     <div class="row">
                       <div class="col">
                         <div class="form-check form-switch">
-                          <input type="checkbox" class="form-check-input" role="switch" id="isHydrauric">
+                          <input type="checkbox" class="form-check-input" role="switch" id="isHydrauric" name="isHydrauric" th:value="${item?.isHydrauric}">
                           <label for="isHydrauric" class="form-check-label">유압식 브레이크</label>
                         </div>
                       </div>
                       <div class="col">
                         <div class="form-check form-switch">
-                          <input type="checkbox" class="form-check-input" role="switch" id="isInternal">
+                          <input type="checkbox" class="form-check-input" role="switch" id="isInternal" name="isInternal" th:value="${item?.isInternal}">
                           <label for="isInternal" class="form-check-label">풀인터널 케이블</label>
                         </div>
                       </div>                      
@@ -350,22 +316,24 @@
                   </div>
                   <div class="col">
                     <label class="form-label">휠셋 브랜드 *</label>
-                    <select class="form-select form-select-lg" id="wheelBrandCd" name="wheelBrandCd" data-select='{
+                    <select class="form-select form-select-lg" id="wheelBrandCd" name="wheelBrandCd" th:value="${item?.wheelBrandCd}" data-select='{
                       "classNames": {
                         "containerInner": ["form-select", "form-select-lg"]
-                      }
-                    }' aria-label="Transmission select" required>
-                      <option th:each="list : ${@codeService.selectListCachedCode(6)}" th:value="${list.cdSeq}" th:text="${list.cdName}"></option>
+                      },
+                      "searchEnabled": true
+                    }' aria-label="wheelBrandCd select" required>
+                      <option value="">Select Brand</option>
+                      <option th:each="list : ${@codeService.selectListCachedCode(6)}" th:value="${list.cdSeq}" th:text="${list.cdName}" th:selected="${list.cdSeq} == ${item?.wheelBrandCd}"></option>
                     </select>
                   </div>
                   <div class="col">
-                    <label for="exterior-color" class="form-label">휠셋 모델</label>
-                    <input type="text" class="form-control form-control-lg" id="wheelModel" name="wheelModel">
+                    <label for="exterior-color" class="form-label">휠셋 모델명</label>
+                    <input type="text" class="form-control form-control-lg" id="wheelModel" th:value="${item?.wheelModel}" name="wheelModel">
                   </div>
                 </div>
                 <label for="description" class="form-label fs-6 fw-semibold">추가 기술 *</label>
                 <p class="fs-sm mb-2">자전거 세부 사항 중 추가로 기술할 부분을 적어주세요!</p>
-                <textarea class="form-control form-control-lg" rows="5" id="bicycleDescribe" name="bicycleDescribe" placeholder="최대 2000자" required></textarea>
+                <textarea class="form-control form-control-lg" rows="5" id="bicycleDescribe" name="bicycleDescribe" th:value="${item?.bicycleDescribe}" placeholder="최대 2000자" required></textarea>
               </div>
               <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark rounded d-none d-block-dark"></div>
             </section>
@@ -478,6 +446,21 @@
     </main>
  <div th:replace="~{usr/include/LoginedFooter :: LoginedFooter}"></div>
 <script type="text/javascript">
+$('.btn-check').on('click', function() {
+	$('#bicycleCateCd').val($(this).val());
+});
+
+$(window).on("load", function () {
+			alert($('.btn-check').val($(this).val()));
+		if ($('.btn-check').val() = $('#bicycleCateCd').val()) {
+			alert("1");
+			$(this).add(checked);
+		} else {
+			alert("2");
+			
+		}
+	})
+
 function validationInst() {
     if(document.getElementById("bicycleName").value == null || document.getElementById("bicycleName").value == "") {
 		document.getElementById("bicycleName").classList.add("is-invalid");
@@ -501,10 +484,28 @@ function validationInst() {
 }
 
 document.getElementById("btnSubmit").onclick = function () {
-	if(validationInst() == false) return false;
-	alert("!");
-	form.action = "/bicycle/bicycleUsrInst";
-	form.submit();
+	if(seq.value == "0" || seq.value == "") {
+		if(validationInst() == false) return false;
+		form.action = "/code/codeXdmInst";
+		form.submit();
+	} else {
+		if(validationUpdt() == false) return false;
+		form.action = "/code/codeXdmUpdt";
+		form.submit();
+	}
+}
+
+document.getElementById("btnSubmit").onclick = function () {
+	if(seq.value == "0" || seq.value == "") {
+		if(validationInst() == false) return false;
+		alert("!");
+		form.action = "/bicycle/bicycleUsrInst";
+		form.submit();
+	} else {
+		if(validationInst() == false) return false;
+		form.action = "/bicycle/bicycleUsrUpdt";
+		form.submit();
+	}
 }
 
 </script>

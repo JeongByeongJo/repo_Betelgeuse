@@ -2,7 +2,7 @@ package com.bicycledoctors.module.bicycle;
 
 public class BicycleDto {
 
-	private String seq;
+	private String bikeSeq;
 	private String bicycleName;
 	private Integer bicycleCateCd;
 	private Integer bicycleBrandCd;
@@ -13,10 +13,10 @@ public class BicycleDto {
     private Integer drivetrainBrandCd;
     private String drivetrainModel;
     private Integer brakeBrandCd;
-    private Integer isElectDrivetrain;
-    private Integer isDiskBrakes;
-    private Integer isHydrauric;
-    private Integer isInternal;
+    private String isElectDrivetrain;
+    private String isDiskBrakes;
+    private String isHydrauric;
+    private String isInternal;
     private Integer wheelBrandCd;
     private String wheelModel;
     private String bicycleDescribe;
@@ -27,12 +27,12 @@ public class BicycleDto {
     private String updtDate;
     private String userCustomer_seq;
 //    -----
-	public String getSeq() {
-		return seq;
-	}
-	public void setSeq(String seq) {
-		this.seq = seq;
-	}
+    public String getBikeSeq() {
+    	return bikeSeq;
+    }
+    public void setBikeSeq(String bikeSeq) {
+    	this.bikeSeq = bikeSeq;
+    }
 	public String getBicycleName() {
 		return bicycleName;
 	}
@@ -93,28 +93,28 @@ public class BicycleDto {
 	public void setBrakeBrandCd(Integer brakeBrandCd) {
 		this.brakeBrandCd = brakeBrandCd;
 	}
-	public Integer getIsElectDrivetrain() {
+	public String getIsElectDrivetrain() {
 		return isElectDrivetrain;
 	}
-	public void setIsElectDrivetrain(Integer isElectDrivetrain) {
+	public void setIsElectDrivetrain(String isElectDrivetrain) {
 		this.isElectDrivetrain = isElectDrivetrain;
 	}
-	public Integer getIsDiskBrakes() {
+	public String getIsDiskBrakes() {
 		return isDiskBrakes;
 	}
-	public void setIsDiskBrakes(Integer isDiskBrakes) {
+	public void setIsDiskBrakes(String isDiskBrakes) {
 		this.isDiskBrakes = isDiskBrakes;
 	}
-	public Integer getIsHydrauric() {
+	public String getIsHydrauric() {
 		return isHydrauric;
 	}
-	public void setIsHydrauric(Integer isHydrauric) {
+	public void setIsHydrauric(String isHydrauric) {
 		this.isHydrauric = isHydrauric;
 	}
-	public Integer getIsInternal() {
+	public String getIsInternal() {
 		return isInternal;
 	}
-	public void setIsInternal(Integer isInternal) {
+	public void setIsInternal(String isInternal) {
 		this.isInternal = isInternal;
 	}
 	public Integer getWheelBrandCd() {

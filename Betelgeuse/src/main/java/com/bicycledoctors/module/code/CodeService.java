@@ -78,4 +78,15 @@ public class CodeService {
 		}
 		return rt;
 	}
+	public static String selectOneCachedCodeEng(int code) throws Exception {
+		String rt = "";
+		for(CodeDto codeRow : CodeDto.cachedCodeArrayList) {
+			if (codeRow.getCdSeq().equals(Integer.toString(code))) {
+				rt = codeRow.getCdNameEng();
+			} else {
+				// by pass
+			}
+		}
+		return rt;
+	}
 }
