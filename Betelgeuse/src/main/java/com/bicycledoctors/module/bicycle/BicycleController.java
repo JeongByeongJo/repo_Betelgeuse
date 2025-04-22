@@ -33,25 +33,24 @@ public class BicycleController extends BaseController{
 	
 	@RequestMapping(value = "/bicycle/bicycleUsrForm")
 	public String bicycleUsrForm(BicycleDto dto, Model model, HttpSession httpSession) {
-		if (dto.getBikeSeq().equals("0") || dto.getBikeSeq().equals("")) {
-//			insert mode
-		} else {
-//			update mode
-			model.addAttribute("item", bicycleService.selectOne(dto));
-		}
 		
 		return "usr/bicycle/BicycleUsrForm";
 	}
+	@RequestMapping(value = "/bicycle/bicycleUsrMfom")
+	public String bicycleUsrMfom(BicycleDto dto, Model model, HttpSession httpSession) {
+		model.addAttribute("item", bicycleService.selectOne(dto));
+		
+		return "usr/bicycle/BicycleUsrMfom";
+	}
 	
 	@RequestMapping(value = "/bicycle/bicycleUsrInst")
-	public String bicycleUsrInst(BicycleDto dto, HttpSession httpSession) {
+	public String bicycleUsrInst(BicycleDto dto, HttpSession httpSession) throws Exception {
 		dto.setUserCustomer_seq((String)httpSession.getAttribute("sessSeqUsr"));
 		bicycleService.insert(dto);
 		return "redirect:/index/home-logined";
 	}
 	@RequestMapping(value = "/bicycle/bicycleUsrUpdt")
-	public String bicycleUsrUpdt(BicycleDto dto, HttpSession httpSession) {
-//		dto.setUserCustomer_seq((String)httpSession.getAttribute("sessSeqUsr"));
+	public String bicycleUsrUpdt(BicycleDto dto) {
 		bicycleService.update(dto);
 		return "redirect:/index/home-logined";
 	}

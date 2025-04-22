@@ -1,6 +1,8 @@
 package com.bicycledoctors.module.bicycle;
 
-public class BicycleDto {
+import com.bicycledoctors.common.base.BaseDto;
+
+public class BicycleDto extends BaseDto{
 
 	private String bikeSeq;
 	private String bicycleName;
@@ -27,6 +29,10 @@ public class BicycleDto {
     private String updtDate;
     private String userCustomer_seq;
 //    -----
+    private Integer uploadImg1Type = 1001;
+	private Integer uploadImg1MaxNumber = 1001;
+//    -----
+    
     public String getBikeSeq() {
     	return bikeSeq;
     }
@@ -185,6 +191,19 @@ public class BicycleDto {
 	}
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+//	-----
+	public Integer getUploadImg1Type() {
+		return uploadImg1Type;
+	}
+	public void setUploadImg1Type(Integer uploadImg1Type) {
+		this.uploadImg1Type = uploadImg1Type;
+	}
+	public Integer getUploadImg1MaxNumber() {
+		return uploadImg1MaxNumber;
+	}
+	public void setUploadImg1MaxNumber(Integer uploadImg1MaxNumber) {
+		this.uploadImg1MaxNumber = uploadImg1MaxNumber;
 	}
 	
 }

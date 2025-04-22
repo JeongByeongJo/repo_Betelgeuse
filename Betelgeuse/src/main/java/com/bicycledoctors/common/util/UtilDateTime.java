@@ -1,5 +1,6 @@
 package com.bicycledoctors.common.util;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -13,6 +14,11 @@ public class UtilDateTime {
 		return date + " " + localDateTimeString;
 	}
 	
+	public static String nowString() {
+		LocalDate localDate = LocalDate.now();
+		String localDateString = localDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		return localDateString;
+	}
 	public static String add00TimeString(String date) {
 		return date + " 00:00:00";
 	}

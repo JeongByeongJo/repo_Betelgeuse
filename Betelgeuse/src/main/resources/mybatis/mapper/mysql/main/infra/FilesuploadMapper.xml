@@ -1,0 +1,36 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bicycledoctors.module.filesupload.FilesUploadDao">
+	
+	<resultMap type="com.bicycledoctors.module.filesupload.FilesUploadDto" id="resultMapObj"></resultMap>
+	
+	<sql id="insertUploaded">
+		INSERT INTO filesUploaded (
+			type
+			,defaultNy
+			,sort
+			,path
+			,originalName
+			,uuidName
+			,ext
+			,size
+			,delNy
+			
+			,pseq
+		) values (
+			#{type}
+			,#{defaultNy}
+			,#{sort}
+			,#{path}
+			,#{originalName}
+			,#{uuidName}
+			,#{ext}
+			,#{size}
+			,0
+			
+			,#{pseq}
+		)
+	</sql>
+	
+
+</mapper>
