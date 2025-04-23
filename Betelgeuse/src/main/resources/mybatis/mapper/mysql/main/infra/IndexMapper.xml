@@ -1,0 +1,23 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bicycledoctors.module.index.IndexDao">
+	
+	<resultMap type="com.bicycledoctors.module.index.IndexDto" id="resultMapObj"></resultMap>
+
+	<select id="selectOneUserShopSeq">
+		SELECT 
+			a.shopSeq
+		    ,a.userCustomer_seq
+		    ,b.seq
+		    ,b.userId
+		    ,b.userName
+		FROM userCustomer as b
+		left join shop a on a.userCustomer_seq = b.seq
+		WHERE 1=1
+		AND b.seq = #{seq}
+	</select>
+
+
+
+</mapper>
+	

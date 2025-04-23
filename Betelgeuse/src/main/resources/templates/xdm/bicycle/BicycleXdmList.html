@@ -87,7 +87,7 @@
 		<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${vo.rowNumToShow}"/>
           <div class="card">
             <div class="card-body">
-            <input type="hidden" name="cdSeq">
+            <input type="hidden" id="bikeSeq" name="bikeSeq">
             <div th:replace="~{xdm/include/totalAndRowNum :: totalAndRowNum}"></div>
 			
 
@@ -123,7 +123,7 @@
                        <td th:text = "${list.userName}"></td>                                                
 <!--                        <td></td>                                                 -->
 <!--                        <td></td>                                                 -->
-                       <td><a href = "javascript:void(0);" th:text = "${list.bicycleName}" th:attr="onclick=|goForm('${list.seq}')|"></a></td>
+                       <td><a th:href="@{/bicycle/bicycleXdmView(bikeSeq=${list.bikeSeq})}" th:text = "${list.bicycleName}"></a></td>
                        <td th:text = "${@codeService.selectOneCachedCode(list.bicycleBrandCd)}"></td>
                        <td th:text = "${@codeService.selectOneCachedCode(list.drivetrainBrandCd)}"></td>
 					   <td th:text = "${@codeService.selectOneCachedCode(list.brakeBrandCd)}"></td>
@@ -166,7 +166,7 @@
                 <div class="col-md-6 padding-right" style="display: flex; justify-content: end;">
                     
                     <button class="btn btn-success btn-right"><i class="bi bi-journal-x"></i></button>
-                  <button type="button" id="btnForm" class="btn btn-primary"><i class="bi bi-plus-lg"></i></button>
+<!--                   <button type="button" id="btnForm" class="btn btn-primary"><i class="bi bi-plus-lg"></i></button> -->
                 </div>
                 </div>
                 </div>
@@ -223,18 +223,6 @@
 			});
 	    });
 		
-		document.getElementById("btnForm").onclick = function () {
-		    goForm(0);
-		}
-
-
-		goForm = function (keyValue) {
-		    seq.value = keyValue;
-		    form.action = "/bicycle/bicycleXdmForm";
-		    form.submit();
-		}
-		
-		
 		document.getElementById("btnSearch").onclick = function () {
 			form.action = "/bicycle/bicycleXdmList";
 			form.submit();
@@ -250,7 +238,7 @@
 		}
 		document.getElementById("changeRowNum").onchange = function () {
 		    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
-		    form.action = "/code/codeXdmList";
+		    form.action = "/bicycle/bicycleXdmList";
 		    form.submit();
 		}
 		

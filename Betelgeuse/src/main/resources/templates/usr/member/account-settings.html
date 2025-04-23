@@ -151,7 +151,7 @@
                       </div>
                     <div class="col position-relative">
                       <label for="userZip" class="form-label fs-base">주 소 *</label>
-                      <input type="text" class="form-control form-control-lg" id="userZip" name="userZip" th:value="${item?.userZip}" placeholder="우편번호">
+                      <input type="text" class="form-control form-control-lg" onclick="sample4_execDaumPostcode()" id="userZip" name="userZip" th:value="${item?.userZip}" placeholder="우편번호" readonly>
                     </div>
                     <div class="col position-relative" style="padding-top: 3.5ex">
 					  <input type="button" class="btn btn-lg btn-dark" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
@@ -159,12 +159,12 @@
                     </div>
                     <div class="col position-relative">
                       <label for="userAddress1" class="form-label fs-base">도로명 주소 </label>
-					<input type="text" class="form-control form-control-lg" id="userAddress1" name="userAddress1" th:value="${item?.userAddress1}" placeholder="도로명주소">
+					<input type="text" class="form-control form-control-lg" id="userAddress1" name="userAddress1" th:value="${item?.userAddress1}" placeholder="도로명주소" readonly>
                     
                     </div>
                     <div class="col position-relative">
                       <label for="userAddress2" class="form-label fs-base">지번 주소 </label>
-					<input type="text" class="form-control form-control-lg" id="userAddress2" name="userAddress2" th:value="${item?.userAddress2}" placeholder="지번주소">
+					<input type="text" class="form-control form-control-lg" id="userAddress2" name="userAddress2" th:value="${item?.userAddress2}" placeholder="지번주소" readonly>
                     
                     </div>
                     <div class="col position-relative">
@@ -174,7 +174,7 @@
                     </div>
                     <div class="col position-relative">
                       <label for="userAddress4" class="form-label fs-base">참고항목</label>
-					<input type="text" class="form-control form-control-lg" id="userAddress4" name="userAddress4" th:value="${item?.userAddress4}" placeholder="참고항목">
+					<input type="text" class="form-control form-control-lg" id="userAddress4" name="userAddress4" th:value="${item?.userAddress4}" placeholder="참고항목" readonly>
                     
                     </div>
                     </div>
@@ -382,6 +382,8 @@
 
             }
         }).open();
+        
+        document.getElementById("shopAddress3").focus();
     }
 </script>
 

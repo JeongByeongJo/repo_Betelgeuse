@@ -30,6 +30,13 @@ public class BicycleController extends BaseController{
 		
 		return "xdm/bicycle/BicycleXdmList";
 	}
+	@RequestMapping(value = "/bicycle/bicycleXdmView")
+	public String bicycleXdmView(Model model, BicycleVo vo) {
+		
+		model.addAttribute("item", bicycleService.selectOne(vo));
+		
+		return "xdm/bicycle/BicycleXdmView";
+	}
 	
 	@RequestMapping(value = "/bicycle/bicycleUsrForm")
 	public String bicycleUsrForm(BicycleDto dto, Model model, HttpSession httpSession) {

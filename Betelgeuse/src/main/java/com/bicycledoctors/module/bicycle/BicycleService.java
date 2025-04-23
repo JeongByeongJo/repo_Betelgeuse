@@ -27,6 +27,9 @@ public class BicycleService extends BaseService{
 	public BicycleDto selectOne(BicycleDto dto) {
 		return bicycleDao.selectOne(dto);
 	}
+	public BicycleDto selectOne(BicycleVo vo) {
+		return bicycleDao.selectOne(vo);
+	}
 	
 	public int selectOneCount(BicycleVo vo) {
 		return bicycleDao.selectOneCount(vo);

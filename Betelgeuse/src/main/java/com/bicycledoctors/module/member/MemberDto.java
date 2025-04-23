@@ -15,8 +15,8 @@ public class MemberDto {
 	private String userAddress2;
 	private String userAddress3;
 	private String userAddress4;
-	private String userLatitude;
-	private String userLongitude;
+	private double userLatitude;
+	private double userLongitude;
 	private String userNote;
 	private String userIp;
 	private String shopComment;
@@ -110,16 +110,16 @@ public class MemberDto {
 	public void setUserAddress4(String userAddress4) {
 		this.userAddress4 = userAddress4;
 	}
-	public String getUserLatitude() {
+	public double getUserLatitude() {
 		return userLatitude;
 	}
-	public void setUserLatitude(String userLatitude) {
+	public void setUserLatitude(double userLatitude) {
 		this.userLatitude = userLatitude;
 	}
-	public String getUserLongitude() {
+	public double getUserLongitude() {
 		return userLongitude;
 	}
-	public void setUserLongitude(String userLongitude) {
+	public void setUserLongitude(double userLongitude) {
 		this.userLongitude = userLongitude;
 	}
 	public String getUserNote() {

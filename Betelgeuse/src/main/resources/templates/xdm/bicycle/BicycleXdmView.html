@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{xdm/include/headNice :: headNice}"></div>
+
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">page 1</a></li>
+          <li class="breadcrumb-item">page 2</li>
+          <li class="breadcrumb-item active">Default</li>
+        </ol>
+      </nav>
+      <h1>자전거관리</h1>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+      <div class="row">
+        
+        <div class="col-lg-12">
+          <div class="card" >
+            <div class="card-body">
+              <h1 class="card-title" style="height: 100px;" >기본정보</h1>
+
+              <!-- Custom Styled Validation -->
+              <form class="row g-3 needs-validation" method="post" id="form" novalidate>
+                <input type="hidden" name="bikeSeq" th:value="${item?.bikeSeq}">	
+                <div class="col-md-3" style="height: 100px;">
+                  <label for="code" class="form-label">코드<sup>*</sup></label>
+                  <input type="text" class="form-control" id="bikeSeq" value="" placeholder="자동생성" th:value="${item?.bikeSeq}" required disabled>
+                  <div class="valid-feedback">
+                    Looks good!
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <label for="bikeName" class="form-label">자전거 이름<sup>*</sup></label>
+                  <input type="text" class="form-control" id="bicycleName" name="bicycleName" placeholder="한글,영대소문자,숫자" th:value="${item?.bicycleName}" required>
+                  <div class="invalid-feedback" id="name-invalid-feedback">
+                    코드이름을 입력해주세요.
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <label for="bicycleBrandCd" class="form-label">자전거 브랜드</label>
+                  <input type="text" class="form-control" id="bicycleBrandCd" name="bicycleBrandCd" placeholder="영대소문자,숫자" th:value="${@codeService.selectOneCachedCode(item?.bicycleBrandCd)}" required>
+                  <div class="invalid-feedback" id="nameeng-invalid-feedback">
+                    코드이름(영문)을 입력하세요.
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <label for="bicycleModel" class="form-label">자전거 모델명</label>
+                  <input type="text" class="form-control" id="bicycleModel" name="bicycleModel" placeholder="영대소문자,숫자" th:value="${item?.bicycleModel}" required>
+                  <div class="invalid-feedback" id="nameeng-invalid-feedback">
+                    코드이름(영문)을 입력하세요.
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <label for="bicycleYears" class="form-label">자전거 연식</label>
+                  <input type="text" class="form-control" id="bicycleYears" name="bicycleYears" th:value="${item?.bicycleYears}" placeholder="영대문자,숫자">
+                </div>
+                <div class="col-md-3">
+                  <label for="drivetrainBrandCd" class="form-label">구동계 브랜드</label>
+                  <input type="text" class="form-control" id="drivetrainBrandCd" name="drivetrainBrandCd" th:value="${@codeService.selectOneCachedCode(item?.drivetrainBrandCd)}" placeholder="영대문자,숫자">
+                </div>
+                <div class="col-md-3">
+                  <label for="drivetrainModel" class="form-label">구동계 모델</label>
+                  <input type="text" class="form-control" id="drivetrainModel" name="drivetrainModel" th:value="${item?.drivetrainModel}" placeholder="영대문자,숫자">
+                </div>
+                <div class="col-md-3">
+                  <label for="brakeBrandCd" class="form-label">브레이크 브랜드</label>
+                  <input type="text" class="form-control" id="brakeBrandCd" name="brakeBrandCd" th:value="${@codeService.selectOneCachedCode(item?.brakeBrandCd)}" placeholder="영대문자,숫자">
+                </div>
+                <div class="col-md-3">
+                  <label for="wheelBrandCd" class="form-label">휠셋 브랜드</label>
+                  <input type="text" class="form-control" id="wheelBrandCd" name="wheelBrandCd" th:value="${@codeService.selectOneCachedCode(item?.wheelBrandCd)}" placeholder="영대문자,숫자">
+                </div>
+                <div class="col-md-3">
+                  <label for="wheelModel" class="form-label">휠셋 모델</label>
+                  <input type="text" class="form-control" id="wheelModel" name="wheelModel" th:value="${item?.wheelModel}" placeholder="영대문자,숫자">
+                </div>
+                <div class="col-md-3" style="height: 100px;">
+                  <label for="delNy" class="form-label">사용여부<sup>*</sup></label>
+                  <select class="form-select" id="delNy" name="delNy" th:value="${item?.delNy}" required>
+<!--                     <option value="">선택하세요</option> -->
+                    <option value="1" th:selected="${item?.delNy == 1}" th:text="사용"></option>
+					<option value="0" th:selected="${item?.delNy == 0}" th:text="미사용"></option>
+                  </select>
+                  <div class="invalid-feedback">
+                    항목중 하나를 선택 해주세요.
+                  </div>
+                </div>
+                <div class="col-md-6" style="height: 150px;">
+                  <label for="bicycleDescribe" class="form-label">설명</label>
+                  <textarea class="form-control" id="bicycleDescribe" name="bicycleDescribe" th:text="${item?.bicycleDescribe}"></textarea>
+                </div>
+                <div class="col-md-6"></div>
+                <div class="col-md-6">
+                  <a href="/bicycle/bicycleXdmList" class="btn btn-outline-dark"><i class="bi bi-blockquote-right"></i></a>
+                  <button class="btn btn-danger">X</button>
+                  <button type="button" class="btn btn-danger" id="btnUelete"><i class="bi bi-trash"></i></button>
+                </div>
+                <div class="col-md-6">
+                  <div style="display: flex;justify-content: end;"><button class="btn btn-primary" id="btnSubmit"><i class="bi bi-server"></i></button></div>
+                </div>
+              </form><!-- End Custom Styled Validation -->
+
+            </div>
+          </div>
+		<div class="modal" id="modalConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="modalConfirmTitle">title</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body" id="modalConfirmBody">
+						body
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">닫힘</button>
+						<button type="button" class="btn btn-danger" name="" id="btnModalDelete"></button>
+						<button type="button" class="btn btn-danger" name="" id="btnModalUelete">삭제</button>
+					</div>
+				</div>
+			</div>
+		</div>
+          
+
+        </div>
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+  <div th:replace="~{xdm/include/footerNice :: footerNice}"></div>
+
+    <script type="text/javascript">
+	
+	</script>
+
+</body>
+
+</html>

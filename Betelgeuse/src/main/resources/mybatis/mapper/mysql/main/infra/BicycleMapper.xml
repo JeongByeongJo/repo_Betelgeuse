@@ -55,7 +55,7 @@
 		    a.instDate,
 		    a.updtDate,
 		    a.userCustomer_seq,
-			b.userID,
+			b.userId,
 			b.userName
 		<include refid = "selectCommon"></include>
 		order by seq desc

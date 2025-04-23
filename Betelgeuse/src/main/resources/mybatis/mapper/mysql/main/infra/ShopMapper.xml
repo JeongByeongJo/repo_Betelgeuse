@@ -5,7 +5,272 @@
 	
 	<resultMap type="com.bicycledoctors.module.shop.ShopDto" id="resultMapObj"></resultMap>
 	
+	<select id="selectList" resultMap="resultMapObj">
+		SELECT 
+			a.shopSeq
+		    ,a.shopName
+		    ,a.shopTel
+		    ,a.shopEmail
+		    ,a.shopZip
+		    ,a.shopAddress1
+		    ,a.shopAddress2
+		    ,a.shopAddress3
+		    ,a.shopAddress4
+		    ,a.shopLatitude
+		    ,a.shopLongitude
+		    ,a.shopDescribe
+		    ,a.parkingNy
+		    ,a.wifiNy
+		    ,a.cctvNy
+		    ,a.cafeNy
+		    ,a.petNy
+		    ,a.customerFavoriteNy
+		    ,a.mondayNy
+		    ,a.tuesdayNy
+		    ,a.wednesdayNy
+		    ,a.thursdayNy
+		    ,a.fridayNy
+		    ,a.saturdayNy
+		    ,a.sundayNy
+		    ,a.mondayOpentime
+		    ,a.mondayClosetime
+		    ,a.tuesdayOpentime
+		    ,a.tuesdayClosetime
+		    ,a.wednesdayOpentime
+		    ,a.wednesdayClosetime
+		    ,a.thursdayOpentime
+		    ,a.thurdayClosetime
+		    ,a.fridayOpentime
+		    ,a.fridayClosetime
+		    ,a.saturdayOpentime
+		    ,a.saturdayClosetime
+		    ,a.sundayOpentime
+		    ,a.sundayClosetime
+		    ,a.verifiedNy
+		    ,a.featuredNy
+		    ,a.delNy
+		    ,a.homepage
+		    ,a.youtube
+		    ,a.shopInstDate
+		    ,a.shopUpdtDate
+		    ,a.userCustomer_seq
+		    ,b.seq
+		    ,b.userId
+		    ,b.userName
+		FROM shop as a
+		left join userCustomer b on a.userCustomer_seq = b.seq
+	</select>
+	<select id="selectOne4ShopLocation" resultMap="resultMapObj">
+	SELECT 
+			a.shopSeq
+		    ,a.shopName
+		    ,a.shopTel
+		    ,a.shopEmail
+		    ,a.shopZip
+		    ,a.shopAddress1
+		    ,a.shopAddress2
+		    ,a.shopAddress3
+		    ,a.shopAddress4
+		    ,a.shopLatitude
+		    ,a.shopLongitude
+		    ,a.shopDescribe
+		    ,a.parkingNy
+		    ,a.wifiNy
+		    ,a.cctvNy
+		    ,a.cafeNy
+		    ,a.petNy
+		    ,a.customerFavoriteNy
+		    ,a.mondayNy
+		    ,a.tuesdayNy
+		    ,a.wednesdayNy
+		    ,a.thursdayNy
+		    ,a.fridayNy
+		    ,a.saturdayNy
+		    ,a.sundayNy
+		    ,a.mondayOpentime
+		    ,a.mondayClosetime
+		    ,a.tuesdayOpentime
+		    ,a.tuesdayClosetime
+		    ,a.wednesdayOpentime
+		    ,a.wednesdayClosetime
+		    ,a.thursdayOpentime
+		    ,a.thurdayClosetime
+		    ,a.fridayOpentime
+		    ,a.fridayClosetime
+		    ,a.saturdayOpentime
+		    ,a.saturdayClosetime
+		    ,a.sundayOpentime
+		    ,a.sundayClosetime
+		    ,a.verifiedNy
+		    ,a.featuredNy
+		    ,a.delNy
+		    ,a.homepage
+		    ,a.youtube
+		    ,a.shopInstDate
+		    ,a.shopUpdtDate
+		    ,a.userCustomer_seq
+		    ,b.seq
+		    ,b.userId
+		    ,b.userName
+		FROM shop as a
+		left join userCustomer b on a.userCustomer_seq = b.seq
+		WHERE 1=1
+		AND a.userCustomer_seq = #{userCustomer_seq}
+	</select>
+	<insert id="insert">
+		INSERT INTO shop (
+			shopSeq
+			,shopName
+			,shopTel
+			,shopEmail
+			,shopZip
+			,shopAddress1
+			,shopAddress2
+			,shopAddress3
+			,shopAddress4
+			,shopLatitude
+			,shopLongitude
+			,shopDescribe
+			,parkingNy
+			,wifiNy
+			,cctvNy
+			,cafeNy
+			,petNy
+			,customerFavoriteNy
+			,mondayNy
+			,tuesdayNy
+			,wednesdayNy
+			,thursdayNy
+			,fridayNy
+			,saturdayNy
+			,sundayNy
+			,mondayOpentime
+			,mondayClosetime
+			,tuesdayOpentime
+			,tuesdayClosetime
+			,wednesdayOpentime
+			,wednesdayClosetime
+			,thursdayOpentime
+			,thurdayClosetime
+			,fridayOpentime
+			,fridayClosetime
+			,saturdayOpentime
+			,saturdayClosetime
+			,sundayOpentime
+			,sundayClosetime
+			,verifiedNy
+			,featuredNy
+			,delNy
+			,homepage
+			,youtube
+			,shopInstDate
+			,shopUpdtDate
+			,userCustomer_seq
+		) VALUES (
+			#{shopSeq}
+			,#{shopName}
+			,#{shopTel}
+			,#{shopEmail}
+			,#{shopZip}
+			,#{shopAddress1}
+			,#{shopAddress2}
+			,#{shopAddress3}
+			,#{shopAddress4}
+			,#{shopLatitude}
+			,#{shopLongitude}
+			,#{shopDescribe}
+			,#{parkingNy}
+			,#{wifiNy}
+			,#{cctvNy}
+			,#{cafeNy}
+			,#{petNy}
+			,#{customerFavoriteNy}
+			,#{mondayNy}
+			,#{tuesdayNy}
+			,#{wednesdayNy}
+			,#{thursdayNy}
+			,#{fridayNy}
+			,#{saturdayNy}
+			,#{sundayNy}
+			,#{mondayOpentime}
+			,#{mondayClosetime}
+			,#{tuesdayOpentime}
+			,#{tuesdayClosetime}
+			,#{wednesdayOpentime}
+			,#{wednesdayClosetime}
+			,#{thursdayOpentime}
+			,#{thurdayClosetime}
+			,#{fridayOpentime}
+			,#{fridayClosetime}
+			,#{saturdayOpentime}
+			,#{saturdayClosetime}
+			,#{sundayOpentime}
+			,#{sundayClosetime}
+			,#{verifiedNy}
+			,#{featuredNy}
+			,#{delNy}
+			,#{homepage}
+			,#{youtube}
+			,#{shopInstDate}
+			,#{shopUpdtDate}
+			,#{userCustomer_seq}
+		)
+		<selectKey resultType="String" keyProperty="shopSeq" order="AFTER">
+			SELECT last_insert_id()
+		</selectKey>
+	</insert>
 	
-	
+	<update id="update">
+		UPDATE shop SET
+			shopSeq = #{shopSeq}
+			,shopName = #{shopName}
+			,shopTel = #{shopTel}
+			,shopEmail = #{shopEmail}
+			,shopZip = #{shopZip}
+			,shopAddress1 = #{shopAddress1}
+			,shopAddress2 = #{shopAddress2}
+			,shopAddress3 = #{shopAddress3}
+			,shopAddress4 = #{shopAddress4}
+			,shopLatitude = #{shopLatitude}
+			,shopLongitude = #{shopLongitude}
+			,shopDescribe = #{shopDescribe}
+			,parkingNy = #{parkingNy}
+			,wifiNy = #{wifiNy}
+			,cctvNy = #{cctvNy}
+			,cafeNy = #{cafeNy}
+			,petNy = #{petNy}
+			,customerFavoriteNy = #{customerFavoriteNy}
+			,mondayNy = #{mondayNy}
+			,tuesdayNy = #{tuesdayNy}
+			,wednesdayNy = #{wednesdayNy}
+			,thursdayNy = #{thursdayNy}
+			,fridayNy = #{fridayNy}
+			,saturdayNy = #{saturdayNy}
+			,sundayNy = #{sundayNy}
+			,mondayOpentime = #{mondayOpentime}
+			,mondayClosetime = #{mondayClosetime}
+			,tuesdayOpentime = #{tuesdayOpentime}
+			,tuesdayClosetime = #{tuesdayClosetime}
+			,wednesdayOpentime = #{wednesdayOpentime}
+			,wednesdayClosetime = #{wednesdayClosetime}
+			,thursdayOpentime = #{thursdayOpentime}
+			,thurdayClosetime = #{thurdayClosetime}
+			,fridayOpentime = #{fridayOpentime}
+			,fridayClosetime = #{fridayClosetime}
+			,saturdayOpentime = #{saturdayOpentime}
+			,saturdayClosetime = #{saturdayClosetime}
+			,sundayOpentime = #{sundayOpentime}
+			,sundayClosetime = #{sundayClosetime}
+			,verifiedNy = #{verifiedNy}
+			,featuredNy = #{featuredNy}
+			,delNy = #{delNy}
+			,homepage = #{homepage}
+			,youtube = #{youtube}
+			,shopInstDate = #{shopInstDate}
+			,shopUpdtDate = #{shopUpdtDate}
+			,userCustomer_seq = #{userCustomer_seq}
+		WHERE 1=1
+		AND shopSeq = #{shopSeq}
+	</update>
 	
 </mapper>

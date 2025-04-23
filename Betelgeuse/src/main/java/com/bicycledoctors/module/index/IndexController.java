@@ -1,10 +1,17 @@
 package com.bicycledoctors.module.index;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class IndexController {
+	
+	@Autowired
+	IndexService service;
 
 	@RequestMapping(value = "/xdm/indexXdm")
 	public String xdmIndex() {
@@ -15,7 +22,9 @@ public class IndexController {
 		return "usr/index/home";
 	}
 	@RequestMapping(value = "/index/home-logined")
-	public String homelogined() {
+	public String homelogined(Model model, IndexDto dto, HttpSession httpSession) {
+		dto.setSeq(httpSession.getAttribute("sessSeqUsr").toString());
+		model.addAttribute("item", service.selectOneUserShopSeq(dto));
 		return "usr/index/home-logined";
 	}
 	@RequestMapping(value = "/member/SigninUsrForm")

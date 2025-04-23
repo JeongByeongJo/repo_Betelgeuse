@@ -1,11 +1,19 @@
 package com.bicycledoctors.module.shop;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.bicycledoctors.module.code.CodeDto;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class ShopController {
 
+	@Autowired
+	ShopService service;
 	
 	@RequestMapping(value = "/shop/shopUsrList")
 	public String shopUsrList() {
@@ -16,7 +24,17 @@ public class ShopController {
 		return "usr/shop/ShopUsrView";
 	}
 	@RequestMapping(value = "/shop/shopaddlocationUsrForm")
-	public String shopaddlocationUsrForm() {
+	public String shopaddlocationUsrForm(Model model, ShopDto vo, HttpSession httpSession) {
+		System.out.println("vo.getUserCustomer_seq(): " + vo.getUserCustomer_seq());
+		if (vo.getUserCustomer_seq().equals("") || vo.getUserCustomer_seq().equals("0")) {
+//			insert mode
+			vo.setSeq(httpSession.getAttribute("sessSeqUsr").toString());
+
+		} else {
+//			update mode
+			model.addAttribute("item", service.selectOne4ShopLocation(vo));
+		}
+		
 		return "usr/shop/ShopaddlocationUsrForm";
 	}
 	@RequestMapping(value = "/shop/shopaddservicesUsrForm")
@@ -34,5 +52,16 @@ public class ShopController {
 	@RequestMapping(value = "/shop/shopaddpicUsrForm")
 	public String shopaddpicUsrForm() {
 		return "usr/shop/ShopaddpicUsrForm";
+	}
+	
+	@RequestMapping(value = "/shop/shopaddlocationUsrInst")
+	public String shopaddlocationUsrInst(ShopDto dto) {
+		service.insert(dto);
+		return "redirect:/shop/shopaddservicesUsrForm";
+	}
+	@RequestMapping(value = "/shop/shopaddlocationUsrUpdt")
+	public String shopaddlocationUsrUpdt(ShopDto dto) {
+		service.update(dto);
+		return "redirect:/shop/shopaddservicesUsrForm";
 	}
 }

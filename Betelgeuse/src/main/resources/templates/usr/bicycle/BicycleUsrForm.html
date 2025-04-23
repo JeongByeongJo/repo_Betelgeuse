@@ -17,7 +17,7 @@
          <div class="col-lg-8 col-xl-9">
            <h1 class="h2">자전거 등록하기</h1>
 		<form id="form" name="form" method="post" autocomplete="off" enctype="multipart/form-data" >
-		<input type="hidden" id="userCustomer_seq" th:value="${session.sessSeqUsr}">
+		<input type="hidden" id="userCustomer_seq" name="userCustomer_seq" th:value="${session.sessSeqUsr}">
 		<input type="hidden" id="bikeSeq" name="bikeSeq">
             <!-- Photos / videos -->
             <section class="position-relative bg-body rounded p-4 mt-4">

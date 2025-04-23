@@ -3,15 +3,15 @@ package com.bicycledoctors.module.bicycle;
 import com.bicycledoctors.common.base.BaseVo;
 
 public class BicycleVo extends BaseVo{
-	private String seq;
+	private String bikeSeq;
 //	-----
 
-	public String getSeq() {
-		return seq;
+	public String getBikeSeq() {
+		return bikeSeq;
 	}
 
-	public void setSeq(String seq) {
-		this.seq = seq;
+	public void setBikeSeq(String bikeSeq) {
+		this.bikeSeq = bikeSeq;
 	}
 	
 }

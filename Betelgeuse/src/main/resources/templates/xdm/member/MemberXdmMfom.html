@@ -64,7 +64,8 @@
                 </div>
                 <div class="col-md-3">
                   <label for="userGps" class="form-label">GPS</label>
-                  <input type="text" class="form-control" id="userGps" name="userGps" th:value="${item?.userGps}">
+                  <input type="text" class="form-control" id="userLatitude" name="userLatitude" th:value="${item?.userLatitude}">
+                  <input type="text" class="form-control" id="userLongitude" name="userLongitude" th:value="${item?.userLongitude}">
                 </div>
                 <div class="col-md-3">
                   <label for="userIp" class="form-label">IP</label>
@@ -83,7 +84,9 @@
                 </div>
                 <div class="col-md-6">
                   <label for="userAddressCd" class="form-label">주소</label>
-                  <textarea class="form-control" id="userAddressCd" name="userAddressCd" th:value="${item?.userAddressCd}" rows="3"></textarea>
+                  <input type="text" class="form-control" id="userAddress1" name="userAddress1" th:value="${item?.userAddress1}">
+                  <input type="text" class="form-control" id="userAddress2" name="userAddress2" th:value="${item?.userAddress2}">
+                  <input type="text" class="form-control" id="userAddress3" name="userAddress3" th:value="${item?.userAddress3}">
                 </div>
                 <div class="col-md-6" style="height: 150px;">
                   <label for="userNote" class="form-label">멤버노트</label>

@@ -66,61 +66,77 @@
                 "containerInner": ["form-select", "form-select-lg"]
               }
             }' multiple aria-label="Select categories">
-            <option value=""></option>
-            <option value="Drivetrain">구동계</option>
-            <option value="Brakes">브레이크</option>
-            <option value="Shocks">샥</option>
-            <option value="Wheelset">휠셋</option>
-            <option value="Pedals">페달</option>
-            <option value="Cockpit">콕핏(핸들바,헤드셋 등)</option>
-            <option value="Components">기타 컴포넌트</option>
-            <option value="Expendables">소모품 관리</option>
+	            <option value=""></option>
+	            <option th:each="list : ${@codeService.selectListCachedCode(8)}" th:value="${list.cdSeq}" th:text="${list.cdName}"></option>
+	            
+<!-- 	            <option value="Drivetrain">구동계</option> -->
+<!-- 	            <option value="Brakes">브레이크</option> -->
+<!-- 	            <option value="Shocks">샥</option> -->
+<!-- 	            <option value="Wheelset">휠셋</option> -->
+<!-- 	            <option value="Pedals">페달</option> -->
+<!-- 	            <option value="Cockpit">콕핏(핸들바,헤드셋 등)</option> -->
+<!-- 	            <option value="Components">기타 컴포넌트</option> -->
+<!-- 	            <option value="Expendables">소모품 관리</option> -->
             </select>
             <br>
-            <h2 class="h6 pb-1 mb-2">취급 주요 브랜드 *</h2>
+            <h2 class="h6 pb-1 mb-2">취급 자전거 브랜드 *</h2>
             <select class="form-select form-select-lg" data-select='{
               "classNames": {
                 "containerInner": ["form-select", "form-select-lg"]
               }
             }' multiple aria-label="Select categories">
             <option value=""></option>
-            <option value="">Select brand</option>
-                      <option value="Argon">Argon 18</option>
-                      <option value="Basso">Basso</option>
-                      <option value="BH">BH</option>
-                      <option value="Bianchi">Bianchi</option>
-                      <option value="BMC">BMC</option>
-                      <option value="Bottecchia">Bottecchia</option>
-                      <option value="Brompton">Brompton</option>
-                      <option value="Cannondale">Cannondale</option>
-                      <option value="Canyon">Canyon</option>
-                      <option value="Cervélo">Cervélo</option>
-                      <option value="Cinelli">Cinelli</option>
-                      <option value="Colnago">Colnago</option>
-                      <option value="Condor">Condor</option>
-                      <option value="Cube">Cube</option>
-                      <option value="Dare">Dare</option>
-                      <option value="De Rosa">De Rosa</option>
-                      <option value="Eddy_Merckx">Eddy Merckx</option>
-                      <option value="Factor">Factor</option>
-                      <option value="Felt">Felt</option>
-                      <option value="Focus">Focus</option>
-                      <option value="Fuji">Fuji</option>
-                      <option value="Giant">Giant</option>
-                      <option value="Lapierre">Lapierre</option>
-                      <option value="Look" selected>Look</option>
-                      <option value="Marin">Marin</option>
-                      <option value="Merida">Merida</option>
-                      <option value="Orbea">Orbea</option>
-                      <option value="Passoni">Passoni</option>
-                      <option value="Pinarello">Pinarello</option>
-                      <option value="Ridley">Ridley</option>
-                      <option value="Scott">Scott</option>
-                      <option value="Specialized">Specialized</option>
-                      <option value="Tern">Tern</option>
-                      <option value="Trek">Trek</option>
-                      <option value="Wilier">Wilier</option>
+            <option th:each="list : ${@codeService.selectListCachedCode(4)}" th:value="${list.cdSeq}" th:text="${list.cdName}" th:selected="${list.cdSeq} == ${item?.bicycleBrandCd}"></option>
+            
+
+<!--             <option value="">Select brand</option> -->
+<!--                       <option value="Argon">Argon 18</option> -->
+<!--                       <option value="Basso">Basso</option> -->
+<!--                       <option value="BH">BH</option> -->
+<!--                       <option value="Bianchi">Bianchi</option> -->
+<!--                       <option value="BMC">BMC</option> -->
+<!--                       <option value="Bottecchia">Bottecchia</option> -->
+<!--                       <option value="Brompton">Brompton</option> -->
+<!--                       <option value="Cannondale">Cannondale</option> -->
+<!--                       <option value="Canyon">Canyon</option> -->
+<!--                       <option value="Cervélo">Cervélo</option> -->
+<!--                       <option value="Cinelli">Cinelli</option> -->
+<!--                       <option value="Colnago">Colnago</option> -->
+<!--                       <option value="Condor">Condor</option> -->
+<!--                       <option value="Cube">Cube</option> -->
+<!--                       <option value="Dare">Dare</option> -->
+<!--                       <option value="De Rosa">De Rosa</option> -->
+<!--                       <option value="Eddy_Merckx">Eddy Merckx</option> -->
+<!--                       <option value="Factor">Factor</option> -->
+<!--                       <option value="Felt">Felt</option> -->
+<!--                       <option value="Focus">Focus</option> -->
+<!--                       <option value="Fuji">Fuji</option> -->
+<!--                       <option value="Giant">Giant</option> -->
+<!--                       <option value="Lapierre">Lapierre</option> -->
+<!--                       <option value="Look" selected>Look</option> -->
+<!--                       <option value="Marin">Marin</option> -->
+<!--                       <option value="Merida">Merida</option> -->
+<!--                       <option value="Orbea">Orbea</option> -->
+<!--                       <option value="Passoni">Passoni</option> -->
+<!--                       <option value="Pinarello">Pinarello</option> -->
+<!--                       <option value="Ridley">Ridley</option> -->
+<!--                       <option value="Scott">Scott</option> -->
+<!--                       <option value="Specialized">Specialized</option> -->
+<!--                       <option value="Tern">Tern</option> -->
+<!--                       <option value="Trek">Trek</option> -->
+<!--                       <option value="Wilier">Wilier</option> -->
             </select>
+            <br>
+            <h2 class="h6 pb-1 mb-2">취급 휠셋 브랜드 *</h2>
+            <select class="form-select form-select-lg" data-select='{
+              "classNames": {
+                "containerInner": ["form-select", "form-select-lg"]
+              }
+            }' multiple aria-label="Select categories">
+            <option value=""></option>
+            <option th:each="list : ${@codeService.selectListCachedCode(6)}" th:value="${list.cdSeq}" th:text="${list.cdName}" th:selected="${list.cdSeq} == ${item?.bicycleBrandCd}"></option>
+            </select>
+            
             <!-- Services (checkboxes) -->
             <h2 class="h6 pt-3 mt-3">편의시설:</h2>
             <div class="row row-cols-2 row-cols-md-3 gy-3 gx-4">
@@ -154,153 +170,7 @@
                   <label for="pet" class="form-check-label">반려동물 동반</label>
                 </div>
               </div>
-              <!-- <div class="col">
-                <div class="form-check mb-0">
-                  <input type="checkbox" class="form-check-input" id="chimney-construction">
-                  <label for="chimney-construction" class="form-check-label">Chimney Construction</label>
-                </div>
-              </div>
-              <div class="col">
-                <div class="form-check mb-0">
-                  <input type="checkbox" class="form-check-input" id="basement-remodeling">
-                  <label for="basement-remodeling" class="form-check-label">Basement Remodeling</label>
-                </div>
-              </div>
-              <div class="col">
-                <div class="form-check mb-0">
-                  <input type="checkbox" class="form-check-input" id="home-renovations" checked>
-                  <label for="home-renovations" class="form-check-label">Home Renovations</label>
-                </div>
-              </div>
-              <div class="col">
-                <div class="form-check mb-0">
-                  <input type="checkbox" class="form-check-input" id="floor-leveling" checked>
-                  <label for="floor-leveling" class="form-check-label">Floor Leveling</label>
-                </div>
-              </div>
-              <div class="col">
-                <div class="form-check mb-0">
-                  <input type="checkbox" class="form-check-input" id="property-extensions">
-                  <label for="property-extensions" class="form-check-label">Property Extensions</label>
-                </div>
-              </div>
-              <div class="col">
-                <div class="form-check mb-0">
-                  <input type="checkbox" class="form-check-input" id="custom-home-building" checked>
-                  <label for="custom-home-building" class="form-check-label">Custom Home Building</label>
-                </div>
-              </div>
-              <div class="col">
-                <div class="form-check mb-0">
-                  <input type="checkbox" class="form-check-input" id="floor-refinishing">
-                  <label for="floor-refinishing" class="form-check-label">Floor Refinishing</label>
-                </div>
-              </div>
-              <div class="col">
-                <div class="form-check mb-0">
-                  <input type="checkbox" class="form-check-input" id="kitchen-remodeling" checked>
-                  <label for="kitchen-remodeling" class="form-check-label">Kitchen Remodeling</label>
-                </div>
-              </div>
-              <div class="col">
-                <div class="form-check mb-0">
-                  <input type="checkbox" class="form-check-input" id="bathroom-plumbing">
-                  <label for="bathroom-plumbing" class="form-check-label">Bathroom Plumbing</label>
-                </div>
-              </div>
-              <div class="col">
-                <div class="form-check mb-0">
-                  <input type="checkbox" class="form-check-input" id="flooring-installation">
-                  <label for="flooring-installation" class="form-check-label">Flooring Installation</label>
-                </div>
-              </div> -->
             </div>
-
-            <!-- Expandable rows -->
-            <!-- <div class="collapse" id="moreServices">
-              <div class="row row-cols-2 row-cols-md-3 gy-3 gx-4 pt-3">
-                <div class="col">
-                  <div class="form-check mb-0">
-                    <input type="checkbox" class="form-check-input" id="roofing-installation">
-                    <label for="roofing-installation" class="form-check-label">Roofing Installation</label>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="form-check mb-0">
-                    <input type="checkbox" class="form-check-input" id="siding-replacement">
-                    <label for="siding-replacement" class="form-check-label">Siding Replacement</label>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="form-check mb-0">
-                    <input type="checkbox" class="form-check-input" id="window-replacement">
-                    <label for="window-replacement" class="form-check-label">Window Replacement</label>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="form-check mb-0">
-                    <input type="checkbox" class="form-check-input" id="door-installation">
-                    <label for="door-installation" class="form-check-label">Door Installation</label>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="form-check mb-0">
-                    <input type="checkbox" class="form-check-input" id="patio-design">
-                    <label for="patio-design" class="form-check-label">Patio Design</label>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="form-check mb-0">
-                    <input type="checkbox" class="form-check-input" id="landscaping-services">
-                    <label for="landscaping-services" class="form-check-label">Landscaping Services</label>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="form-check mb-0">
-                    <input type="checkbox" class="form-check-input" id="garage-construction">
-                    <label for="garage-construction" class="form-check-label">Garage Construction</label>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="form-check mb-0">
-                    <input type="checkbox" class="form-check-input" id="solar-panel-installation">
-                    <label for="solar-panel-installation" class="form-check-label">Solar Panel Installation</label>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="form-check mb-0">
-                    <input type="checkbox" class="form-check-input" id="fencing-installation">
-                    <label for="fencing-installation" class="form-check-label">Fencing Installation</label>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="form-check mb-0">
-                    <input type="checkbox" class="form-check-input" id="driveway-paving">
-                    <label for="driveway-paving" class="form-check-label">Driveway Paving</label>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="form-check mb-0">
-                    <input type="checkbox" class="form-check-input" id="attic-insulation">
-                    <label for="attic-insulation" class="form-check-label">Attic Insulation</label>
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="form-check mb-0">
-                    <input type="checkbox" class="form-check-input" id="swimming-pool-construction">
-                    <label for="swimming-pool-construction" class="form-check-label">Swimming Pool Construction</label>
-                  </div>
-                </div>
-              </div>
-            </div> -->
-
-            <!-- Show more button -->
-            <!-- <div class="nav">
-              <a class="nav-link position-relative px-0 pb-0 collapsed mt-3" href="#moreServices" data-bs-toggle="collapse" aria-expanded="false" aria-controls="moreServices" aria-label="Show / hide services">
-                <span class="hover-effect-underline stretched-link" data-label-collapsed="Show more" data-label-expanded="Show less"></span>
-                <i class="collapse-toggle-icon fi-chevron-down fs-base mt-1 ms-1"></i>
-              </a>
-            </div> -->
 
             <!-- Next step button -->
             <div class="pt-5">
