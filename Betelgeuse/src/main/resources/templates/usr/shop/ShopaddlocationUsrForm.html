@@ -57,7 +57,8 @@
 
 
 <form id="form" name="form">
-<input type="hidden" id="shopSeq" name="shopSeq">
+<input type="hidden" id="shopSeq" name="shopSeq" th:value="${item?.shopSeq}">
+<input type="hidden" id="seq" name="seq" th:value="${session.sessSeqUsr}">
 <input type="hidden" id="userCustomer_seq" name="userCustomer_seq" th:value="${seq}">
 
       <!-- Business location page content -->

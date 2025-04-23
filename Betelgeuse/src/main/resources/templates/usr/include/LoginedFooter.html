@@ -145,20 +145,15 @@
     <script src="/usr/template/Finder/assets/js/theme.min.js"></script>
     
     <script type="text/javascript">
-    let form = document.querySelector("form[name=form]");
-	let seq = document.querySelector("input[name=userCustomer_seq]");
+    let formH = document.querySelector("form[name=form]");
+	let seqH = document.querySelector("input[name=userCustomer_seq]");
 	
 	
 	
 	goForm = function (keyValue) {
-		if (seq == null) {
-			keyValue = 0;
-		} else {
-			//by pass
-		}
-	    seq.value = keyValue;
-	    form.action = "/shop/shopaddlocationUsrForm";
-	    form.submit();
+	    seqH.value = keyValue;
+	    formH.action = "/shop/shopaddlocationUsrForm";
+	    formH.submit();
 	}
     
 	$("#btnSignout").on("click", function(){

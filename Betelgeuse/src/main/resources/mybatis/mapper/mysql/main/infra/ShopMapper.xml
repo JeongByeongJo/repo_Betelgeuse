@@ -119,8 +119,7 @@
 	</select>
 	<insert id="insert">
 		INSERT INTO shop (
-			shopSeq
-			,shopName
+			shopName
 			,shopTel
 			,shopEmail
 			,shopZip
@@ -167,8 +166,7 @@
 			,shopUpdtDate
 			,userCustomer_seq
 		) VALUES (
-			#{shopSeq}
-			,#{shopName}
+			#{shopName}
 			,#{shopTel}
 			,#{shopEmail}
 			,#{shopZip}
@@ -213,7 +211,7 @@
 			,#{youtube}
 			,#{shopInstDate}
 			,#{shopUpdtDate}
-			,#{userCustomer_seq}
+			,#{seq}
 		)
 		<selectKey resultType="String" keyProperty="shopSeq" order="AFTER">
 			SELECT last_insert_id()
@@ -268,7 +266,7 @@
 			,youtube = #{youtube}
 			,shopInstDate = #{shopInstDate}
 			,shopUpdtDate = #{shopUpdtDate}
-			,userCustomer_seq = #{userCustomer_seq}
+			,userCustomer_seq = #{seq}
 		WHERE 1=1
 		AND shopSeq = #{shopSeq}
 	</update>
