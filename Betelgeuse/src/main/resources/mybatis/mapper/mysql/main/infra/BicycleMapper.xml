@@ -55,6 +55,7 @@
 		    a.instDate,
 		    a.updtDate,
 		    a.userCustomer_seq,
+		    b.seq,
 			b.userId,
 			b.userName
 		<include refid = "selectCommon"></include>

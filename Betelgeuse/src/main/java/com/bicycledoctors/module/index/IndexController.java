@@ -1,4 +1,4 @@
-package com.bicycledoctors.module.index;
+   package com.bicycledoctors.module.index;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,7 +24,7 @@ public class IndexController {
 	@RequestMapping(value = "/index/home-logined")
 	public String homelogined(Model model, IndexDto dto, HttpSession httpSession) {
 		dto.setSeq(httpSession.getAttribute("sessSeqUsr").toString());
-		model.addAttribute("item", service.selectOneUserShopSeq(dto));
+		model.addAttribute("itemH", service.selectOneUserShopSeq(dto));
 		return "usr/index/home-logined";
 	}
 	@RequestMapping(value = "/member/SigninUsrForm")

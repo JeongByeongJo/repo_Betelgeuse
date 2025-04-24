@@ -5,18 +5,27 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.bicycledoctors.module.code.CodeDto;
+import com.bicycledoctors.common.base.BaseController;
+import com.bicycledoctors.module.index.IndexDto;
+import com.bicycledoctors.module.index.IndexService;
 
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-public class ShopController {
+public class ShopController extends BaseController{
 
 	@Autowired
 	ShopService service;
 	
+	@Autowired
+	IndexService indexService;
+	
 	@RequestMapping(value = "/shop/shopUsrList")
-	public String shopUsrList() {
+	public String shopUsrList(Model model, IndexDto dto, HttpSession httpSession) {
+		dto.setSeq(httpSession.getAttribute("sessSeqUsr").toString());
+		model.addAttribute("itemH", indexService.selectOneUserShopSeq(dto));
+		System.out.println("자전거 등록 들어올때 dto.getUserCustomer_seq(): " + dto.getUserCustomer_seq());
+
 		return "usr/shop/ShopUsrList";
 	}
 	@RequestMapping(value = "/shop/shopUsrView")
@@ -25,7 +34,7 @@ public class ShopController {
 	}
 	@RequestMapping(value = "/shop/shopaddlocationUsrForm")
 	public String shopaddlocationUsrForm(Model model, ShopDto vo, HttpSession httpSession) {
-		System.out.println("vo.getUserCustomer_seq(): " + vo.getUserCustomer_seq());
+		System.out.println("매장등록 들어올때 vo.getUserCustomer_seq(): " + vo.getUserCustomer_seq());
 		if (vo.getUserCustomer_seq().equals("") || vo.getUserCustomer_seq().equals("0")) {
 //			insert mode
 			vo.setSeq(httpSession.getAttribute("sessSeqUsr").toString());

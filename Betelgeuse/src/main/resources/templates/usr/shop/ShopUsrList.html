@@ -21,7 +21,7 @@
                   "marker": "<div class=\"map-marker\"><i class=\"fi-map-pin-filled text-primary fs-4\"></i><span class=\"map-marker-price\">${{price}}</span></div>",
                   "popup": "<div class=\"card bg-transparent border-0\" data-bs-theme=\"light\"><div class=\"card-img-top position-relative bg-body-tertiary overflow-hidden\"><div class=\"ratio d-block\" style=\"--fn-aspect-ratio: calc(248 / 362 * 100%)\"><img src=\"{{image}}\" alt=\"Image\"></div></div><div class=\"card-body p-3\"><div class=\"h5 mb-2\">${{price}}</div><h3 class=\"fs-sm fw-normal text-body mb-2\"><a class=\"stretched-link text-body\" href=\"single-entry-real-estate.html\">{{address}}</a></h3><div class=\"h6 fs-sm mb-0\">{{area}} sq.m</div></div><div class=\"card-footer d-flex gap-2 border-0 bg-transparent pt-0 pb-3 px-3 mt-n1\"><div class=\"d-flex align-items-center fs-sm gap-1 me-1\">{{bedrooms}}<i class=\"fi-bed-single fs-base text-secondary-emphasis\"></i></div><div class=\"d-flex align-items-center fs-sm gap-1 me-1\">{{bathrooms}}<i class=\"fi-shower fs-base text-secondary-emphasis\"></i></div><div class=\"d-flex align-items-center fs-sm gap-1 me-1\">{{garage}}<i class=\"fi-car-garage fs-base text-secondary-emphasis\"></i></div></div></div>"
                 }
-              }' data-map-markers="assets/json/map-real-estate.json"></div>
+              }' data-map-markers="/usr/template/Finder/assets/json/map-real-estate.json"></div>
             </div>
           </div>
         </div>
@@ -1016,6 +1016,8 @@
       </a>
     </div>
 
+	<script src="/xdm/template/NiceAdmin/assets/jquery/jquery-3.7.1.min.js"></script>
+
 
     <!-- Vendor scripts -->
     <script src="/usr/template/Finder/assets/vendor/leaflet/dist/leaflet.js"></script>
@@ -1045,5 +1047,58 @@
         }
       }
     </script>
+    <script type="text/javascript">
+    let formH = document.querySelector("form[name=form]");
+	let seqH = document.querySelector("input[name=userCustomer_seq]");
+	
+	
+	
+	goForm = function (keyValue) {
+	    seqH.value = keyValue;
+	    formH.action = "/shop/shopaddlocationUsrForm";
+	    formH.submit();
+	}
+    
+	$("#btnSignout").on("click", function(){
+		$.ajax({
+			async: true 
+			,cache: false
+			,type: "post"
+			,url: "/member/signoutUsrProc"
+			,data: {}
+			,success: function(response) {
+				if(response.rt == "success") {
+					location.href = "/index";
+// 					location.href = "/member/signinUsrForm";
+				} else {
+					// by pass
+				}
+			}
+			,error : function(jqXHR, textStatus, errorThrown){
+				alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+			}
+		});
+	});
+	$("#signout").on("click", function(){
+		$.ajax({
+			async: true 
+			,cache: false
+			,type: "post"
+			,url: "/member/signoutUsrProc"
+			,data: {}
+			,success: function(response) {
+				if(response.rt == "success") {
+					location.href = "/index";
+// 					location.href = "/member/signinUsrForm";
+				} else {
+					// by pass
+				}
+			}
+			,error : function(jqXHR, textStatus, errorThrown){
+				alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+			}
+		});
+	});
+	</script>
   </body>
 </html>

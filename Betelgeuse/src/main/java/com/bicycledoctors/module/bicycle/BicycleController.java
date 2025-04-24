@@ -6,7 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bicycledoctors.common.base.BaseController;
-import com.bicycledoctors.module.code.CodeDto;
+import com.bicycledoctors.module.index.IndexDto;
+import com.bicycledoctors.module.index.IndexService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -17,6 +18,8 @@ public class BicycleController extends BaseController{
 	@Autowired
 	BicycleService bicycleService;
 	
+	@Autowired
+	IndexService indexService;
 	
 	@RequestMapping(value = "/bicycle/bicycleXdmList")
 	public String bicycleXdmList(Model model, BicycleVo vo) {
@@ -39,8 +42,12 @@ public class BicycleController extends BaseController{
 	}
 	
 	@RequestMapping(value = "/bicycle/bicycleUsrForm")
-	public String bicycleUsrForm(BicycleDto dto, Model model, HttpSession httpSession) {
-		
+	public String bicycleUsrForm(IndexDto dto, Model model, HttpSession httpSession) {
+		dto.setSeq(httpSession.getAttribute("sessSeqUsr").toString());
+		model.addAttribute("itemH", indexService.selectOneUserShopSeq(dto));
+		indexService.selectOneUserShopSeq(dto);
+		System.out.println("자전거 등록 들어올때 dto.getUserCustomer_seq(): " + dto.getUserCustomer_seq());
+
 		return "usr/bicycle/BicycleUsrForm";
 	}
 	@RequestMapping(value = "/bicycle/bicycleUsrMfom")

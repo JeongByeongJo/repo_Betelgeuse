@@ -80,10 +80,10 @@
                     </div>
 
                     <!-- Item -->
-                    <div class="col">
+                    <div class="col" th:if="${item?.path} != null ">
                       <div class="hover-effect-opacity position-relative overflow-hidden rounded">
                         <div class="ratio" style="--fn-aspect-ratio: calc(180 / 268 * 100%)">
-                          <img th:src="${item.path}"  alt="Image">
+                          <img th:src="${item?.path}"  alt="Image">
                         </div>
                         <div class="hover-effect-target position-absolute top-0 start-0 d-flex align-items-center justify-content-center w-100 h-100 opacity-0">
                           <button type="button" class="btn btn-icon btn-sm btn-light position-relative z-2" aria-label="Remove">

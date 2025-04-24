@@ -270,7 +270,10 @@
           </span>
           Bicycle Doctors
         </a>
-
+        <form id="form" name="form">
+              <input type="hidden" id="seq" name="seq" th:value="${session.sessSeqUsr}">
+              <input type="hidden" id="userCustomer_seq" name="userCustomer_seq" th:value="${itemH?.userCustomer_seq}">
+        </form>
         <!-- Main navigation that turns into offcanvas on screens < 992px wide (lg breakpoint) -->
         <nav class="offcanvas offcanvas-start" id="navbarNav" tabindex="-1" aria-labelledby="navbarNavLabel">
           <div class="offcanvas-header py-3">
@@ -286,7 +289,7 @@
                 <a class="nav-link" href="/bicycle/bicycleUsrForm">자전거 등록하기</a>
               </li>
               <li class="nav-item py-lg-2 me-lg-n2 me-xl-0">
-                <a class="nav-link" href = "javascript:void(0);" th:attr="onclick=|goForm('${item?.userCustomer_seq != null ? item.userCustomer_seq : 0}')|">매장 등록하기</a>
+                <a class="nav-link" href = "javascript:void(0);" th:attr="onclick=|goForm('${itemH?.userCustomer_seq != null ? itemH.userCustomer_seq : 0}')|">매장 등록하기</a>
               </li>
               <li class="nav-item py-lg-2 me-lg-n2 me-xl-0">
                 <a class="nav-link" href="/shop/shopUsrList">점검 & 정비</a>
