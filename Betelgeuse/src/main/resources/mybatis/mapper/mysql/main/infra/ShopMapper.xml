@@ -172,7 +172,7 @@
 		AND b.seq = #{seq})
 	</select>
 	
-	<select id="selectShopBrandCd" resultMap="resultMapObjBs">
+	<select id="selectShopBrandCd" resultMap="resultMapObjBb">
 		select
 			cdSeq
 		    ,cdName

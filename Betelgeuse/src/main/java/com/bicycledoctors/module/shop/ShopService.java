@@ -45,13 +45,18 @@ public class ShopService {
 	}
 	
 	public int insertHandlingBicycleBrands(List<ShopBikeBrandDto> listBB, ShopDto dto) {
-//		dao.deleteSBByShopSeq(dto);
+		dao.deleteSBByShopSeq(dto);
 		if (listBB != null && !listBB.isEmpty()) {
 			dao.insertHandlingBicycleBrands(listBB);
 		}
 		return 1;
 	}
-	
+	public void deleteBB(ShopDto dto) {
+		dao.deleteSBByShopSeq(dto);
+	}
+	public void deleteAS(ShopDto dto) {
+		dao.deleteByShopSeq(dto);
+	}
 	public int update(ShopDto dto) {
 		return dao.update(dto);
 	}
