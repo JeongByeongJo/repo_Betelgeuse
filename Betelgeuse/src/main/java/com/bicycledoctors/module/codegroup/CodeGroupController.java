@@ -1,4 +1,3 @@
-
 package com.bicycledoctors.module.codegroup;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,14 +29,13 @@ public class CodeGroupController extends BaseController {
 	}
 	
 	@RequestMapping(value = "/codegroup/codegroupXdmForm")
-	public String codegroupXdmForm(@ModelAttribute("vo") CodeGroupVo vo, CodeGroupDto dto, Model model) {
+	public String codegroupXdmForm(@ModelAttribute("vo") CodeGroupVo vo, Model model) {
 		if (vo.getCdgSeq().equals("0") || vo.getCdgSeq().equals("")) {
 //			insert mode
 		} else {
 //			update mode
 			model.addAttribute("item", codeGroupService.selectOne(vo));
 		}
-		System.out.println("dto.getCdgUpdtDate() " + dto.getCdgUpdtDate());
 		return "xdm/codegroup/CodegroupXdmForm";
 	}
 	

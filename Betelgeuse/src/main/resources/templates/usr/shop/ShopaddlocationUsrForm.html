@@ -56,7 +56,7 @@
       </div>
 
 
-<form id="form" name="form">
+<form id="form" name="form" method="post">
 <input type="hidden" id="shopSeq" name="shopSeq" th:value="${item?.shopSeq}">
 <input type="hidden" id="seq" name="seq" th:value="${session.sessSeqUsr}">
 <input type="hidden" id="userCustomer_seq" name="userCustomer_seq" th:value="${seq}">
@@ -112,7 +112,7 @@
 
             <!-- Next step button -->
             <div class="pt-3">
-              <button type="button" class="btn btn-lg btn-dark" id="btnSubmit" >
+              <button type="button" class="btn btn-lg btn-dark" id="btnSubmit">
                 점검,정비 범위 설정으로
                 <i class="fi-chevron-right fs-lg ms-1 me-n2"></i>
               </button>
@@ -220,19 +220,16 @@
     
     var seq = document.querySelector("input[name=shopSeq]");
     var form = document.querySelector("form[name=form]");
-    
+
     document.getElementById("btnSubmit").onclick = function () {
-    alert("1");
-	if(seq.value == "0" || seq.value == "") {
-    alert("2");
-		form.action = "/shop/shopaddlocationUsrInst";
-		form.submit();
-	} else {
-    alert("3");
-		form.action = "/shop/shopaddlocationUsrUpdt";
-		form.submit();
+		if(seq.value == "0" || seq.value == "") {
+			form.action = "/shop/shopaddlocationUsrInst";
+			form.submit();
+		} else {
+			form.action = "/shop/shopaddlocationUsrUpdt";
+			form.submit();
+		}
 	}
-}
 </script>
 
   </body>

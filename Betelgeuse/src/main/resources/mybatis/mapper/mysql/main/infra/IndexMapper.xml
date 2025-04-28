@@ -11,7 +11,7 @@
 		    ,b.seq
 		    ,b.userId
 		    ,b.userName
-		FROM userCustomer as b
+		FROM usercustomer as b
 		left join shop a on a.userCustomer_seq = b.seq
 		WHERE 1=1
 		AND b.seq = #{seq}

@@ -9,8 +9,8 @@ public class IndexService {
 	@Autowired
 	IndexDao dao;
 	
-	public IndexDto selectOneUserShopSeq(IndexDto dto) {
-		return dao.selectOneUserShopSeq(dto);
+	public IndexDto selectOneUserShopSeq(IndexVo vo) {
+		return dao.selectOneUserShopSeq(vo);
 	}
 
 	

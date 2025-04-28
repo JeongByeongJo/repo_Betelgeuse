@@ -22,9 +22,9 @@ public class IndexController {
 		return "usr/index/home";
 	}
 	@RequestMapping(value = "/index/home-logined")
-	public String homelogined(Model model, IndexDto dto, HttpSession httpSession) {
-		dto.setSeq(httpSession.getAttribute("sessSeqUsr").toString());
-		model.addAttribute("itemH", service.selectOneUserShopSeq(dto));
+	public String homelogined(Model model, IndexVo vo, HttpSession httpSession) {
+		vo.setSeq(httpSession.getAttribute("sessSeqUsr").toString());
+		model.addAttribute("itemH", service.selectOneUserShopSeq(vo));
 		return "usr/index/home-logined";
 	}
 	@RequestMapping(value = "/member/SigninUsrForm")

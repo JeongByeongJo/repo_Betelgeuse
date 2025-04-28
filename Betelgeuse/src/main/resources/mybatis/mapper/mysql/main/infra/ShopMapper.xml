@@ -4,6 +4,10 @@
 <mapper namespace="com.bicycledoctors.module.shop.ShopDao">
 	
 	<resultMap type="com.bicycledoctors.module.shop.ShopDto" id="resultMapObj"></resultMap>
+	<resultMap type="com.bicycledoctors.module.shop.ShopAvailableServicesDto" id="resultMapObjs"></resultMap>
+	<resultMap type="com.bicycledoctors.module.shop.ShopAvailableServiceDto" id="resultMapObjas"></resultMap>
+	<resultMap type="com.bicycledoctors.module.shop.ShopBikeBrandsDto" id="resultMapObjBs"></resultMap>
+	<resultMap type="com.bicycledoctors.module.shop.ShopBikeBrandDto" id="resultMapObjBb"></resultMap>
 	
 	<select id="selectList" resultMap="resultMapObj">
 		SELECT 
@@ -58,7 +62,7 @@
 		    ,b.userId
 		    ,b.userName
 		FROM shop as a
-		left join userCustomer b on a.userCustomer_seq = b.seq
+		left join usercustomer b on a.userCustomer_seq = b.seq
 	</select>
 	<select id="selectOne4ShopLocation" resultMap="resultMapObj">
 	SELECT 
@@ -73,39 +77,6 @@
 		    ,a.shopAddress4
 		    ,a.shopLatitude
 		    ,a.shopLongitude
-		    ,a.shopDescribe
-		    ,a.parkingNy
-		    ,a.wifiNy
-		    ,a.cctvNy
-		    ,a.cafeNy
-		    ,a.petNy
-		    ,a.customerFavoriteNy
-		    ,a.mondayNy
-		    ,a.tuesdayNy
-		    ,a.wednesdayNy
-		    ,a.thursdayNy
-		    ,a.fridayNy
-		    ,a.saturdayNy
-		    ,a.sundayNy
-		    ,a.mondayOpentime
-		    ,a.mondayClosetime
-		    ,a.tuesdayOpentime
-		    ,a.tuesdayClosetime
-		    ,a.wednesdayOpentime
-		    ,a.wednesdayClosetime
-		    ,a.thursdayOpentime
-		    ,a.thurdayClosetime
-		    ,a.fridayOpentime
-		    ,a.fridayClosetime
-		    ,a.saturdayOpentime
-		    ,a.saturdayClosetime
-		    ,a.sundayOpentime
-		    ,a.sundayClosetime
-		    ,a.verifiedNy
-		    ,a.featuredNy
-		    ,a.delNy
-		    ,a.homepage
-		    ,a.youtube
 		    ,a.shopInstDate
 		    ,a.shopUpdtDate
 		    ,a.userCustomer_seq
@@ -113,10 +84,113 @@
 		    ,b.userId
 		    ,b.userName
 		FROM shop as a
-		left join userCustomer b on a.userCustomer_seq = b.seq
+		left join usercustomer b on a.userCustomer_seq = b.seq
 		WHERE 1=1
 		AND a.userCustomer_seq = #{userCustomer_seq}
 	</select>
+	<select id="selectOne4ShopService" resultMap="resultMapObj">
+	SELECT 
+			a.shopSeq
+		    ,a.shopName
+		    ,a.shopTel
+		    ,a.shopEmail
+		    ,a.shopZip
+		    ,a.shopAddress1
+		    ,a.shopAddress2
+		    ,a.shopAddress3
+		    ,a.shopAddress4
+		    ,a.shopLatitude
+		    ,a.shopLongitude
+		    ,a.shopDescribe
+		    
+		    ,a.parkingNy
+		    ,a.wifiNy
+		    ,a.cctvNy
+		    ,a.cafeNy
+		    ,a.petNy
+		    
+		    ,a.shopInstDate
+		    ,a.shopUpdtDate
+		    ,a.userCustomer_seq
+		    ,b.seq
+		    ,b.userId
+		    ,b.userName
+		FROM shop as a
+		left join usercustomer b on a.userCustomer_seq = b.seq
+		WHERE 1=1
+		AND a.userCustomer_seq = (SELECT 
+		    a.userCustomer_seq
+		FROM usercustomer as b
+		left join shop a on a.userCustomer_seq = b.seq
+		WHERE 1=1
+		AND b.seq = #{seq})
+	</select>
+	
+	<select id="selectShopService" resultMap="resultMapObjs">
+		SELECT
+			availableServiceCd
+			,shop_shopSeq
+		FROM availableService
+		WHERE 1=1
+		AND shop_shopSeq = (SELECT 
+		    a.shopSeq
+		FROM usercustomer as b
+		left join shop a on a.userCustomer_seq = b.seq
+		WHERE 1=1
+		AND b.seq = #{seq})
+	</select>
+	
+	<select id="selectShopServiceCd" resultMap="resultMapObjas">
+		select
+			cdSeq
+		    ,cdName
+		    ,cdNameEng
+		from code as cd
+		left join availableService as se on cd.cdSeq = se.availableServiceCd
+		where 1=1
+		and codegroup_cdgSeq = 8
+		and cdSeq in (select
+			cdSeq
+		from availableService as se
+		left join code as cd on cd.cdSeq = se.availableServiceCd
+		left join usercustomer as uc on uc.seq = se.shop_shopSeq
+		where 1=1
+		and shop_shopSeq = #{seq})
+	</select>
+	
+	<select id="selectShopBrand" resultMap="resultMapObjBb">
+		SELECT
+			bikeBrandCd
+			,shop_shopSeq
+		FROM handlingBicycleBrand
+		WHERE 1=1
+		AND shop_shopSeq = (SELECT 
+		    a.shopSeq
+		FROM usercustomer as b
+		left join shop a on a.userCustomer_seq = b.seq
+		WHERE 1=1
+		AND b.seq = #{seq})
+	</select>
+	
+	<select id="selectShopBrandCd" resultMap="resultMapObjBs">
+		select
+			cdSeq
+		    ,cdName
+		    ,cdNameEng
+		from code as cd
+		left join handlingBicycleBrand as se on cd.cdSeq = se.bikeBrandCd
+		where 1=1
+		and codegroup_cdgSeq = 4
+		and cdSeq in (select
+			cdSeq
+		from handlingBicycleBrand as se
+		left join code as cd on cd.cdSeq = se.bikeBrandCd
+		left join usercustomer as uc on uc.seq = se.shop_shopSeq
+		where 1=1
+		and shop_shopSeq = #{seq})
+	</select>
+	
+	
 	<insert id="insert">
 		INSERT INTO shop (
 			shopName
@@ -217,11 +291,40 @@
 			SELECT last_insert_id()
 		</selectKey>
 	</insert>
+	<delete id="deleteByShopSeq">
+	    DELETE FROM availableService
+	    WHERE shop_shopSeq = #{seq}
+	</delete>
+	<insert id="insertAvailableServices">
+		INSERT INTO availableService (
+			availableServiceCd
+			,shop_shopSeq
+
+		) VALUES 
+		<foreach collection="listAS" item="dto" separator=",">
+	        (#{dto.availableServiceCd}
+			,#{dto.shopSeq})
+	    </foreach>
+	</insert>
+	<delete id="deleteSBByShopSeq">
+	    DELETE FROM handlingBicycleBrand
+	    WHERE shop_shopSeq = #{seq}
+	</delete>
+	<insert id="insertHandlingBicycleBrands">
+		INSERT INTO handlingBicycleBrand (
+			bikeBrandCd
+			,shop_shopSeq
+
+		) VALUES 
+		<foreach collection="listBB" item="dto" separator=",">
+	        (#{dto.bikeBrandCd}
+			,#{dto.shopSeq})
+	    </foreach>
+	</insert>
 	
 	<update id="update">
 		UPDATE shop SET
-			shopSeq = #{shopSeq}
-			,shopName = #{shopName}
+			shopName = #{shopName}
 			,shopTel = #{shopTel}
 			,shopEmail = #{shopEmail}
 			,shopZip = #{shopZip}

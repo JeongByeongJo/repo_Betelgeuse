@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IndexDao {
 	
-	public IndexDto selectOneUserShopSeq(IndexDto dto);
+	public IndexDto selectOneUserShopSeq(IndexVo vo);
 
 }

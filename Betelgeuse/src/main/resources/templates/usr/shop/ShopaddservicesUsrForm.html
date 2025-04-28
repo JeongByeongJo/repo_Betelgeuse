@@ -4,7 +4,10 @@
   
     <!-- Page content -->
     <main class="content-wrapper">
-
+<form id="form" name="form">
+<input type="hidden" id="shopSeq" name="shopSeq" th:value="${item?.shopSeq}">
+<input type="hidden" id="seq" name="seq" th:value="${item?.seq}">
+<input type="hidden" id="userCustomer_seq" name="userCustomer_seq" th:value="${item?.userCustomer_seq}">
       <!-- Steps (Navigation) -->
       <div class="sticky-top bg-info pt-3" style="margin-top: -76px">
         <div class="d-block d-md-none" style="height: 62px"></div>
@@ -53,6 +56,8 @@
       </div>
 
 
+
+
       <!-- Services page content -->
       <div class="container py-5 mb-xxl-3">
         <div class="row pt-md-1 pt-lg-2 pt-xl-3 pb-2 pb-sm-3 pb-md-4 pb-lg-5">
@@ -61,33 +66,35 @@
           <div class="col-lg-7">
             <h1 class="h3 pb-sm-1 pb-md-2">점검, 정비 가능 범위는 어떻게 되시나요?</h1>
             <h2 class="h6 pb-1 mb-2">점검, 정비 가능 카테고리 *</h2>
-            <select class="form-select form-select-lg" data-select='{
+            <select class="form-select form-select-lg" id="availableServiceCd" name="availableServiceCd" data-select='{
               "classNames": {
                 "containerInner": ["form-select", "form-select-lg"]
               }
             }' multiple aria-label="Select categories">
 	            <option value="">매장에서 제공하시는 서비스를 선택해주세요.&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</option>
+	            <option th:each="lists : ${lists}" th:value="${lists.cdSeq}" th:text="${lists.cdName}" th:selected="selected"></option>
 	            <option th:each="list : ${@codeService.selectListCachedCode(8)}" th:value="${list.cdSeq}" th:text="${list.cdName}"></option>
             </select>
             <br>
             <h2 class="h6 pb-1 mb-2">취급 자전거 브랜드 *</h2>
-            <select class="form-select form-select-lg" data-select='{
+            <select class="form-select form-select-lg" id="bikeBrandCd" name="bikeBrandCd" data-select='{
               "classNames": {
                 "containerInner": ["form-select", "form-select-lg"]
               }
             }' multiple aria-label="Select categories">
             <option value="">취급 브랜드를 선택해주세요.&emsp;&emsp;&emsp;&emsp;</option>
-            <option th:each="list : ${@codeService.selectListCachedCode(4)}" th:value="${list.cdSeq}" th:text="${list.cdName}" th:selected="${list.cdSeq} == ${item?.bicycleBrandCd}"></option>
+            <option th:each="listb : ${listb}" th:value="${listb.cdSeq}" th:text="${listb.cdName}" th:selected="selected"></option>
+            <option th:each="list : ${@codeService.selectListCachedCode(4)}" th:value="${list.cdSeq}" th:text="${list.cdName}" th:selected="${list.cdSeq} == ${listB?.bikeBrandCd}"></option>
             </select>
             <br>
             <h2 class="h6 pb-1 mb-2">취급 휠셋 브랜드 *</h2>
-            <select class="form-select form-select-lg" data-select='{
+            <select class="form-select form-select-lg" id="wheelBrandCd" name="wheelBrandCd" data-select='{
               "classNames": {
                 "containerInner": ["form-select", "form-select-lg"]
               }
             }' multiple aria-label="Select categories">
             <option value="">취급 브랜드를 선택해주세요.&emsp;&emsp;&emsp;&emsp;</option>
-            <option th:each="list : ${@codeService.selectListCachedCode(6)}" th:value="${list.cdSeq}" th:text="${list.cdName}" th:selected="${list.cdSeq} == ${item?.bicycleBrandCd}"></option>
+            <option th:each="list : ${@codeService.selectListCachedCode(6)}" th:value="${list.cdSeq}" th:text="${list.cdName}" th:selected="${list.cdSeq} == ${listC?.wheelBrandCd}"></option>
             </select>
             
             <!-- Services (checkboxes) -->
@@ -127,10 +134,10 @@
 
             <!-- Next step button -->
             <div class="pt-5">
-              <a class="btn btn-lg btn-dark" href="/shop/shopaddprofileUsrForm">
+              <button type="button" class="btn btn-lg btn-dark" id="btnSubmit">
                 상세 소개 설정으로
                 <i class="fi-chevron-right fs-lg ms-1 me-n2"></i>
-              </a>
+              </button>
             </div>
           </div>
 
@@ -141,9 +148,21 @@
           </div>
         </div>
       </div>
+</form>
     </main>
 
      <div th:replace="~{usr/include/LoginedFooter :: LoginedFooter}"></div>
+    
+    <script type="text/javascript">
+    
+    var form = document.querySelector("form[name=form]");
+
+    document.getElementById("btnSubmit").onclick = function () {
+		form.action = "/shop/shopaddprofileUsrForm";
+		form.submit();
+	}
+    
+    </script>
     
   </body>
 </html>
