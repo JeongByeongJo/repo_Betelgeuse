@@ -16,9 +16,9 @@
           <!-- Sell car form -->
          <div class="col-lg-8 col-xl-9">
            <h1 class="h2">자전거 등록하기</h1>
-		<form id="form" name="form" method="post">
+		<form id="form" name="form" method="post" autocomplete="off" enctype="multipart/form-data">
 		<input type="hidden" id="userCustomer_seq" th:value="${session.sessSeqUsr}">
-<!-- 		<input type="hidden" id="bikeSeq" name="bikeSeq" th:value="${item?.bikeSeq}"> -->
+		<input type="hidden" id="bikeSeq" name="bikeSeq" th:value="${item?.bikeSeq}">
             <!-- Photos / videos -->
             <section class="position-relative bg-body rounded p-4 mt-4">
               <div class="position-relative z-1 pb-md-2 px-md-2">
@@ -34,60 +34,21 @@
                   <div class="row row-cols-2 row-cols-sm-3 g-2 g-md-4 g-lg-3 g-xl-4" id="previewContainer">
 
                     <!-- Item -->
-                    <div class="col">
-                      <div class="hover-effect-opacity position-relative overflow-hidden rounded">
-                        <span class="badge text-bg-light position-absolute top-0 start-0 z-3 mt-2 ms-2">Cover</span>
-                        <div class="ratio" style="--fn-aspect-ratio: calc(180 / 268 * 100%)">
-                          <img src="/usr/template/Finder/assets/img/add-item/bd/IMG_4871.JPG" alt="Image">
-                        </div>
-                        <div class="hover-effect-target position-absolute top-0 start-0 d-flex align-items-center justify-content-center w-100 h-100 opacity-0">
-                          <button type="button" class="btn btn-icon btn-sm btn-light position-relative z-2" aria-label="Remove">
-                            <i class="fi-trash fs-base"></i>
-                          </button>
-                          <span class="position-absolute top-0 start-0 w-100 h-100 bg-black bg-opacity-25 z-1"></span>
-                        </div>
-                      </div>
-                    </div>
 
                     <!-- Item -->
-                    <div class="col">
-                      <div class="hover-effect-opacity position-relative overflow-hidden rounded">
-                        <div class="ratio" style="--fn-aspect-ratio: calc(180 / 268 * 100%)">
-                          <img src="/usr/template/Finder/assets/img/add-item/bd/IMG_4868.JPG" alt="Image">
-                        </div>
-                        <div class="hover-effect-target position-absolute top-0 start-0 d-flex align-items-center justify-content-center w-100 h-100 opacity-0">
-                          <button type="button" class="btn btn-icon btn-sm btn-light position-relative z-2" aria-label="Remove">
-                            <i class="fi-trash fs-base"></i>
-                          </button>
-                          <span class="position-absolute top-0 start-0 w-100 h-100 bg-black bg-opacity-25 z-1"></span>
-                        </div>
-                      </div>
-                    </div>
 
                     <!-- Item -->
-                    <div class="col">
-                      <div class="hover-effect-opacity position-relative overflow-hidden rounded">
-                        <div class="ratio" style="--fn-aspect-ratio: calc(180 / 268 * 100%)">
-                          <img src="/usr/template/Finder/assets/img/add-item/bd/IMG_4867.JPG" alt="Image">
-                        </div>
-                        <div class="hover-effect-target position-absolute top-0 start-0 d-flex align-items-center justify-content-center w-100 h-100 opacity-0">
-                          <button type="button" class="btn btn-icon btn-sm btn-light position-relative z-2" aria-label="Remove">
-                            <i class="fi-trash fs-base"></i>
-                          </button>
-                          <span class="position-absolute top-0 start-0 w-100 h-100 bg-black bg-opacity-25 z-1"></span>
-                        </div>
-                      </div>
-                    </div>
 
                     <!-- Item -->
 <!--                     <div class="col" th:if="${item?.path} != null"> -->
                     <div class="col" th:each ="list : ${list}">
+                    <input class="delNy-input" type="text" id="delNy" name="delNy" th:value="${list.delNy}" style="display: none;"/>
                       <div class="hover-effect-opacity position-relative overflow-hidden rounded">
                         <div class="ratio" style="--fn-aspect-ratio: calc(180 / 268 * 100%)">
                           <img th:src="${list?.path}"  alt="Image">
                         </div>
                         <div class="hover-effect-target position-absolute top-0 start-0 d-flex align-items-center justify-content-center w-100 h-100 opacity-0">
-                          <button type="button" class="btn btn-icon btn-sm btn-light position-relative z-2" aria-label="Remove">
+                          <button type="button" class="btn btn-icon btn-sm btn-light position-relative z-2 btn-remove-image" aria-label="Remove">
                             <i class="fi-trash fs-base"></i>
                           </button>
                           <span class="position-absolute top-0 start-0 w-100 h-100 bg-black bg-opacity-25 z-1"></span>
@@ -547,6 +508,29 @@ document.getElementById("btnSubmit").onclick = function () {
     }
   });
 </script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const removeButtons = document.querySelectorAll(".btn-remove-image");
+
+    removeButtons.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        // 가장 가까운 이미지 블럭 찾기
+        const imageBlock = btn.closest(".col");
+
+        // 숨겨진 input 찾아서 값 1로 설정
+        const input = imageBlock.querySelector(".delNy-input");
+        if (input) {
+          input.value = "1";
+        }
+
+        // 화면에서 해당 이미지 블럭 제거 (display:none)
+        imageBlock.style.display = "none";
+      });
+    });
+  });
+</script>
+
 
   </body>
 </html>

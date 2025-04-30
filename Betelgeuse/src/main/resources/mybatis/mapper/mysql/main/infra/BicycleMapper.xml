@@ -10,7 +10,7 @@
 			bicycle as a
 			left join usercustomer b on a.userCustomer_seq = b.seq
 		where 1=1
-        <if test="shDelNy != null and !shDelNy.equals('')">AND a.delNy = #{shDelNy}</if>
+        <if test="shDelNy != null and !shDelNy.equals('')">AND a.bikeDelNy = #{shDelNy}</if>
 <!-- 		<if test="shUseNy != null and !shUseNy.equals('')">AND a.useNy = #{shUseNy}</if> -->
 				<choose>
 					<when test="shOptionDate == 1">AND a.cdInstDate BETWEEN #{shDateStart} AND #{shDateEnd}</when>
@@ -51,7 +51,7 @@
 		    a.bicycleDescribe,
 		    a.isInspectingNy,
 		    a.isRepairingNy,
-		    a.delNy,
+		    a.bikeDelNy,
 		    a.instDate,
 		    a.updtDate,
 		    a.userCustomer_seq,
@@ -96,7 +96,7 @@
 		    a.bicycleDescribe,
 		    a.isInspectingNy,
 		    a.isRepairingNy,
-		    a.delNy,
+		    a.bikeDelNy,
 		    a.instDate,
 		    a.updtDate,
 		    a.userCustomer_seq,
@@ -113,8 +113,10 @@
 	<select id="selectOnePicList" resultMap="resultMapObj">
 	select
 		path
+		,delNy
 	from filesUploaded
 	where 1=1
+	and delNy = 0
 	and pSeq = #{bikeSeq}
 	order by sort asc
 	</select>
@@ -141,7 +143,7 @@
 		    a.bicycleDescribe,
 		    a.isInspectingNy,
 		    a.isRepairingNy,
-		    a.delNy,
+		    a.bikeDelNy,
 		    a.instDate,
 		    a.updtDate,
 		    a.userCustomer_seq,
@@ -174,7 +176,7 @@
 		    wheelBrandCd,
 		    wheelModel,
 		    bicycleDescribe,
-		    delNy,
+		    bikeDelNy,
 		    instDate,
 		    userCustomer_seq
 		) values (
@@ -227,6 +229,14 @@
 			bikeSeq = #{bikeSeq}
 	</update>
 	
+	<update id="updatePic">
+		update filesUploaded set
+			delNy = #{delNy}
+		where 1=1
+		and delNy = 0
+		and pSeq = #{bikeSeq}
+	</update>
+	
 	<update id="uelete">
 		update code set
 			cdDelNy = 1
@@ -258,7 +268,7 @@
 		    a.drivetrainModel,
 		    a.isInspectingNy,
 		    a.isRepairingNy,
-		    a.delNy,
+		    a.bikeDelNy,
 		    a.instDate,
 		    a.updtDate,
 		    a.userCustomer_seq,

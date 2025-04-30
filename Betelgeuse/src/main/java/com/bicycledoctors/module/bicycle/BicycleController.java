@@ -65,9 +65,9 @@ public class BicycleController extends BaseController{
 		return "redirect:/index/home-logined";
 	}
 	@RequestMapping(value = "/bicycle/bicycleUsrUpdt")
-	public String bicycleUsrUpdt(BicycleDto dto) {
+	public String bicycleUsrUpdt(BicycleDto dto) throws Exception {
 		bicycleService.update(dto);
-		return "redirect:/index/home-logined";
+		return "redirect:/member/userBicycleUsrList";
 	}
 
 }

@@ -25,7 +25,7 @@ public class BicycleDto extends BaseDto{
     private String bicycleDescribe;
     private Integer isInspectingNy;
     private Integer isRepairingNy;
-    private Integer delNy;
+    private Integer bikeDelNy;
     private String instDate;
     private String updtDate;
     private String userCustomer_seq;
@@ -154,11 +154,11 @@ public class BicycleDto extends BaseDto{
 	public void setIsRepairingNy(Integer isRepairingNy) {
 		this.isRepairingNy = isRepairingNy;
 	}
-	public Integer getDelNy() {
-		return delNy;
+	public Integer getBikeDelNy() {
+		return bikeDelNy;
 	}
-	public void setDelNy(Integer delNy) {
-		this.delNy = delNy;
+	public void setBikeDelNy(Integer bikeDelNy) {
+		this.bikeDelNy = bikeDelNy;
 	}
 	public String getInstDate() {
 		return instDate;

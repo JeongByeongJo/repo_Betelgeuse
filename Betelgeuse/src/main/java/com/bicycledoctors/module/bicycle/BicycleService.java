@@ -52,8 +52,21 @@ public class BicycleService extends BaseService{
     			, amazonS3Client);
 		return 1;
 	}
-	public int update(BicycleDto dto) {
-		return bicycleDao.update(dto);
+	public int update(BicycleDto dto) throws Exception {
+		bicycleDao.update(dto);
+		bicycleDao.updatePic(dto);
+		dto.setUploadImg1MaxNumber(1001);
+		dto.setUploadImg1Type(1000);
+		uploadFilesToS3(
+    			dto.getUploadImg1()
+    			, dto
+    			, "filesUploaded"
+    			, dto.getUploadImg1Type()
+    			, dto.getUploadImg1MaxNumber()
+    			, dto.getBikeSeq()
+    			, bicycleDao
+    			, amazonS3Client);
+		return 1;
 	}
 	
 }
