@@ -16,9 +16,9 @@
           <!-- Sell car form -->
          <div class="col-lg-8 col-xl-9">
            <h1 class="h2">자전거 등록하기</h1>
-		<form id="form" name="form" method="post">
-		<input type="hidden" id="userCustomer_seq" th:value="${session.sessSeqUsr}">
-<!-- 		<input type="hidden" id="bikeSeq" name="bikeSeq" th:value="${item?.bikeSeq}"> -->
+		<form id="form" name="form" method="post" autocomplete="off" enctype="multipart/form-data" >
+		<input type="hidden" id="userCustomer_seq" name="userCustomer_seq" th:value="${session.sessSeqUsr}">
+		<input type="hidden" id="bikeSeq" name="bikeSeq">
             <!-- Photos / videos -->
             <section class="position-relative bg-body rounded p-4 mt-4">
               <div class="position-relative z-1 pb-md-2 px-md-2">
@@ -31,7 +31,7 @@
                 </div>
                 <p class="fs-sm">사진파일 용량은 최대 8Mb 입니다. 파일형식: jpeg, jpg, png.</p>
                 <div style="max-width: 852px">
-                  <div class="row row-cols-2 row-cols-sm-3 g-2 g-md-4 g-lg-3 g-xl-4" id="previewContainer">
+                  <div class="row row-cols-2 row-cols-sm-3 g-2 g-md-4 g-lg-3 g-xl-4">
 
                     <!-- Item -->
                     <div class="col">
@@ -80,11 +80,10 @@
                     </div>
 
                     <!-- Item -->
-<!--                     <div class="col" th:if="${item?.path} != null"> -->
-                    <div class="col" th:each ="list : ${list}">
+                    <div class="col">
                       <div class="hover-effect-opacity position-relative overflow-hidden rounded">
                         <div class="ratio" style="--fn-aspect-ratio: calc(180 / 268 * 100%)">
-                          <img th:src="${list?.path}"  alt="Image">
+                          <img src="/usr/template/Finder/assets/img/add-item/bd/IMG_4870.JPG" alt="Image">
                         </div>
                         <div class="hover-effect-target position-absolute top-0 start-0 d-flex align-items-center justify-content-center w-100 h-100 opacity-0">
                           <button type="button" class="btn btn-icon btn-sm btn-light position-relative z-2" aria-label="Remove">
@@ -96,20 +95,15 @@
                     </div>
 
                     <!-- Upload button -->
-                    <!-- Upload button -->
-        <div class="col" id="uploadSlot">
-          <div class="hover-effect-opacity position-relative overflow-hidden rounded h-100">
-            <div class="ratio" style="--fn-aspect-ratio: calc(180 / 268 * 100%)">
-              <div class="d-flex align-items-center justify-content-center w-100 h-100 bg-body-tertiary border border-2 border-dotted rounded">
-                <label for="uploadImg1" class="text-center w-100 h-100 d-flex flex-column justify-content-center align-items-center mb-0 cursor-pointer">
-                  <i class="fi-plus-circle fs-4 text-secondary-emphasis mb-2"></i>
-                  <span class="hover-effect-underline fs-sm fw-medium">사진 추가하기</span>
-                  <input type="file" id="uploadImg1" name="uploadImg1" style="display: none;" multiple>
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
+                    <div class="col">
+                      <div class="d-flex align-items-center justify-content-center position-relative h-100 cursor-pointer bg-body-tertiary border border-2 border-dotted rounded p-3">
+                        <div class="text-center">
+<!--                           <i class="fi-plus-circle fs-4 text-secondary-emphasis mb-2" ></i>                           -->
+                          <label class="hover-effect-underline stretched-link fs-sm fw-medium" for="inputfile">사진 추가하기</label>
+                          <input type="file" id="inputfile" name="uploadImg1" style="display: none;">
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -295,13 +289,13 @@
                     <div class="row">
                       <div class="col">
                         <div class="form-check form-switch">
-                          <input type="checkbox" class="form-check-input" role="switch" id="isElectDrivetrain" name="isElectDrivetrain" th:value="${item?.isElectDrivetrain}" th:checked="${!#strings.equals(item?.isElectDrivetrain, on)}">
+                          <input type="checkbox" class="form-check-input" role="switch" id="isElectDrivetrain" name="isElectDrivetrain">
                           <label for="isElectDrivetrain" class="form-check-label">전동 구동계</label>
                         </div>
                       </div>
                       <div class="col">
                         <div class="form-check form-switch">
-                          <input type="checkbox" class="form-check-input" role="switch" id="isDiskBrakes" name="isDiskBrakes" th:value="${item?.isDiskBrakes}" th:checked="${!#strings.equals(item?.isDiskBrakes, on)}">
+                          <input type="checkbox" class="form-check-input" role="switch" id="isDiskBrakes" name="isDiskBrakes">
                           <label for="isDiskBrakes" class="form-check-label">디스크 브레이크</label>
                         </div>
                       </div>                      
@@ -309,13 +303,13 @@
                     <div class="row">
                       <div class="col">
                         <div class="form-check form-switch">
-                          <input type="checkbox" class="form-check-input" role="switch" id="isHydrauric" name="isHydrauric" th:value="${item?.isHydrauric}" th:checked="${!#strings.equals(item?.isHydrauric, on)}">
+                          <input type="checkbox" class="form-check-input" role="switch" id="isHydrauric" name="isHydrauric">
                           <label for="isHydrauric" class="form-check-label">유압식 브레이크</label>
                         </div>
                       </div>
                       <div class="col">
                         <div class="form-check form-switch">
-                          <input type="checkbox" class="form-check-input" role="switch" id="isInternal" name="isInternal" th:value="${item?.isInternal}" th:checked="${!#strings.equals(item?.isInternal, on)}">
+                          <input type="checkbox" class="form-check-input" role="switch" id="isInternal" name="isInternal">
                           <label for="isInternal" class="form-check-label">풀인터널 케이블</label>
                         </div>
                       </div>                      
@@ -431,20 +425,6 @@
                 </article>
 
                 <hr class="d-lg-none">
-
-                <!-- Progress -->
-                <!-- <div class="position-relative bg-body rounded">
-                  <div class="position-relative z-1 p-lg-3">
-                    <h3 class="h6 mb-1">The quality of content</h3>
-                    <div class="fs-sm text-end mb-2">75%</div>
-                    <div class="progress" role="progressbar" aria-label="Warning example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="height: 4px">
-                      <div class="progress-bar bg-warning rounded-pill" style="width: 75%"></div>
-                    </div>
-                  </div>
-                  <div class="d-none d-lg-block">
-                    <div class="position-absolute top-0 start-0 w-100 h-100 bg-body-tertiary rounded d-none d-block-dark"></div>
-                  </div>
-                </div> -->
               </div>
             </div>
           </aside>
@@ -456,14 +436,9 @@
 let seq = document.querySelector("input[name=bikeSeq]");
 let form = document.querySelector("form[name=form]");
 
-
-
-
 $('.btn-check').on('click', function() {
 	$('#bicycleCateCd').val($(this).val());
 });
-
-
 
 function validationInst() {
     if(document.getElementById("bicycleName").value == null || document.getElementById("bicycleName").value == "") {
@@ -475,78 +450,12 @@ function validationInst() {
 	}
 }
 
-
 document.getElementById("btnSubmit").onclick = function () {
-	if(validationInst() == false) return false;
-	alert("4");
-	form.action = "/bicycle/bicycleUsrUpdt";
-	form.submit();
+		if(validationInst() == false) return false;
+		form.action = "/bicycle/bicycleUsrInst";
+		form.submit();
 }
 
 </script>
-
-
-<script>
-  const uploadInput = document.getElementById('uploadImg1');
-  const previewContainer = document.getElementById('previewContainer');
-  const uploadSlot = document.getElementById('uploadSlot');
-
-  function updateCoverBadge() {
-    const previews = previewContainer.querySelectorAll('.col:not(#uploadSlot)');
-    previews.forEach((col, index) => {
-      const badge = col.querySelector('.badge');
-      if (index === 0) {
-        if (!badge) {
-          const badgeEl = document.createElement('span');
-          badgeEl.className = 'badge text-bg-light position-absolute top-0 start-0 z-3 mt-2 ms-2';
-          badgeEl.textContent = 'Cover';
-          col.querySelector('.hover-effect-opacity').prepend(badgeEl);
-        }
-      } else {
-        if (badge) badge.remove();
-      }
-    });
-  }
-
-  uploadInput.addEventListener('change', function () {
-    const files = Array.from(uploadInput.files);
-
-    files.forEach((file) => {
-      if (!file.type.startsWith('image/')) return;
-
-      const reader = new FileReader();
-      reader.onload = function (e) {
-        const col = document.createElement('div');
-        col.className = 'col';
-        col.innerHTML = `
-          <div class="hover-effect-opacity position-relative overflow-hidden rounded">
-            <div class="ratio" style="--fn-aspect-ratio: calc(180 / 268 * 100%)">
-              <img src="${e.target.result}" alt="Preview" class="w-100 h-100">
-            </div>
-            <div class="hover-effect-target position-absolute top-0 start-0 d-flex align-items-center justify-content-center w-100 h-100 opacity-0">
-              <button type="button" class="btn btn-icon btn-sm btn-light position-relative z-2 remove-preview" aria-label="Remove">
-                <i class="fi-trash fs-base"></i>
-              </button>
-              <span class="position-absolute top-0 start-0 w-100 h-100 bg-black bg-opacity-25 z-1"></span>
-            </div>
-          </div>`;
-        previewContainer.insertBefore(col, uploadSlot);
-        updateCoverBadge();
-      };
-      reader.readAsDataURL(file);
-    });
-
-    // Note: input의 value는 리셋하지 않아야 서버 제출 가능
-  });
-
-  previewContainer.addEventListener('click', function (e) {
-    if (e.target.closest('.remove-preview')) {
-      const col = e.target.closest('.col');
-      col.remove();
-      updateCoverBadge();
-    }
-  });
-</script>
-
   </body>
 </html>

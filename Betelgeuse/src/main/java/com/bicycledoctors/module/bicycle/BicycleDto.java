@@ -1,5 +1,6 @@
 package com.bicycledoctors.module.bicycle;
 
+
 import com.bicycledoctors.common.base.BaseDto;
 
 public class BicycleDto extends BaseDto{
@@ -29,8 +30,8 @@ public class BicycleDto extends BaseDto{
     private String updtDate;
     private String userCustomer_seq;
 //    -----
-    private Integer uploadImg1Type = 1001;
-	private Integer uploadImg1MaxNumber = 1001;
+    private Integer uploadImg1Type;
+	private Integer uploadImg1MaxNumber;
 //    -----
     
     public String getBikeSeq() {

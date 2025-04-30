@@ -102,14 +102,23 @@
 		    a.userCustomer_seq,
 		    b.seq,
 			b.userID,
-			b.userName,
-			(select path from filesUploaded where pSeq = bikeSeq) as path
+			b.userName
  		from
 			bicycle as a
 			left join usercustomer b on a.userCustomer_seq = b.seq
 		where 1=1
 			and a.bikeSeq = #{bikeSeq}
 	</select>
+	
+	<select id="selectOnePicList" resultMap="resultMapObj">
+	select
+		path
+	from filesUploaded
+	where 1=1
+	and pSeq = #{bikeSeq}
+	order by sort asc
+	</select>
+	
 	<select id="selectOneList" resultMap="resultMapObj">
 		SELECT 
 			a.bikeSeq,

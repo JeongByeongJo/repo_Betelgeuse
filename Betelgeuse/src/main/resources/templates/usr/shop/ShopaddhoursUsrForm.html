@@ -59,7 +59,10 @@
 
           <!-- Inputs -->
           <div class="col-lg-7">
-
+<form id="form" name="form" method="post">
+<input type="hidden" id="shopSeq" name="shopSeq" th:value="${item?.shopSeq}">
+<input type="hidden" id="seq" name="seq" th:value="${item?.seq}">
+<input type="hidden" id="userCustomer_seq" name="userCustomer_seq" th:value="${item?.userCustomer_seq}">
             <!-- Working hours -->
             <div class="pt-5">
               <h2 class="h3 pb-sm-2 pb-lg-3">영업시간을 입력해주세요.</h2>
@@ -68,16 +71,16 @@
                 <!-- Monday -->
                 <div class="d-flex align-items-center gap-3 gap-sm-5">
                   <div class="form-check form-switch w-100 m-0" data-bs-toggle="collapse" data-bs-target="#mondayHours" aria-controls="mondayHours" style="max-width: 132px">
-                    <input type="checkbox" class="form-check-input" role="switch" id="monday" checked>
-                    <label for="monday" class="form-check-label w-100 fw-medium">월요일</label>
+                    <input type="checkbox" class="form-check-input" role="switch" id="mondayNy" name="mondayNy" checked th:value="${item?.mondayNy}" th:checked="${!#strings.equals(item?.mondayNy, on)}">
+                    <label for="mondayNy" class="form-check-label w-100 fw-medium">월요일</label>
                   </div>
                   <div class="position-relative d-flex align-items-center w-100" style="max-width: 238px; height: 40px">
                     <div class="position-absolute top-0 start-0 w-100 h-100">
-                      <div class="collapse bg-body transition-none show" id="mondayHours">
+                      <div class="collapse bg-body transition-none" id="mondayHours">
                         <div class="d-flex align-items-center gap-2 gap-sm-3">
-                          <input type="text" class="form-control" data-input-format='{"time": true, "timePattern": ["h", "m"]}' placeholder="hh:mm" value="09:00">
+                          <input type="text" class="form-control" id="mondayOpentime" name="mondayOpentime" data-input-format='{"time": true, "timePattern": ["h", "m"]}' placeholder="hh:mm" value="09:00">
                           <div class="fs-sm">to</div>
-                          <input type="text" class="form-control" data-input-format='{"time": true, "timePattern": ["h", "m"]}' placeholder="hh:mm" value="19:00">
+                          <input type="text" class="form-control" id="mondayClosetime" name="mondayClosetime" data-input-format='{"time": true, "timePattern": ["h", "m"]}' placeholder="hh:mm" value="19:00">
                         </div>
                       </div>
                     </div>
@@ -88,16 +91,16 @@
                 <!-- Tuesday -->
                 <div class="d-flex align-items-center gap-3 gap-sm-5">
                   <div class="form-check form-switch w-100 m-0" data-bs-toggle="collapse" data-bs-target="#tuesdayHours" aria-controls="tuesdayHours" style="max-width: 132px">
-                    <input type="checkbox" class="form-check-input" role="switch" id="tuesday" checked>
-                    <label for="tuesday" class="form-check-label w-100 fw-medium">화요일</label>
+                    <input type="checkbox" class="form-check-input" role="switch" id="tuesdayNy" name="tuesdayNy" checked th:value="${item?.tuesdayNy}" th:checked="${!#strings.equals(item?.tuesdayNy, on)}">
+                    <label for="tuesdayNy" class="form-check-label w-100 fw-medium">화요일</label>
                   </div>
                   <div class="position-relative d-flex align-items-center w-100" style="max-width: 238px; height: 40px">
                     <div class="position-absolute top-0 start-0 w-100 h-100">
-                      <div class="collapse bg-body transition-none show" id="tuesdayHours">
+                      <div class="collapse bg-body transition-none" id="tuesdayHours">
                         <div class="d-flex align-items-center gap-2 gap-sm-3">
-                          <input type="text" class="form-control" data-input-format='{"time": true, "timePattern": ["h", "m"]}' placeholder="hh:mm" value="09:00">
+                          <input type="text" class="form-control" id="tuesdayOpentime" name="tuesdayOpentime" data-input-format='{"time": true, "timePattern": ["h", "m"]}' placeholder="hh:mm" value="09:00">
                           <div class="fs-sm">to</div>
-                          <input type="text" class="form-control" data-input-format='{"time": true, "timePattern": ["h", "m"]}' placeholder="hh:mm" value="19:00">
+                          <input type="text" class="form-control" id="tuesdayClosetime" name="tuesdayClosetime" data-input-format='{"time": true, "timePattern": ["h", "m"]}' placeholder="hh:mm" value="19:00">
                         </div>
                       </div>
                     </div>
@@ -108,16 +111,16 @@
                 <!-- Wednesday -->
                 <div class="d-flex align-items-center gap-3 gap-sm-5">
                   <div class="form-check form-switch w-100 m-0" data-bs-toggle="collapse" data-bs-target="#wednesdayHours" aria-controls="wednesdayHours" style="max-width: 132px">
-                    <input type="checkbox" class="form-check-input" role="switch" id="wednesday" checked>
-                    <label for="wednesday" class="form-check-label w-100 fw-medium">수요일</label>
+                    <input type="checkbox" class="form-check-input" role="switch" id="wednesdayNy" name="wednesdayNy" checked th:value="${item?.wednesdayNy}" th:checked="${!#strings.equals(item?.wednesdayNy, on)}">
+                    <label for="wednesdayNy" class="form-check-label w-100 fw-medium">수요일</label>
                   </div>
                   <div class="position-relative d-flex align-items-center w-100" style="max-width: 238px; height: 40px">
                     <div class="position-absolute top-0 start-0 w-100 h-100">
-                      <div class="collapse bg-body transition-none show" id="wednesdayHours">
+                      <div class="collapse bg-body transition-none" id="wednesdayHours">
                         <div class="d-flex align-items-center gap-2 gap-sm-3">
-                          <input type="text" class="form-control" data-input-format='{"time": true, "timePattern": ["h", "m"]}' placeholder="hh:mm" value="09:00">
+                          <input type="text" class="form-control" id="wednesdayOpentime" name="wednesdayOpentime" data-input-format='{"time": true, "timePattern": ["h", "m"]}' placeholder="hh:mm" value="09:00">
                           <div class="fs-sm">to</div>
-                          <input type="text" class="form-control" data-input-format='{"time": true, "timePattern": ["h", "m"]}' placeholder="hh:mm" value="19:00">
+                          <input type="text" class="form-control" id="wednesdayClosetime" name="wednesdayClosetime" data-input-format='{"time": true, "timePattern": ["h", "m"]}' placeholder="hh:mm" value="19:00">
                         </div>
                       </div>
                     </div>
@@ -128,16 +131,16 @@
                 <!-- Thursday -->
                 <div class="d-flex align-items-center gap-3 gap-sm-5">
                   <div class="form-check form-switch w-100 m-0" data-bs-toggle="collapse" data-bs-target="#thursdayHours" aria-controls="thursdayHours" style="max-width: 132px">
-                    <input type="checkbox" class="form-check-input" role="switch" id="thursday" checked>
-                    <label for="thursday" class="form-check-label w-100 fw-medium">목요일</label>
+                    <input type="checkbox" class="form-check-input" role="switch" id="thursdayNy" name="thursdayNy" checked th:value="${item?.thursdayNy}" th:checked="${!#strings.equals(item?.thursdayNy, on)}">
+                    <label for="thursdayNy" class="form-check-label w-100 fw-medium">목요일</label>
                   </div>
                   <div class="position-relative d-flex align-items-center w-100" style="max-width: 238px; height: 40px">
                     <div class="position-absolute top-0 start-0 w-100 h-100">
-                      <div class="collapse bg-body transition-none show" id="thursdayHours">
+                      <div class="collapse bg-body transition-none" id="thursdayHours">
                         <div class="d-flex align-items-center gap-2 gap-sm-3">
-                          <input type="text" class="form-control" data-input-format='{"time": true, "timePattern": ["h", "m"]}' placeholder="hh:mm" value="09:00">
+                          <input type="text" class="form-control" id="thursdayOpentime" name="thursdayOpentime" data-input-format='{"time": true, "timePattern": ["h", "m"]}' placeholder="hh:mm" value="09:00">
                           <div class="fs-sm">to</div>
-                          <input type="text" class="form-control" data-input-format='{"time": true, "timePattern": ["h", "m"]}' placeholder="hh:mm" value="19:00">
+                          <input type="text" class="form-control" id="thurdayClosetime" name="thurdayClosetime" data-input-format='{"time": true, "timePattern": ["h", "m"]}' placeholder="hh:mm" value="19:00">
                         </div>
                       </div>
                     </div>
@@ -148,16 +151,16 @@
                 <!-- Friday -->
                 <div class="d-flex align-items-center gap-3 gap-sm-5">
                   <div class="form-check form-switch w-100 m-0" data-bs-toggle="collapse" data-bs-target="#fridayHours" aria-controls="fridayHours" style="max-width: 132px">
-                    <input type="checkbox" class="form-check-input" role="switch" id="friday" checked>
-                    <label for="friday" class="form-check-label w-100 fw-medium">금요일</label>
+                    <input type="checkbox" class="form-check-input" role="switch" id="fridayNy" name="fridayNy" checked th:value="${item?.fridayNy}" th:checked="${!#strings.equals(item?.fridayNy, on)}">
+                    <label for="fridayNy" class="form-check-label w-100 fw-medium">금요일</label>
                   </div>
                   <div class="position-relative d-flex align-items-center w-100" style="max-width: 238px; height: 40px">
                     <div class="position-absolute top-0 start-0 w-100 h-100">
-                      <div class="collapse bg-body transition-none show" id="fridayHours">
+                      <div class="collapse bg-body transition-none" id="fridayHours">
                         <div class="d-flex align-items-center gap-2 gap-sm-3">
-                          <input type="text" class="form-control" data-input-format='{"time": true, "timePattern": ["h", "m"]}' placeholder="hh:mm" value="09:00">
+                          <input type="text" class="form-control" id="fridayOpentime" name="fridayOpentime" data-input-format='{"time": true, "timePattern": ["h", "m"]}' placeholder="hh:mm" value="09:00">
                           <div class="fs-sm">to</div>
-                          <input type="text" class="form-control" data-input-format='{"time": true, "timePattern": ["h", "m"]}' placeholder="hh:mm" value="19:00">
+                          <input type="text" class="form-control" id="fridayClosetime" name="fridayClosetime" data-input-format='{"time": true, "timePattern": ["h", "m"]}' placeholder="hh:mm" value="19:00">
                         </div>
                       </div>
                     </div>
@@ -168,16 +171,16 @@
                 <!-- Saturday -->
                 <div class="d-flex align-items-center gap-3 gap-sm-5">
                   <div class="form-check form-switch w-100 m-0" data-bs-toggle="collapse" data-bs-target="#saturdayHours" aria-controls="saturdayHours" style="max-width: 132px">
-                    <input type="checkbox" class="form-check-input" role="switch" id="saturday">
-                    <label for="saturday" class="form-check-label w-100 fw-medium">토요일</label>
+                    <input type="checkbox" class="form-check-input" role="switch" id="saturdayNy" name="saturdayNy" th:value="${item?.saturdayNy}" th:checked="${!#strings.equals(item?.saturdayNy, on)}">
+                    <label for="saturdayNy" class="form-check-label w-100 fw-medium">토요일</label>
                   </div>
                   <div class="position-relative d-flex align-items-center w-100" style="max-width: 238px; height: 40px">
                     <div class="position-absolute top-0 start-0 w-100 h-100">
                       <div class="collapse bg-body transition-none" id="saturdayHours">
                         <div class="d-flex align-items-center gap-2 gap-sm-3">
-                          <input type="text" class="form-control" data-input-format='{"time": true, "timePattern": ["h", "m"]}' placeholder="hh:mm" value="09:00">
+                          <input type="text" class="form-control" id="saturdayOpentime" name="saturdayOpentime" data-input-format='{"time": true, "timePattern": ["h", "m"]}' placeholder="hh:mm" value="09:00">
                           <div class="fs-sm">to</div>
-                          <input type="text" class="form-control" data-input-format='{"time": true, "timePattern": ["h", "m"]}' placeholder="hh:mm" value="19:00">
+                          <input type="text" class="form-control" id="saturdayClosetime" name="saturdayClosetime" data-input-format='{"time": true, "timePattern": ["h", "m"]}' placeholder="hh:mm" value="19:00">
                         </div>
                       </div>
                     </div>
@@ -188,16 +191,16 @@
                 <!-- Sunday -->
                 <div class="d-flex align-items-center gap-3 gap-sm-5">
                   <div class="form-check form-switch w-100 m-0" data-bs-toggle="collapse" data-bs-target="#sundayHours" aria-controls="sundayHours" style="max-width: 132px">
-                    <input type="checkbox" class="form-check-input" role="switch" id="sunday">
-                    <label for="sunday" class="form-check-label w-100 fw-medium">일요일</label>
+                    <input type="checkbox" class="form-check-input" role="switch" id="sundayNy" name="sundayNy" th:value="${item?.sundayNy}" th:checked="${!#strings.equals(item?.sundayNy, on)}">
+                    <label for="sundayNy" class="form-check-label w-100 fw-medium">일요일</label>
                   </div>
                   <div class="position-relative d-flex align-items-center w-100" style="max-width: 238px; height: 40px">
                     <div class="position-absolute top-0 start-0 w-100 h-100">
                       <div class="collapse bg-body transition-none" id="sundayHours">
                         <div class="d-flex align-items-center gap-2 gap-sm-3">
-                          <input type="text" class="form-control" data-input-format='{"time": true, "timePattern": ["h", "m"]}' placeholder="hh:mm" value="09:00">
+                          <input type="text" class="form-control" id="sundayOpentime" name="sundayOpentime" data-input-format='{"time": true, "timePattern": ["h", "m"]}' placeholder="hh:mm" value="09:00">
                           <div class="fs-sm">to</div>
-                          <input type="text" class="form-control" data-input-format='{"time": true, "timePattern": ["h", "m"]}' placeholder="hh:mm" value="19:00">
+                          <input type="text" class="form-control" id="sundayClosetime" name="sundayClosetime" data-input-format='{"time": true, "timePattern": ["h", "m"]}' placeholder="hh:mm" value="19:00">
                         </div>
                       </div>
                     </div>
@@ -209,11 +212,11 @@
 
             <!-- Next step button -->
             <div class="pt-5">
-              <a class="btn btn-lg btn-dark" href="/shop/shopaddpicUsrForm">
-                사진 등록으로
-                <i class="fi-chevron-right fs-lg ms-1 me-n2"></i>
-              </a>
-            </div>
+            	<button type="button" class="btn btn-lg btn-dark" id="btnSubmit">
+	                사진 등록으로
+	                <i class="fi-chevron-right fs-lg ms-1 me-n2"></i>
+            	</button>
+            </div></form>
           </div>
 
 
@@ -226,6 +229,17 @@
     </main>
 
              <div th:replace="~{usr/include/LoginedFooter :: LoginedFooter}"></div>
+             
+    <script type="text/javascript">
+    
+    var form = document.querySelector("form[name=form]");
+
+    document.getElementById("btnSubmit").onclick = function () {
+		form.action = "/shop/shopaddpicUsrForm";
+		form.submit();
+	}
+    
+    </script>
     
   </body>
 </html>

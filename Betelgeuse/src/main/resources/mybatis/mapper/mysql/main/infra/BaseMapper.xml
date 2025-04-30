@@ -32,5 +32,34 @@
 		)
 	</sql>
 	
+	<sql id="insertUploadedes">
+		INSERT INTO filesUploaded (
+			type
+			,defaultNy
+			,sort
+			,path
+			,originalName
+			,uuidName
+			,ext
+			,size
+			,delNy
+			,pseq
+		) values 
+		<foreach item="file" collection="list" separator=",">
+		(
+			#{type}
+			,#{defaultNy}
+			,#{sort}
+			,#{path}
+			,#{originalName}
+			,#{uuidName}
+			,#{ext}
+			,#{size}
+			,0
+			,#{pseq}
+		)
+		</foreach>
+	</sql>
+	
 
 </mapper>

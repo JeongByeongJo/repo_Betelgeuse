@@ -73,7 +73,7 @@
 
           <!-- Account listings content -->
           <div class="col-lg-9">
-<form id="formList" name="formList" method="post">
+<form id="formList" name="formList" method="get">
             <h1 class="h2 pb-2 pb-lg-3">내 자전거</h1>
             <!-- Nav pills -->
             <div class="nav overflow-x-auto mb-2">
@@ -127,9 +127,9 @@
                 <div class="vstack gap-4" id="publishedSelection">
 
                   <!-- Item -->
-                 <th:block th:each="list : ${list}">
-                 <input type="hidden" id="bikeSeq" name="bikeSeq" th:value="${list.bikeSeq}">
-                  <div class="d-sm-flex align-items-center">
+<!--                  <th:block th:each="list : ${list}"> -->
+                 <input type="hidden" name="bikeSeq">
+                  <div class="d-sm-flex align-items-center" th:each="list : ${list}">
                     <div class="d-inline-flex position-relative z-2 pt-1 pb-2 ps-2 p-sm-0 ms-2 ms-sm-0 me-sm-2">
                       <div class="form-check position-relative z-1 fs-lg m-0">
                         <input type="checkbox" class="form-check-input" checked>
@@ -204,7 +204,7 @@
                       </div>
                     </article>
                   </div>
-                 </th:block>
+<!--                  </th:block> -->
 
                   <!-- Item -->
                   <div class="d-sm-flex align-items-center">

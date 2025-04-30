@@ -24,6 +24,9 @@ public class BicycleService extends BaseService{
 	public List<BicycleDto> selectOneList(BicycleDto dto) {
 		return bicycleDao.selectOneList(dto);
 	}
+	public List<BicycleDto> selectOnePicList(BicycleDto dto) {
+		return bicycleDao.selectOnePicList(dto);
+	}
 	public BicycleDto selectOne(BicycleDto dto) {
 		return bicycleDao.selectOne(dto);
 	}
@@ -36,6 +39,8 @@ public class BicycleService extends BaseService{
 	}
 	public int insert(BicycleDto dto) throws Exception {
 		bicycleDao.insert(dto);
+		dto.setUploadImg1MaxNumber(1001);
+		dto.setUploadImg1Type(1000);
 		uploadFilesToS3(
     			dto.getUploadImg1()
     			, dto

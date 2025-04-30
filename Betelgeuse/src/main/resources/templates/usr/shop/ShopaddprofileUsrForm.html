@@ -54,6 +54,9 @@
       </div>
 
 		<form id="form" name="form" method="post" autocomplete="off" enctype="multipart/form-data" >
+		<input type="hidden" id="shopSeq" name="shopSeq" th:value="${item?.shopSeq}">
+<input type="hidden" id="seq" name="seq" th:value="${item?.seq}">
+<input type="hidden" id="userCustomer_seq" name="userCustomer_seq" th:value="${item?.seq}">
 
       <!-- Profile details page content -->
       <div class="container py-5 mb-xxl-3">
@@ -66,7 +69,7 @@
             <h1 class="h3 pb-sm-1 pb-md-2">사장님의 프로필 사진을 업로드해주세요.</h1>
             <div class="d-flex align-items-start align-items-sm-center">
               <div class="ratio ratio-1x1 hover-effect-opacity bg-body-tertiary border rounded-circle overflow-hidden" style="width: 160px">
-                <img src="/usr/template/Finder/assets/img/add-item/contractor/avatar.jpg" alt="Avatar">
+                <img id="img" src="/usr/template/Finder/assets/img/add-item/contractor/avatar.jpg" th:src="${item?.path != null ? item.path : '/usr/template/Finder/assets/img/add-item/contractor/avatar.jpg'}" alt="Avatar">
                 <div class="hover-effect-target position-absolute top-0 start-0 d-flex align-items-center justify-content-center w-100 h-100 opacity-0">
                   <button type="button" class="btn btn-icon btn-sm btn-light position-relative z-2" aria-label="Remove">
                     <i class="fi-trash fs-base"></i>
@@ -76,10 +79,11 @@
               </div>
               <div class="ps-3 ps-sm-4">
                 <p class="fs-sm" style="max-width: 440px">1000px 이하의 너비와 높이인 PNG 또는 JPG 파일로 업로드해주세요.</p>
-                <button type="button" class="btn btn-sm btn-outline-secondary">
+                <label for="uploadImg1" class="btn btn-sm btn-outline-secondary">
                   <i class="fi-refresh-ccw fs-sm ms-n1 me-2"></i>
                   사진 업데이트
-                </button>
+                </label>
+                <input type="file" id="uploadImg1" name="uploadImg1" style="display: none;">
               </div>
             </div>
 
@@ -87,20 +91,20 @@
             <!-- About -->
             <div class="pt-5">
               <label for="about" class="form-label">사장님과 매장의 소개글을 적어주세요.</label>
-              <textarea class="form-control form-control-lg" rows="6" id="about" placeholder=""></textarea>
+              <textarea class="form-control form-control-lg" rows="6" id="shopDescribe" name="shopDescribe" th:text="${item?.shopDescribe}" placeholder=""></textarea>
               <label for="website" class="form-label mt-3 mt-md-4">매장 홈페이지가 있으신가요?</label>
               <div class="position-relative">
                 <i class="fi-link position-absolute top-50 start-0 translate-middle-y fs-lg ms-3"></i>
-                <input type="url" class="form-control form-control-lg form-icon-start" id="website" placeholder="https://">
+                <input type="url" class="form-control form-control-lg form-icon-start" id="homepage" name="homepage" th:value="${item?.homepage}" placeholder="https://">
               </div>
             </div>
 
             <!-- Next step button -->
             <div class="pt-5">
-              <a class="btn btn-lg btn-dark" href="/shop/shopaddhoursUsrForm">
-                영업시간 설정으로
-                <i class="fi-chevron-right fs-lg ms-1 me-n2"></i>
-              </a>
+            	<button type="button" class="btn btn-lg btn-dark" id="btnSubmit">
+	                영업시간 설정으로
+	                <i class="fi-chevron-right fs-lg ms-1 me-n2"></i>
+				</button>
             </div>
           </div>
 
@@ -115,6 +119,47 @@
     </main>
 
          <div th:replace="~{usr/include/LoginedFooter :: LoginedFooter}"></div>
+    
+<script type="text/javascript">
+    //이미지 미리보기
+    var sel_file;
+ 
+    $(document).ready(function() {
+        $("#uploadImg1").on("change", handleImgFileSelect);
+    });
+ 
+    function handleImgFileSelect(e) {
+        var files = e.target.files;
+        var filesArr = Array.prototype.slice.call(files);
+ 
+        var reg = /(.*?)\/(jpg|jpeg|png|bmp)$/;
+ 
+        filesArr.forEach(function(f) {
+            if (!f.type.match(reg)) {
+                alert("확장자는 이미지 확장자만 가능합니다.");
+                return;
+            }
+ 
+            sel_file = f;
+ 
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $("#img").attr("src", e.target.result);
+            }
+            reader.readAsDataURL(f);
+        });
+    }
+</script>
+	<script type="text/javascript">
+    
+    var form = document.querySelector("form[name=form]");
+
+    document.getElementById("btnSubmit").onclick = function () {
+		form.action = "/shop/shopaddhoursUsrForm";
+		form.submit();
+	}
+    
+    </script>
     
   </body>
 </html>

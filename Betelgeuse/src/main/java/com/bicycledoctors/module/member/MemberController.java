@@ -258,11 +258,8 @@ public class MemberController extends BaseController {
 		return "usr/member/account-profile";
 	}
 	@RequestMapping(value = "/member/userBicycleUsrList")
-	public String userBicycleUsrList(MemberDto memberDto, Model model, HttpSession httpSession, BicycleDto bicycleDto) {
-		memberDto.setSeq((String)httpSession.getAttribute("sessSeqUsr"));
-		model.addAttribute("item", memberService.selectOne(memberDto));
+	public String userBicycleUsrList(Model model, HttpSession httpSession, BicycleDto bicycleDto) {
 		bicycleDto.setUserCustomer_seq((String)httpSession.getAttribute("sessSeqUsr"));
-		System.out.println(memberDto.getSeq());
 		model.addAttribute("list", bicycleService.selectOneList(bicycleDto));
 		return "usr/member/account-listings";
 	}

@@ -17,7 +17,7 @@ import com.bicycledoctors.module.index.IndexVo;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-public class ShopController extends BaseController{
+public class ShopController extends BaseController {
 
 
 	@Autowired
@@ -54,62 +54,94 @@ public class ShopController extends BaseController{
 		return "usr/shop/ShopaddlocationUsrForm";
 	}
 	@RequestMapping(value = "/shop/shopaddservicesUsrForm")
-	public String shopaddservicesUsrForm(Model model, ShopDto dto, HttpSession httpSession, ShopAvailableServiceDto shopAvailableServiceDto, ShopBikeBrandDto shopBikeBrandDto) throws Exception {
+	public String shopaddservicesUsrForm(Model model, ShopDto dto, HttpSession httpSession, ShopAvailableServiceDto shopAvailableServiceDto, ShopBikeBrandDto shopBikeBrandDto, ShopWheelBrandDto shopWheelBrandDto) throws Exception {
 		dto.setSeq(httpSession.getAttribute("sessSeqUsr").toString());
 		shopAvailableServiceDto.setSeq(httpSession.getAttribute("sessSeqUsr").toString());
 		shopBikeBrandDto.setSeq(httpSession.getAttribute("sessSeqUsr").toString());
+		shopWheelBrandDto.setSeq(httpSession.getAttribute("sessSeqUsr").toString());
 		model.addAttribute("item", service.selectOne4ShopService(dto));
 		model.addAttribute("lists", service.selectShopServiceCd(shopAvailableServiceDto));
 		model.addAttribute("listb", service.selectShopBrandCd(shopBikeBrandDto));
+		model.addAttribute("listw", service.selectShopWBrandCd(shopWheelBrandDto));
 		return "usr/shop/ShopaddservicesUsrForm";
 	}
 	@RequestMapping(value = "/shop/shopaddprofileUsrForm")
-	public String shopaddprofileUsrForm(@ModelAttribute ShopAvailableServicesDto dtos,@ModelAttribute ShopBikeBrandsDto bbdtos, ShopDto dto) throws Exception {
-		 List<ShopAvailableServiceDto> dtoList = new ArrayList<>();
-		 List<ShopBikeBrandDto> bbdtoList = new ArrayList<>();
+	public String shopaddprofileUsrForm(@ModelAttribute ShopAvailableServicesDto dtos,@ModelAttribute ShopBikeBrandsDto bbdtos,@ModelAttribute ShopWheelBrandsDto wbdtos,Model model, ShopDto dto, HttpSession httpSession) throws Exception {
+		dto.setSeq(httpSession.getAttribute("sessSeqUsr").toString());
+		List<ShopAvailableServiceDto> dtoList = new ArrayList<>();
+		List<ShopBikeBrandDto> bbdtoList = new ArrayList<>();
+		List<ShopWheelBrandDto> wbdtoList = new ArrayList<>();
 		
 		// [1] availableServiceCd 목록 처리
-		    if (dtos.getAvailableServiceCd() != null && !dtos.getAvailableServiceCd().isEmpty()) {
-		        for (Integer code : dtos.getAvailableServiceCd()) {
-		            ShopAvailableServiceDto availableServiceDto = new ShopAvailableServiceDto();
-		            availableServiceDto.setShopSeq(dtos.getShopSeq());
-		            availableServiceDto.setAvailableServiceCd(code);
-		            dtoList.add(availableServiceDto);
-		        }
-		    }
+	    if (dtos.getAvailableServiceCd() != null && !dtos.getAvailableServiceCd().isEmpty()) {
+	        for (Integer code : dtos.getAvailableServiceCd()) {
+	            ShopAvailableServiceDto availableServiceDto = new ShopAvailableServiceDto();
+	            availableServiceDto.setShopSeq(dtos.getShopSeq());
+	            availableServiceDto.setAvailableServiceCd(code);
+	            dtoList.add(availableServiceDto);
+	        }
+	    }
 
-		    // [2] bikeBrandCd 목록 처리
-		    if (bbdtos.getBikeBrandCd() != null && !bbdtos.getBikeBrandCd().isEmpty()) {
-		        for (Integer code : bbdtos.getBikeBrandCd()) {
-		            ShopBikeBrandDto bikeBrandDto = new ShopBikeBrandDto();
-		            bikeBrandDto.setShopSeq(bbdtos.getShopSeq());
-		            bikeBrandDto.setBikeBrandCd(code);
-		            bbdtoList.add(bikeBrandDto);
-		        }
-		    }
+	    // [2] bikeBrandCd 목록 처리
+	    if (bbdtos.getBikeBrandCd() != null && !bbdtos.getBikeBrandCd().isEmpty()) {
+	        for (Integer code : bbdtos.getBikeBrandCd()) {
+	            ShopBikeBrandDto bikeBrandDto = new ShopBikeBrandDto();
+	            bikeBrandDto.setShopSeq(bbdtos.getShopSeq());
+	            bikeBrandDto.setBikeBrandCd(code);
+	            bbdtoList.add(bikeBrandDto);
+	        }
+	    }
+	    // [2] bikeBrandCd 목록 처리
+	    if (wbdtos.getWheelBrandCd() != null && !wbdtos.getWheelBrandCd().isEmpty()) {
+	    	for (Integer code : wbdtos.getWheelBrandCd()) {
+	    		ShopWheelBrandDto shopWheelBrandDto = new ShopWheelBrandDto();
+	    		shopWheelBrandDto.setShopSeq(wbdtos.getShopSeq());
+	    		shopWheelBrandDto.setWheelBrandCd(code);
+	    		wbdtoList.add(shopWheelBrandDto);
+	    	}
+	    }
 
-		    // [3] insertAvailableServices 호출 (있을 때만)
-		    if (!dtoList.isEmpty()) {
-		        service.insertAvailableServices(dtoList, dto);
-		    } else {
-		    	service.deleteAS(dto);
-		    }
+	    // [3] insertAvailableServices 호출 (있을 때만)
+	    if (!dtoList.isEmpty()) {
+	        service.insertAvailableServices(dtoList, dto);
+	    } else {
+	    	service.deleteAS(dto);
+	    }
 
-		    // [4] insertHandlingBicycleBrands 호출 (있을 때만)
-		    if (!bbdtoList.isEmpty()) {
-		        service.insertHandlingBicycleBrands(bbdtoList, dto);
-		    } else {
-		    	service.deleteBB(dto);
-		    }
-		 
+	    // [4] insertHandlingBicycleBrands 호출 (있을 때만)
+	    if (!bbdtoList.isEmpty()) {
+	        service.insertHandlingBicycleBrands(bbdtoList, dto);
+	    } else {
+	    	service.deleteBB(dto);
+	    }
+	 
+	    // [4] insertHandlingBicycleBrands 호출 (있을 때만)
+	    if (!wbdtoList.isEmpty()) {
+	    	service.insertHandlingWheelBrands(wbdtoList, dto);
+	    } else {
+	    	service.deleteWB(dto);
+	    }
+	    service.update1(dto);
+		model.addAttribute("item", service.selectOne4ShopProfile(dto));
+
+	    System.out.println("아랄랄" + dto.getUserCustomer_seq());
+
 		return "usr/shop/ShopaddprofileUsrForm";
 	}
 	@RequestMapping(value = "/shop/shopaddhoursUsrForm")
-	public String shopaddhoursUsrForm() {
+	public String shopaddhoursUsrForm(Model model, ShopDto dto, HttpSession httpSession) throws Exception {
+		service.update2(dto);
+		dto.setSeq(httpSession.getAttribute("sessSeqUsr").toString());
+	    System.out.println(dto.getShopSeq());
+		model.addAttribute("item", service.selectOne4Hour(dto));
+
 		return "usr/shop/ShopaddhoursUsrForm";
 	}
 	@RequestMapping(value = "/shop/shopaddpicUsrForm")
-	public String shopaddpicUsrForm() {
+	public String shopaddpicUsrForm(Model model, ShopDto dto, HttpSession httpSession) {
+		service.update3(dto);
+		dto.setSeq(httpSession.getAttribute("sessSeqUsr").toString());
+		model.addAttribute("item", service.selectOne4Pic(dto));
 		return "usr/shop/ShopaddpicUsrForm";
 	}
 	
@@ -123,5 +155,10 @@ public class ShopController extends BaseController{
 	public String shopaddlocationUsrUpdt(ShopDto dto, Model model) {
 		service.update(dto);
 		return "redirect:/shop/shopaddservicesUsrForm";
+	}
+	@RequestMapping(value = "/shop/shopaddpicUsrUpdt")
+	public String shopaddpicUsrUpdt(ShopDto dto, Model model) throws Exception {
+		service.update4(dto);
+		return "redirect:/index/home-logined";
 	}
 }

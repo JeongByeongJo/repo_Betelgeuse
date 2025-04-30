@@ -51,8 +51,9 @@ public class BicycleController extends BaseController{
 		return "usr/bicycle/BicycleUsrForm";
 	}
 	@RequestMapping(value = "/bicycle/bicycleUsrMfom")
-	public String bicycleUsrMfom(BicycleDto dto, Model model, HttpSession httpSession) {
+	public String bicycleUsrMfom(BicycleDto dto, Model model) {
 		model.addAttribute("item", bicycleService.selectOne(dto));
+		model.addAttribute("list", bicycleService.selectOnePicList(dto));
 		
 		return "usr/bicycle/BicycleUsrMfom";
 	}

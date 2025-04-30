@@ -1,6 +1,8 @@
 package com.bicycledoctors.module.shop;
 
-public class ShopDto {
+import com.bicycledoctors.common.base.BaseDto;
+
+public class ShopDto extends BaseDto{
 	private String seq;
 
 	private String shopSeq;
@@ -44,12 +46,16 @@ public class ShopDto {
     private String sundayClosetime;
     private String verifiedNy;
     private String featuredNy;
-    private String delNy;
+    private Integer delNy;
     private String homepage;
     private String youtube;
     private String shopInstDate;
     private String shopUpdtDate;
     private String userCustomer_seq;
+//    -----
+    private Integer uploadImg1Type;
+	private Integer uploadImg1MaxNumber;
+    
 //    -----
 	public String getShopSeq() {
 		return shopSeq;
@@ -298,12 +304,6 @@ public class ShopDto {
 	public void setFeaturedNy(String featuredNy) {
 		this.featuredNy = featuredNy;
 	}
-	public String getDelNy() {
-		return delNy;
-	}
-	public void setDelNy(String delNy) {
-		this.delNy = delNy;
-	}
 	public String getHomepage() {
 		return homepage;
 	}
@@ -339,6 +339,24 @@ public class ShopDto {
 	}
 	public void setSeq(String seq) {
 		this.seq = seq;
+	}
+	public Integer getUploadImg1Type() {
+		return uploadImg1Type;
+	}
+	public void setUploadImg1Type(Integer uploadImg1Type) {
+		this.uploadImg1Type = uploadImg1Type;
+	}
+	public Integer getUploadImg1MaxNumber() {
+		return uploadImg1MaxNumber;
+	}
+	public void setUploadImg1MaxNumber(Integer uploadImg1MaxNumber) {
+		this.uploadImg1MaxNumber = uploadImg1MaxNumber;
+	}
+	public Integer getDelNy() {
+		return delNy;
+	}
+	public void setDelNy(Integer delNy) {
+		this.delNy = delNy;
 	}
     
 	

@@ -94,6 +94,7 @@
               }
             }' multiple aria-label="Select categories">
             <option value="">취급 브랜드를 선택해주세요.&emsp;&emsp;&emsp;&emsp;</option>
+            <option th:each="listw : ${listw}" th:value="${listw.cdSeq}" th:text="${listw.cdName}" th:selected="selected"></option>
             <option th:each="list : ${@codeService.selectListCachedCode(6)}" th:value="${list.cdSeq}" th:text="${list.cdName}" th:selected="${list.cdSeq} == ${listC?.wheelBrandCd}"></option>
             </select>
             
@@ -102,32 +103,32 @@
             <div class="row row-cols-2 row-cols-md-3 gy-3 gx-4">
               <div class="col">
                 <div class="form-check mb-0">
-                  <input type="checkbox" class="form-check-input" id="parking" checked>
-                  <label for="parking" class="form-check-label">주차장</label>
+                  <input type="checkbox" class="form-check-input" id="parkingNy" name="parkingNy" th:value="${item?.parkingNy}" th:checked="${!#strings.equals(item?.parkingNy, on)}">
+                  <label for="parkingNy" class="form-check-label">주차장</label>
                 </div>
               </div>
               <div class="col">
                 <div class="form-check mb-0">
-                  <input type="checkbox" class="form-check-input" id="wifi" checked>
-                  <label for="wifi" class="form-check-label">WiFi</label>
+                  <input type="checkbox" class="form-check-input" id="wifiNy" name="wifiNy" th:value="${item?.wifiNy}" th:checked="${!#strings.equals(item?.wifiNy, on)}">
+                  <label for="wifiNy" class="form-check-label">WiFi</label>
                 </div>
               </div>
               <div class="col">
                 <div class="form-check mb-0">
-                  <input type="checkbox" class="form-check-input" id="cctv">
-                  <label for="cctv" class="form-check-label">CCTV</label>
+                  <input type="checkbox" class="form-check-input" id="cctvNy" name="cctvNy" th:value="${item?.cctvNy}" th:checked="${!#strings.equals(item?.cctvNy, on)}">
+                  <label for="cctvNy" class="form-check-label">CCTV</label>
                 </div>
               </div>
               <div class="col">
                 <div class="form-check mb-0">
-                  <input type="checkbox" class="form-check-input" id="cafe" checked>
-                  <label for="cafe" class="form-check-label">카페</label>
+                  <input type="checkbox" class="form-check-input" id="cafeNy" name="cafeNy" th:value="${item?.cafeNy}" th:checked="${!#strings.equals(item?.cafeNy, on)}">
+                  <label for="cafeNy" class="form-check-label">카페</label>
                 </div>
               </div>
               <div class="col">
                 <div class="form-check mb-0">
-                  <input type="checkbox" class="form-check-input" id="pet">
-                  <label for="pet" class="form-check-label">반려동물 동반</label>
+                  <input type="checkbox" class="form-check-input" id="petNy" name="petNy" th:value="${item?.petNy}" th:checked="${!#strings.equals(item?.petNy, on)}">
+                  <label for="petNy" class="form-check-label">반려동물 동반</label>
                 </div>
               </div>
             </div>

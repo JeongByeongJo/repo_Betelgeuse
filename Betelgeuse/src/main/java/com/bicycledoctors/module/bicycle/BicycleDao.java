@@ -13,6 +13,7 @@ public interface BicycleDao extends BaseDao{
 	
 	public List<BicycleDto> selectList(BicycleVo vo);
 	public List<BicycleDto> selectOneList(BicycleDto dto);
+	public List<BicycleDto> selectOnePicList(BicycleDto dto);
 	public BicycleDto selectOne(BicycleDto dto);
 	public BicycleDto selectOne(BicycleVo vo);
 	public int selectOneCount(BicycleVo vo);

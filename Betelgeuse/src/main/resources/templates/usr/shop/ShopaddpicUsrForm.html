@@ -61,82 +61,87 @@
 
           <!-- Inputs -->
           <div class="col-lg-7">
-
+		<form id="form" name="form" method="post" autocomplete="off" enctype="multipart/form-data">
+		<input type="hidden" id="shopSeq" name="shopSeq" th:value="${item?.shopSeq}">
+		<input type="hidden" id="seq" name="seq" th:value="${item?.seq}">
+		<input type="hidden" id="userCustomer_seq" name="userCustomer_seq" th:value="${item?.userCustomer_seq}">
             <!-- Project photos and videos -->
             <div class="pt-3 mt-3">
               <h2>사진 등록하기</h2>
               <p class="fs-sm mb-0">사진 용량은 최대 8 MB입니다. 업로드 가능 확장자: jpeg, jpg, png. 메인 사진을 가장 먼저 업로드해주세요.</p>
               <p class="fs-sm">소개영상이 있으시다면 유튜브 링크를 연결해주세요.</p>
               <div class="border rounded p-3">
-                <div class="row row-cols-2 row-cols-sm-3 g-2">
+                <div class="row row-cols-2 row-cols-sm-3 g-2" id="previewContainer">
 
                   <!-- Item -->
-                  <div class="col">
-                    <div class="hover-effect-opacity position-relative overflow-hidden rounded">
-                      <span class="badge text-bg-light position-absolute top-0 start-0 z-3 mt-2 ms-2">Cover</span>
-                      <div class="ratio" style="--fn-aspect-ratio: calc(180 / 268 * 100%)">
-                        <img src="/usr/template/Finder/assets/img/listings/bd/1731905799997173.jpg" alt="Image">
-                      </div>
-                      <div class="hover-effect-target position-absolute top-0 start-0 d-flex align-items-center justify-content-center w-100 h-100 opacity-0">
-                        <button type="button" class="btn btn-icon btn-sm btn-light position-relative z-2" aria-label="Remove">
-                          <i class="fi-trash fs-base"></i>
-                        </button>
-                        <span class="position-absolute top-0 start-0 w-100 h-100 bg-black bg-opacity-25 z-1"></span>
-                      </div>
-                    </div>
-                  </div>
+<!--                   <div class="col" id="colImg1"> -->
+<!--                     <div class="hover-effect-opacity position-relative overflow-hidden rounded"> -->
+<!--                       <span class="badge text-bg-light position-absolute top-0 start-0 z-3 mt-2 ms-2">Cover</span> -->
+<!--                       <div class="ratio" style="--fn-aspect-ratio: calc(180 / 268 * 100%)"> -->
+<!--                         <img id="img1" src="/usr/template/Finder/assets/img/listings/bd/1731905799997173.jpg" alt="Image"> -->
+<!--                       </div> -->
+<!--                       <div class="hover-effect-target position-absolute top-0 start-0 d-flex align-items-center justify-content-center w-100 h-100 opacity-0"> -->
+<!--                         <button type="button" class="btn btn-icon btn-sm btn-light position-relative z-2" aria-label="Remove"> -->
+<!--                           <i class="fi-trash fs-base"></i> -->
+<!--                         </button> -->
+<!--                         <span class="position-absolute top-0 start-0 w-100 h-100 bg-black bg-opacity-25 z-1"></span> -->
+<!--                       </div> -->
+<!--                     </div> -->
+<!--                   </div> -->
 
-                  <!-- Item -->
-                  <div class="col">
-                    <div class="hover-effect-opacity position-relative overflow-hidden rounded">
-                      <div class="ratio" style="--fn-aspect-ratio: calc(180 / 268 * 100%)">
-                        <img src="/usr/template/Finder/assets/img/listings/bd/1731905809524829.jpg" alt="Image">
-                      </div>
-                      <div class="hover-effect-target position-absolute top-0 start-0 d-flex align-items-center justify-content-center w-100 h-100 opacity-0">
-                        <button type="button" class="btn btn-icon btn-sm btn-light position-relative z-2" aria-label="Remove">
-                          <i class="fi-trash fs-base"></i>
-                        </button>
-                        <span class="position-absolute top-0 start-0 w-100 h-100 bg-black bg-opacity-25 z-1"></span>
-                      </div>
-                    </div>
-                  </div>
+				  <!-- Item -->
+<!--                   <div class="col"> -->
+<!--                     <div class="hover-effect-opacity position-relative overflow-hidden rounded"> -->
+<!--                       <div class="ratio" style="--fn-aspect-ratio: calc(180 / 268 * 100%)"> -->
+<!--                         <img id="img2" src="/usr/template/Finder/assets/img/listings/bd/1731905809524829.jpg" alt="Image"> -->
+<!--                       </div> -->
+<!--                       <div class="hover-effect-target position-absolute top-0 start-0 d-flex align-items-center justify-content-center w-100 h-100 opacity-0"> -->
+<!--                         <button type="button" class="btn btn-icon btn-sm btn-light position-relative z-2" aria-label="Remove"> -->
+<!--                           <i class="fi-trash fs-base"></i> -->
+<!--                         </button> -->
+<!--                         <span class="position-absolute top-0 start-0 w-100 h-100 bg-black bg-opacity-25 z-1"></span> -->
+<!--                       </div> -->
+<!--                     </div> -->
+<!--                   </div> -->
 
-                  <!-- Item -->
-                  <div class="col">
-                    <div class="hover-effect-opacity position-relative overflow-hidden rounded">
-                      <div class="ratio" style="--fn-aspect-ratio: calc(180 / 268 * 100%)">
-                        <img src="/usr/template/Finder/assets/img/listings/bd/1731905814158035.jpg" alt="Image">
-                      </div>
-                      <div class="hover-effect-target position-absolute top-0 start-0 d-flex align-items-center justify-content-center w-100 h-100 opacity-0">
-                        <button type="button" class="btn btn-icon btn-sm btn-light position-relative z-2" aria-label="Remove">
-                          <i class="fi-trash fs-base"></i>
-                        </button>
-                        <span class="position-absolute top-0 start-0 w-100 h-100 bg-black bg-opacity-25 z-1"></span>
-                      </div>
-                    </div>
-                  </div>
+					<!-- Item -->
+<!--                   <div class="col"> -->
+<!--                     <div class="hover-effect-opacity position-relative overflow-hidden rounded"> -->
+<!--                       <div class="ratio" style="--fn-aspect-ratio: calc(180 / 268 * 100%)"> -->
+<!--                         <img src="/usr/template/Finder/assets/img/listings/bd/1731905814158035.jpg" alt="Image"> -->
+<!--                       </div> -->
+<!--                       <div id="img3" class="hover-effect-target position-absolute top-0 start-0 d-flex align-items-center justify-content-center w-100 h-100 opacity-0"> -->
+<!--                         <button type="button" class="btn btn-icon btn-sm btn-light position-relative z-2" aria-label="Remove"> -->
+<!--                           <i class="fi-trash fs-base"></i> -->
+<!--                         </button> -->
+<!--                         <span class="position-absolute top-0 start-0 w-100 h-100 bg-black bg-opacity-25 z-1"></span> -->
+<!--                       </div> -->
+<!--                     </div> -->
+<!--                   </div> -->
 
-                  <!-- Item -->
-                  <div class="col">
-                    <div class="hover-effect-opacity position-relative overflow-hidden rounded">
-                      <div class="ratio" style="--fn-aspect-ratio: calc(180 / 268 * 100%)">
-                        <img src="/usr/template/Finder/assets/img/listings/bd/1731905820391099.jpg" alt="Image">
-                      </div>
-                      <div class="hover-effect-target position-absolute top-0 start-0 d-flex align-items-center justify-content-center w-100 h-100 opacity-0">
-                        <button type="button" class="btn btn-icon btn-sm btn-light position-relative z-2" aria-label="Remove">
-                          <i class="fi-trash fs-base"></i>
-                        </button>
-                        <span class="position-absolute top-0 start-0 w-100 h-100 bg-black bg-opacity-25 z-1"></span>
-                      </div>
-                    </div>
-                  </div>
+					<!-- Item -->
+<!--                   <div class="col"> -->
+<!--                     <div class="hover-effect-opacity position-relative overflow-hidden rounded"> -->
+<!--                       <div class="ratio" style="--fn-aspect-ratio: calc(180 / 268 * 100%)"> -->
+<!--                         <img src="/usr/template/Finder/assets/img/listings/bd/1731905820391099.jpg" alt="Image"> -->
+<!--                       </div> -->
+<!--                       <div class="hover-effect-target position-absolute top-0 start-0 d-flex align-items-center justify-content-center w-100 h-100 opacity-0"> -->
+<!--                         <button type="button" class="btn btn-icon btn-sm btn-light position-relative z-2" aria-label="Remove"> -->
+<!--                           <i class="fi-trash fs-base"></i> -->
+<!--                         </button> -->
+<!--                         <span class="position-absolute top-0 start-0 w-100 h-100 bg-black bg-opacity-25 z-1"></span> -->
+<!--                       </div> -->
+<!--                     </div> -->
+<!--                   </div> -->
 
                   <!-- Upload button -->
-                  <div class="col">
+                  <div class="col" id="uploadSlot">
                     <div class="d-flex align-items-center justify-content-center position-relative h-100 cursor-pointer bg-body-tertiary border border-2 border-dotted rounded p-3">
                       <div class="text-center">
+                        <label for="uploadImg1">
                         <i class="fi-plus-circle fs-4 text-secondary-emphasis mb-2"></i>
-                        <div class="hover-effect-underline stretched-link fs-sm fw-medium">사진 업로드</div>
+                        <div class="hover-effect-underline stretched-link fs-sm fw-medium">사진 업로드</div></label>
+                        <input type="file" id="uploadImg1" name="uploadImg1" multiple style="display: none;">
                       </div>
                     </div>
                   </div>
@@ -146,21 +151,20 @@
                 <label for="link" class="form-label">유튜브 링크</label>
                 <div class="position-relative">
                   <i class="fi-link position-absolute top-50 start-0 translate-middle-y fs-lg ms-3"></i>
-                  <input type="url" class="form-control form-control-lg form-icon-start" id="link" placeholder="www.youtube.com/...">
+                  <input type="url" class="form-control form-control-lg form-icon-start" id="youtube" name="youtube" th:value="${item?.youtube}" placeholder="www.youtube.com/...">
                 </div>
               </div>
             </div>
 
             <!-- Complete button + Skip step button -->
             <div class="d-flex flex-column flex-sm-row align-items-sm-center gap-3 pt-5">
-              <button type="button" class="btn btn-lg btn-primary">
+              <button type="button" class="btn btn-lg btn-dark" id="btnSubmit">
                 저장 완료하기
                 <i class="fi-chevron-right fs-lg ms-1 me-n2"></i>
               </button>
-              <div class="nav">
-                <a class="nav-link hover-effect-underline fs-base" href="#!">Add project later</a>
-              </div>
             </div>
+            </form>
+            
           </div>
 
 
@@ -173,6 +177,132 @@
     </main>
 
     <div th:replace="~{usr/include/LoginedFooter :: LoginedFooter}"></div>
+
+<script>
+//   const uploadInput = document.getElementById('uploadImg1');
+//   const previewContainer = document.getElementById('previewContainer');
+//   const uploadSlot = document.getElementById('uploadSlot');
+
+//   uploadInput.addEventListener('change', function () {
+//     const files = Array.from(uploadInput.files);
+
+//     files.forEach((file, index) => {
+//       if (!file.type.startsWith('image/')) return;
+
+//       const reader = new FileReader();
+
+//       reader.onload = function (e) {
+//         const col = document.createElement('div');
+//         col.className = 'col';
+//      // 뱃지 추가 조건: 현재 썸네일이 첫 번째라면
+//         const isFirst = previewContainer.querySelectorAll('.col:not(#uploadSlot)').length === 0;
+//         col.innerHTML = `
+//             <div class="hover-effect-opacity position-relative overflow-hidden rounded">
+//               ${isFirst ? '<span class="badge text-bg-light position-absolute top-0 start-0 z-3 mt-2 ms-2">Cover</span>' : ''}
+//               <div class="ratio" style="--fn-aspect-ratio: calc(180 / 268 * 100%)">
+//                 <img src="${e.target.result}" alt="Preview" class="w-100 h-auto">
+//               </div>
+//               <div class="hover-effect-target position-absolute top-0 start-0 d-flex align-items-center justify-content-center w-100 h-100 opacity-0">
+//                 <button type="button" class="btn btn-icon btn-sm btn-light position-relative z-2 remove-preview" aria-label="Remove">
+//                   <i class="fi-trash fs-base"></i>
+//                 </button>
+//                 <span class="position-absolute top-0 start-0 w-100 h-100 bg-black bg-opacity-25 z-1"></span>
+//               </div>
+//             </div>
+//           `;
+
+//         // 썸네일을 업로드 박스 앞에 삽입
+//         previewContainer.insertBefore(col, uploadSlot);
+//       };
+
+//       reader.readAsDataURL(file);
+//     });
+
+//     // 초기화해서 같은 파일 또 올릴 수 있게 함
+//     uploadInput.value = '';
+//   });
+
+//   // 삭제 버튼 기능도 추가 (델리게이션 방식)
+//   previewContainer.addEventListener('click', function (e) {
+//     if (e.target.closest('.remove-preview')) {
+//       e.target.closest('.col').remove();
+//     }
+//   });
+</script>
+
+<script>
+  const uploadInput = document.getElementById('uploadImg1');
+  const previewContainer = document.getElementById('previewContainer');
+  const uploadSlot = document.getElementById('uploadSlot');
+
+  function updateCoverBadge() {
+    const previews = previewContainer.querySelectorAll('.col:not(#uploadSlot)');
+    previews.forEach((col, index) => {
+      const badge = col.querySelector('.badge');
+      if (index === 0) {
+        if (!badge) {
+          const badgeEl = document.createElement('span');
+          badgeEl.className = 'badge text-bg-light position-absolute top-0 start-0 z-3 mt-2 ms-2';
+          badgeEl.textContent = 'Cover';
+          col.querySelector('.hover-effect-opacity').prepend(badgeEl);
+        }
+      } else {
+        if (badge) badge.remove();
+      }
+    });
+  }
+
+  uploadInput.addEventListener('change', function () {
+    const files = Array.from(uploadInput.files);
+
+    files.forEach((file) => {
+      if (!file.type.startsWith('image/')) return;
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const col = document.createElement('div');
+        col.className = 'col';
+        col.innerHTML = `
+          <div class="hover-effect-opacity position-relative overflow-hidden rounded">
+            <div class="ratio" style="--fn-aspect-ratio: calc(180 / 268 * 100%)">
+              <img src="${e.target.result}" alt="Preview" class="w-100 h-auto">
+            </div>
+            <div class="hover-effect-target position-absolute top-0 start-0 d-flex align-items-center justify-content-center w-100 h-100 opacity-0">
+              <button type="button" class="btn btn-icon btn-sm btn-light position-relative z-2 remove-preview" aria-label="Remove">
+                <i class="fi-trash fs-base"></i>
+              </button>
+              <span class="position-absolute top-0 start-0 w-100 h-100 bg-black bg-opacity-25 z-1"></span>
+            </div>
+          </div>`;
+        previewContainer.insertBefore(col, uploadSlot);
+        updateCoverBadge();
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // Note: input의 value는 리셋하지 않아야 서버 제출 가능
+  });
+
+  previewContainer.addEventListener('click', function (e) {
+    if (e.target.closest('.remove-preview')) {
+      const col = e.target.closest('.col');
+      col.remove();
+      updateCoverBadge();
+    }
+  });
+</script>
+
+
+<script type="text/javascript">
     
+    var form = document.querySelector("form[name=form]");
+
+    document.getElementById("btnSubmit").onclick = function () {
+		form.action = "/shop/shopaddpicUsrUpdt";
+		form.submit();
+	}
+    
+    </script>
+
   </body>
 </html>

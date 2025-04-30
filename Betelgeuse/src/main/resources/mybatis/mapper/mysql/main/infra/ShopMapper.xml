@@ -6,8 +6,8 @@
 	<resultMap type="com.bicycledoctors.module.shop.ShopDto" id="resultMapObj"></resultMap>
 	<resultMap type="com.bicycledoctors.module.shop.ShopAvailableServicesDto" id="resultMapObjs"></resultMap>
 	<resultMap type="com.bicycledoctors.module.shop.ShopAvailableServiceDto" id="resultMapObjas"></resultMap>
-	<resultMap type="com.bicycledoctors.module.shop.ShopBikeBrandsDto" id="resultMapObjBs"></resultMap>
 	<resultMap type="com.bicycledoctors.module.shop.ShopBikeBrandDto" id="resultMapObjBb"></resultMap>
+	<resultMap type="com.bicycledoctors.module.shop.ShopWheelBrandDto" id="resultMapObjWb"></resultMap>
 	
 	<select id="selectList" resultMap="resultMapObj">
 		SELECT 
@@ -63,6 +63,67 @@
 		    ,b.userName
 		FROM shop as a
 		left join usercustomer b on a.userCustomer_seq = b.seq
+	</select>
+	<select id="selectOne4Pic" resultMap="resultMapObj">
+		SELECT 
+			a.shopSeq
+		    ,a.youtube
+		    ,a.userCustomer_seq
+		    ,b.seq
+		    ,b.userId
+		    ,b.userName
+		FROM shop as a
+		left join usercustomer b on a.userCustomer_seq = b.seq
+		WHERE 1=1
+		AND a.userCustomer_seq = #{userCustomer_seq}
+	</select>
+	<select id="selectOne4Hour" resultMap="resultMapObj">
+		SELECT 
+			a.shopSeq
+		    ,a.mondayNy
+		    ,a.tuesdayNy
+		    ,a.wednesdayNy
+		    ,a.thursdayNy
+		    ,a.fridayNy
+		    ,a.saturdayNy
+		    ,a.sundayNy
+		    ,a.mondayOpentime
+		    ,a.mondayClosetime
+		    ,a.tuesdayOpentime
+		    ,a.tuesdayClosetime
+		    ,a.wednesdayOpentime
+		    ,a.wednesdayClosetime
+		    ,a.thursdayOpentime
+		    ,a.thurdayClosetime
+		    ,a.fridayOpentime
+		    ,a.fridayClosetime
+		    ,a.saturdayOpentime
+		    ,a.saturdayClosetime
+		    ,a.sundayOpentime
+		    ,a.sundayClosetime
+		    ,a.userCustomer_seq
+		    ,b.seq
+		    ,b.userId
+		    ,b.userName
+		FROM shop as a
+		left join usercustomer b on a.userCustomer_seq = b.seq
+		WHERE 1=1
+		AND a.userCustomer_seq = #{userCustomer_seq}
+	</select>
+	<select id="selectOne4ShopProfile" resultMap="resultMapObj">
+		SELECT 
+			a.shopSeq
+		    ,a.shopDescribe
+		    ,a.homepage
+		    ,a.userCustomer_seq
+		    ,b.seq
+		    ,b.userId
+		    ,b.userName
+		    ,(select path from filesUploaded where pSeq = shopSeq and type = 2000) as path
+		FROM shop as a
+		left join usercustomer b on a.userCustomer_seq = b.seq
+		WHERE 1=1
+		AND a.userCustomer_seq = #{userCustomer_seq}
 	</select>
 	<select id="selectOne4ShopLocation" resultMap="resultMapObj">
 	SELECT 
@@ -185,6 +246,38 @@
 			cdSeq
 		from handlingBicycleBrand as se
 		left join code as cd on cd.cdSeq = se.bikeBrandCd
+		left join usercustomer as uc on uc.seq = se.shop_shopSeq
+		where 1=1
+		and shop_shopSeq = #{seq})
+	</select>
+	
+	<select id="selectShopWBrand" resultMap="resultMapObjWb">
+		SELECT
+			wheelBrandCd
+			,shop_shopSeq
+		FROM handlingWheelBrand
+		WHERE 1=1
+		AND shop_shopSeq = (SELECT 
+		    a.shopSeq
+		FROM usercustomer as b
+		left join shop a on a.userCustomer_seq = b.seq
+		WHERE 1=1
+		AND b.seq = #{seq})
+	</select>
+	
+	<select id="selectShopWBrandCd" resultMap="resultMapObjWb">
+		select
+			cdSeq
+		    ,cdName
+		    ,cdNameEng
+		from code as cd
+		left join handlingWheelBrand as se on cd.cdSeq = se.wheelBrandCd
+		where 1=1
+		and codegroup_cdgSeq = 6
+		and cdSeq in (select
+			cdSeq
+		from handlingWheelBrand as se
+		left join code as cd on cd.cdSeq = se.wheelBrandCd
 		left join usercustomer as uc on uc.seq = se.shop_shopSeq
 		where 1=1
 		and shop_shopSeq = #{seq})
@@ -322,7 +415,23 @@
 	    </foreach>
 	</insert>
 	
-	<update id="update">
+	<delete id="deleteWBByShopSeq">
+	    DELETE FROM handlingWheelBrand
+	    WHERE shop_shopSeq = #{seq}
+	</delete>
+	<insert id="insertHandlingWheelBrands">
+		INSERT INTO handlingWheelBrand (
+			wheelBrandCd
+			,shop_shopSeq
+
+		) VALUES 
+		<foreach collection="listWB" item="dto" separator=",">
+	        (#{dto.wheelBrandCd}
+			,#{dto.shopSeq})
+	    </foreach>
+	</insert>
+	
+	<update id="0update">
 		UPDATE shop SET
 			shopName = #{shopName}
 			,shopTel = #{shopTel}
@@ -374,4 +483,79 @@
 		AND shopSeq = #{shopSeq}
 	</update>
 	
+	<update id="update">
+		UPDATE shop SET
+			shopName = #{shopName}
+			,shopTel = #{shopTel}
+			,shopZip = #{shopZip}
+			,shopAddress1 = #{shopAddress1}
+			,shopAddress2 = #{shopAddress2}
+			,shopAddress3 = #{shopAddress3}
+			,shopAddress4 = #{shopAddress4}
+			,shopLatitude = #{shopLatitude}
+			,shopLongitude = #{shopLongitude}
+			,userCustomer_seq = #{seq}
+		WHERE 1=1
+		AND shopSeq = #{shopSeq}
+	</update>
+	
+	<update id="update1">
+		UPDATE shop SET
+			parkingNy = #{parkingNy}
+			,wifiNy = #{wifiNy}
+			,cctvNy = #{cctvNy}
+			,cafeNy = #{cafeNy}
+			,petNy = #{petNy}
+		WHERE 1=1
+		AND shopSeq = #{shopSeq}
+	</update>
+	
+	<update id="update2">
+		UPDATE shop SET
+			shopDescribe = #{shopDescribe}
+			,homepage = #{homepage}
+		WHERE 1=1
+		AND shopSeq = #{shopSeq}
+	</update>
+	
+	<update id="update3">
+		UPDATE shop SET
+			mondayNy = #{mondayNy}
+			,tuesdayNy = #{tuesdayNy}
+			,wednesdayNy = #{wednesdayNy}
+			,thursdayNy = #{thursdayNy}
+			,fridayNy = #{fridayNy}
+			,saturdayNy = #{saturdayNy}
+			,sundayNy = #{sundayNy}
+			,mondayOpentime = #{mondayOpentime}
+			,mondayClosetime = #{mondayClosetime}
+			,tuesdayOpentime = #{tuesdayOpentime}
+			,tuesdayClosetime = #{tuesdayClosetime}
+			,wednesdayOpentime = #{wednesdayOpentime}
+			,wednesdayClosetime = #{wednesdayClosetime}
+			,thursdayOpentime = #{thursdayOpentime}
+			,thurdayClosetime = #{thurdayClosetime}
+			,fridayOpentime = #{fridayOpentime}
+			,fridayClosetime = #{fridayClosetime}
+			,saturdayOpentime = #{saturdayOpentime}
+			,saturdayClosetime = #{saturdayClosetime}
+			,sundayOpentime = #{sundayOpentime}
+			,sundayClosetime = #{sundayClosetime}
+		WHERE 1=1
+		AND shopSeq = #{shopSeq}
+	</update>
+	
+	<update id="update4">
+		UPDATE shop SET
+			youtube = #{youtube}
+		WHERE 1=1
+		AND shopSeq = #{shopSeq}
+	</update>
+	
+	<insert id="insertUploaded" parameterType="list">
+		<include refid = "base.insertUploaded"></include>
+	</insert>
+	<insert id="insertUploadedes">
+		<include refid = "base.insertUploadedes"></include>
+	</insert>
 </mapper>
