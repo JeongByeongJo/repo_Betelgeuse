@@ -72,6 +72,7 @@
 		FROM filesUploaded
 		WHERE 1=1
 		AND type = 3000
+		order by sort asc
 	</select>	
 	
 	<select id="selectOne4Pic" resultMap="resultMapObj">

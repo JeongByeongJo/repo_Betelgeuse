@@ -53,6 +53,7 @@ public class MemberService {
 		return memberDao.selectOneEmailChk(memberDto);
 	}
 	public MemberDto pswdrecoveryChk(MemberDto memberDto) {
+		System.out.println("memberDto.getSeq(): "+memberDto.getSeq());
 		return memberDao.pswdrecoveryChk(memberDto);
 	}
 

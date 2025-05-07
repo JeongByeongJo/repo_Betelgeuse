@@ -134,6 +134,51 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f7d210607aa49a67c830e2baeb80358f&libraries=services"></script>
 
+
+<script>
+    const phoneInput = document.getElementById('shopTel');
+    let cleave = new Cleave(phoneInput, {
+      phone: false,
+      numericOnly: true,
+      delimiters: ['-', '-'],
+      blocks: [3, 4, 4]
+    });
+
+    phoneInput.addEventListener('input', function () {
+      const raw = phoneInput.value.replace(/\D/g, '');
+
+      // 동적 포맷 판별
+      if (raw.startsWith('02')) {
+        if (cleave.properties.blocks.join() !== '2,3,4') {
+          cleave.destroy();
+          cleave = new Cleave(phoneInput, {
+            numericOnly: true,
+            delimiters: ['-', '-'],
+            blocks: [2, 3, 4]
+          });
+        }
+      } else if (raw.length <= 10) {
+        if (cleave.properties.blocks.join() !== '3,3,4') {
+          cleave.destroy();
+          cleave = new Cleave(phoneInput, {
+            numericOnly: true,
+            delimiters: ['-', '-'],
+            blocks: [3, 3, 4]
+          });
+        }
+      } else {
+        if (cleave.properties.blocks.join() !== '3,4,4') {
+          cleave.destroy();
+          cleave = new Cleave(phoneInput, {
+            numericOnly: true,
+            delimiters: ['-', '-'],
+            blocks: [3, 4, 4]
+          });
+        }
+      }
+    });
+  </script>
+
 <script>
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
         mapOption = {

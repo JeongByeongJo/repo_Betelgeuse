@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.bicycledoctors.common.base.BaseController;
 import com.bicycledoctors.module.bicycle.BicycleDto;
 import com.bicycledoctors.module.bicycle.BicycleService;
+import com.bicycledoctors.module.code.CodeController;
 import com.bicycledoctors.module.mail.MailService;
 
 import jakarta.servlet.http.HttpSession;
@@ -89,13 +90,6 @@ public class MemberController extends BaseController {
 	}
 	
 	
-	@RequestMapping(value = "/member/memberUsrPwUpdt")
-	public String memberUsrPwUpdt(MemberDto memberDto, HttpSession httpSession) {
-		memberDto.setSeq((String)httpSession.getAttribute("sessSeqUsr"));
-		memberService.pwUpdate(memberDto);
-		return "redirect:/member/signinUsrForm";
-	}
-	
 	@RequestMapping(value = "/member/memberUsrUele")
 	public String memberUsrUele(MemberDto memberDto, HttpSession httpSession) {
 		memberDto.setSeq((String)httpSession.getAttribute("sessSeqUsr"));
@@ -138,6 +132,8 @@ public class MemberController extends BaseController {
 				httpSession.setAttribute("sessSeqUsr", rtMemberId.getSeq());
 				httpSession.setAttribute("sessIdUsr", rtMemberId.getUserId());
 				httpSession.setAttribute("sessNameUsr", rtMemberId.getUserName());
+				httpSession.setAttribute("sessEmailUsr", rtMemberId.getUserEmail());
+				System.out.println(rtMemberId.getUserEmail());
 			} else {
 				returnMap.put("rt", "fail");
 			}
@@ -150,33 +146,11 @@ public class MemberController extends BaseController {
 				httpSession.setAttribute("sessSeqUsr", rtMember.getSeq());
 				httpSession.setAttribute("sessIdUsr", rtMember.getUserId());
 				httpSession.setAttribute("sessNameUsr", rtMember.getUserName());
+				httpSession.setAttribute("sessEmailUsr", rtMemberId.getUserEmail());
 			} else {
 				returnMap.put("rt", "fail");
 			}
 		}
-//		MemberDto rtMember = memberService.selectOneIdChk(dto);
-//		if(Integer.valueOf(rtMember.getSeq()) > 11) {
-//			if(rtMember != null && matchesBcrypt(dto.getUserPassword(), rtMember.getUserPassword(), 10)) {
-//				returnMap.put("rt", "success");
-//				httpSession.setMaxInactiveInterval(60 * 30); 						// 60second * 30 = 30minute
-//				httpSession.setAttribute("sessSeqUsr", rtMember.getSeq());
-//				httpSession.setAttribute("sessIdUsr", rtMember.getUserId());
-//				httpSession.setAttribute("sessNameUsr", rtMember.getUserName());
-//			} else {
-//				returnMap.put("rt", "fail");
-//			}
-//		} else {
-//			
-//			if(rtMember != null) {
-//				returnMap.put("rt", "success");
-//				httpSession.setMaxInactiveInterval(60 * 30); 						// 60second * 30 = 30minute
-//				httpSession.setAttribute("sessSeqUsr", rtMember.getSeq());
-//				httpSession.setAttribute("sessIdUsr", rtMember.getUserId());
-//				httpSession.setAttribute("sessNameUsr", rtMember.getUserName());
-//			} else {
-//				returnMap.put("rt", "fail");
-//			}
-//		}
 		return returnMap;
 	}
 	
@@ -187,6 +161,7 @@ public class MemberController extends BaseController {
 		httpSession.setAttribute("sessSeqUsr", null);
 		httpSession.setAttribute("sessIdUsr", null);
 		httpSession.setAttribute("sessNameUsr", null);
+		httpSession.setAttribute("sessEmailUsr", null);
 		returnMap.put("rt", "success");
 		return returnMap;
 	}
@@ -225,13 +200,31 @@ public class MemberController extends BaseController {
 	public Map<String, Object> pwChkUsrProc(MemberDto dto, HttpSession httpSession) throws Exception {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		dto.setUserId((String)httpSession.getAttribute("sessIdUsr"));
-		MemberDto rtMember = memberService.selectOneIdChk(dto);		
-		
-		if(rtMember != null) {
-			returnMap.put("rt", "success");
+		dto.setSeq((String)httpSession.getAttribute("sessSeqUsr"));
+//		MemberDto rtMember = memberService.selectOneIdChk(dto);		
+		MemberDto rtMemberId = memberService.selectOneId(dto);
+		if(Integer.valueOf(dto.getSeq()) > 11) {
+			if(rtMemberId != null && matchesBcrypt(dto.getUserPassword(), rtMemberId.getUserPassword(), 10)) {
+				returnMap.put("rt", "success");
+			} else {
+				returnMap.put("rt", "fail");
+			}
 		} else {
-			returnMap.put("rt", "fail");
+			MemberDto rtMember = memberService.selectOneIdChk(dto);
+			
+			if(rtMember != null) {
+				returnMap.put("rt", "success");
+				memberService.pwUpdate(rtMemberId);
+			} else {
+				returnMap.put("rt", "fail");
+			}
 		}
+		
+//		if(rtMember != null) {
+//			returnMap.put("rt", "success");
+//		} else {
+//			returnMap.put("rt", "fail");
+//		}
 		return returnMap;
 	}
 	
@@ -257,16 +250,45 @@ public class MemberController extends BaseController {
 	@RequestMapping(value = "/member/pswdfindUsrProc")
 	public Map<String, Object> pswdfindUsrProc(MemberDto dto, HttpSession httpSession) throws Exception {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
-		
 		MemberDto rt = memberService.pswdrecoveryChk(dto);
-		
 		if(rt != null) {
 			returnMap.put("rt", "success");
+			rt.setUserPassword(encodeBcrypt(rt.getUserName(), 10));
+			memberService.pwUpdate(rt);
+			Thread threads = new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					try {
+						mailService.sendMailPWRecovery(rt);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});
+			
+			threads.start();
 		} else {
 			returnMap.put("rt", "fail");
 		}
 		return returnMap;
 	}
+	
+	@RequestMapping(value = "/member/memberUsrPwUpdt")
+	public String memberUsrPwUpdt(MemberDto memberDto, HttpSession httpSession) {
+		memberDto.setSeq((String)httpSession.getAttribute("sessSeqUsr"));
+		if(Integer.valueOf(memberDto.getSeq()) > 11) {
+			memberDto.setUserPassword(encodeBcrypt(memberDto.getUserPassword(), 10));
+			memberService.pwUpdate(memberDto);
+
+		} else {
+			memberService.pwUpdate(memberDto);
+
+		}
+		
+		return "redirect:/member/signinUsrForm";
+	}
+
 
 	@RequestMapping(value = "/member/userProfileUsrForm")
 	public String userProfileUsrForm(MemberDto memberDto, Model model, HttpSession httpSession) {

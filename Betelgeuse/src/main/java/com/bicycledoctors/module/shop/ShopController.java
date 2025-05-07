@@ -32,8 +32,6 @@ public class ShopController extends BaseController {
 	public String shopUsrList(Model model, IndexVo vo, ShopDto dto, HttpSession httpSession) {
 		vo.setSeq(httpSession.getAttribute("sessSeqUsr").toString());
 		model.addAttribute("itemH", indexService.selectOneUserShopSeq(vo));
-//		model.addAttribute("list", service.selectList(dto));
-//		model.addAttribute("listPic", service.selectOneList4Pic(dto));
 		
 		List<ShopDto> shopList = service.selectList(dto);  // 가게 정보 리스트
 		List<BaseDto> picList = service.selectOneList4Pic(dto);  // 이미지 정보 리스트
@@ -47,7 +45,6 @@ public class ShopController extends BaseController {
 		    shop.setPicList(matchedPics); // ShopDto에 picList 필드를 추가하여 연결
 		}
 
-		// 모델에 데이터를 추가합니다.
 		model.addAttribute("list", shopList);  // 가게 정보 리스트
 		model.addAttribute("listPic", picList);  // 이미지 정보 리스트 (혹시 필요하다면)
 		

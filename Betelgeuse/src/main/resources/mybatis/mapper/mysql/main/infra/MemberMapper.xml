@@ -183,6 +183,7 @@
 				,userId
 			    ,userPassword
 			    ,userName
+			    ,userEmail
 			    ,delNy
 		    from
 		    	usercustomer

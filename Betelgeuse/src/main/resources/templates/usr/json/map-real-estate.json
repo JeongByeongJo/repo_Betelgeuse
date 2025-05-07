@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "image": "https://betelbucket.s3.ap-northeast-2.amazonaws.com/files/3000/2025/05/07/f2645120-8301-472c-8394-fe4138a61670.jpg",
+    "image": "assets/img/listings/real-estate/01.jpg",
     "shopName": "섭바이크",
     "shopAddress": "서울 중랑구 용마산로136가길 2",
     "shopTel": "02-978-0719",
@@ -13,7 +13,7 @@
   },
   {
     "id": 2,
-    "image": "https://betelbucket.s3.ap-northeast-2.amazonaws.com/files/3000/2025/05/07/47916624-3161-411e-8db3-fbd3c98a22ae.jpg",
+    "image": "assets/img/listings/real-estate/02.jpg",
     "shopName": "바이크랜드",
     "shopAddress": "서울시 중랑구 동일로 717",
     "shopTel": "02-492-5501",

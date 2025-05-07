@@ -31,5 +31,18 @@ public class MailService {
     	javaMailSender.send(mimeMessage);
     	
     }
+    
+//	회원가입 축하 메일
+    public void sendMailPWRecovery(MemberDto memberDto) throws Exception{
+    	
+    	
+    	MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+    	MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
+    	mimeMessageHelper.setTo(memberDto.getUserEmail()); 
+    	mimeMessageHelper.setSubject("BicycleDoctors 계정 안내");
+    	mimeMessageHelper.setText("가입하신 ID는 " + memberDto.getUserId() + "입니다.\n" + "비밀번호는 가입시 사용한 이름으로 초기화되었습니다. \n 회원정보 변경에서 비밀번호를 꼭 변경해주세요.", true); 
+    	javaMailSender.send(mimeMessage);
+    	
+    }
 	
 }
