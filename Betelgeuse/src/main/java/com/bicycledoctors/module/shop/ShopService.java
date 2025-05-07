@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.amazonaws.services.s3.AmazonS3Client;
+import com.bicycledoctors.common.base.BaseDto;
 import com.bicycledoctors.common.base.BaseService;
 
 @Service
@@ -17,6 +18,15 @@ public class ShopService extends BaseService {
 //	for aws.s3 fileupload s
 	@Autowired
 	private AmazonS3Client amazonS3Client;
+	
+	
+	public List<ShopDto> selectList(ShopDto dto) {
+		return dao.selectList(dto);
+	}
+	public List<BaseDto> selectOneList4Pic(ShopDto dto) {
+		return dao.selectOneList4Pic(dto);
+	}
+	
 	
 	public ShopDto selectOne4ShopLocation(ShopDto dto) {
 		return dao.selectOne4ShopLocation(dto);

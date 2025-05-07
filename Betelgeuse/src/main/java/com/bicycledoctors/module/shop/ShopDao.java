@@ -6,9 +6,13 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import com.bicycledoctors.common.base.BaseDao;
+import com.bicycledoctors.common.base.BaseDto;
 
 @Repository
 public interface ShopDao extends BaseDao {
+	
+	public List<ShopDto> selectList(ShopDto dto);
+	public List<BaseDto> selectOneList4Pic(ShopDto dto);
 
 	public ShopDto selectOne4ShopLocation(ShopDto dto);
 	public ShopDto selectOne4ShopService(ShopDto dto);

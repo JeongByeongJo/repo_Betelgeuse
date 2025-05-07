@@ -1,5 +1,7 @@
 package com.bicycledoctors.module.shop;
 
+import java.util.List;
+
 import com.bicycledoctors.common.base.BaseDto;
 
 public class ShopDto extends BaseDto{
@@ -56,7 +58,14 @@ public class ShopDto extends BaseDto{
     private Integer uploadImg1Type;
 	private Integer uploadImg1MaxNumber;
     
-//    -----
+	private List<BaseDto> picList;
+	public List<BaseDto> getPicList() {
+			return picList;
+		}
+	public void setPicList(List<BaseDto> picList) {
+		this.picList = picList;
+	}
+	//    -----
 	public String getShopSeq() {
 		return shopSeq;
 	}

@@ -154,6 +154,29 @@ public class MemberController extends BaseController {
 				returnMap.put("rt", "fail");
 			}
 		}
+//		MemberDto rtMember = memberService.selectOneIdChk(dto);
+//		if(Integer.valueOf(rtMember.getSeq()) > 11) {
+//			if(rtMember != null && matchesBcrypt(dto.getUserPassword(), rtMember.getUserPassword(), 10)) {
+//				returnMap.put("rt", "success");
+//				httpSession.setMaxInactiveInterval(60 * 30); 						// 60second * 30 = 30minute
+//				httpSession.setAttribute("sessSeqUsr", rtMember.getSeq());
+//				httpSession.setAttribute("sessIdUsr", rtMember.getUserId());
+//				httpSession.setAttribute("sessNameUsr", rtMember.getUserName());
+//			} else {
+//				returnMap.put("rt", "fail");
+//			}
+//		} else {
+//			
+//			if(rtMember != null) {
+//				returnMap.put("rt", "success");
+//				httpSession.setMaxInactiveInterval(60 * 30); 						// 60second * 30 = 30minute
+//				httpSession.setAttribute("sessSeqUsr", rtMember.getSeq());
+//				httpSession.setAttribute("sessIdUsr", rtMember.getUserId());
+//				httpSession.setAttribute("sessNameUsr", rtMember.getUserName());
+//			} else {
+//				returnMap.put("rt", "fail");
+//			}
+//		}
 		return returnMap;
 	}
 	

@@ -41,7 +41,7 @@
 
                     <!-- Item -->
 <!--                     <div class="col" th:if="${item?.path} != null"> -->
-                    <div class="col" th:each ="list : ${list}">
+                    <div class="col" th:each = "list : ${list}">
                     <input class="delNy-input" type="text" id="delNy" name="delNy" th:value="${list.delNy}" style="display: none;"/>
                       <div class="hover-effect-opacity position-relative overflow-hidden rounded">
                         <div class="ratio" style="--fn-aspect-ratio: calc(180 / 268 * 100%)">

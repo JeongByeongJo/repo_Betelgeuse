@@ -80,7 +80,7 @@
             <div class="position-relative mb-4">
               <label for="userPassword" class="form-label">비밀번호 | Password</label>
               <div class="password-toggle">
-                <input type="password" class="form-control form-control-lg" id="userPassword" name="userPassword" th:value="qwer" placeholder="비밀번호 | Password" onkeyup="enterkey()" required>
+                <input type="password" class="form-control form-control-lg" id="userPassword" name="userPassword" th:value="qwer" placeholder="비밀번호 | Password" onkeyup="enterkey(event)" required>
                 <div class="invalid-tooltip bg-transparent py-0">비밀번호를 입력해주세요.</div>
                 <label class="password-toggle-button fs-lg" aria-label="Show/hide password">
                   <input type="checkbox" class="btn-check">
@@ -137,15 +137,15 @@
 	<div class="modal fade" id="modalAlert" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
-				<div class="modal-header">
+				<div class="modal-header" style="background-color: indianred; height: fit-content;">
 					<h5 class="modal-title" id="modalAlertTitle">title</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body" id="modalAlertBody">
 					body
 				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-outline-secondary btn-sm btn_custom" data-bs-dismiss="modal">닫힘</button>
+				<div class="modal-footer" style="height: 9ex;">
+					<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">닫힘</button>
 				</div>
 			</div>
 		</div>
@@ -225,6 +225,12 @@ $("#userPassword").on("keyup", function(){
 		$("#userPassword").removeClass("is-invalid");		
 	}
 });
+
+function enterkey(e) {
+	  if (e.key === "Enter") {
+		  loginLogic ();
+	  }
+	}
 </script>
     <!-- Bootstrap + Theme scripts -->
     <script src="/usr/template/Finder/assets/js/theme.min.js"></script>

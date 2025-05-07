@@ -64,6 +64,16 @@
 		FROM shop as a
 		left join usercustomer b on a.userCustomer_seq = b.seq
 	</select>
+	
+	<select id="selectOneList4Pic" resultMap="resultMapObj">
+		SELECT
+			path
+			,pSeq
+		FROM filesUploaded
+		WHERE 1=1
+		AND type = 3000
+	</select>	
+	
 	<select id="selectOne4Pic" resultMap="resultMapObj">
 		SELECT 
 			a.shopSeq

@@ -1,8 +1,8 @@
 package com.bicycledoctors.module.shop;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bicycledoctors.common.base.BaseController;
+import com.bicycledoctors.common.base.BaseDto;
 import com.bicycledoctors.module.index.IndexService;
 import com.bicycledoctors.module.index.IndexVo;
 
@@ -28,9 +29,28 @@ public class ShopController extends BaseController {
 
 	
 	@RequestMapping(value = "/shop/shopUsrList")
-	public String shopUsrList(Model model, IndexVo vo, HttpSession httpSession) {
+	public String shopUsrList(Model model, IndexVo vo, ShopDto dto, HttpSession httpSession) {
 		vo.setSeq(httpSession.getAttribute("sessSeqUsr").toString());
 		model.addAttribute("itemH", indexService.selectOneUserShopSeq(vo));
+//		model.addAttribute("list", service.selectList(dto));
+//		model.addAttribute("listPic", service.selectOneList4Pic(dto));
+		
+		List<ShopDto> shopList = service.selectList(dto);  // 가게 정보 리스트
+		List<BaseDto> picList = service.selectOneList4Pic(dto);  // 이미지 정보 리스트
+
+		// 각 가게에 해당하는 이미지들만 매칭하여 picList에 할당합니다.
+		for (ShopDto shop : shopList) {
+		    List<BaseDto> matchedPics = picList.stream()
+		        .filter(pic -> pic.getPseq().equals(shop.getShopSeq())) // shopSeq와 pSeq가 일치하는 것만 찾기
+		        .collect(Collectors.toList());
+		    
+		    shop.setPicList(matchedPics); // ShopDto에 picList 필드를 추가하여 연결
+		}
+
+		// 모델에 데이터를 추가합니다.
+		model.addAttribute("list", shopList);  // 가게 정보 리스트
+		model.addAttribute("listPic", picList);  // 이미지 정보 리스트 (혹시 필요하다면)
+		
 		return "usr/shop/ShopUsrList";
 	}
 	@RequestMapping(value = "/shop/shopUsrView")
