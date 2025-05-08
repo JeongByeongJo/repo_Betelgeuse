@@ -14,6 +14,8 @@ import com.bicycledoctors.common.base.BaseController;
 import com.bicycledoctors.common.base.BaseDto;
 import com.bicycledoctors.module.index.IndexService;
 import com.bicycledoctors.module.index.IndexVo;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -29,12 +31,15 @@ public class ShopController extends BaseController {
 
 	
 	@RequestMapping(value = "/shop/shopUsrList")
-	public String shopUsrList(Model model, IndexVo vo, ShopDto dto, HttpSession httpSession) {
+	public String shopUsrList(Model model, IndexVo vo, ShopDto dto, HttpSession httpSession) throws JsonProcessingException {
 		vo.setSeq(httpSession.getAttribute("sessSeqUsr").toString());
 		model.addAttribute("itemH", indexService.selectOneUserShopSeq(vo));
 		
 		List<ShopDto> shopList = service.selectList(dto);  // 가게 정보 리스트
 		List<BaseDto> picList = service.selectOneList4Pic(dto);  // 이미지 정보 리스트
+		
+		ObjectMapper mapper = new ObjectMapper();
+	    String json = mapper.writeValueAsString(shopList);
 
 		// 각 가게에 해당하는 이미지들만 매칭하여 picList에 할당합니다.
 		for (ShopDto shop : shopList) {
@@ -44,7 +49,7 @@ public class ShopController extends BaseController {
 		    
 		    shop.setPicList(matchedPics); // ShopDto에 picList 필드를 추가하여 연결
 		}
-
+		model.addAttribute("jsonData", json);
 		model.addAttribute("list", shopList);  // 가게 정보 리스트
 		model.addAttribute("listPic", picList);  // 이미지 정보 리스트 (혹시 필요하다면)
 		
