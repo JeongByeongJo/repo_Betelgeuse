@@ -65,6 +65,30 @@
 		left join usercustomer b on a.userCustomer_seq = b.seq
 	</select>
 	
+	<select id="selectList4Marker" resultMap="resultMapObj">
+		SELECT 
+			a.shopSeq
+		    ,a.shopName
+		    ,a.shopTel
+		    ,a.shopZip
+		    ,a.shopAddress1
+		    ,a.shopAddress2
+		    ,a.shopAddress3
+		    ,a.shopAddress4
+		    ,a.shopLatitude
+		    ,a.shopLongitude
+		    ,a.parkingNy
+		    ,a.wifiNy
+		    ,a.cctvNy
+		    ,a.cafeNy
+		    ,a.petNy
+		    ,a.delNy
+		    ,a.userCustomer_seq
+		    ,b.seq
+		FROM shop as a
+		left join usercustomer b on a.userCustomer_seq = b.seq
+	</select>
+	
 	<select id="selectOneList4Pic" resultMap="resultMapObj">
 		SELECT
 			path

@@ -15,13 +15,14 @@
               </button>
 
               <!-- In order to make the map look like in the demo site add following property "tileLayer": "https://api.maptiler.com/maps/pastel/{z}/{x}/{y}.png?key=YOUR_MAPTILER_API_KEY", "tileSize": 512 and "zoomOffset": -1 to [data-map] attribute -->
-              <div id="map-div" class="position-absolute top-0 start-0 w-100 h-100 bg-body-tertiary" data-map='{
+              <div id="map" class="position-absolute top-0 start-0 w-100 h-100 bg-body-tertiary" data-map='{
                 "zoom": 15,
                 "templates": {
                   "marker": "<div class=\"map-marker\"><i class=\"fi-map-pin-filled text-primary fs-4\"></i><span class=\"map-marker-price\">{{shopName}}</span></div>",
                   "popup": "<div class=\"card bg-transparent border-0\" data-bs-theme=\"light\"><div class=\"card-img-top position-relative bg-body-tertiary overflow-hidden\"><div class=\"ratio d-block\" style=\"--fn-aspect-ratio: calc(248 / 362 * 100%)\"><img src=\"{{image}}\" alt=\"Image\"></div></div><div class=\"card-body p-3\"><div class=\"h5 mb-2\">{{shopName}}</div><h3 class=\"fs-sm fw-normal text-body mb-2\"><a class=\"stretched-link text-body\" href=\"single-entry-real-estate.html\">{{shopAddress}}</a></h3><div class=\"h6 fs-sm mb-0\">{{shopTel}}</div></div><div class=\"card-footer d-flex gap-2 border-0 bg-transparent pt-0 pb-3 px-3 mt-n1\"></div></div></div>"
                 }
-              }' data-map-markers="/usr/template/Finder/assets/json/map-real-estate.json"></div>
+              }' data-map-markers="/usr/template/Finder/assets/json/map-real-estate.json">
+              </div>
             </div>
           </div>											
         </div>
@@ -1031,31 +1032,7 @@
     <script src="/usr/template/Finder/assets/js/theme.min.js"></script>
 
     <!-- Page specific scripts -->
-    <script th:inline="javascript">
-  document.addEventListener('DOMContentLoaded', function () {
-    // 백엔드에서 받아온 JSON 문자열
-    let rawData = /*[[${jsonData}]]*/ '[]';
-    let shops = JSON.parse(rawData);
-
-    // coordinates 필드 조합
-    shops = shops.map(shop => ({
-      ...shop,
-      coordinates: {
-        lat: shop.shopLatitude,
-        lng: shop.shopLongitude
-      }
-    }));
-
-    // JSON 문자열로 다시 변환 (data-* 속성에는 문자열만 들어갈 수 있음)
-    const markersJson = JSON.stringify(shops);
-
-    // HTML 요소에 data-map-markers 속성 주입
-    const mapDiv = document.getElementById('map-div');
-    mapDiv.setAttribute('data-map-markers', markersJson);
-
-  });
-        console.log(shops);
-</script>
+    
     
     <script>
 

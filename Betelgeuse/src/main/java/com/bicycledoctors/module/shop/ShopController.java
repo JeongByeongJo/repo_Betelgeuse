@@ -146,8 +146,6 @@ public class ShopController extends BaseController {
 	    service.update1(dto);
 		model.addAttribute("item", service.selectOne4ShopProfile(dto));
 
-	    System.out.println("아랄랄" + dto.getUserCustomer_seq());
-
 		return "usr/shop/ShopaddprofileUsrForm";
 	}
 	@RequestMapping(value = "/shop/shopaddhoursUsrForm")
