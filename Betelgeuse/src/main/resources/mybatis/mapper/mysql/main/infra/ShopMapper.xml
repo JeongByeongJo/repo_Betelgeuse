@@ -64,6 +64,45 @@
 		FROM shop as a
 		left join usercustomer b on a.userCustomer_seq = b.seq
 	</select>
+	<select id="selectOne" resultMap="resultMapObj">
+		SELECT 
+			a.shopSeq
+		    ,a.shopName
+		    ,a.shopTel
+		    ,a.shopEmail
+		    ,a.shopZip
+		    ,a.shopAddress1
+		    ,a.shopAddress2
+		    ,a.shopAddress3
+		    ,a.shopAddress4
+		    ,a.shopLatitude
+		    ,a.shopLongitude
+		    ,a.shopDescribe
+		    ,a.parkingNy
+		    ,a.wifiNy
+		    ,a.cctvNy
+		    ,a.cafeNy
+		    ,a.petNy
+		    ,a.customerFavoriteNy
+		    ,a.verifiedNy
+		    ,a.featuredNy
+		    ,a.delNy
+		    ,a.homepage
+		    ,a.youtube
+		    ,a.shopInstDate
+		    ,a.shopUpdtDate
+		    ,a.userCustomer_seq
+		    ,b.seq
+		    ,b.userId
+		    ,b.userName
+		    ,(select path from filesUploaded where pSeq = shopSeq and sort = 3001) as path1
+		    ,(select path from filesUploaded where pSeq = shopSeq and sort = 3002) as path2
+		    ,(select path from filesUploaded where pSeq = shopSeq and sort = 3003) as path3
+		FROM shop as a
+		left join usercustomer b on a.userCustomer_seq = b.seq
+		WHERE 1=1
+		AND shopSeq = #{shopSeq}
+	</select>
 	
 	<select id="selectList4Marker" resultMap="resultMapObj">
 		SELECT 
@@ -77,14 +116,10 @@
 		    ,a.shopAddress4
 		    ,a.shopLatitude
 		    ,a.shopLongitude
-		    ,a.parkingNy
-		    ,a.wifiNy
-		    ,a.cctvNy
-		    ,a.cafeNy
-		    ,a.petNy
 		    ,a.delNy
 		    ,a.userCustomer_seq
 		    ,b.seq
+		    ,(select path from filesUploaded where pSeq = shopSeq and sort = 3001) as path
 		FROM shop as a
 		left join usercustomer b on a.userCustomer_seq = b.seq
 	</select>

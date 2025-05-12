@@ -3,27 +3,40 @@ package com.bicycledoctors.module.shop;
 public class ShopMarkerResponseDto {
 
 	private String id;
+	private String shopSeq;
     private String image;
     private String shopName;
     private String shopAddress;
     private String shopTel;
+    private String path;
     private Coordinates coordinates;
 
     // 생성자: ShopDto → JSON 응답용 DTO로 변환
     public ShopMarkerResponseDto(ShopDto dto) {
+        this.id = dto.getUserCustomer_seq();
         this.id = dto.getShopSeq();
         this.image = dto.getPath();
         this.shopName = dto.getShopName();
         this.shopAddress = dto.getShopAddress1();
         this.shopTel = dto.getShopTel();
         this.coordinates = new Coordinates(
-            dto.getShopLatitude() != null ? dto.getShopLatitude() : 0.0,
-            dto.getShopLongitude() != null ? dto.getShopLongitude() : 0.0
+            dto.getShopLatitude() != null ? dto.getShopLatitude() : 37.0,
+            dto.getShopLongitude() != null ? dto.getShopLongitude() : 127.0
         );
     }
 
-    public ShopMarkerResponseDto(String shopSeq, String shopName2, String shopTel2, String shopAddress1,
+    public ShopMarkerResponseDto(String id, String shopSeq, String path, String shopName2, String shopTel2, String shopAddress1,
 			Double shopLatitude, Double shopLongitude) {
+    	this.id = id;
+    	this.shopSeq = shopSeq;
+        this.image = path;
+        this.shopName = shopName2;
+        this.shopAddress = shopAddress1;
+        this.shopTel = shopTel2;
+        this.coordinates = new Coordinates(
+    		shopLatitude != null ? shopLatitude : 37.0,
+			shopLongitude != null ? shopLongitude : 127.0
+        );
 		// TODO Auto-generated constructor stub
 	}
 
@@ -47,7 +60,11 @@ public class ShopMarkerResponseDto {
         return shopTel;
     }
 
-    public Coordinates getCoordinates() {
+    public String getShopSeq() {
+		return shopSeq;
+	}
+
+	public Coordinates getCoordinates() {
         return coordinates;
     }
 

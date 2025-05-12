@@ -12,6 +12,9 @@ public class BaseDto {
 	private Integer defaultNy;
 	private Integer sort;
 	private String path;
+	private String path1;
+	private String path2;
+	private String path3;
 	private String originalName;
 	private String uuidName;
 	private String ext;
@@ -126,6 +129,30 @@ public class BaseDto {
 
 	public void setUploadImg1(MultipartFile[] uploadImg1) {
 		this.uploadImg1 = uploadImg1;
+	}
+
+	public String getPath1() {
+		return path1;
+	}
+
+	public void setPath1(String path1) {
+		this.path1 = path1;
+	}
+
+	public String getPath2() {
+		return path2;
+	}
+
+	public void setPath2(String path2) {
+		this.path2 = path2;
+	}
+
+	public String getPath3() {
+		return path3;
+	}
+
+	public void setPath3(String path3) {
+		this.path3 = path3;
 	}
 
 

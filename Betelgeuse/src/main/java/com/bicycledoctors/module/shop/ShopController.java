@@ -56,7 +56,12 @@ public class ShopController extends BaseController {
 		return "usr/shop/ShopUsrList";
 	}
 	@RequestMapping(value = "/shop/shopUsrView")
-	public String shopUsrView() {
+	public String shopUsrView(Model model, IndexVo vo, ShopDto dto, HttpSession httpSession) {
+		vo.setSeq(httpSession.getAttribute("sessSeqUsr").toString());
+		model.addAttribute("itemH", indexService.selectOneUserShopSeq(vo));
+		
+		model.addAttribute("item", service.selectOne(dto));
+		
 		return "usr/shop/ShopUsrView";
 	}
 	@RequestMapping(value = "/shop/shopaddlocationUsrForm")

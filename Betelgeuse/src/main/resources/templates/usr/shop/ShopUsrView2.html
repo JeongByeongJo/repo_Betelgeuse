@@ -5,40 +5,40 @@
     <!-- Page content -->
     <main class="content-wrapper">
       <div class="container pt-4 pb-5 mb-xxl-3">
-<input type="hidden" id="shopSeq" name="shopSeq" th:value="${item?.shopSeq}"/>
+
         <!-- Breadcrumb -->
         <nav class="pb-2 pb-md-3" aria-label="breadcrumb">
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/index/home-logined">홈</a></li>
             <li class="breadcrumb-item"><a href="/shop/shopUsrList">자전거 점검&정비 샵 리스트</a></li>
-            <li class="breadcrumb-item active" aria-current="page" th:text="${item?.shopName}">섭바이크</li>
+            <li class="breadcrumb-item active" aria-current="page">섭바이크</li>
           </ol>
         </nav>
 
         <!-- Image gallery -->
         <div class="row g-3 g-lg-4">
           <div class="col-md-8">
-            <a class="hover-effect-scale hover-effect-opacity position-relative d-flex rounded overflow-hidden" th:href="${item?.path2}" data-glightbox data-gallery="image-gallery">
+            <a class="hover-effect-scale hover-effect-opacity position-relative d-flex rounded overflow-hidden" href="/usr/template/Finder/assets/img/listings/bd/1731905825460932.jpg" data-glightbox data-gallery="image-gallery">
               <i class="fi-zoom-in hover-effect-target fs-3 text-white position-absolute top-50 start-50 translate-middle opacity-0 z-2"></i>
               <span class="hover-effect-target position-absolute top-0 start-0 w-100 h-100 bg-black bg-opacity-25 opacity-0 z-1"></span>
               <div class="ratio hover-effect-target bg-body-tertiary rounded" style="--fn-aspect-ratio: calc(450 / 856 * 100%)">
-                <img th:src="${item?.path2}" alt="Image">
+                <img src="/usr/template/Finder/assets/img/listings/bd/1731905825460932.jpg" alt="Image">
               </div>
             </a>
           </div>
           <div class="col-md-4 vstack gap-3 gap-lg-4">
-            <a class="hover-effect-scale hover-effect-opacity position-relative d-flex rounded overflow-hidden" th:href="${item?.path1}" data-glightbox data-gallery="image-gallery">
+            <a class="hover-effect-scale hover-effect-opacity position-relative d-flex rounded overflow-hidden" href="/usr/template/Finder/assets/img/listings/bd/1731905799997173.jpg" data-glightbox data-gallery="image-gallery">
               <i class="fi-zoom-in hover-effect-target fs-3 text-white position-absolute top-50 start-50 translate-middle opacity-0 z-2"></i>
               <span class="hover-effect-target position-absolute top-0 start-0 w-100 h-100 bg-black bg-opacity-25 opacity-0 z-1"></span>
               <div class="ratio hover-effect-target bg-body-tertiary rounded" style="--fn-aspect-ratio: calc(213 / 416 * 100%)">
-                <img th:src="${item?.path1}" alt="Image">
+                <img src="/usr/template/Finder/assets/img/listings/bd/1731905799997173.jpg" alt="Image">
               </div>
             </a>
-            <a class="hover-effect-scale hover-effect-opacity position-relative d-flex rounded overflow-hidden" th:href="${item?.path3}" data-glightbox data-gallery="image-gallery">
+            <a class="hover-effect-scale hover-effect-opacity position-relative d-flex rounded overflow-hidden" href="/usr/template/Finder/assets/img/listings/bd/1731905809524829.jpg" data-glightbox data-gallery="image-gallery">
               <i class="fi-zoom-in hover-effect-target fs-3 text-white position-absolute top-50 start-50 translate-middle opacity-0 z-2"></i>
               <span class="hover-effect-target position-absolute top-0 start-0 w-100 h-100 bg-black bg-opacity-25 opacity-0 z-1"></span>
               <div class="ratio hover-effect-target bg-body-tertiary rounded" style="--fn-aspect-ratio: calc(213 / 416 * 100%)">
-                <img th:src="${item?.path3}" alt="Image">
+                <img src="/usr/template/Finder/assets/img/listings/bd/1731905809524829.jpg" alt="Image">
               </div>              
             </a>
           </div>
@@ -93,10 +93,10 @@
             </div>
 
             <!-- Price + Address + Facilities -->
-            <div class="h3 pb-1 mb-2" th:text="${item?.shopName}">섭바이크</div>
-            <p class="fs-sm pb-1 mb-2"th:text="${item?.shopAddress1}">서울 중랑구 용마산로136가길 2 <span th:text="${item?.shopAddress3}">1층</span></p>
+            <div class="h3 pb-1 mb-2">섭바이크</div>
+            <p class="fs-sm pb-1 mb-2">서울 중랑구 용마산로136가길 2 1층</p>
             <div class="d-flex gap-2 mb-4">
-              <div class="d-flex align-items-center fs-sm gap-1 me-2" th:text="${item?.shopTel}">
+              <div class="d-flex align-items-center fs-sm gap-1 me-2">
                 02-978-0719
               </div>
             </div>
@@ -104,19 +104,31 @@
             <!-- Amenities -->
             <h2 class="h5 pt-4 pt-sm-5 mt-3 mt-sm-0">편의시설</h2>
             <div class="row row-cols-2 row-cols-sm-3 fs-sm gy-3">
-              <div class="col d-flex align-items-center" th:if="${item?.wifiNy} != null">
+              <div class="col d-flex align-items-center">
                 <i class="fi-wifi fs-lg me-2"></i>
                 WiFi
               </div>
-              <div class="col d-flex align-items-center" th:if="${item?.cafeNy} != null">
+              <!-- <div class="col d-flex align-items-center">
+                <i class="fi-dishwasher fs-lg me-2"></i>
+                Dishwasher
+              </div> -->
+              <div class="col d-flex align-items-center">
                 <i class="fi-snowflake fs-lg me-2"></i>
                 Air conditioning
               </div>
-              <div class="col d-flex align-items-center" th:if="${item?.parkingNy} != null">
+              <div class="col d-flex align-items-center">
                 <i class="fi-parking fs-lg me-2"></i>
                 Parking place
               </div>
-              <div class="col d-flex align-items-center" th:if="${item?.cctvNy} != null">
+              <!-- <div class="col d-flex align-items-center">
+                <i class="fi-washing-machine fs-lg me-2"></i>
+                Laundry
+              </div> -->
+              <!-- <div class="col d-flex align-items-center">
+                <i class="fi-iron fs-lg me-2"></i>
+                Icon
+              </div> -->
+              <div class="col d-flex align-items-center">
                 <i class="fi-video fs-lg me-2"></i>
                 Security cameras
               </div>
@@ -124,7 +136,7 @@
                 <i class="fi-no-smoking fs-lg me-2"></i>
                 No smocking
               </div>
-              <div class="col d-flex align-items-center" th:if="${item?.petNy} != null">
+              <div class="col d-flex align-items-center">
                 <i class="fi-paw fs-lg me-2"></i>
                 Pets allowed
               </div>

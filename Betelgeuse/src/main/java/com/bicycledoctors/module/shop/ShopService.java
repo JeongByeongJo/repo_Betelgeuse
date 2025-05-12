@@ -31,6 +31,9 @@ public class ShopService extends BaseService {
 	}
 	
 	
+	public ShopDto selectOne(ShopDto dto) {
+		return dao.selectOne(dto);
+	}
 	public ShopDto selectOne4ShopLocation(ShopDto dto) {
 		return dao.selectOne4ShopLocation(dto);
 	}
