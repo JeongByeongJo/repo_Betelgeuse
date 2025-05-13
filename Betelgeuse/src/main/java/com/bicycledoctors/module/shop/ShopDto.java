@@ -57,6 +57,8 @@ public class ShopDto extends BaseDto{
 //    -----
     private Integer uploadImg1Type;
 	private Integer uploadImg1MaxNumber;
+	
+	private String userId;
     
 	private List<BaseDto> picList;
 	public List<BaseDto> getPicList() {
@@ -366,6 +368,12 @@ public class ShopDto extends BaseDto{
 	}
 	public void setDelNy(Integer delNy) {
 		this.delNy = delNy;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
     
 	

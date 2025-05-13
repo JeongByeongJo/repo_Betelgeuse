@@ -9,6 +9,27 @@
 	<resultMap type="com.bicycledoctors.module.shop.ShopBikeBrandDto" id="resultMapObjBb"></resultMap>
 	<resultMap type="com.bicycledoctors.module.shop.ShopWheelBrandDto" id="resultMapObjWb"></resultMap>
 	
+	<sql id="selectCommon">	    
+	    from shop as a
+	    left join usercustomer b on a.userCustomer_seq = b.seq
+	    where 1=1
+<!-- 	    <if test="shUseNy != null and !shUseNy.equals('')">AND a.cdgUseNy = #{shUseNy}</if> -->
+        <if test="shDelNy != null and !shDelNy.equals('')">AND a.delNy = #{shDelNy}</if>
+				
+				<choose>
+					<when test="shOptionDate == 1">AND a.shopInstDate BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+					<when test="shOptionDate == 2">AND a.shopUpdtDate BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+				</choose>
+				
+        <choose>
+            <when test="shOption == 1">AND b.userId LIKE CONCAT('%',#{shValue},'%')</when>
+            <when test="shOption == 2">AND a.shopName LIKE CONCAT('%',#{shValue},'%')</when>
+            <when test="shOption == 3">AND a.shopAddress1 LIKE CONCAT('%',#{shValue},'%')</when>
+            <when test="shOption == 4">AND a.shopTel LIKE CONCAT('%',#{shValue},'%')</when>
+        </choose>
+    </sql>
+	
+	
 	<select id="selectList" resultMap="resultMapObj">
 		SELECT 
 			a.shopSeq
@@ -61,9 +82,13 @@
 		    ,b.seq
 		    ,b.userId
 		    ,b.userName
-		FROM shop as a
-		left join usercustomer b on a.userCustomer_seq = b.seq
+		<include refid = "selectCommon"></include>
 	</select>
+	
+	<select id="selectOneCount" resultType="Integer">
+    	select count(*) FROM shop
+    </select>
+	
 	<select id="selectOne" resultMap="resultMapObj">
 		SELECT 
 			a.shopSeq
@@ -98,9 +123,7 @@
 		    ,(select path from filesUploaded where pSeq = shopSeq and sort = 3001) as path1
 		    ,(select path from filesUploaded where pSeq = shopSeq and sort = 3002) as path2
 		    ,(select path from filesUploaded where pSeq = shopSeq and sort = 3003) as path3
-		FROM shop as a
-		left join usercustomer b on a.userCustomer_seq = b.seq
-		WHERE 1=1
+		<include refid = "selectCommon"></include>
 		AND shopSeq = #{shopSeq}
 	</select>
 	

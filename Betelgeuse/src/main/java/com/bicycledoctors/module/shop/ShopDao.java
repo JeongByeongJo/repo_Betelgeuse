@@ -11,10 +11,12 @@ import com.bicycledoctors.common.base.BaseDto;
 @Repository
 public interface ShopDao extends BaseDao {
 	
+	public List<ShopDto> selectList(ShopVo vo);
 	public List<ShopDto> selectList(ShopDto dto);
 	public List<ShopDto> selectList4Marker(ShopDto dto);
 	public List<BaseDto> selectOneList4Pic(ShopDto dto);
 
+	public ShopDto selectOne(ShopVo vo);
 	public ShopDto selectOne(ShopDto dto);
 	public ShopDto selectOne4ShopLocation(ShopDto dto);
 	public ShopDto selectOne4ShopService(ShopDto dto);
@@ -31,6 +33,7 @@ public interface ShopDao extends BaseDao {
 	public List<ShopBikeBrandDto> selectShopWBrandCd(ShopWheelBrandDto dto);
 	public List<ShopBikeBrandDto> selectShopWBrand(ShopWheelBrandsDto dtos);
 	
+	public int selectOneCount(ShopVo vo);
 	public int insert(ShopDto dto);
 	public int insertAvailableServices(@Param("listAS") List<ShopAvailableServiceDto> listAS);
 	public int insertHandlingBicycleBrands(@Param("listBB") List<ShopBikeBrandDto> listBB);

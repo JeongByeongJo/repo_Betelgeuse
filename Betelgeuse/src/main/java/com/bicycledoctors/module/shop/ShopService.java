@@ -20,6 +20,9 @@ public class ShopService extends BaseService {
 	private AmazonS3Client amazonS3Client;
 	
 	
+	public List<ShopDto> selectList(ShopVo vo) {
+		return dao.selectList(vo);
+	}
 	public List<ShopDto> selectList(ShopDto dto) {
 		return dao.selectList(dto);
 	}
@@ -31,6 +34,9 @@ public class ShopService extends BaseService {
 	}
 	
 	
+	public ShopDto selectOne(ShopVo vo) {
+		return dao.selectOne(vo);
+	}
 	public ShopDto selectOne(ShopDto dto) {
 		return dao.selectOne(dto);
 	}
@@ -69,6 +75,10 @@ public class ShopService extends BaseService {
 	}
 	public List<ShopBikeBrandDto> selectShopWBrand(ShopWheelBrandsDto dtos) {
 		return dao.selectShopWBrand(dtos);
+	}
+	
+	public int selectOneCount(ShopVo vo) {
+		return dao.selectOneCount(vo);
 	}
 	
 	public int insert(ShopDto dto) {

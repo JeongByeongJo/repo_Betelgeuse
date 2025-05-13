@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="~{xdm/include/headNice :: headNice}"></div>
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">page 1</a></li>
+          <li class="breadcrumb-item">page 2</li>
+          <li class="breadcrumb-item active">Default</li>
+        </ol>
+      </nav>
+      <h1 style="height: 50px;">샵 관리</h1>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+        <form class="row g-3 needs-validation" id="formList" name="formList" method="post" novalidate>
+            <div class="col-md-2" style="height: 10px;">
+                <select id="shDelNy" name="shDelNy" class="form-select form-select-sm">
+					<option value="" th:selected="${vo.shDelNy == null}">삭제여부</option>
+					<option value="1" th:selected="${vo.shDelNy == 1}">Y</option>
+					<option value="0" th:selected="${vo.shDelNy == 0}">N</option>            
+				</select>
+                <div class="invalid-feedback">
+                  항목중 하나를 선택 해주세요.
+                </div>
+              </div>
+<!--             <div class="col-md-2"> -->
+<!--                 <select name="shUseNy" id="shUseNy" class="form-select form-select-sm"> -->
+<!-- 					<option value="" th:selected="${vo.shUseNy == null}">사용여부</option> -->
+<!-- 					<option value="1" th:selected="${vo.shUseNy == 1}">Y</option> -->
+<!-- 					<option value="0" th:selected="${vo.shUseNy == 0}">N</option> -->
+<!-- 				</select> -->
+<!--                   <div class="invalid-feedback"> -->
+<!--                     항목중 하나를 선택 해주세요. -->
+<!--                   </div> -->
+<!--             </div> -->
+            <div class="col-md-2">
+                <select id="shOptionDate" name="shOptionDate" class="form-select form-select-sm">
+					<option value="" th:selected="${vo.shOptionDate == null}">날짜</option>
+					<option value="1" th:selected="${vo.shOptionDate == 1}">등록일</option>
+					<option value="2" th:selected="${vo.shOptionDate == 2}">수정일</option>
+				</select>
+                  <div class="invalid-feedback">
+                    항목중 하나를 선택 해주세요.
+                  </div>
+            </div>
+            <div class="col-md-2">
+                <input type="text" id="shDateStart" name="shDateStart" th:value="${#strings.substring(vo.shDateStart, 0, 10)}" placeholder="시작일" class="form-control form-control-sm" autocomplete="off">
+                <div class="invalid-feedback">
+                  코드를 입력해주세요.
+                </div>
+            </div>
+            <div class="col-md-2">
+                <input type="text" id="shDateEnd" name="shDateEnd" th:value="${#strings.substring(vo.shDateEnd, 0, 10)}" placeholder="종료일" class="form-control form-control-sm" autocomplete="off">
+                <div class="invalid-feedback">
+                  코드를 입력해주세요.
+                </div>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-2">
+                <select id="shOption" name="shOption" class="form-select form-select-sm">
+					<option value="" th:selected="${vo.shOption == null}">검색구분</option>
+					<option value="1" th:selected="${vo.shOption == 1}">샵 유저ID</option>
+					<option value="2" th:selected="${vo.shOption == 2}">샵 이름</option>
+					<option value="3" th:selected="${vo.shOption == 3}">샵 주소</option>
+					<option value="4" th:selected="${vo.shOption == 3}">샵 전화번호</option>
+				</select>
+                <div class="invalid-feedback">
+                  항목중 하나를 선택 해주세요.
+                </div>
+            </div>
+            <div class="col-md-2">
+                <input type="text" id="shValue" name="shValue" th:value="${vo.shValue}" onkeyup="enterkey()" placeholder="검색어" class="form-control form-control-sm">
+                <div class="invalid-feedback">
+                  검색어를 입력해주세요.
+                </div>
+            </div>
+            <div class="col-md-8">
+                <button type="button" id="btnSearch" class="btn btn-outline-dark"><i class="bi bi-search"></i></button>
+                <button type="button" id="btnReset" class="btn btn-outline-dark"><i class="bi bi-arrow-clockwise"></i></button>
+            </div>
+        <br>
+        <div class="col-lg-12">
+        <input type="hidden" name="thisPage" th:value="${vo.thisPage}" default="1"/>
+		<input type="hidden" id="rowNumToShow" name="rowNumToShow" th:value="${vo.rowNumToShow}"/>
+          <div class="card">
+            <div class="card-body">
+            <input type="hidden" id="shopSeq" name="shopSeq">
+            <div th:replace="~{xdm/include/totalAndRowNum :: totalAndRowNum}"></div>
+			
+
+              <!-- Table with stripped rows -->
+              <table class="table datatable" style="text-align: center;">
+                <thead>
+                  <tr>
+                    <th data-sortable="false"  style="text-align: center; width: 100px;"><div class="checked"><input type="checkbox" class="form-check" name="allChk" onclick='selectAll(this)'></div></th>
+                    <th data-sortable="false" style="width: 10px; text-align: center;" >#</th>
+<!--                     <th style="text-align: center;">사용</th> -->
+                    <th class="list-sort">ShopSeq</th>
+                    <th class="list-sort">샵 유저 ID</th>
+                    <th class="list-sort">샵 이름</th>
+                    <th class="list-sort">샵 주소</th>
+                    <th class="list-sort">샵 상세주소</th>
+                    <th class="list-sort">샵 전화번호</th>
+<!--                     <th class="list-sort">휠셋 브랜드</th> -->
+                    <th data-type="date" data-format="YYYY/DD/MM" class="list-sort" style="text-align: center;">등록일</th>
+                    <th data-type="data" data-format="YYYY/DD/MM" class="list-sort" style="text-align: center;">수정일</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${#lists.isEmpty(list)}" class="hover-action-trigger btn-reveal-trigger position-static">
+	               		<td colspan="10">
+	               			<p class="fs-0" style="padding-top: 12px;">There are no data!</p>
+	               		</td>
+	               	</tr>
+	                   <tr th:if="${!#lists.isEmpty(list)}" th:each ="list : ${list}">
+	                   <th><div class="checked"><input type="checkbox" class="form-check" name="eachChk" onclick='checkSelectAll()'></div></th>
+	                   <td th:text = "${vo.totalRows - ((vo.thisPage - 1) * vo.rowNumToShow + listStat.index)}"></td>
+<!--                        <td>1</td> -->
+                       <td th:text = "${list.shopSeq}"></td>
+                       <td th:text = "${list.userId}"></td>
+                       <td><a href = "javascript:void(0);" th:text="${list.shopName}" th:attr="onclick=|goForm('${list.shopSeq}')|"></a></td>                                                
+<!--                        <td></td>                                                 -->
+                       <td th:text = "${list.shopAddress1}"></td>
+                       <td th:text = "${list.shopAddress3}"></td>
+                       <td th:text = "${list.shopTel}"></td>
+                       <td th:text = "${list.shopInstDate}"></td>
+                       <td th:text = "${list.shopUpdtDate}"></td>                                              
+	                   </tr>
+                  </tbody>
+                  <tfoot>
+                   
+                  </tfoot>
+                  
+                  </table>
+                  <div class="row" >
+                    <nav aria-label="Page navigation example" style="display: flex; justify-content: center;">
+                    	<ul class="pagination">
+							<li class="page-item">
+							<li th:if="${vo.startPage gt vo.pageNumToShow}" class="page-item" style="cursor: pointer;">
+								<a class="page-link" href="javascript:goList(${vo.startPage - 1})" th:attr="onclick=|goList('${vo.startPage - 1}')|">
+									&laquo;
+								</a>
+							</li>
+							<li th:each="num: ${#numbers.sequence(vo.startPage, vo.endPage)}" th:classappend="${num eq vo.thisPage} ? active : ''" class="page-item" style="cursor: pointer;">
+								<a class="page-link" th:attr="onclick=|goList('${num}')|" th:text="${num}"><!-- ${i.index} --></a>
+							</li>
+							<li th:if="${vo.endPage ne vo.totalPages}" class="page-item" style="cursor: pointer;">
+								<a class="page-link" th:attr="onclick=|goList('${vo.endPage + 1}')|">
+									&raquo;
+								</a>
+							</li>
+                    	</ul>
+                    </nav>
+                    
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 padding-left">
+                  <button type="button" class="btn btn-danger">X</button>
+                  <button type="button" class="btn btn-danger" id="btnUelete"><i class="bi bi-trash"></i></button>
+                </div>
+                <div class="col-md-6 padding-right" style="display: flex; justify-content: end;">
+                    
+                    <button class="btn btn-success btn-right"><i class="bi bi-journal-x"></i></button>
+<!--                   <button type="button" id="btnForm" class="btn btn-primary"><i class="bi bi-plus-lg"></i></button> -->
+                </div>
+                </div>
+                </div>
+            </div>
+          </div>    
+       </form>
+    </section>
+		<div class="modal fade" id="modalConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="modalConfirmTitle">title</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body" id="modalConfirmBody">
+						body
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">닫힘</button>
+						<button type="button" class="btn btn-danger" name="" id="btnModalDelete"></button>
+						<button type="button" class="btn btn-danger" name="" id="btnModalUelete">삭제</button>
+					</div>
+				</div>
+			</div>
+		</div>
+  </main><!-- End #main -->
+<div th:replace="~{xdm/include/footerNice :: footerNice}"></div>
+
+	<script>
+		let form = document.querySelector("form[name=formList]");
+		let seq = document.querySelector("input[name=shopSeq]");
+		
+		$.datetimepicker.setLocale('ko');
+		$(window).on("load", function () {
+			$(function(){
+				 $('#shDateStart').datetimepicker({
+				  format:'Y-m-d',
+				  onShow:function( ct ){
+				   this.setOptions({
+				    maxDate:$('#shDateEnd').val()?$('#shDateEnd').val():false
+				   })
+				  },
+				  timepicker:false
+				 });
+				 $('#shDateEnd').datetimepicker({
+				  format:'Y-m-d',
+				  onShow:function( ct ){
+				   this.setOptions({
+				    minDate:$('#shDateStart').val()?$('#shDateStart').val():false
+				   })
+				  },
+				  timepicker:false
+				 });
+			});
+	    });
+		
+		document.getElementById("btnSearch").onclick = function () {
+			form.action = "/shop/shopXdmList";
+			form.submit();
+		};
+		document.getElementById("btnReset").onclick = function () {
+			location = "/shop/shopXdmList";
+		};
+		
+		goList = function (thisPage) {
+		    document.querySelector("input[name=thisPage]").value = thisPage;
+		    form.action = "/shop/shopXdmList";
+		    form.submit();
+		}
+		document.getElementById("changeRowNum").onchange = function () {
+		    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
+		    form.action = "/shop/shopXdmList";
+		    form.submit();
+		}
+		
+		if(document.getElementById("btnUelete")){
+			document.getElementById("btnUelete").onclick = function () {
+				document.querySelector("#modalConfirmTitle").textContent = "확 인";
+				document.querySelector("#modalConfirmBody").textContent = "해당 데이터를 삭제하시겠습니까 ?";
+				document.querySelector("#btnModalUelete").style.display = '';
+				document.querySelector("#btnModalDelete").style.display = 'none';
+				$("#modalConfirm").modal("show");      	
+			}
+		}
+		
+		goForm = function (keyValue) {
+		    seq.value = keyValue;
+		    form.action = "/shop/shopXdmForm";
+		    form.submit();
+		}
+		
+		function checkSelectAll()  {
+			  // 전체 체크박스
+			  const checkboxes 
+			    = document.querySelectorAll('input[name="eachChk"]');
+			  // 선택된 체크박스
+			  const checked 
+			    = document.querySelectorAll('input[name="eachChk"]:checked');
+			  // select all 체크박스
+			  const selectAll 
+			    = document.querySelector('input[name="allChk"]');
+			  
+			  if(checkboxes.length === checked.length)  {
+			    selectAll.checked = true;
+			  }else {
+			    selectAll.checked = false;
+			  }
+
+			}
+
+		function selectAll(selectAll)  {
+		  const checkboxes 
+		     = document.getElementsByName('eachChk');
+		  
+		  checkboxes.forEach((checkbox) => {
+		    checkbox.checked = selectAll.checked
+		  })
+		}
+	</script>
+	
+</body>
+</html>

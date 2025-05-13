@@ -40,7 +40,7 @@
 			,a.cdgInstDate
 			,a.cdgUpdtDate
 			,a.cdgDesc
-		<include refid = "selectCommon"></include>	
+		<include refid = "selectCommon"></include>
 		order by a.cdgSeq desc
 	) aa
 	limit #{rowNumToShow} offset #{startRnumForMysql}

@@ -1,7 +1,91 @@
 <!DOCTYPE html>
 <html lang="ko" data-bs-theme="light" data-pwa="true" xmlns:th="http://www.thymeleaf.org">
   <div th:replace="~{usr/include/LoginedHead :: LoginedHead}"></div>
+<!-- Filters offcanvas -->
+    <div class="offcanvas offcanvas-end" id="filters" tabindex="-1" style="width: 400px">
+    <form id="formFilter" name="formFilter">
 
+      <!-- Header -->
+      <div class="offcanvas-header px-sm-5">
+        <h4 class="h5 offcanvas-title">검색 필터</h4>
+        <button class="btn-close" type="button" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+
+      <!-- Body (Filter inputs) -->
+      <div class="offcanvas-body pt-2 pb-3 px-sm-5">
+        <div class="row g-4 pb-3 mb-3">
+          <div class="col">
+            <h6>위치를 검색합니다.</h6>
+            <div class="position-relative w-100">
+              <i class="fi-map-pin position-absolute top-50 start-0 translate-middle-y z-1 ms-3"></i>
+              <input type="search" class="form-control form-icon-start" value=" " placeholder="Search for location">
+            </div>
+          </div>
+        </div>
+        <div class="row g-4 pb-3 mb-3">
+          <div class="col">
+          <h6>서비스 필터</h6>
+            <select class="form-select form-select-lg" id="availableServiceCd" name="availableServiceCd" data-select='{
+              "classNames": {
+                "containerInner": ["form-select", "form-select-lg"]
+              }
+            }' multiple aria-label="Select categories">
+	            <option value="">원하시는 서비스를 선택해주세요.&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</option>
+	            <option th:each="list : ${@codeService.selectListCachedCode(8)}" th:value="${list.cdSeq}" th:text="${list.cdName}"></option>
+            </select>
+          </div>
+        </div>
+        <div class="row g-4 pb-3 mb-3">
+          <div class="col">
+          <h6>취급브랜드 필터</h6>
+            <select class="form-select form-select-lg" id="availableServiceCd" name="availableServiceCd" data-select='{
+              "classNames": {
+                "containerInner": ["form-select", "form-select-lg"]
+              }
+            }' multiple aria-label="Select categories">
+	            <option value="">원하시는 브랜드를 선택해주세요.&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</option>
+	            <option th:each="list : ${@codeService.selectListCachedCode(4)}" th:value="${list.cdSeq}" th:text="${list.cdName}"></option>
+            </select>
+          </div>
+        </div>
+        <h6>편의시설</h6>
+        <div class="row gy-2 gx-4 pb-3 mb-3">
+          <div class="col vstack gap-2">
+            <div class="form-check m-0">
+              <input type="checkbox" class="form-check-input" id="parkingNy" name="parkingNy">
+              <label for="ac" class="form-check-label">주차장</label>
+            </div>
+            <div class="form-check m-0">
+              <input type="checkbox" class="form-check-input" id="wifiNy" name="wifiNy">
+              <label for="balcony" class="form-check-label">Wifi</label>
+            </div>
+            <div class="form-check m-0">
+              <input type="checkbox" class="form-check-input" id="cctvNy" name="cctvNy">
+              <label for="garage" class="form-check-label">CCTV</label>
+            </div>
+            <div class="form-check m-0">
+              <input type="checkbox" class="form-check-input" id="cafeNy" name="cafeNy">
+              <label for="gym" class="form-check-label">Cafe</label>
+            </div>
+            <div class="form-check m-0">
+              <input type="checkbox" class="form-check-input" id="petNy" name="petNy">
+              <label for="parking" class="form-check-label">반려동물 동반</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer: Action buttons -->
+      <div class="row pt-2 pb-3 px-sm-5">
+          <div class="col pt-3">
+          	<a class="nav-link fs-xs text-decoration-underline text-nowrap p-0" href="#!">Clear all</a>
+          </div>
+          <div class="col">
+        	<button type="button" class="btn btn-primary" data-bs-dismiss="offcanvas">See 156 properties</button>
+          </div>
+      </div>
+      </form>
+    </div>
     <!-- Page content -->
     <main class="content-wrapper d-lg-flex">
       <div class="d-lg-flex flex-grow-1">

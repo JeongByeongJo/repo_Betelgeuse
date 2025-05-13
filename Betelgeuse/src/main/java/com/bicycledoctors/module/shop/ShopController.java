@@ -28,14 +28,25 @@ public class ShopController extends BaseController {
 	
 	@Autowired
 	IndexService indexService;
+	
+	@RequestMapping(value = "/shop/shopXdmList")
+	public String shopXdmList(@ModelAttribute("vo") ShopVo vo, ShopDto dto, Model model) {
+		
+		utildatetime(vo);
+		
+		vo.setParamsPaging(service.selectOneCount(vo));
+		
+		model.addAttribute("list", service.selectList(vo));
+		return "xdm/shop/ShopXdmList";
+	}
 
 	
 	@RequestMapping(value = "/shop/shopUsrList")
-	public String shopUsrList(Model model, IndexVo vo, ShopDto dto, HttpSession httpSession) throws JsonProcessingException {
+	public String shopUsrList(Model model, IndexVo vo, ShopDto dto, ShopVo shopVo, HttpSession httpSession) throws JsonProcessingException {
 		vo.setSeq(httpSession.getAttribute("sessSeqUsr").toString());
 		model.addAttribute("itemH", indexService.selectOneUserShopSeq(vo));
 		
-		List<ShopDto> shopList = service.selectList(dto);  // 가게 정보 리스트
+		List<ShopDto> shopList = service.selectList(shopVo);  // 가게 정보 리스트
 		List<BaseDto> picList = service.selectOneList4Pic(dto);  // 이미지 정보 리스트
 		
 		ObjectMapper mapper = new ObjectMapper();
@@ -56,11 +67,11 @@ public class ShopController extends BaseController {
 		return "usr/shop/ShopUsrList";
 	}
 	@RequestMapping(value = "/shop/shopUsrView")
-	public String shopUsrView(Model model, IndexVo vo, ShopDto dto, HttpSession httpSession) {
+	public String shopUsrView(Model model, IndexVo vo, ShopDto dto, ShopVo shopVo, HttpSession httpSession) {
 		vo.setSeq(httpSession.getAttribute("sessSeqUsr").toString());
 		model.addAttribute("itemH", indexService.selectOneUserShopSeq(vo));
 		
-		model.addAttribute("item", service.selectOne(dto));
+		model.addAttribute("item", service.selectOne(shopVo));
 		
 		return "usr/shop/ShopUsrView";
 	}
