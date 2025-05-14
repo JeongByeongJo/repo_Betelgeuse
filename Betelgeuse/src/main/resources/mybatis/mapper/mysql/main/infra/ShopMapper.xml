@@ -127,6 +127,64 @@
 		AND shopSeq = #{shopSeq}
 	</select>
 	
+	<select id="select4Filter">
+		select distinct
+			s.shop_shopSeq
+			,a.shopSeq
+		    ,a.shopName
+		    ,a.shopTel
+		    ,a.shopEmail
+		    ,a.shopZip
+		    ,a.shopAddress1
+		    ,a.shopAddress2
+		    ,a.shopAddress3
+		    ,a.shopAddress4
+		    ,a.shopLatitude
+		    ,a.shopLongitude
+		    ,a.shopDescribe
+		    ,a.parkingNy
+		    ,a.wifiNy
+		    ,a.cctvNy
+		    ,a.cafeNy
+		    ,a.petNy
+		    ,a.customerFavoriteNy
+		    ,a.mondayNy
+		    ,a.tuesdayNy
+		    ,a.wednesdayNy
+		    ,a.thursdayNy
+		    ,a.fridayNy
+		    ,a.saturdayNy
+		    ,a.sundayNy
+		    ,a.mondayOpentime
+		    ,a.mondayClosetime
+		    ,a.tuesdayOpentime
+		    ,a.tuesdayClosetime
+		    ,a.wednesdayOpentime
+		    ,a.wednesdayClosetime
+		    ,a.thursdayOpentime
+		    ,a.thurdayClosetime
+		    ,a.fridayOpentime
+		    ,a.fridayClosetime
+		    ,a.saturdayOpentime
+		    ,a.saturdayClosetime
+		    ,a.sundayOpentime
+		    ,a.sundayClosetime
+		    ,a.verifiedNy
+		    ,a.featuredNy
+		    ,a.delNy
+		    ,a.homepage
+		    ,a.youtube
+		    ,a.shopInstDate
+		    ,a.shopUpdtDate
+		    ,a.userCustomer_seq
+		from availableService as s
+		left join shop as a on s.shop_shopSeq = a.shopSeq
+		where 1=1
+<!-- 		<foreach collection="listBB4F" item="dto" separator=","> -->
+	        and availableServiceCd in (#{availableServiceCd})
+<!-- 	    </foreach> -->
+	</select>
+	
 	<select id="selectList4Marker" resultMap="resultMapObj">
 		SELECT 
 			a.shopSeq

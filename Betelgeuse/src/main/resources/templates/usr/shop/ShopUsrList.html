@@ -38,7 +38,7 @@
         <div class="row g-4 pb-3 mb-3">
           <div class="col">
           <h6>취급브랜드 필터</h6>
-            <select class="form-select form-select-lg" id="availableServiceCd" name="availableServiceCd" data-select='{
+            <select class="form-select form-select-lg" id="bikeBrandCd" name="bikeBrandCd" data-select='{
               "classNames": {
                 "containerInner": ["form-select", "form-select-lg"]
               }
@@ -394,7 +394,7 @@
       }
     </script>
     <script type="text/javascript">
-    let formH = document.querySelector("form[name=form]");
+    let formH = document.querySelector("form[name=formH]");
 	let seqH = document.querySelector("input[name=userCustomer_seq]");
 	
 	
@@ -446,5 +446,26 @@
 		});
 	});
 	</script>
+	<script th:inline="javascript">
+    $('#availableServiceCd').on("change", function() {
+    	$.ajax({
+    		async: true 
+    		,cache: false
+    		,type: "post"
+    		/* ,dataType:"json" */
+    		,url: "/shop/shopFilterUsrProc"
+    		/* ,data : $("#formLogin").serialize() */
+    		,data : { "availableServiceCd" : $("#availableServiceCd").val()}
+    		,success: function(response) {
+    			
+    		}
+    		,error : function(jqXHR, textStatus, errorThrown){
+    			alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+    		}
+    	});
+    })
+	</script>
+    
+   
   </body>
 </html>
