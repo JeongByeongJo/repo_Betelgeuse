@@ -21,7 +21,7 @@ public class IndexController {
 	public String Home() {
 		return "usr/index/home";
 	}
-	@RequestMapping(value = "/index/home-logined")
+	@RequestMapping(value = "/index/homeUsr")
 	public String homelogined(Model model, IndexVo vo, HttpSession httpSession) {
 		vo.setSeq(httpSession.getAttribute("sessSeqUsr").toString());
 		model.addAttribute("itemH", service.selectOneUserShopSeq(vo));

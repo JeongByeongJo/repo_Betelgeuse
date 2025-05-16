@@ -87,7 +87,7 @@
       </form>
     </div>
     <!-- Page content -->
-    <main class="content-wrapper d-lg-flex">
+    <main id="shopListMain" class="content-wrapper d-lg-flex">
       <div class="d-lg-flex flex-grow-1">
 
         <!-- Interactive map that turns into offcanvas on screens < 992px wide (lg breakpoint) -->
@@ -456,6 +456,7 @@
     		,url: "/shop/shopFilterUsrProc"
     		/* ,data : $("#formLogin").serialize() */
     		,data : { "availableServiceCd" : $("#availableServiceCd").val()}
+    		,traditional: true
     		,success: function(response) {
     			
     		}

@@ -127,7 +127,7 @@
 		AND shopSeq = #{shopSeq}
 	</select>
 	
-	<select id="select4Filter">
+	<select id="select4Filter" resultMap="resultMapObj">
 		select distinct
 			s.shop_shopSeq
 			,a.shopSeq
@@ -180,9 +180,7 @@
 		from availableService as s
 		left join shop as a on s.shop_shopSeq = a.shopSeq
 		where 1=1
-<!-- 		<foreach collection="listBB4F" item="dto" separator=","> -->
 	        and availableServiceCd in (#{availableServiceCd})
-<!-- 	    </foreach> -->
 	</select>
 	
 	<select id="selectList4Marker" resultMap="resultMapObj">

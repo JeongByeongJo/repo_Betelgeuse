@@ -177,7 +177,7 @@ function loginLogic (){
 		,data : { "userId" : $("#userId").val(), "userPassword" : $("#userPassword").val()}
 		,success: function(response) {
 			if(response.rt == "success") {
-				location.href = "/index/home-logined";
+				location.href = "/index/homeUsr";
 // 				if(response.changePwd == "true") {
 // 					location.href = "/member/expiredPwdUsrForm";
 // 				} else {

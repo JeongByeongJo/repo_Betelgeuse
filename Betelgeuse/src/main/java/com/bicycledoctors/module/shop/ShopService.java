@@ -19,6 +19,9 @@ public class ShopService extends BaseService {
 	@Autowired
 	private AmazonS3Client amazonS3Client;
 	
+	public List<ShopDto> select4Filter(List<ShopAvailableServiceDto> dtoList) {
+		return dao.select4Filter(dtoList);
+	}
 	public List<ShopDto> select4Filter(ShopAvailableServicesDto dtos) {
 		return dao.select4Filter(dtos);
 	}
