@@ -1,0 +1,36 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bicycledoctors.module.reservation.ReservationDao">
+	
+	<resultMap type="com.bicycledoctors.module.reservation.ReservationDto" id="resultMapObj"></resultMap>
+	
+	<insert id="insert">
+	INSERT INTO reservation (
+		reservationDate
+		,reservationTime
+		,shop_shopSeq
+		,bicycle_bikeSeq
+	) VALUES (
+		#{reservationDate}
+			,#{reservationTime}
+			,#{shop_shopSeq}
+			,#{bicycle_bikeSeq}
+	)
+	<selectKey resultType="String" keyProperty="rsrvSeq" order="AFTER">
+			SELECT last_insert_id()
+	</selectKey>
+	</insert>
+
+	<insert id="rsrvServices">
+	INSERT INTO availableService (
+			availableServiceCd
+			,shop_shopSeq
+			,reservation_rsrvSeq
+		) VALUES 
+		<foreach collection="listAS" item="dto" separator=",">
+	        (#{dto.availableServiceCd}
+			,#{dto.shopSeq})
+			,#{dto.rsrvSeq})
+	    </foreach>
+	</insert>
+</mapper>

@@ -23,8 +23,10 @@ public class BaseDto {
 	private String pseq;
 
 	private MultipartFile[] uploadImg1;
-	
-	
+//	-----
+ 	private String id;
+    private String label;
+    private boolean checked;
 //	-----
 
 	public String getTableName() {
@@ -153,6 +155,30 @@ public class BaseDto {
 
 	public void setPath3(String path3) {
 		this.path3 = path3;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	public boolean isChecked() {
+		return checked;
+	}
+
+	public void setChecked(boolean checked) {
+		this.checked = checked;
 	}
 
 

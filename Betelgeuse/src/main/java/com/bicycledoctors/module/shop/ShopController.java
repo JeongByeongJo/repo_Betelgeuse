@@ -1,9 +1,7 @@
 package com.bicycledoctors.module.shop;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +13,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bicycledoctors.common.base.BaseController;
 import com.bicycledoctors.common.base.BaseDto;
+import com.bicycledoctors.module.bicycle.BicycleService;
+import com.bicycledoctors.module.bicycle.BicycleVo;
 import com.bicycledoctors.module.index.IndexService;
 import com.bicycledoctors.module.index.IndexVo;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -31,6 +30,9 @@ public class ShopController extends BaseController {
 	
 	@Autowired
 	IndexService indexService;
+	
+	@Autowired
+	BicycleService bicycleService;
 	
 	@RequestMapping(value = "/shop/shopXdmList")
 	public String shopXdmList(@ModelAttribute("vo") ShopVo vo, ShopDto dto, Model model) {
@@ -66,11 +68,15 @@ public class ShopController extends BaseController {
 		return "usr/shop/ShopUsrList";
 	}
 	@RequestMapping(value = "/shop/shopUsrView")
-	public String shopUsrView(Model model, IndexVo vo, ShopDto dto, ShopVo shopVo, HttpSession httpSession) {
+	public String shopUsrView(Model model, IndexVo vo, ShopDto dto, ShopVo shopVo, BicycleVo bicycleVo,  HttpSession httpSession) {
 		vo.setSeq(httpSession.getAttribute("sessSeqUsr").toString());
+		bicycleVo.setUserCustomer_seq(httpSession.getAttribute("sessSeqUsr").toString());
 		model.addAttribute("itemH", indexService.selectOneUserShopSeq(vo));
 		
 		model.addAttribute("item", service.selectOne(shopVo));
+		model.addAttribute("list", service.selectShopService(shopVo));
+		model.addAttribute("visitDays", service.getNext7Days());
+		model.addAttribute("listBike", bicycleService.selectList(bicycleVo));
 		
 		return "usr/shop/ShopUsrView";
 	}

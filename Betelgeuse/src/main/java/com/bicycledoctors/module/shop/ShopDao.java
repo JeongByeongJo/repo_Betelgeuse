@@ -27,7 +27,7 @@ public interface ShopDao extends BaseDao {
 	public ShopDto selectOne4Pic(ShopDto dto);
 	
 	public List<ShopAvailableServiceDto> selectShopServiceCd(ShopAvailableServiceDto dto);
-	public List<ShopAvailableServiceDto> selectShopService(ShopAvailableServicesDto dtos);
+	public List<ShopAvailableServiceDto> selectShopService(ShopVo vo);
 	
 	public List<ShopBikeBrandDto> selectShopBrandCd(ShopBikeBrandDto dto);
 	public List<ShopBikeBrandDto> selectShopBrand(ShopBikeBrandsDto dtos);

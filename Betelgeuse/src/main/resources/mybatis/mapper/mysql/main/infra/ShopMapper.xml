@@ -336,18 +336,13 @@
 		AND b.seq = #{seq})
 	</select>
 	
-	<select id="selectShopService" resultMap="resultMapObjs">
+	<select id="selectShopService" resultMap="resultMapObjas">
 		SELECT
 			availableServiceCd
 			,shop_shopSeq
 		FROM availableService
 		WHERE 1=1
-		AND shop_shopSeq = (SELECT 
-		    a.shopSeq
-		FROM usercustomer as b
-		left join shop a on a.userCustomer_seq = b.seq
-		WHERE 1=1
-		AND b.seq = #{seq})
+		AND shop_shopSeq = #{shopSeq}
 	</select>
 	
 	<select id="selectShopServiceCd" resultMap="resultMapObjas">

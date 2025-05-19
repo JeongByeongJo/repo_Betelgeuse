@@ -74,7 +74,8 @@
           </div>
         </div>
       </div>
-
+<!-- Appointment booking offcanvas -->
+    
       <!-- Footer: Action buttons -->
       <div class="row pt-2 pb-3 px-sm-5">
           <div class="col pt-3">
@@ -249,9 +250,9 @@
                       </a>
                     </div>
                     <div class="col-sm-7">
-                      <button type="button" class="btn btn-outline-primary ms-auto d-block" data-bs-toggle="offcanvas" data-bs-target="#bookAppointment" aria-controls="bookAppointment">
-                        예약하기
-                      </button>
+                      <a type="button" class="btn btn-outline-primary ms-auto d-block" th:href="@{/shop/shopUsrView(shopSeq=${list.shopSeq})}">
+                        점검&정비 예약하기
+                      </a>
                     </div>
                   </div>
                   <div class="row px-2">
