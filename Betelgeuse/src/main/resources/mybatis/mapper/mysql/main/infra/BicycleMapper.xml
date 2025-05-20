@@ -116,6 +116,7 @@
 		,delNy
 	from filesUploaded
 	where 1=1
+	and sort = 1000
 	and delNy = 0
 	and pSeq = #{bikeSeq}
 	order by sort asc
@@ -155,6 +156,46 @@
 			left join usercustomer b on a.userCustomer_seq = b.seq
 		where 1=1
 			and a.userCustomer_seq = #{userCustomer_seq}
+	</select>
+	<select id="selectList4Reservation" resultMap="resultMapObj">
+		SELECT 
+			a.bikeSeq,
+		    a.bicycleName,
+		    a.bicycleCateCd,
+		    a.bicycleBrandCd,
+		    a.bicycleModel,
+		    a.bicycleYears,
+		    a.bicycleMiles,
+		    a.bicycleSN,
+		    a.drivetrainBrandCd,
+		    a.drivetrainModel,
+		    a.brakeBrandCd,
+		    a.isElectDrivetrain,
+		    a.isDiskBrakes,
+		    a.isHydrauric,
+		    a.isInternal,
+		    a.wheelBrandCd,
+		    a.wheelModel,
+		    a.bicycleDescribe,
+		    a.bikeStatus,
+		    a.latestiNrDate,
+		    a.bikeDelNy,
+		    a.instDate,
+		    a.updtDate,
+		    a.userCustomer_seq,
+		    (select s.shopName from reservation as r left join shop as s on r.shop_shopSeq = s.shopSeq where r.bicycle_bikeSeq = a.bikeSeq) as shopName,
+		    (select s.shopSeq from reservation as r left join shop as s on r.shop_shopSeq = s.shopSeq where r.bicycle_bikeSeq = a.bikeSeq) as shopSeq,
+		    b.seq,
+			b.userID,
+			b.userName
+ 		from
+			bicycle as a
+			left join usercustomer b on a.userCustomer_seq = b.seq
+		where 1=1
+			and a.userCustomer_seq = #{userCustomer_seq}
+			and a.bikeStatus between 120 and 121
+<!-- 			and a.bikeStatus &gt;= 120 -->
+<!-- 			and a.bikeStatus &lt;= 121 -->
 	</select>
 	
 	<insert id="insert">

@@ -306,6 +306,7 @@ public class MemberController extends BaseController {
 	public String userBicycleUsrList(Model model, HttpSession httpSession, BicycleDto bicycleDto) {
 		bicycleDto.setUserCustomer_seq((String)httpSession.getAttribute("sessSeqUsr"));
 		model.addAttribute("list", bicycleService.selectOneList(bicycleDto));
+		model.addAttribute("listR", bicycleService.selectList4Reservation(bicycleDto));
 		return "usr/member/account-listings";
 	}
 

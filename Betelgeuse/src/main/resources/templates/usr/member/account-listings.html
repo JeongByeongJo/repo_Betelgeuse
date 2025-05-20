@@ -79,7 +79,7 @@
             <div class="nav overflow-x-auto mb-2">
               <ul class="nav nav-pills flex-nowrap gap-2 pb-2 mb-1" role="tablist">
                 <li class="nav-item me-1" role="presentation">
-                  <button type="button" class="nav-link text-nowrap active" id="published-tab" data-bs-toggle="pill" data-bs-target="#published" role="tab" aria-controls="published" aria-selected="true">
+                  <button type="button" class="nav-link text-nowrap active" id="myBicycle-tab" data-bs-toggle="pill" data-bs-target="#myBicycle" role="tab" aria-controls="myBicycle" aria-selected="true">
                     내 자전거 (3)
                   </button>
                 </li>
@@ -99,13 +99,13 @@
             <div class="tab-content">
 
               <!-- Published tab -->
-              <div class="tab-pane fade show active" id="published" role="tabpanel" aria-labelledby="published-tab">
+              <div class="tab-pane fade show active" id="myBicycle" role="tabpanel" aria-labelledby="myBicycle-tab">
 
                 <!-- Master checkbox + Action buttons -->
                 <div class="nav align-items-center mb-4">
-                  <div class="nav-link fs-lg ps-0 pe-2 py-2 mt-n1 me-4" data-master-checkbox='{"container": "#publishedSelection", "label": "모두 선택하기", "labelChecked": "모두 해제하기", "showOnCheck": "#published-action-buttons"}'>
-                    <input type="checkbox" class="form-check-input" id="published-master" checked>
-                    <label for="published-master" class="form-check-label fw-normal mt-1 ms-2">모두 선택하기</label>
+                  <div class="nav-link fs-lg ps-0 pe-2 py-2 mt-n1 me-4" data-master-checkbox='{"container": "#myBicycleSelection", "label": "모두 선택하기", "labelChecked": "모두 해제하기", "showOnCheck": "#published-action-buttons"}'>
+                    <input type="checkbox" class="form-check-input" id="myBicycle-master" checked>
+                    <label for="myBicycle-master" class="form-check-label fw-normal mt-1 ms-2">모두 선택하기</label>
                   </div>
                   <div class="d-flex flex-wrap" id="published-action-buttons">
                     <!-- <a class="nav-link position-relative px-0 pe-sm-2 py-2 me-4" href="#!">
@@ -124,7 +124,7 @@
                 </div>
 
                 <!-- Published listings -->
-                <div class="vstack gap-4" id="publishedSelection">
+                <div class="vstack gap-4" id="myBicycleSelection">
 
                   <!-- Item -->
 <!--                  <th:block th:each="list : ${list}"> -->
@@ -154,7 +154,7 @@
                               <div class="h6 fs-sm mb-0 opacity-75"><span th:text="${@codeService.selectOneCachedCodeEng(list.wheelBrandCd)}"></span> <span th:text="${list.wheelModel}"></span></div>
                             </div>
                             <div class="text-end">
-                              <div class="fs-xs text-body-secondary mb-3">최근 점검&정비: <span th:text="${list.updtDate}"></span>2025/05/06</div>
+                              <div class="fs-xs text-body-secondary mb-3">최근 점검&정비: <span th:text="${list.updtDate}"></span></div>
                               <div class="d-flex justify-content-end gap-2 mb-3">                            
                                 <div class="dropdown">
                                   <button type="button" class="btn btn-icon btn-outline-secondary" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Settings">
@@ -313,7 +313,82 @@
 
                 <!-- Drafts listings -->
                 <div class="vstack gap-4" id="draftsSelection">
-
+				<div class="d-sm-flex align-items-center" th:each="listR : ${listR}">
+				<input type="hidden" id="shopSeq" name="shopSeq" />
+                    <div class="d-inline-flex position-relative z-2 pt-1 pb-2 ps-2 p-sm-0 ms-2 ms-sm-0 me-sm-2">
+                      <div class="form-check position-relative z-1 fs-lg m-0">
+                        <input type="checkbox" class="form-check-input" checked>
+                      </div>
+                      <span class="position-absolute top-0 start-0 w-100 h-100 bg-body border rounded d-sm-none"></span>
+                    </div>
+                    <article class="card w-100">
+                      <div class="row g-0">
+                        <div class="col-sm-4 col-md-3 rounded overflow-hidden pb-2 pb-sm-0 pe-sm-2">
+                          <a class="position-relative d-flex h-100 bg-body-tertiary" href="#!" style="min-height: 174px">
+                            <img src="/usr/template/Finder/assets/img/add-item/bd/IMG_4871.JPG" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" alt="Image">
+                            <div class="ratio d-none d-sm-block"  style="--fn-aspect-ratio: calc(180 / 240 * 100%)"></div>
+                            <div class="ratio ratio-16x9 d-sm-none"></div>
+                          </a>
+                        </div>
+                        <div class="col-sm-8 col-md-9 align-self-center">
+                          <div class="card-body d-flex justify-content-between p-3 py-sm-4 ps-sm-2 ps-md-3 pe-md-4 mt-n1 mt-sm-0">
+                            <div class="position-relative pe-3">
+                              <div class="h2 mb-2"><span th:text="${listR.bicycleName}"></span></div>
+                              <div class="h5 mb-2"><span th:text="${@codeService.selectOneCachedCodeEng(listR?.bicycleBrandCd)}"></span> <span th:text="${listR?.bicycleModel}"></span></div>
+                              <div class="h6 fs-sm mb-0 opacity-75"><span th:text="${@codeService.selectOneCachedCodeEng(listR.drivetrainBrandCd)}"></span> <span th:text="${listR.drivetrainModel}"></span></div>
+                              <div class="h6 fs-sm mb-0 opacity-75"><span th:text="${@codeService.selectOneCachedCodeEng(listR.wheelBrandCd)}"></span> <span th:text="${listR.wheelModel}"></span></div>
+                            </div>
+                            <div class="text-end">
+                              <div class="fs-xs text-body-secondary mb-3">최근 점검&정비: <span th:text="${listR.updtDate}"></span></div>
+                              <div class="d-flex justify-content-end gap-2 mb-3">                            
+                                <div class="dropdown">
+                                  <button type="button" class="btn btn-icon btn-outline-secondary" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Settings">
+                                    <i class="fi-settings fs-base"></i>
+                                  </button>
+                                  <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                      <a class="dropdown-item" href = "javascript:void(0);" th:attr="onclick=|goForm('${listR.bikeSeq}')|">
+                                        <i class="fi-edit opacity-75 me-2"></i>
+                                        수정하기
+                                      </a>
+                                    </li>
+                                    <li>
+                                      <a class="dropdown-item" href="#!">
+                                        <i class="fi-zap fs-base opacity-75 me-2"></i>
+                                        점검,정비 내역보기
+                                      </a>
+                                    </li>
+                                    <!-- <li>
+                                      <a class="dropdown-item" href="#!">
+                                        <i class="fi-archive opacity-75 me-2"></i>
+                                        Move to archive
+                                      </a>
+                                    </li> -->
+                                    <li>
+                                      <a class="dropdown-item text-danger" href="#!">
+                                        <i class="fi-trash opacity-75 me-2"></i>
+                                        삭제하기
+                                      </a>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                              <ul class="list-unstyled flex-row flex-wrap fs-sm mb-0">
+                                <li class="d-flex align-items-center me-2 me-md-3">
+                                  <i class="fi-eye fs-base me-1"></i>
+                                  예약 점검&정비 샵 :&ensp;  <a href = "javascript:void(0);" th:attr="onclick=|goShop('${listR.shopSeq}')|"><span th:text="${listR?.shopName}"></span></a>
+                                </li>
+                                <!-- <li class="d-flex align-items-center me-2 me-md-3">
+                                  <i class="fi-heart fs-base me-1"></i>
+                                  최근 점검일
+                                </li> -->
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </article>
+                  </div>
                   <!-- Item -->
                   <div class="d-sm-flex align-items-center">
                     <div class="d-inline-flex position-relative z-2 pt-1 pb-2 ps-2 p-sm-0 ms-2 ms-sm-0 me-sm-2">
@@ -399,10 +474,16 @@
 <script type="text/javascript">
 let form = document.querySelector("form[name=formList]");
 let seq = document.querySelector("input[name=bikeSeq]");
+let seqS = document.querySelector("input[name=shopSeq]");
 
 goForm = function (keyValue) {
     seq.value = keyValue;
     form.action = "/bicycle/bicycleUsrMfom";
+    form.submit();
+}
+goShop = function (keyValue) {
+    seqS.value = keyValue;
+    form.action = "/shop/shopUsrView";
     form.submit();
 }
 </script>

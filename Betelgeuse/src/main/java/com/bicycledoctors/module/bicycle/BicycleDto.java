@@ -29,6 +29,8 @@ public class BicycleDto extends BaseDto{
     private String instDate;
     private String updtDate;
     private String userCustomer_seq;
+    private String shopName;
+    private String shopSeq;
 //    -----
     private Integer uploadImg1Type;
 	private Integer uploadImg1MaxNumber;
@@ -205,6 +207,18 @@ public class BicycleDto extends BaseDto{
 	}
 	public void setUploadImg1MaxNumber(Integer uploadImg1MaxNumber) {
 		this.uploadImg1MaxNumber = uploadImg1MaxNumber;
+	}
+	public String getShopName() {
+		return shopName;
+	}
+	public void setShopName(String shopName) {
+		this.shopName = shopName;
+	}
+	public String getShopSeq() {
+		return shopSeq;
+	}
+	public void setShopSeq(String shopSeq) {
+		this.shopSeq = shopSeq;
 	}
 	
 }
