@@ -164,27 +164,4 @@ public class ShopService extends BaseService {
 		return 1;
 	}
 	
-	public List<BaseDto> getNext7Days() {
-        List<BaseDto> result = new ArrayList<>();
-        LocalDate today = LocalDate.now();
-        String[] dayNames = {"일", "월", "화", "수", "목", "금", "토"};
-
-        for (int i = 0; i < 7; i++) {
-            LocalDate date = today.plusDays(i);
-            String label = String.format("%d/%d (%s)",
-                    date.getMonthValue(),
-                    date.getDayOfMonth(),
-                    dayNames[date.getDayOfWeek().getValue() % 7]
-            );
-
-            BaseDto dto = new BaseDto();
-            dto.setId("visit-day-" + (i + 1));
-            dto.setLabel(label);
-            dto.setChecked(i == 0); // 첫 날짜는 기본 선택
-
-            result.add(dto);
-        }
-
-        return result;
-    }
 }

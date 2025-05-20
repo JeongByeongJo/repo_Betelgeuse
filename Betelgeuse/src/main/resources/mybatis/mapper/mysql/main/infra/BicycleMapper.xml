@@ -49,8 +49,8 @@
 		    a.wheelBrandCd,
 		    a.wheelModel,
 		    a.bicycleDescribe,
-		    a.isInspectingNy,
-		    a.isRepairingNy,
+		    a.bikeStatus,
+		    a.latestiNrDate,
 		    a.bikeDelNy,
 		    a.instDate,
 		    a.updtDate,
@@ -94,8 +94,8 @@
 		    a.wheelBrandCd,
 		    a.wheelModel,
 		    a.bicycleDescribe,
-		    a.isInspectingNy,
-		    a.isRepairingNy,
+		    a.bikeStatus,
+		    a.latestiNrDate,
 		    a.bikeDelNy,
 		    a.instDate,
 		    a.updtDate,
@@ -141,8 +141,8 @@
 		    a.wheelBrandCd,
 		    a.wheelModel,
 		    a.bicycleDescribe,
-		    a.isInspectingNy,
-		    a.isRepairingNy,
+		    a.bikeStatus,
+		    a.latestiNrDate,
 		    a.bikeDelNy,
 		    a.instDate,
 		    a.updtDate,
@@ -266,8 +266,8 @@
 		    a.bicycleSN,
 		    a.drivetrainBrandCd,
 		    a.drivetrainModel,
-		    a.isInspectingNy,
-		    a.isRepairingNy,
+		    a.bikeStatus,
+		    a.latestiNrDate,
 		    a.bikeDelNy,
 		    a.instDate,
 		    a.updtDate,
@@ -275,7 +275,9 @@
 			b.userID,
 			b.userName
 		<include refid = "selectCommon"></include>
+		AND a.userCustomer_seq = #{userCustomer_seq}
 		order by seq desc
+		
    	</select>
    	
    	<insert id="insertUploaded">

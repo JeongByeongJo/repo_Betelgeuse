@@ -5,7 +5,7 @@
     <!-- Page content -->
     <main class="content-wrapper">
       <div class="container pt-4 pb-5 mb-xxl-3">
-<input type="hidden" id="shopSeq" name="shopSeq" th:value="${item?.shopSeq}"/>
+
         <!-- Breadcrumb -->
         <nav class="pb-2 pb-md-3" aria-label="breadcrumb">
           <ol class="breadcrumb">
@@ -427,7 +427,7 @@
 
           <!-- Sidebar with contact form that turns into offcanvas on screens < 992px wide (lg breakpoint) -->
           <aside class="col-lg-4 offset-xl-1">
-<form id="rsrvForm">
+<form id="rsrvForm"><input type="hidden" id="shopSeq" name="shopSeq" th:value="${item?.shopSeq}"/>
             <div class="d-none d-lg-block" style="margin-top: -105px"></div>
             <div class="sticky-lg-top">
               <div class="d-none d-lg-block" style="height: 105px"></div>
@@ -457,7 +457,7 @@
     <th:block th:each="day, iterStat : ${visitDays}">
       <input type="radio"
              class="btn-check"
-             name="visit-day"
+             name="reservationDateCd"
              th:id="${day.id}"
              th:checked="${day.checked}"
              th:data-index="${iterStat.index}"
@@ -477,87 +477,87 @@
 </div>
                   <div class="row row-cols-4 g-2 pt-4 pb-2">
                     <div class="col">
-                      <input type="radio" class="btn-check" name="visit-time" id="visit-time-1" th:value="1">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-1" th:value="1">
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-1">10:00</label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" name="visit-time" id="visit-time-2" th:value="2">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-2" th:value="2">
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-2">10:30</label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" name="visit-time" id="visit-time-3" th:value="3">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-3" th:value="3">
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-3">11:00</label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" name="visit-time" id="visit-time-4" th:value="4">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-4" th:value="4">
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-4">11:30</label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" name="visit-time" id="visit-time-5" th:value="5">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-5" th:value="5">
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-5">12:00</label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" name="visit-time" id="visit-time-6" th:value="6" checked>
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-6" th:value="6" checked>
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-6">12:30</label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" name="visit-time" id="visit-time-7" th:value="7">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-7" th:value="7">
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-7">13:00</label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" name="visit-time" id="visit-time-8" th:value="8">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-8" th:value="8">
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-8">13:30</label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" name="visit-time" id="visit-time-9" th:value="9">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-9" th:value="9">
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-9">14:00</label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" name="visit-time" id="visit-time-10" th:value="10">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-10" th:value="10">
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-10">14:30</label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" name="visit-time" id="visit-time-11" th:value="11">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-11" th:value="11">
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-11">15:00</label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" name="visit-time" id="visit-time-12" th:value="12">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-12" th:value="12">
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-12">15:30</label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" name="visit-time" id="visit-time-13" th:value="13">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-13" th:value="13">
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-13">16:00</label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" name="visit-time" id="visit-time-14" th:value="14">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-14" th:value="14">
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-14">16:30</label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" name="visit-time" id="visit-time-15" th:value="15">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-15" th:value="15">
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-15">17:00</label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" name="visit-time" id="visit-time-16" th:value="16">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-16" th:value="16">
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-16">17:30</label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" name="visit-time" id="visit-time-17" th:value="17">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-17" th:value="17">
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-17">18:00</label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" name="visit-time" id="visit-time-18" th:value="18">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-18" th:value="18">
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-18">18:30</label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" name="visit-time" id="visit-time-19" th:value="19">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-19" th:value="19">
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-19">19:00</label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" name="visit-time" id="visit-time-20" th:value="20" disabled>
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-20" th:value="20" disabled>
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-20">19:30</label>
                     </div>
                   </div>
-                  <button type="button" class="btn btn-lg btn-primary w-100 mt-4" data-bs-toggle="modal" data-bs-target="#modalId">
+                  <button type="button" class="btn btn-lg btn-primary w-100 mt-4" id="appoint" data-bs-toggle="modal" data-bs-target="#modalId">
                     <i class="fi-clock fs-lg me-2 ms-n1 d-lg-none d-xl-inline-flex"></i>
                     Next appointment 12:30, Tue, 12
                   </button>
@@ -569,7 +569,7 @@
                 </div> -->
               </div>
             </div>
-                  </form>
+            </form>
           </aside>
         </div>
         <div class="modal fade" id="modalId" tabindex="-1" role="dialog">
@@ -581,15 +581,10 @@
               </div>
               <div class="modal-body">
                 <p>Modal body content goes here.</p>
-                <label class="form-label fs-base">점검 & 정비 자전거 선택</label>
-                  <select class="form-select form-select-lg" data-select multiple aria-label="bicycle select">
-                    <option value="">예약할 자전거를 선택해주세요.&emsp;&emsp;&emsp;&emsp;</option>
-                    <option th:each="listBike : ${listBike}" th:value="${listBike?.bikeSeq}" th:text="${listBike?.bicycleName}"> </option>
-                  </select>
               </div>
               <div class="modal-footer flex-column flex-sm-row align-items-stretch">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                <button type="button" class="btn btn-primary">예약하기</button>
+                <button type="button" id="btnReservation" class="btn btn-primary">예약하기</button>
               </div>
             </div>
           </div>
@@ -694,7 +689,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	  const maxVisible = 3;
 	  let startIndex = 0;
 
-	  const inputs = Array.from(document.querySelectorAll('input[name="visit-day"]'));
+	  const inputs = Array.from(document.querySelectorAll('input[name="reservationDate"]'));
 	  const labels = Array.from(document.querySelectorAll('#date-buttons label.btn'));
 
 	  function updateVisible() {
@@ -724,7 +719,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	  updateVisible();
 	});
+var form = document.querySelector("form[id=rsrvForm]");
 
+document.getElementById("btnReservation").onclick = function () {
+	form.action = "/shop/shopResrvInst";
+	form.submit();
+}
 </script>
 
  

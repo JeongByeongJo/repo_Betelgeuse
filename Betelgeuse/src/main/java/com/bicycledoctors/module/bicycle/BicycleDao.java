@@ -12,6 +12,7 @@ import com.bicycledoctors.common.base.BaseDto;
 public interface BicycleDao extends BaseDao{
 	
 	public List<BicycleDto> selectList(BicycleVo vo);
+	public List<BicycleDto> selectOneList(BicycleVo vo);
 	public List<BicycleDto> selectOneList(BicycleDto dto);
 	public List<BicycleDto> selectOnePicList(BicycleDto dto);
 	public BicycleDto selectOne(BicycleDto dto);

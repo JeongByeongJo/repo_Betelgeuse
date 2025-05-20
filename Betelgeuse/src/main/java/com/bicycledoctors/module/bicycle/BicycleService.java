@@ -21,6 +21,9 @@ public class BicycleService extends BaseService{
 	public List<BicycleDto> selectList(BicycleVo vo) {
 		return bicycleDao.selectList(vo);
 	}
+	public List<BicycleDto> selectOneList(BicycleVo vo) {
+		return bicycleDao.selectOneList(vo);
+	}
 	public List<BicycleDto> selectOneList(BicycleDto dto) {
 		return bicycleDao.selectOneList(dto);
 	}

@@ -353,6 +353,7 @@
 		from code as cd
 		left join availableService as se on cd.cdSeq = se.availableServiceCd
 		where 1=1
+		and reservation_rsrvSeq is NULL
 		and codegroup_cdgSeq = 8
 		and cdSeq in (select
 			cdSeq

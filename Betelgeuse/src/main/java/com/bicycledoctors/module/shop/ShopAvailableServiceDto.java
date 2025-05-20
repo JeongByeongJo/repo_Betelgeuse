@@ -6,6 +6,8 @@ public class ShopAvailableServiceDto {
 	private String shopSeq;
 	private String shop_shopSeq;
 	private String seq;
+	private String reservation_rsrvSeq;
+	private String rsrvSeq;
 	
 	private String cdSeq;
 	private String cdName;
@@ -60,6 +62,18 @@ public class ShopAvailableServiceDto {
 	}
 	public void setCodegroup_cdgSeq(String codegroup_cdgSeq) {
 		this.codegroup_cdgSeq = codegroup_cdgSeq;
+	}
+	public String getReservation_rsrvSeq() {
+		return reservation_rsrvSeq;
+	}
+	public void setReservation_rsrvSeq(String reservation_rsrvSeq) {
+		this.reservation_rsrvSeq = reservation_rsrvSeq;
+	}
+	public String getRsrvSeq() {
+		return rsrvSeq;
+	}
+	public void setRsrvSeq(String rsrvSeq) {
+		this.rsrvSeq = rsrvSeq;
 	}
 	
 	

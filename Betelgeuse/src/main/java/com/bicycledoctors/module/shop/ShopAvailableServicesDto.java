@@ -8,6 +8,8 @@ public class ShopAvailableServicesDto {
 	private String shopSeq;
 	private String shop_shopSeq;
 	private String seq;
+	private String reservation_rsrvSeq;
+	private String rsrvSeq;
 //	-----
 	public List<Integer> getAvailableServiceCd() {
 		return availableServiceCd;
@@ -32,6 +34,18 @@ public class ShopAvailableServicesDto {
 	}
 	public void setSeq(String seq) {
 		this.seq = seq;
+	}
+	public String getReservation_rsrvSeq() {
+		return reservation_rsrvSeq;
+	}
+	public void setReservation_rsrvSeq(String reservation_rsrvSeq) {
+		this.reservation_rsrvSeq = reservation_rsrvSeq;
+	}
+	public String getRsrvSeq() {
+		return rsrvSeq;
+	}
+	public void setRsrvSeq(String rsrvSeq) {
+		this.rsrvSeq = rsrvSeq;
 	}
 	
 	

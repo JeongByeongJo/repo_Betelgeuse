@@ -12,16 +12,16 @@
 		,bicycle_bikeSeq
 	) VALUES (
 		#{reservationDate}
-			,#{reservationTime}
-			,#{shop_shopSeq}
-			,#{bicycle_bikeSeq}
+		,#{reservationTime}
+		,#{shopSeq}
+		,#{bikeSeq}
 	)
 	<selectKey resultType="String" keyProperty="rsrvSeq" order="AFTER">
 			SELECT last_insert_id()
 	</selectKey>
 	</insert>
 
-	<insert id="rsrvServices">
+	<insert id="rsrvServicesInst">
 	INSERT INTO availableService (
 			availableServiceCd
 			,shop_shopSeq
@@ -29,8 +29,17 @@
 		) VALUES 
 		<foreach collection="listAS" item="dto" separator=",">
 	        (#{dto.availableServiceCd}
-			,#{dto.shopSeq})
+			,#{dto.shopSeq}
 			,#{dto.rsrvSeq})
 	    </foreach>
 	</insert>
+	
+	<update id="bikeStatusUpdt">
+		update bicycle set
+			bikeStatus = 120
+		    ,updtDate = CURRENT_TIMESTAMP
+		where
+			bikeSeq = #{bikeSeq}
+	</update>
+	
 </mapper>
