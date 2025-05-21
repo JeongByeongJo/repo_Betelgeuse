@@ -86,6 +86,7 @@
 		    ,noshow
 		    ,isBlack
 		    ,delNy
+		    ,shopSeq
 	    from
 	    	usercustomer
 	    where 1=1
@@ -163,7 +164,21 @@
 		where 1=1
 			and seq = #{seq}
 	</update>
+	<update id="updateShopSeq">
+		update usercustomer set
+		    shopSeq = #{shopSeq}
+		where 1=1
+			and seq = #{seq}
+	</update>
 	
+	<select id="select4ShopSeq" resultMap="resultMapObj">
+		SELECT
+			userShopSeq
+	    from
+	    	usercustomer
+	    where 1=1
+	    	and seq = #{seq}
+	</select>
 	<select id="selectOneIdChk" resultMap="resultMapObj">
 		SELECT
 				seq

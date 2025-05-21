@@ -16,6 +16,8 @@ public interface BicycleDao extends BaseDao{
 	public List<BicycleDto> selectOneList(BicycleDto dto);
 	public List<BicycleDto> selectOnePicList(BicycleDto dto);
 	public List<BicycleDto> selectList4Reservation(BicycleDto dto);
+	public List<BicycleDto> selectList4ReservationCheck(BicycleDto dto);
+	public List<BicycleDto> selectList4iNr(BicycleDto dto);
 	public BicycleDto selectOne(BicycleDto dto);
 	public BicycleDto selectOne(BicycleVo vo);
 	public int selectOneCount(BicycleVo vo);

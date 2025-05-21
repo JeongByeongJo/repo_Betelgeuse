@@ -1,7 +1,5 @@
 package com.bicycledoctors.module.shop;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +8,15 @@ import org.springframework.stereotype.Service;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.bicycledoctors.common.base.BaseDto;
 import com.bicycledoctors.common.base.BaseService;
+import com.bicycledoctors.module.member.MemberDao;
 
 @Service
 public class ShopService extends BaseService {
 
 	@Autowired
 	ShopDao dao;
+	@Autowired
+	MemberDao memberdao;
 	
 //	for aws.s3 fileupload s
 	@Autowired
@@ -89,7 +90,9 @@ public class ShopService extends BaseService {
 	}
 	
 	public int insert(ShopDto dto) {
-		return dao.insert(dto);
+		dao.insert(dto);
+		memberdao.updateShopSeq(dto);
+		return 1;
 	}
 
 	public int insertAvailableServices(List<ShopAvailableServiceDto> listAS, ShopDto dto) {

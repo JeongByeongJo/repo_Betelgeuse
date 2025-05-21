@@ -25,6 +25,8 @@ public class MemberDto {
 	private Integer delNy;
 	private String userInstDate;
 	private String userUpdtDate;
+	private String userShopSeq;
+	private String shopSeq;
 //	-----
 	public String getSeq() {
 		return seq;
@@ -169,6 +171,18 @@ public class MemberDto {
 	}
 	public void setUserUpdtDate(String userUpdtDate) {
 		this.userUpdtDate = userUpdtDate;
+	}
+	public String getUserShopSeq() {
+		return userShopSeq;
+	}
+	public void setUserShopSeq(String userShopSeq) {
+		this.userShopSeq = userShopSeq;
+	}
+	public String getShopSeq() {
+		return shopSeq;
+	}
+	public void setShopSeq(String shopSeq) {
+		this.shopSeq = shopSeq;
 	}
 	
 }

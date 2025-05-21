@@ -33,6 +33,12 @@ public class BicycleService extends BaseService{
 	public List<BicycleDto> selectList4Reservation(BicycleDto dto) {
 		return bicycleDao.selectList4Reservation(dto);
 	}
+	public List<BicycleDto> selectList4ReservationCheck(BicycleDto dto) {
+		return bicycleDao.selectList4ReservationCheck(dto);
+	}
+	public List<BicycleDto> selectList4iNr(BicycleDto dto) {
+		return bicycleDao.selectList4iNr(dto);
+	}
 	public BicycleDto selectOne(BicycleDto dto) {
 		return bicycleDao.selectOne(dto);
 	}

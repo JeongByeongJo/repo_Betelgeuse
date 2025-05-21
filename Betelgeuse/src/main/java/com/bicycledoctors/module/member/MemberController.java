@@ -23,7 +23,7 @@ public class MemberController extends BaseController {
 
 	
 	@Autowired
-	MemberService memberService;
+	MemberService service;
 	
 	@Autowired
 	MailService mailService;
@@ -35,22 +35,22 @@ public class MemberController extends BaseController {
 	public String memberXdmList(MemberVo vo, Model model) {
 		utildatetime(vo);
 		
-		vo.setParamsPaging(memberService.selectOneCount(vo));
+		vo.setParamsPaging(service.selectOneCount(vo));
 		
-		model.addAttribute("list", memberService.selectList(vo));
+		model.addAttribute("list", service.selectList(vo));
 		model.addAttribute("vo", vo);
 		return "xdm/member/MemberXdmList";
 	}
 	
 	@RequestMapping(value = "/member/memberXdmMfom")
 	public String memberXdmMfom(Model model, MemberDto memberDto) {
-		model.addAttribute("item", memberService.selectOne(memberDto));
+		model.addAttribute("item", service.selectOne(memberDto));
 		return "xdm/member/MemberXdmMfom";
 	}
 	
 	@RequestMapping(value = "/member/memberXdmUpdt")
 	public String memberXdmUpdt(MemberDto memberDto) {
-		memberService.update(memberDto);
+		service.update(memberDto);
 		return "redirect:/member/memberXdmList";
 	}
 	
@@ -64,7 +64,7 @@ public class MemberController extends BaseController {
 	public Map<String, Object> signinXdmProc(MemberDto dto, HttpSession httpSession) throws Exception {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
-		MemberDto rtMember = memberService.selectOneIdChk(dto);		
+		MemberDto rtMember = service.selectOneIdChk(dto);		
 		
 		if(rtMember != null) {
 			returnMap.put("rt", "success");
@@ -93,14 +93,14 @@ public class MemberController extends BaseController {
 	@RequestMapping(value = "/member/memberUsrUele")
 	public String memberUsrUele(MemberDto memberDto, HttpSession httpSession) {
 		memberDto.setSeq((String)httpSession.getAttribute("sessSeqUsr"));
-		memberService.uelete(memberDto);
+		service.uelete(memberDto);
 		return "redirect:/member/signinUsrForm";
 	}
 	
 	@RequestMapping(value = "/member/memberUsrInst")
 	public String memberUsrInst(MemberDto memberDto) {
 		memberDto.setUserPassword(encodeBcrypt(memberDto.getUserPassword(), 10));
-		memberService.insert(memberDto);
+		service.insert(memberDto);
 		
 		Thread thread = new Thread(new Runnable() {
 			
@@ -124,7 +124,7 @@ public class MemberController extends BaseController {
 	public Map<String, Object> signinUsrProc(MemberDto dto, HttpSession httpSession) throws Exception {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
-		MemberDto rtMemberId = memberService.selectOneId(dto);
+		MemberDto rtMemberId = service.selectOneId(dto);
 		if(Integer.valueOf(rtMemberId.getSeq()) > 11) {
 			if(rtMemberId != null && matchesBcrypt(dto.getUserPassword(), rtMemberId.getUserPassword(), 10)) {
 				returnMap.put("rt", "success");
@@ -133,12 +133,13 @@ public class MemberController extends BaseController {
 				httpSession.setAttribute("sessIdUsr", rtMemberId.getUserId());
 				httpSession.setAttribute("sessNameUsr", rtMemberId.getUserName());
 				httpSession.setAttribute("sessEmailUsr", rtMemberId.getUserEmail());
+				httpSession.setAttribute("sessCateUsr", rtMemberId.getUserCate());
 				System.out.println(rtMemberId.getUserEmail());
 			} else {
 				returnMap.put("rt", "fail");
 			}
 		} else {
-			MemberDto rtMember = memberService.selectOneIdChk(dto);
+			MemberDto rtMember = service.selectOneIdChk(dto);
 			
 			if(rtMember != null) {
 				returnMap.put("rt", "success");
@@ -147,6 +148,7 @@ public class MemberController extends BaseController {
 				httpSession.setAttribute("sessIdUsr", rtMember.getUserId());
 				httpSession.setAttribute("sessNameUsr", rtMember.getUserName());
 				httpSession.setAttribute("sessEmailUsr", rtMemberId.getUserEmail());
+				httpSession.setAttribute("sessCateUsr", rtMemberId.getUserCate());
 			} else {
 				returnMap.put("rt", "fail");
 			}
@@ -171,7 +173,7 @@ public class MemberController extends BaseController {
 	public Map<String, Object> idChkUsrProc(MemberDto dto) throws Exception {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
-		MemberDto rtMember = memberService.selectOneIdChk(dto);		
+		MemberDto rtMember = service.selectOneIdChk(dto);		
 		
 		if(rtMember != null) {
 			returnMap.put("rt", "success");
@@ -185,7 +187,7 @@ public class MemberController extends BaseController {
 	public Map<String, Object> emailChkUsrProc(MemberDto dto) throws Exception {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
-		MemberDto rtMember = memberService.selectOneEmailChk(dto);		
+		MemberDto rtMember = service.selectOneEmailChk(dto);		
 		
 		if(rtMember != null) {
 			returnMap.put("rt", "success");
@@ -201,8 +203,8 @@ public class MemberController extends BaseController {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		dto.setUserId((String)httpSession.getAttribute("sessIdUsr"));
 		dto.setSeq((String)httpSession.getAttribute("sessSeqUsr"));
-//		MemberDto rtMember = memberService.selectOneIdChk(dto);		
-		MemberDto rtMemberId = memberService.selectOneId(dto);
+//		MemberDto rtMember = service.selectOneIdChk(dto);		
+		MemberDto rtMemberId = service.selectOneId(dto);
 		if(Integer.valueOf(dto.getSeq()) > 11) {
 			if(rtMemberId != null && matchesBcrypt(dto.getUserPassword(), rtMemberId.getUserPassword(), 10)) {
 				returnMap.put("rt", "success");
@@ -210,11 +212,11 @@ public class MemberController extends BaseController {
 				returnMap.put("rt", "fail");
 			}
 		} else {
-			MemberDto rtMember = memberService.selectOneIdChk(dto);
+			MemberDto rtMember = service.selectOneIdChk(dto);
 			
 			if(rtMember != null) {
 				returnMap.put("rt", "success");
-				memberService.pwUpdate(rtMemberId);
+				service.pwUpdate(rtMemberId);
 			} else {
 				returnMap.put("rt", "fail");
 			}
@@ -236,13 +238,13 @@ public class MemberController extends BaseController {
 	@RequestMapping(value = "/member/userInfosettingUsrForm")
 	public String userInfosettingUsrForm(MemberDto memberDto, Model model, HttpSession httpSession) {
 		memberDto.setSeq((String)httpSession.getAttribute("sessSeqUsr"));
-		model.addAttribute("item", memberService.selectOne(memberDto));
+		model.addAttribute("item", service.selectOne(memberDto));
 		return "usr/member/account-settings";
 	}
 	
 	@RequestMapping(value = "/member/memberUsrUpdt")
 	public String memberUsrUpdt(MemberDto memberDto) {
-		memberService.updateInfo(memberDto);
+		service.updateInfo(memberDto);
 		return "redirect:/member/userInfosettingUsrForm";
 	}
 	
@@ -250,11 +252,11 @@ public class MemberController extends BaseController {
 	@RequestMapping(value = "/member/pswdfindUsrProc")
 	public Map<String, Object> pswdfindUsrProc(MemberDto dto, HttpSession httpSession) throws Exception {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
-		MemberDto rt = memberService.pswdrecoveryChk(dto);
+		MemberDto rt = service.pswdrecoveryChk(dto);
 		if(rt != null) {
 			returnMap.put("rt", "success");
 			rt.setUserPassword(encodeBcrypt(rt.getUserName(), 10));
-			memberService.pwUpdate(rt);
+			service.pwUpdate(rt);
 			Thread threads = new Thread(new Runnable() {
 				
 				@Override
@@ -279,10 +281,10 @@ public class MemberController extends BaseController {
 		memberDto.setSeq((String)httpSession.getAttribute("sessSeqUsr"));
 		if(Integer.valueOf(memberDto.getSeq()) > 11) {
 			memberDto.setUserPassword(encodeBcrypt(memberDto.getUserPassword(), 10));
-			memberService.pwUpdate(memberDto);
+			service.pwUpdate(memberDto);
 
 		} else {
-			memberService.pwUpdate(memberDto);
+			service.pwUpdate(memberDto);
 
 		}
 		
@@ -293,13 +295,13 @@ public class MemberController extends BaseController {
 	@RequestMapping(value = "/member/userProfileUsrForm")
 	public String userProfileUsrForm(MemberDto memberDto, Model model, HttpSession httpSession) {
 		memberDto.setSeq((String)httpSession.getAttribute("sessSeqUsr"));
-		model.addAttribute("item", memberService.selectOne(memberDto));
+		model.addAttribute("item", service.selectOne(memberDto));
 		return "usr/member/account-profile";
 	}
 	@RequestMapping(value = "/member/userBicycleUsrForm")
 	public String userBicycleUsrForm(MemberDto memberDto, Model model, HttpSession httpSession) {
 		memberDto.setSeq((String)httpSession.getAttribute("sessSeqUsr"));
-		model.addAttribute("item", memberService.selectOne(memberDto));
+		model.addAttribute("item", service.selectOne(memberDto));
 		return "usr/member/account-profile";
 	}
 	@RequestMapping(value = "/member/userBicycleUsrList")
@@ -308,6 +310,16 @@ public class MemberController extends BaseController {
 		model.addAttribute("list", bicycleService.selectOneList(bicycleDto));
 		model.addAttribute("listR", bicycleService.selectList4Reservation(bicycleDto));
 		return "usr/member/account-listings";
+	}
+	@RequestMapping(value = "/member/shopUsrServiceAdmin")
+	public String shopUsrServiceAdmin(Model model, MemberVo vo, HttpSession httpSession, BicycleDto bicycleDto) {
+		bicycleDto.setUserCustomer_seq((String)httpSession.getAttribute("sessSeqUsr"));
+		vo.setSeq((String)httpSession.getAttribute("sessSeqUsr"));
+		bicycleDto.setUserShopSeq(service.select4ShopSeq(vo).getUserShopSeq());
+//		bicycleDto.setShopSeq("1");
+		model.addAttribute("list", bicycleService.selectList4ReservationCheck(bicycleDto));
+		model.addAttribute("listR", bicycleService.selectList4iNr(bicycleDto));
+		return "usr/member/ServiceAdministration";
 	}
 
 }

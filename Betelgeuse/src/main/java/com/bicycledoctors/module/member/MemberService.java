@@ -26,6 +26,9 @@ public class MemberService {
 	public MemberDto selectOne(MemberVo memberVo) {
 		return memberDao.selectOne(memberVo);
 	}
+	public MemberDto select4ShopSeq(MemberVo vo) {
+		return memberDao.select4ShopSeq(vo);
+	}
 	
 	public int insert(MemberDto memberDto) {
 		return memberDao.insert(memberDto);				
