@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="ko" data-bs-theme="light" data-pwa="true" xmlns:th="http://www.thymeleaf.org">
+  
+<div th:replace="~{usr/include/LoginedHead :: LoginedHead}"></div>
+
+  <!-- Body -->
+  <body class="bg-body-tertiary">
+
+
+
+    <!-- Page content -->
+    <main class="content-wrapper"><form id="form" name="form"><input type="hidden" id="bikeSeq" name="bikeSeq"/>
+      <div class="container pt-3 pt-sm-4 pt-md-5 pb-5">
+        <div class="row pt-lg-2 pt-xl-3 pb-1 pb-sm-2 pb-md-3 pb-lg-4 pb-xl-5">
+
+          <!-- Sell car form -->
+          <div class="col-lg-8 col-xl-9">
+            <h1 class="h2">자전거 점검,정비하기</h1>
+
+            <!-- Photos / videos -->
+            <section class="position-relative bg-body rounded p-4 mt-4">
+              <div class="position-relative z-1 pb-md-2 px-md-2">
+                <h2 class="h4 mb-3 mb-sm-4">구동계 정비,점검</h2>
+                <div class="row row-cols-1 row-cols-md-2 g-3 g-md-4 mb-3 mb-md-4">
+                  <div class="col pt-3">
+                    <div class="row" style="margin-top: 0.5ex;">
+                      <div class="col-6" style="margin-top: 1ex;">
+                        <div class="input-group mb-3">
+                          <span class="input-group-text" id="addon-left">
+                            브랜드
+                          </span>
+                          <input type="text" class="form-control" id="driveTrainBrandCd" name="driveTrainBrandCd" aria-label="Username" aria-describedby="addon-left">
+                        </div>
+                      </div>
+                      <div class="col-6" style="margin-top: 1ex;">
+                        <div class="input-group mb-3">
+                          <span class="input-group-text" id="addon-left">
+                            모델명
+                          </span>
+                          <input type="text" class="form-control" id="driveTrainModel" name="driveTrainModel" aria-label="Username" aria-describedby="addon-left">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <label for="date-1" class="form-label">구동계 점검,정비일</label>
+                    <div class="position-relative">
+                      <input type="text" class="form-control form-icon-end" id="driveTrainDate" name="driveTrainDate" data-datepicker placeholder="날짜를 선택해주세요">
+                      <i class="fi-calendar position-absolute top-50 end-0 translate-middle-y me-3"></i>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <label class="form-label">구동계 점검비용</label>
+                    <div class="input-group mb-3">
+                      <span class="input-group-text">
+                        ₩
+                      </span>
+                      <input type="text" style="text-align: right;" class="form-control" aria-label="Amount (to the nearest dollar)">
+                      <span class="input-group-text">원</span>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <label class="form-label">구동계 정비비용</label>
+                    <div class="input-group mb-3">
+                      <span class="input-group-text">
+                        ₩
+                      </span>
+                      <input type="text" style="text-align: right;" class="form-control" aria-label="Amount (to the nearest dollar)">
+                      <span class="input-group-text">원</span>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <label for="description" class="form-label fs-6 fw-semibold">점검 기술서</label>
+                      <p class="fs-sm mb-2">점검 내역을 기입해주세요.</p>
+                      <textarea class="form-control form-control-lg" rows="5" id="description" placeholder="최대 2000자" required></textarea>
+                  </div>
+                  <div class="col">
+                    <label for="description" class="form-label fs-6 fw-semibold">정비 기술서</label>
+                      <p class="fs-sm mb-2">정비 내역을 기입해주세요.</p>
+                      <textarea class="form-control form-control-lg" rows="5" id="description" placeholder="최대 2000자" required></textarea>
+                  </div>
+                </div>
+              <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark rounded d-none d-block-dark"></div>
+            </section>
+            <section class="position-relative bg-body rounded p-4 mt-4">
+              <div class="position-relative z-1 pb-md-2 px-md-2">
+                <h2 class="h4 mb-3 mb-sm-4">브레이크 정비,점검</h2>
+                <div class="row row-cols-1 row-cols-md-2 g-3 g-md-4 mb-3 mb-md-4">
+                  <div class="col pt-3">
+                    <div class="row" style="margin-top: 0.5ex;">
+                      <div class="col-6" style="margin-top: 1ex;">
+                        <div class="input-group mb-3">
+                          <span class="input-group-text" id="addon-left">
+                            브랜드
+                          </span>
+                          <input type="text" class="form-control" id="brakeBrandCd" name="brakeBrandCd" aria-label="Username" aria-describedby="addon-left">
+                        </div>
+                      </div>
+                      <div class="col-6" style="margin-top: 1ex;">
+<!--                         <div class="input-group mb-3"> -->
+<!--                           <span class="input-group-text" id="addon-left"> -->
+<!--                             모델명 -->
+<!--                           </span> -->
+<!--                           <input type="text" class="form-control" id="driveTrainModel" name="driveTrainModel" aria-label="Username" aria-describedby="addon-left"> -->
+<!--                         </div> -->
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <label for="date-1" class="form-label">브레이크 점검,정비일</label>
+                    <div class="position-relative">
+                      <input type="text" class="form-control form-icon-end" id="brakeDate" name="brakeDate" data-datepicker placeholder="날짜를 선택해주세요">
+                      <i class="fi-calendar position-absolute top-50 end-0 translate-middle-y me-3"></i>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <label class="form-label">브레이크 점검비용</label>
+                    <div class="input-group mb-3">
+                      <span class="input-group-text">
+                        ₩
+                      </span>
+                      <input type="text" style="text-align: right;" class="form-control" aria-label="Amount (to the nearest dollar)">
+                      <span class="input-group-text">원</span>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <label class="form-label">브레이크 정비비용</label>
+                    <div class="input-group mb-3">
+                      <span class="input-group-text">
+                        ₩
+                      </span>
+                      <input type="text" style="text-align: right;" class="form-control" aria-label="Amount (to the nearest dollar)">
+                      <span class="input-group-text">원</span>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <label for="description" class="form-label fs-6 fw-semibold">점검 기술서</label>
+                      <p class="fs-sm mb-2">점검 내역을 기입해주세요.</p>
+                      <textarea class="form-control form-control-lg" rows="5" id="description" placeholder="최대 2000자" required></textarea>
+                  </div>
+                  <div class="col">
+                    <label for="description" class="form-label fs-6 fw-semibold">정비 기술서</label>
+                      <p class="fs-sm mb-2">정비 내역을 기입해주세요.</p>
+                      <textarea class="form-control form-control-lg" rows="5" id="description" placeholder="최대 2000자" required></textarea>
+                  </div>
+              <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark rounded d-none d-block-dark"></div>
+            </section>
+            <section class="position-relative bg-body rounded p-4 mt-4">
+              <div class="position-relative z-1 pb-md-2 px-md-2">
+                <h2 class="h4 mb-3 mb-sm-4">휠셋 정비,점검</h2>
+                <div class="row row-cols-1 row-cols-md-2 g-3 g-md-4 mb-3 mb-md-4">
+                  <div class="col pt-3">
+                    <div class="row" style="margin-top: 0.5ex;">
+                      <div class="col-6" style="margin-top: 1ex;">
+                        <div class="input-group mb-3">
+                          <span class="input-group-text" id="addon-left">
+                            브랜드
+                          </span>
+                          <input type="text" class="form-control" id="wheelBrandCd" name="wheelBrandCd" aria-label="Username" aria-describedby="addon-left">
+                        </div>
+                      </div>
+                      <div class="col-6" style="margin-top: 1ex;">
+                        <div class="input-group mb-3">
+                          <span class="input-group-text" id="addon-left">
+                            모델명
+                          </span>
+                          <input type="text" class="form-control" id="wheelModel" name="wheelModel" aria-label="Username" aria-describedby="addon-left">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <label for="date-1" class="form-label">휠셋 점검,정비일</label>
+                    <div class="position-relative">
+                      <input type="text" class="form-control form-icon-end" id="wheelDate" name="wheelDate" data-datepicker placeholder="날짜를 선택해주세요">
+                      <i class="fi-calendar position-absolute top-50 end-0 translate-middle-y me-3"></i>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <label class="form-label">휠셋 점검비용</label>
+                    <div class="input-group mb-3">
+                      <span class="input-group-text">
+                        ₩
+                      </span>
+                      <input type="text" style="text-align: right;" class="form-control" aria-label="Amount (to the nearest dollar)">
+                      <span class="input-group-text">원</span>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <label class="form-label">휠셋 정비비용</label>
+                    <div class="input-group mb-3">
+                      <span class="input-group-text">
+                        ₩
+                      </span>
+                      <input type="text" style="text-align: right;" class="form-control" aria-label="Amount (to the nearest dollar)">
+                      <span class="input-group-text">원</span>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <label for="description" class="form-label fs-6 fw-semibold">점검 기술서</label>
+                      <p class="fs-sm mb-2">점검 내역을 기입해주세요.</p>
+                      <textarea class="form-control form-control-lg" rows="5" id="description" placeholder="최대 2000자" required></textarea>
+                  </div>
+                  <div class="col">
+                    <label for="description" class="form-label fs-6 fw-semibold">정비 기술서</label>
+                      <p class="fs-sm mb-2">정비 내역을 기입해주세요.</p>
+                      <textarea class="form-control form-control-lg" rows="5" id="description" placeholder="최대 2000자" required></textarea>
+                  </div>
+              <!-- <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark rounded d-none d-block-dark"></div> -->
+            </section>
+            <section class="position-relative bg-body rounded p-4 mt-4">
+              <div class="position-relative z-1 pb-md-2 px-md-2">
+                <h2 class="h4 mb-3 mb-sm-4">콕핏 정비,점검</h2>
+                <div class="row row-cols-1 row-cols-md-2 g-3 g-md-4 mb-3 mb-md-4">
+                  <div class="col">
+                    <label class="form-label">콕핏 분야 *</label>
+                    <select class="form-select" data-select multiple aria-label="Multiple select">
+                      <option value="">Select</option>
+                      <option value="핸들바">핸들바</option>
+                      <option value="포크">포크</option>
+                      <option value="헤드셋">헤드셋</option>
+                      <option value="레버">레버</option>
+                      <option value="스템">스템</option>
+                      <option value="기타">기타</option>
+                    </select>
+                  </div>
+                  <div class="col">
+                    <label for="date-1" class="form-label">콕핏 점검,정비일</label>
+                    <div class="position-relative">
+                      <input type="text" class="form-control form-icon-end" id="date-1" data-datepicker placeholder="날짜를 선택해주세요">
+                      <i class="fi-calendar position-absolute top-50 end-0 translate-middle-y me-3"></i>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <label class="form-label">콕핏 점검비용</label>
+                    <div class="input-group mb-3">
+                      <span class="input-group-text">
+                        ₩
+                      </span>
+                      <input type="text" style="text-align: right;" class="form-control" aria-label="Amount (to the nearest dollar)">
+                      <span class="input-group-text">원</span>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <label class="form-label">콕핏 정비비용</label>
+                    <div class="input-group mb-3">
+                      <span class="input-group-text">
+                        ₩
+                      </span>
+                      <input type="text" style="text-align: right;" class="form-control" aria-label="Amount (to the nearest dollar)">
+                      <span class="input-group-text">원</span>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <label for="description" class="form-label fs-6 fw-semibold">점검 기술서</label>
+                      <p class="fs-sm mb-2">점검 내역을 기입해주세요.</p>
+                      <textarea class="form-control form-control-lg" rows="5" id="description" placeholder="최대 2000자" required></textarea>
+                  </div>
+                  <div class="col">
+                    <label for="description" class="form-label fs-6 fw-semibold">정비 기술서</label>
+                      <p class="fs-sm mb-2">정비 내역을 기입해주세요.</p>
+                      <textarea class="form-control form-control-lg" rows="5" id="description" placeholder="최대 2000자" required></textarea>
+                  </div>
+              <!-- <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark rounded d-none d-block-dark"></div> -->
+            </section>
+            <section class="position-relative bg-body rounded p-4 mt-4">
+              <div class="position-relative z-1 pb-md-2 px-md-2">
+                <h2 class="h4 mb-3 mb-sm-4">기타 컴포넌트 정비,점검</h2>
+                <div class="row row-cols-1 row-cols-md-2 g-3 g-md-4 mb-3 mb-md-4">
+                  <div class="col">
+                  	<label for="component" class="form-label">점검,정비 컴포넌트</label>
+                    <input type="text" class="form-control" id="component" placeholder="입력해주세요">
+                  </div>
+                  <div class="col">
+                    <label for="date-1" class="form-label">기타 컴포넌트 점검,정비일</label>
+                    <div class="position-relative">
+                      <input type="text" class="form-control form-icon-end" id="date-1" data-datepicker placeholder="날짜를 선택해주세요">
+                      <i class="fi-calendar position-absolute top-50 end-0 translate-middle-y me-3"></i>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <label class="form-label">기타 컴포넌트 점검비용</label>
+                    <div class="input-group mb-3">
+                      <span class="input-group-text">
+                        ₩
+                      </span>
+                      <input type="text" style="text-align: right;" class="form-control" aria-label="Amount (to the nearest dollar)">
+                      <span class="input-group-text">원</span>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <label class="form-label">기타 컴포넌트 정비비용</label>
+                    <div class="input-group mb-3">
+                      <span class="input-group-text">
+                        ₩
+                      </span>
+                      <input type="text" style="text-align: right;" class="form-control" aria-label="Amount (to the nearest dollar)">
+                      <span class="input-group-text">원</span>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <label for="description" class="form-label fs-6 fw-semibold">점검 기술서</label>
+                      <p class="fs-sm mb-2">점검 내역을 기입해주세요.</p>
+                      <textarea class="form-control form-control-lg" rows="5" id="description" placeholder="최대 2000자" required></textarea>
+                  </div>
+                  <div class="col">
+                    <label for="description" class="form-label fs-6 fw-semibold">정비 기술서</label>
+                      <p class="fs-sm mb-2">정비 내역을 기입해주세요.</p>
+                      <textarea class="form-control form-control-lg" rows="5" id="description" placeholder="최대 2000자" required></textarea>
+                  </div>
+              <!-- <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark rounded d-none d-block-dark"></div> -->
+            </section>
+            <!-- Specifications -->
+            <section class="position-relative bg-body rounded p-4 mt-4">
+              <div class="position-relative z-1 pb-md-2 px-md-2">
+                <h2 class="h4 mb-3 mb-sm-4">소모품 교체</h2>
+                <div class="row row-cols-1 row-cols-md-2 g-3 g-md-4 mb-3 mb-md-4">
+                  <div class="col">
+                    <label class="form-label">소모품 *</label>
+                    <select class="form-select" data-select multiple aria-label="Multiple select">
+                      <option value="">Select</option>
+                      <option value="1">타이어</option>
+                      <option value="2">튜브</option>
+                      <option value="3">실란트</option>
+                      <option value="4">케이블</option>
+                      <option value="5">바테이프</option>
+                      <option value="6">클릿</option>
+                      <option value="7">기타</option>
+                    </select>
+                  </div>
+                  <div class="col">
+                    <label for="date-1" class="form-label">소모품 교체일</label>
+                    <div class="position-relative">
+                      <input type="text" class="form-control form-icon-end" id="date-1" data-datepicker placeholder="날짜를 선택해주세요">
+                      <i class="fi-calendar position-absolute top-50 end-0 translate-middle-y me-3"></i>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <label class="form-label">소모품1 교체비용</label>
+                    <div class="input-group mb-3">
+                      <span class="input-group-text">
+                        ₩
+                      </span>
+                      <input type="text" style="text-align: right;" class="form-control" aria-label="Amount (to the nearest dollar)">
+                      <span class="input-group-text">원</span>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <label class="form-label">소모품2 교체비용</label>
+                    <div class="input-group mb-3">
+                      <span class="input-group-text">
+                        ₩
+                      </span>
+                      <input type="text" style="text-align: right;" class="form-control" aria-label="Amount (to the nearest dollar)">
+                      <span class="input-group-text">원</span>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <label class="form-label">소모품3 교체비용</label>
+                    <div class="input-group mb-3">
+                      <span class="input-group-text">
+                        ₩
+                      </span>
+                      <input type="text" style="text-align: right;" class="form-control" aria-label="Amount (to the nearest dollar)">
+                      <span class="input-group-text">원</span>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <label class="form-label">소모품4 교체비용</label>
+                    <div class="input-group mb-3">
+                      <span class="input-group-text">
+                        ₩
+                      </span>
+                      <input type="text" style="text-align: right;" class="form-control" aria-label="Amount (to the nearest dollar)">
+                      <span class="input-group-text">원</span>
+                    </div>
+                  </div>
+                  <div class="col">
+                    <label class="form-label">소모품5 교체비용</label>
+                    <div class="input-group mb-3">
+                      <span class="input-group-text">
+                        ₩
+                      </span>
+                      <input type="text" style="text-align: right;" class="form-control" aria-label="Amount (to the nearest dollar)">
+                      <span class="input-group-text">원</span>
+                    </div>
+                  </div>                  
+                  <div class="col">
+                    <label class="form-label">총 소모품 교체비용</label>
+                    <div class="input-group mb-3">
+                      <span class="input-group-text">
+                        ₩
+                      </span>
+                      <input type="text" style="text-align: right;" class="form-control" aria-label="Amount (to the nearest dollar)">
+                      <span class="input-group-text">원</span>
+                    </div>
+                  </div>
+                </div>
+                <label for="description" class="form-label fs-6 fw-semibold">소모품 교체 기술서 *</label>
+                <p class="fs-sm mb-2">소모품 교체 상세내역을 기입해주세요.</p>
+                <textarea class="form-control form-control-lg" rows="5" id="description" placeholder="최대 2000자" required></textarea>
+              </div>
+              <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark rounded d-none d-block-dark"></div>
+            </section>
+
+            
+
+
+            <!-- Action buttons -->
+            <section class="d-flex flex-column flex-sm-row justify-content-between gap-3 mt-4">
+              <button type="button" class="btn btn-lg btn-outline-secondary bg-body">
+                <i class="fi-eye fs-lg ms-n1 me-2"></i>
+                미리보기
+              </button>
+              <button type="button" class="btn btn-lg btn-primary">
+                <i class="fi-upload fs-lg ms-n1 me-2"></i>
+                저장하기
+              </button>
+            </section>
+          </div>
+
+
+          <!-- Quick preview (Sidebar) -->
+          <aside class="col-lg-4 col-xl-3 mt-lg-n4">
+            <div class="offcanvas-lg offcanvas-end sticky-lg-top pt-lg-5" id="quickPreview">
+              <div class="offcanvas-header d-lg-block py-3 p-lg-0">
+                <h3 class="h6 pt-lg-5 mb-0">Quick preview</h3>
+                <button type="button" class="btn-close d-lg-none" data-bs-dismiss="offcanvas" data-bs-target="#quickPreview" aria-label="Close"></button>
+              </div>
+              <div class="offcanvas-body d-block pt-2 pb-lg-0">
+
+                <!-- Preview card -->
+                <article class="card hover-effect-scale border-0 mb-3">
+                  <!-- <div class="card-img-top position-relative z-1 overflow-hidden">
+                    <div class="d-flex flex-column gap-2 align-items-start position-absolute top-0 start-0 z-1 pt-1 pt-sm-0 ps-1 ps-sm-0 mt-2 mt-sm-3 ms-2 ms-sm-3">
+                      <span class="badge text-bg-warning"></span>
+                    </div>
+                    <div class="ratio hover-effect-target" style="--fn-aspect-ratio: calc(204 / 306 * 100%)">
+                      <img src="assets/img/add-item/bd/IMG_4871.JPG" alt="Image">
+                    </div>
+                  </div> -->
+                  <div class="card-body position-relative z-1 px-0 px-lg-4 pb-3">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                      <div class="fs-xs text-body-secondary me-3">2024/06/28</div>
+                      <div class="d-flex gap-2 position-relative z-2">
+                        <button type="button" class="btn btn-icon btn-sm btn-outline-secondary animate-pulse rounded-circle" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-sm" title="Wishlist" aria-label="Add to wishlist">
+                          <i class="fi-heart animate-target fs-sm"></i>
+                        </button>
+                        <button type="button" class="btn btn-icon btn-sm btn-outline-secondary animate-shake rounded-circle" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-sm" title="Notify" aria-label="Notify">
+                          <i class="fi-bell animate-target fs-sm"></i>
+                        </button>
+                        <button type="button" class="btn btn-icon btn-sm btn-outline-secondary animate-rotate rounded-circle" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-sm" title="Compare" aria-label="Compare">
+                          <i class="fi-repeat animate-target fs-sm"></i>
+                        </button>
+                      </div>
+                    </div>
+                    <h3 class="h6 mb-2">
+                      <a class="hover-effect-underline stretched-link me-1" href="#!">Look 795 Light RS</a>
+                      <span class="fs-xs fw-normal text-body-secondary">(2021)</span>
+                    </h3>
+                    <p><i class="fi-search"></i><span style="font-size: medium;">점검</span><i class="fi-tool"></i>정비</p>
+                    <table>
+                      <thead>
+                        <th style="width: 10ex;">분야</th>
+                        <th style="width: 6ex;">여부</th>
+                        <th style="width: 12ex;">비용</th>
+                      </thead>
+                      <tr>
+                        <td>브레이크</td>
+                        <td><i class="fi-search"></i><span style="font-size: medium;"></span><i class="fi-tool"></i></td>
+                        <td>20000원</td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div class="card-footer position-relative z-1 bg-transparent border-0 pt-0 px-0 px-lg-4 pb-0 pb-lg-4">
+                    <div class="border-top pt-3">
+                      <div class="row row-cols-2 g-2 fs-sm">
+                        <div class="col d-flex align-items-center gap-2">
+                          총액
+                        </div>
+                        <div class="col d-flex align-items-center gap-2">
+                          287000원
+                        </div>
+                        <!-- <div class="col d-flex align-items-center gap-2">
+                          <i class="fi-gas-pump"></i>
+                          Gasoline
+                        </div>
+                        <div class="col d-flex align-items-center gap-2">
+                          <i class="fi-gearbox"></i>
+                          Automatic
+                        </div> -->
+                      </div>
+                    </div>
+                  </div>
+                  <div class="d-none d-lg-block">
+                    <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark rounded d-none d-block-dark"></div>
+                  </div>
+                </article>
+
+                <hr class="d-lg-none">
+
+                <!-- Progress -->
+                <!-- <div class="position-relative bg-body rounded">
+                  <div class="position-relative z-1 p-lg-3">
+                    <h3 class="h6 mb-1">The quality of content</h3>
+                    <div class="fs-sm text-end mb-2">75%</div>
+                    <div class="progress" role="progressbar" aria-label="Warning example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="height: 4px">
+                      <div class="progress-bar bg-warning rounded-pill" style="width: 75%"></div>
+                    </div>
+                  </div>
+                  <div class="d-none d-lg-block">
+                    <div class="position-absolute top-0 start-0 w-100 h-100 bg-body-tertiary rounded d-none d-block-dark"></div>
+                  </div>
+                </div> -->
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div></form>
+    </main>
+ <div th:replace="~{usr/include/LoginedFooter :: LoginedFooter}"></div>
+<script type="text/javascript">
+let seq = document.querySelector("input[name=bikeSeq]");
+let form = document.querySelector("form[name=form]");
+
+
+
+
+$('.btn-check').on('click', function() {
+	$('#bicycleCateCd').val($(this).val());
+});
+
+
+
+function validationInst() {
+    if(document.getElementById("bicycleName").value == null || document.getElementById("bicycleName").value == "") {
+		document.getElementById("bicycleName").classList.add("is-invalid");
+		document.getElementById("bicycleName").focus();
+		return false;
+	} else {
+		document.getElementById("bicycleName").classList.remove("is-invalid");			
+	}
+}
+
+
+document.getElementById("btnSubmit").onclick = function () {
+	if(validationInst() == false) return false;
+	alert("4");
+	form.action = "/bicycle/bicycleUsrUpdt";
+	form.submit();
+}
+
+</script>
+  </body>
+</html>

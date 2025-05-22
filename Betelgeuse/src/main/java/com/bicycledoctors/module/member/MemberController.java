@@ -21,10 +21,9 @@ import com.bicycledoctors.common.base.BaseController;
 import com.bicycledoctors.common.util.UtilDateTime;
 import com.bicycledoctors.module.bicycle.BicycleDto;
 import com.bicycledoctors.module.bicycle.BicycleService;
-import com.bicycledoctors.module.code.CodeController;
-import com.bicycledoctors.module.codegroup.CodeGroupDto;
-import com.bicycledoctors.module.codegroup.CodeGroupVo;
 import com.bicycledoctors.module.mail.MailService;
+import com.bicycledoctors.module.reservation.ReservationService;
+import com.bicycledoctors.module.reservation.ReservationVo;
 
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -42,6 +41,9 @@ public class MemberController extends BaseController {
 	
 	@Autowired
 	BicycleService bicycleService;
+	
+	@Autowired
+	ReservationService reservationService;
 	
 	@RequestMapping(value = "/member/memberXdmList")
 	public String memberXdmList(MemberVo vo, Model model) {
@@ -323,13 +325,12 @@ public class MemberController extends BaseController {
 		return "usr/member/account-listings";
 	}
 	@RequestMapping(value = "/member/shopUsrServiceAdmin")
-	public String shopUsrServiceAdmin(Model model, MemberVo vo, HttpSession httpSession, BicycleDto bicycleDto) {
+	public String shopUsrServiceAdmin(Model model, MemberVo vo, HttpSession httpSession, BicycleDto bicycleDto, ReservationVo reservationVo) {
 		bicycleDto.setUserCustomer_seq((String)httpSession.getAttribute("sessSeqUsr"));
 		vo.setSeq((String)httpSession.getAttribute("sessSeqUsr"));
-		bicycleDto.setUserShopSeq(service.select4ShopSeq(vo).getUserShopSeq());
-//		bicycleDto.setShopSeq("1");
-		model.addAttribute("list", bicycleService.selectList4ReservationCheck(bicycleDto));
-		model.addAttribute("listR", bicycleService.selectList4iNr(bicycleDto));
+		reservationVo.setUserShopSeq(service.select4ShopSeq(vo).getUserShopSeq());
+		model.addAttribute("list", reservationService.selectList4ReservationCheck(reservationVo));
+		model.addAttribute("listR", reservationService.selectList4iNr(reservationVo));
 		return "usr/member/ServiceAdministration";
 	}
 

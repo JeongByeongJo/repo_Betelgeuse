@@ -41,4 +41,14 @@ public class ReservationController {
 		model.addAttribute("serviceList", service.selectList4ServiceView(vo));
 		return "usr/member/ServiceAdministration :: modalContent";
 	}
+
+	@ResponseBody
+	@RequestMapping(value = "/shop/resrvUsrProc")
+	public void resrvUsrProc(ReservationDto dto) {
+		if (dto.getBikeStatus() == 122) {
+			service.rsrvYesUpdt(dto);
+		} else {
+			service.rsrvNoUpdt(dto);
+		}
+	}
 }

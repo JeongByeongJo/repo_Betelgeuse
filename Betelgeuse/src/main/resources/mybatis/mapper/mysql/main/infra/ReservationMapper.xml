@@ -94,4 +94,109 @@
 		where 1=1
 			and reservation_rsrvSeq = #{rsrvSeq}
 	</select>
+	
+	<select id="selectList4ReservationCheck" resultMap="resultMapObj">
+		SELECT 
+			b.bikeSeq,
+		    b.bicycleName,
+		    b.bicycleCateCd,
+		    b.bicycleBrandCd,
+		    b.bicycleModel,
+		    b.bicycleYears,
+		    b.bicycleMiles,
+		    b.bicycleSN,
+		    b.drivetrainBrandCd,
+		    b.drivetrainModel,
+		    b.brakeBrandCd,
+		    b.isElectDrivetrain,
+		    b.isDiskBrakes,
+		    b.isHydrauric,
+		    b.isInternal,
+		    b.wheelBrandCd,
+		    b.wheelModel,
+		    b.bicycleDescribe,
+		    b.bikeStatus,
+		    b.latestiNrDate,
+		    b.bikeDelNy,
+		    b.instDate,
+		    b.updtDate,
+		    b.userCustomer_seq,
+		    r.rsrvSeq,
+		    (select userShopSeq from usercustomer where seq=#{userShopSeq}) as userShopSeq
+ 		from
+			bicycle as b
+			left join reservation r on b.bikeSeq = r.bicycle_bikeSeq
+		where 1=1
+			and r.shop_shopSeq = #{userShopSeq}
+			and b.bikeStatus = 121
+<!-- 			and a.bikeStatus &gt;= 120 -->
+<!-- 			and a.bikeStatus &lt;= 121 -->
+	</select>
+	<select id="selectList4iNr" resultMap="resultMapObj">
+		SELECT 
+			b.bikeSeq,
+		    b.bicycleName,
+		    b.bicycleCateCd,
+		    b.bicycleBrandCd,
+		    b.bicycleModel,
+		    b.bicycleYears,
+		    b.bicycleMiles,
+		    b.bicycleSN,
+		    b.drivetrainBrandCd,
+		    b.drivetrainModel,
+		    b.brakeBrandCd,
+		    b.isElectDrivetrain,
+		    b.isDiskBrakes,
+		    b.isHydrauric,
+		    b.isInternal,
+		    b.wheelBrandCd,
+		    b.wheelModel,
+		    b.bicycleDescribe,
+		    b.bikeStatus,
+		    b.latestiNrDate,
+		    b.bikeDelNy,
+		    b.instDate,
+		    b.updtDate,
+		    b.userCustomer_seq,
+		    r.rsrvSeq,
+		    (select userShopSeq from usercustomer where seq=#{userShopSeq}) as userShopSeq
+ 		from
+			bicycle as b
+			left join reservation r on b.bikeSeq = r.bicycle_bikeSeq
+		where 1=1
+			and r.shop_shopSeq = #{userShopSeq}
+			and b.bikeStatus between 122 and 123
+<!-- 			and a.bikeStatus &gt;= 120 -->
+<!-- 			and a.bikeStatus &lt;= 121 -->
+	</select>
+	<update id="rsrvYesUpdt">
+		update bicycle set
+			bikeStatus = 122
+		    ,updtDate = DATE_FORMAT(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul'), '%Y-%m-%d %H:%i:%S')
+		where
+			bikeSeq = #{bikeSeq}
+	</update>
+	<update id="rsrvNoUpdt">
+		update bicycle set
+			bikeStatus = 120
+		    ,updtDate = DATE_FORMAT(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul'), '%Y-%m-%d %H:%i:%S')
+		where
+			bikeSeq = #{bikeSeq}
+	</update>
+	<select id="selectOneCountRsrvList" resultType="Integer">
+    	SELECT count(*)
+    	FROM bicycle as b
+			left join reservation r on b.bikeSeq = r.bicycle_bikeSeq
+		where 1=1
+			and r.shop_shopSeq = (select userShopSeq from usercustomer where seq = #{seq})
+			and b.bikeStatus = 121
+    </select>
+	<select id="selectOneCountInRList" resultType="Integer">
+    	SELECT count(*)
+    	FROM bicycle as b
+			left join reservation r on b.bikeSeq = r.bicycle_bikeSeq
+		where 1=1
+			and r.shop_shopSeq = (select userShopSeq from usercustomer where seq = #{seq})
+			and b.bikeStatus between 122 and 123
+    </select>
 </mapper>

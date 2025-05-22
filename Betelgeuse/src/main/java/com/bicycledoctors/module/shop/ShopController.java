@@ -185,6 +185,10 @@ public class ShopController extends BaseController {
 		model.addAttribute("item", service.selectOne4Pic(dto));
 		return "usr/shop/ShopaddpicUsrForm";
 	}
+	@RequestMapping(value = "/shop/inspectNrepairUsrForm")
+	public String inspectNrepairUsrForm() {
+		return "usr/shop/InRUsrform";
+	}
 	
 	@RequestMapping(value = "/shop/shopaddlocationUsrInst")
 	public String shopaddlocationUsrInst(ShopDto dto, Model model, ShopDto vo) {
@@ -202,6 +206,9 @@ public class ShopController extends BaseController {
 		service.update4(dto);
 		return "redirect:/index/home-logined";
 	}
+	
+	
+	
 	
 	@ResponseBody
 	@RequestMapping(value = "/shop/shopFilterUsrProc")

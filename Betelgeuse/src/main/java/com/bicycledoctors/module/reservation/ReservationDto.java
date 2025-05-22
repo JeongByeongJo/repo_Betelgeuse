@@ -2,7 +2,7 @@ package com.bicycledoctors.module.reservation;
 
 import com.bicycledoctors.module.bicycle.BicycleDto;
 
-public class ReservationDto extends BicycleDto{
+public class ReservationDto extends BicycleDto {
 	private String rsrvSeq;
 	private int reservationDateCd;
 	private String reservationDate;
@@ -18,6 +18,7 @@ public class ReservationDto extends BicycleDto{
 	private String availableServiceCd;
 	private String userName;
 	private String userTel;
+	private Integer xCount;
 //	-----
 	public String getRsrvSeq() {
 		return rsrvSeq;
@@ -108,6 +109,12 @@ public class ReservationDto extends BicycleDto{
 	}
 	public void setUserTel(String userTel) {
 		this.userTel = userTel;
+	}
+	public Integer getxCount() {
+		return xCount;
+	}
+	public void setxCount(Integer xCount) {
+		this.xCount = xCount;
 	}
 	
 }

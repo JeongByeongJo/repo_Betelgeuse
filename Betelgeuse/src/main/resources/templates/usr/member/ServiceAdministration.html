@@ -4,7 +4,7 @@
 
 
     <!-- Page content -->
-    <main class="content-wrapper">
+    <main class="content-wrapper"><form id="formList" name="formList" method="get"><input type="hidden" name="bikeSeq"/>
       <div class="container pt-4 pt-sm-5 pb-5 mb-xxl-3">
         <div class="row pt-2 pt-sm-0 pt-lg-2 pb-2 pb-sm-3 pb-md-4 pb-lg-5">
 
@@ -72,12 +72,12 @@
               <ul class="nav nav-pills flex-nowrap gap-2 pb-2 mb-1" role="tablist">
                 <li class="nav-item me-1" role="presentation">
                   <button type="button" class="nav-link text-nowrap active" id="published-tab" data-bs-toggle="pill" data-bs-target="#published" role="tab" aria-controls="published" aria-selected="true">
-                    예약신청 자전거 (3)
+                    예약신청 자전거 (<span th:text="${@reservationService.selectOneCountRsrvList(session.sessSeqUsr)}"></span>)
                   </button>
                 </li>
                 <li class="nav-item me-1" role="presentation">
                   <button type="button" class="nav-link text-nowrap" id="drafts-tab" data-bs-toggle="pill" data-bs-target="#drafts" role="tab" aria-controls="drafts" aria-selected="false">
-                    점검&정비 자전거 (1)
+                    점검&정비 자전거 (<span th:text="${@reservationService.selectOneCountInRList(session.sessSeqUsr != null ? session.sessSeqUsr : 0)}"></span>)
                   </button>
                 </li>
                 <li class="nav-item" role="presentation">
@@ -111,7 +111,8 @@
                 <div class="vstack gap-4" id="publishedSelection">
 
                   <!-- Item -->
-                  <div class="d-sm-flex align-items-center" th:each="list : ${list}">
+                  <div class="d-sm-flex align-items-center" th:if="${#lists.isEmpty(list)}"><h4>예약신청중인 자전거가 없습니다.</h4></div>
+                  <div class="d-sm-flex align-items-center" th:if="${!#lists.isEmpty(list)}" th:each="list : ${list}">
                   <input type="hidden" id="rsrvSeq" name="rsrvSeq" th:value="${list.rsrvSeq}"/>
                     <div class="d-inline-flex position-relative z-2 pt-1 pb-2 ps-2 p-sm-0 ms-2 ms-sm-0 me-sm-2">
                       <div class="form-check position-relative z-1 fs-lg m-0">
@@ -145,25 +146,25 @@
                                   </button>
                                   <ul class="dropdown-menu dropdown-menu-end">
                                     <li>
-                                      <a class="dropdown-item" th:id="viewReservation" href="javascript:void(0);" th:attr="onclick=|goAjax ('${list?.rsrvSeq}')|" data-bs-toggle="modal" data-bs-target="#modalId">
+                                      <a class="dropdown-item" th:id="viewReservation" href="javascript:void(0);" th:attr="onclick=|goAjax ('${list?.rsrvSeq}')|">
                                         <i class="fi-edit opacity-75 me-2"></i>
                                         예약내용보기
                                       </a>
                                     </li>
+<!--                                     <li> -->
+<!--                                       <a class="dropdown-item" th:id="viewHistory" href="#!"> -->
+<!--                                         <i class="fi-zap fs-base opacity-75 me-2"></i> -->
+<!--                                         점검이력보기 -->
+<!--                                       </a> -->
+<!--                                     </li> -->
                                     <li>
-                                      <a class="dropdown-item" th:id="viewHistory" href="#!">
-                                        <i class="fi-zap fs-base opacity-75 me-2"></i>
-                                        점검이력보기
-                                      </a>
-                                    </li>
-                                    <li>
-                                      <a class="dropdown-item" th:id="approveReservation" href="#!">
+                                      <a class="dropdown-item" th:id="approveReservation" href="javascript:void(0);" th:attr="onclick=|goYeservation ('${list?.bikeSeq}')|">
                                         <i class="fi-archive opacity-75 me-2"></i>
                                         예약승인
                                       </a>
                                     </li>
                                     <li>
-                                      <a class="dropdown-item text-danger" th:id="rejectReservation" href="#!">
+                                      <a class="dropdown-item text-danger" th:id="rejectReservation" href="javascript:void(0);" th:attr="onclick=|goNeservation ('${list?.bikeSeq}')|">
                                         <i class="fi-trash opacity-75 me-2"></i>
                                         예약반려
                                       </a>
@@ -219,8 +220,8 @@
                 </div>
 
                 <!-- Drafts listings -->
-                <div class="vstack gap-4" id="draftsSelection"><div >
-				<div class="d-sm-flex align-items-center" th:if="${#lists.isEmpty(listR)}"> 예약 또는 점검,정비 중인 자전거가 없습니다.</div>
+                <div class="vstack gap-4" id="draftsSelection">
+				<div class="d-sm-flex align-items-center" th:if="${#lists.isEmpty(listR)}"><h4> 예약 또는 점검,정비 중인 자전거가 없습니다.</h4></div>
 				<div class="d-sm-flex align-items-center" th:if="${!#lists.isEmpty(listR)}" th:each="listR : ${listR}">
 					<input type="hidden" id="shopSeq" name="shopSeq" />
 	                    <div class="d-inline-flex position-relative z-2 pt-1 pb-2 ps-2 p-sm-0 ms-2 ms-sm-0 me-sm-2">
@@ -255,7 +256,7 @@
 	                                  </button>
 	                                  <ul class="dropdown-menu dropdown-menu-end">
 	                                    <li>
-	                                      <a class="dropdown-item" href = "javascript:void(0);" th:attr="onclick=|goForm('${listR.bikeSeq}')|">
+	                                      <a class="dropdown-item" href = "/shop/inspectNrepairUsrForm" th:attr="onclick=|goInR('${listR.bikeSeq}')|">
 	                                        <i class="fi-edit opacity-75 me-2"></i>
 	                                        점검,정비 입력
 	                                      </a>
@@ -290,7 +291,7 @@
 	                        </div>
 	                      </div>
 	                    </article>
-	                  </div></div>
+	                  </div>
                   <!-- Item -->
                   <div class="d-sm-flex align-items-center">
                     <div class="d-inline-flex position-relative z-2 pt-1 pb-2 ps-2 p-sm-0 ms-2 ms-sm-0 me-sm-2">
@@ -367,7 +368,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div></form>
     </main>
 
 <!-- Basic modal markup -->
@@ -441,6 +442,44 @@ goAjax = function (keyValue) {
 	});
 }
 
+goYeservation = function (keyValue) {
+	$.ajax({
+		async: true 
+		,cache: false
+		,type: "post"
+		,url: "/shop/resrvUsrProc"
+		,data: {"bikeSeq" : keyValue, "bikeStatus" : 122}
+		,success: function() {
+			location.href="/member/shopUsrServiceAdmin";
+        }
+		,error : function(jqXHR, textStatus, errorThrown){
+			alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+		}
+	});
+}
+goNeservation = function (keyValue) {
+	$.ajax({
+		async: true 
+		,cache: false
+		,type: "post"
+		,url: "/shop/resrvUsrProc"
+		,data: {"bikeSeq" : keyValue, "bikeStatus" : 120}
+		,success: function() {
+			location.href="/member/shopUsrServiceAdmin";
+        }
+		,error : function(jqXHR, textStatus, errorThrown){
+			alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+		}
+	});
+}
+let form = document.querySelector("form[name=formList]");
+let seq = document.querySelector("input[name=bikeSeq]");
+
+goInR = function (keyValue) {
+    seq.value = keyValue;
+    form.action = "/shop/inspectNrepairUsrForm";
+    form.submit();
+}
 
 </script>
 </html>

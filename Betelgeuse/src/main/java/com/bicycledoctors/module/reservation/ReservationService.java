@@ -25,6 +25,13 @@ public class ReservationService extends BaseService {
 		return dao.rsrvServicesInst(listAS);
 	}
 	
+	public int rsrvYesUpdt(ReservationDto dto) {
+		return dao.rsrvYesUpdt(dto);
+	}
+	public int rsrvNoUpdt(ReservationDto dto) {
+		return dao.rsrvNoUpdt(dto);
+	}
+	
 	public ReservationDto selectOne4View(ReservationVo vo) {
 		return dao.selectOne4View(vo);
 	}
@@ -33,9 +40,31 @@ public class ReservationService extends BaseService {
 		return dao.selectList4ServiceView(vo);
 	}
 	
+	public List<ReservationDto> selectList4ReservationCheck(ReservationVo vo) {
+		return dao.selectList4ReservationCheck(vo);
+	}
+	public List<ReservationDto> selectList4iNr(ReservationVo vo) {
+		return dao.selectList4iNr(vo);
+	}
+	
+	
 	public LocalDate num2Date(int i) {
 		LocalDate today = LocalDate.now();
 		LocalDate date = today.plusDays(i);
 		return date;
+	}
+	
+//	-----
+	public Integer selectOneCountRsrvList(Integer seq) {
+		ReservationVo vo = new ReservationVo();
+		vo.setSeq(seq.toString());
+		Integer countRsrv = dao.selectOneCountRsrvList(vo);
+		return countRsrv;
+	}
+	public Integer selectOneCountInRList(Integer seq) {
+		ReservationVo vo = new ReservationVo();
+		vo.setSeq(seq.toString());
+		Integer countInR = dao.selectOneCountInRList(vo);
+		return countInR;
 	}
 }
