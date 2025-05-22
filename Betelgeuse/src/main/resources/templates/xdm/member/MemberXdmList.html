@@ -175,13 +175,11 @@
 
   </main><!-- End #main -->
 <div th:replace="~{xdm/include/footerNice :: footerNice}"></div>
-<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+
 <script>
-	let today = new Date();
-	let date = today.getFullYear().toString() + (today.getMonth() + 1).toString().padStart(2, '0') + today.getDate().toString().padStart(2, '0');
 	document.getElementById("btnExls").addEventListener('click', function() {
-	  var wb = XLSX.utils.table_to_book(document.getElementById("memberTable"));
-	  XLSX.writeFile(wb, "MemberTable"+date+".xlsx");
+		form.action = "/member/excelDownload";
+		form.submit();
 	});
 </script>
 	<script>

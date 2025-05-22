@@ -92,7 +92,7 @@
 			
 
               <!-- Table with stripped rows -->
-              <table class="table datatable" style="text-align: center;">
+              <table class="table datatable" id="bicycleTable" style="text-align: center;">
                 <thead>
                   <tr>
                     <th data-sortable="false"  style="text-align: center; width: 100px;"><div class="checked"><input type="checkbox" class="form-check" name="allChk" onclick='selectAll(this)'></div></th>
@@ -165,7 +165,7 @@
                 </div>
                 <div class="col-md-6 padding-right" style="display: flex; justify-content: end;">
                     
-                    <button class="btn btn-success btn-right"><i class="bi bi-journal-x"></i></button>
+                    <button type="button" id="btnExls" class="btn btn-success btn-right"><i class="bi bi-journal-x"></i></button>
 <!--                   <button type="button" id="btnForm" class="btn btn-primary"><i class="bi bi-plus-lg"></i></button> -->
                 </div>
                 </div>
@@ -194,7 +194,15 @@
 		</div>
   </main><!-- End #main -->
 <div th:replace="~{xdm/include/footerNice :: footerNice}"></div>
-
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+<script>
+	let today = new Date();
+	let date = today.getFullYear().toString() + (today.getMonth() + 1).toString().padStart(2, '0') + today.getDate().toString().padStart(2, '0');
+	document.getElementById("btnExls").addEventListener('click', function() {
+	  var wb = XLSX.utils.table_to_book(document.getElementById("bicycleTable"));
+	  XLSX.writeFile(wb, "bicycleTable"+date+".xlsx");
+	});
+</script>
 	<script>
 		let form = document.querySelector("form[name=formList]");
 		let seq = document.querySelector("input[name=cdSeq]");
