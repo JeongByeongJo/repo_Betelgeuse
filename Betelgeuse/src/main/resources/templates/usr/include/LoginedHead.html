@@ -207,14 +207,8 @@
             <ul class="dropdown-menu dropdown-menu-end" style="--fn-dropdown-spacer: .5rem">
               <li><span class="h6 dropdown-header">[[${session.sessNameUsr}]]</span></li>
               <li>
-                <a class="dropdown-item" href="account-profile.html">
-                  <i class="fi-user opacity-75 me-2"></i>
-                  내 정보
-                </a>
-              </li>
-              <li>
                 <a class="dropdown-item" href="/member/userBicycleUsrList">
-                  <i class="fi-layers opacity-75 me-2"></i>
+                  <i class="fi-bicycle opacity-75 me-2"></i>
                   내 자전거
                 </a>
               </li>
@@ -231,15 +225,15 @@
                 </a>
               </li>
               <li>
-                <a class="dropdown-item" href="account-payment.html">
-                  <i class="fi-credit-card opacity-75 me-2"></i>
-                  Payment details
-                </a>
-              </li>
-              <li>
                 <a class="dropdown-item" href="/member/userInfosettingUsrForm">
                   <i class="fi-settings opacity-75 me-2"></i>
                   계정설정
+                </a>
+              </li>
+              <li th:if="${session.sessCateUsr} == 4">
+                <a class="dropdown-item" aria-current="page" href="/member/shopUsrServiceAdmin">
+                  <i class="fi-tool opacity-75 me-2"></i>
+                  예약, 점검정비 관리
                 </a>
               </li>
               <li><hr class="dropdown-divider"></li>

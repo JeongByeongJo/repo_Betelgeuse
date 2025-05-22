@@ -94,7 +94,7 @@
             </div>
 
               <!-- Table with stripped rows -->
-              <table class="table datatable" style="text-align: center;">
+              <table class="table datatable" id="codeGroupTable" style="text-align: center;">
                 <thead>
                   <tr>
                     
@@ -164,7 +164,7 @@
                 </div>
                 <div class="col-md-6 padding-right" style="display: flex; justify-content: end;">
                     
-                    <button class="btn btn-success btn-right"><i class="bi bi-journal-x"></i></button>
+                    <button type="button" id="btnExls" class="btn btn-success btn-right"><i class="bi bi-journal-x"></i></button>
 					<button type="button" id="btnForm" class="btn btn-primary"><i class="bi bi-plus-lg"></i></button>
                 </div>
                 </div>
@@ -192,108 +192,110 @@
 		</div>
   </main><!-- End #main -->
 <div th:replace="~{xdm/include/footerNice :: footerNice}"></div>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+<script>
+	let today = new Date();
+	let date = today.getFullYear().toString() + (today.getMonth() + 1).toString().padStart(2, '0') + today.getDate().toString().padStart(2, '0');
+	document.getElementById("btnExls").addEventListener('click', function() {
+	  var wb = XLSX.utils.table_to_book(document.getElementById("codeGroupTable"));
+	  XLSX.writeFile(wb, "CodeGroupTable"+date+".xlsx");
+	});
+</script>
+<script type="text/javascript">	
+	let form = document.querySelector("form[name=formList]");
+	let seq = document.querySelector("input[name=cdgSeq]");
+	
+	$.datetimepicker.setLocale('ko');
+	$(window).on("load", function () {
+		$(function(){
+			 $('#shDateStart').datetimepicker({
+			  format:'Y-m-d',
+			  onShow:function( ct ){
+			   this.setOptions({
+			    maxDate:$('#shDateEnd').val()?$('#shDateEnd').val():false
+			   })
+			  },
+			  timepicker:false
+			 });
+			 $('#shDateEnd').datetimepicker({
+			  format:'Y-m-d',
+			  onShow:function( ct ){
+			   this.setOptions({
+			    minDate:$('#shDateStart').val()?$('#shDateStart').val():false
+			   })
+			  },
+			  timepicker:false
+			 });
+		});
+    });
+	
+	document.getElementById("btnSearch").onclick = function () {
+		form.action = "/codegroup/codegroupXdmList";
+		form.submit();
+	};
+	
+	document.getElementById("btnReset").onclick = function () {
+		location = "/codegroup/codegroupXdmList";
+	};
+	
+	goList = function (thisPage) {
+	    document.querySelector("input[name=thisPage]").value = thisPage;
+	    form.action = "/codegroup/codegroupXdmList";
+	    form.submit();
+	}
+	document.getElementById("changeRowNum").onchange = function () {
+	    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
+	    form.action = "/codegroup/codegroupXdmList";
+	    form.submit();
+	}
+	
+	document.getElementById("btnForm").onclick = function () {
+	    goForm(0);
+	}
+	goForm = function (keyValue) {
+	    seq.value = keyValue;
+	    form.action = "/codegroup/codegroupXdmForm";
+	    form.submit();
+	}
+	
+	if(document.getElementById("btnUelete")){
+		document.getElementById("btnUelete").onclick = function () {
+			document.querySelector("#modalConfirmTitle").textContent = "확 인";
+			document.querySelector("#modalConfirmBody").textContent = "해당 데이터를 삭제하시겠습니까 ?";
+			document.querySelector("#btnModalUelete").style.display = '';
+			document.querySelector("#btnModalDelete").style.display = 'none';
+			$("#modalConfirm").modal("show");      	
+		}
+	}
+	
+	function checkSelectAll()  {
+		  // 전체 체크박스
+		  const checkboxes 
+		    = document.querySelectorAll('input[name="eachChk"]');
+		  // 선택된 체크박스
+		  const checked 
+		    = document.querySelectorAll('input[name="eachChk"]:checked');
+		  // select all 체크박스
+		  const selectAll 
+		    = document.querySelector('input[name="allChk"]');
+		  
+		  if(checkboxes.length === checked.length)  {
+		    selectAll.checked = true;
+		  }else {
+		    selectAll.checked = false;
+		  }
 
-	<script type="text/javascript">	
-		let form = document.querySelector("form[name=formList]");
-		let seq = document.querySelector("input[name=cdgSeq]");
-		
-		$.datetimepicker.setLocale('ko');
-		$(window).on("load", function () {
-			$(function(){
-				 $('#shDateStart').datetimepicker({
-				  format:'Y-m-d',
-				  onShow:function( ct ){
-				   this.setOptions({
-				    maxDate:$('#shDateEnd').val()?$('#shDateEnd').val():false
-				   })
-				  },
-				  timepicker:false
-				 });
-				 $('#shDateEnd').datetimepicker({
-				  format:'Y-m-d',
-				  onShow:function( ct ){
-				   this.setOptions({
-				    minDate:$('#shDateStart').val()?$('#shDateStart').val():false
-				   })
-				  },
-				  timepicker:false
-				 });
-			});
-	    });
-		
-		document.getElementById("btnSearch").onclick = function () {
-			form.action = "/codegroup/codegroupXdmList";
-			form.submit();
-		};
-		
-		document.getElementById("btnReset").onclick = function () {
-			location = "/codegroup/codegroupXdmList";
-		};
-		
-		goList = function (thisPage) {
-		    document.querySelector("input[name=thisPage]").value = thisPage;
-		    form.action = "/codegroup/codegroupXdmList";
-		    form.submit();
 		}
-		document.getElementById("changeRowNum").onchange = function () {
-		    document.getElementById("rowNumToShow").value = document.getElementById("changeRowNum").value;
-		    form.action = "/codegroup/codegroupXdmList";
-		    form.submit();
-		}
-		
-		document.getElementById("btnForm").onclick = function () {
-		    goForm(0);
-		}
-		goForm = function (keyValue) {
-		    seq.value = keyValue;
-		    form.action = "/codegroup/codegroupXdmForm";
-		    form.submit();
-		}
-		
-		if(document.getElementById("btnUelete")){
-			document.getElementById("btnUelete").onclick = function () {
-				document.querySelector("#modalConfirmTitle").textContent = "확 인";
-				document.querySelector("#modalConfirmBody").textContent = "해당 데이터를 삭제하시겠습니까 ?";
-				document.querySelector("#btnModalUelete").style.display = '';
-				document.querySelector("#btnModalDelete").style.display = 'none';
-				$("#modalConfirm").modal("show");      	
-			}
-		}
-		
-// 		document.getElementById("btnModalUelete").onclick = function () {
-// 		    form.action = "/codegroup/CodegroupXdmUele";
-// 		    form.submit();
-// 		}
-		
-		
-		function checkSelectAll()  {
-			  // 전체 체크박스
-			  const checkboxes 
-			    = document.querySelectorAll('input[name="eachChk"]');
-			  // 선택된 체크박스
-			  const checked 
-			    = document.querySelectorAll('input[name="eachChk"]:checked');
-			  // select all 체크박스
-			  const selectAll 
-			    = document.querySelector('input[name="allChk"]');
-			  
-			  if(checkboxes.length === checked.length)  {
-			    selectAll.checked = true;
-			  }else {
-			    selectAll.checked = false;
-			  }
 
-			}
-
-			function selectAll(selectAll)  {
-			  const checkboxes 
-			     = document.getElementsByName('eachChk');
-			  
-			  checkboxes.forEach((checkbox) => {
-			    checkbox.checked = selectAll.checked
-			  })
-			}
-	</script>
+		function selectAll(selectAll)  {
+		  const checkboxes 
+		     = document.getElementsByName('eachChk');
+		  
+		  checkboxes.forEach((checkbox) => {
+		    checkbox.checked = selectAll.checked
+		  })
+		}
+</script>
 	
 </body>
 </html>

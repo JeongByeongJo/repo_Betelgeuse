@@ -11,6 +11,7 @@ public class ReservationVo extends BaseVo {
 	private String shopSeq;
 	private String bicycle_bikeSeq;
 	private String bikeSeq;
+	private String rsrvDesc;
 //	----
 	public String getRsrvSeq() {
 		return rsrvSeq;
@@ -59,6 +60,12 @@ public class ReservationVo extends BaseVo {
 	}
 	public void setBikeSeq(String bikeSeq) {
 		this.bikeSeq = bikeSeq;
+	}
+	public String getRsrvDesc() {
+		return rsrvDesc;
+	}
+	public void setRsrvDesc(String rsrvDesc) {
+		this.rsrvDesc = rsrvDesc;
 	}
 	
 	

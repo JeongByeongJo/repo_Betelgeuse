@@ -10,11 +10,13 @@
 		,reservationTime
 		,shop_shopSeq
 		,bicycle_bikeSeq
+		,rsrvDesc
 	) VALUES (
 		#{reservationDate}
 		,#{reservationTime}
 		,#{shopSeq}
 		,#{bikeSeq}
+		,#{rsrvDesc}
 	)
 	<selectKey resultType="String" keyProperty="rsrvSeq" order="AFTER">
 			SELECT last_insert_id()
@@ -36,10 +38,60 @@
 	
 	<update id="bikeStatusUpdt">
 		update bicycle set
-			bikeStatus = 120
+			bikeStatus = 121
 		    ,updtDate = CURRENT_TIMESTAMP
 		where
 			bikeSeq = #{bikeSeq}
 	</update>
 	
+	<select id="selectOne4View" resultMap="resultMapObj">
+		SELECT 
+		    r.rsrvSeq
+		    ,r.shop_shopSeq
+		    ,r.bicycle_bikeSeq
+		    ,r.reservationDate
+		    ,r.reservationTime
+		    ,r.rsrvDesc
+		    ,r.reservedNy
+			,b.bikeSeq
+		    ,b.bicycleName
+		    ,b.bicycleCateCd
+		    ,b.bicycleBrandCd
+		    ,b.bicycleModel
+		    ,b.bicycleYears
+		    ,b.bicycleMiles
+		    ,b.bicycleSN
+		    ,b.drivetrainBrandCd
+		    ,b.drivetrainModel
+		    ,b.brakeBrandCd
+		    ,b.isElectDrivetrain
+		    ,b.isDiskBrakes
+		    ,b.isHydrauric
+		    ,b.isInternal
+		    ,b.wheelBrandCd
+		    ,b.wheelModel
+		    ,b.bicycleDescribe
+		    ,b.bikeStatus
+		    ,b.latestiNrDate
+		    ,b.bikeDelNy
+		    ,b.instDate
+		    ,b.updtDate
+		    ,b.userCustomer_seq
+		    ,u.userName
+		    ,u.userTel
+ 		from
+			reservation r
+			left join bicycle as b on r.bicycle_bikeSeq = b.bikeSeq
+			left join usercustomer as u on b.userCustomer_seq = u.seq
+		where 1=1
+			and r.rsrvSeq = #{rsrvSeq}
+	</select>
+	<select id="selectList4ServiceView" resultMap="resultMapObj">
+		SELECT 
+		    availableServiceCd
+ 		from
+			availableService
+		where 1=1
+			and reservation_rsrvSeq = #{rsrvSeq}
+	</select>
 </mapper>

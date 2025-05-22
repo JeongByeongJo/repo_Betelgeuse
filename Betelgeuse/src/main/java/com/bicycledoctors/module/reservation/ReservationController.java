@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bicycledoctors.module.shop.ShopAvailableServiceDto;
 import com.bicycledoctors.module.shop.ShopAvailableServicesDto;
@@ -18,19 +19,26 @@ public class ReservationController {
 	ReservationService service;
 	
 	@RequestMapping(value = "/shop/shopResrvInst")
-	public String shopResrvInst(Model model, ReservationVo vo, ShopAvailableServicesDto listAS) {
+	public String shopResrvInst(Model model, ReservationDto dto, ShopAvailableServicesDto listAS) {
 		List<ShopAvailableServiceDto> dtoList = new ArrayList<>();
-		service.insert(vo);
+		service.insert(dto);
 		if (listAS.getAvailableServiceCd() != null && !listAS.getAvailableServiceCd().isEmpty()) {
 			for (Integer code : listAS.getAvailableServiceCd()) {
 				ShopAvailableServiceDto availableServiceDto = new ShopAvailableServiceDto();
 				availableServiceDto.setShopSeq(listAS.getShopSeq());
 				availableServiceDto.setAvailableServiceCd(code);
-				availableServiceDto.setRsrvSeq(vo.getRsrvSeq());
+				availableServiceDto.setRsrvSeq(dto.getRsrvSeq());
 				dtoList.add(availableServiceDto);
 			}
 		}
 		service.rsrvServicesInst(dtoList);
 		return "redirect:/member/userBicycleUsrList";
+	}
+
+	@RequestMapping(value = "/shop/resrvUsrViewProc")
+	public String resrvUsrViewProc(Model model, ReservationVo vo) {
+		model.addAttribute("view", service.selectOne4View(vo));
+		model.addAttribute("serviceList", service.selectList4ServiceView(vo));
+		return "usr/member/ServiceAdministration :: modalContent";
 	}
 }

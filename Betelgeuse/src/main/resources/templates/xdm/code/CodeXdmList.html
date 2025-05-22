@@ -166,7 +166,7 @@
                 </div>
                 <div class="col-md-6 padding-right" style="display: flex; justify-content: end;">
                     
-                    <button class="btn btn-success btn-right"><i class="bi bi-journal-x"></i></button>
+                  <button type="button" id="btnExls" class="btn btn-success btn-right"><i class="bi bi-journal-x"></i></button>
 <!--                   <a href="/code/CodeXdmForm" class="btn btn-primary"><i class="bi bi-plus-lg"></i></a> -->
                   <button type="button" id="btnForm" class="btn btn-primary"><i class="bi bi-plus-lg"></i></button>
                 </div>
@@ -237,6 +237,11 @@
 		}
 		
 		
+		document.getElementById("btnExls").onclick = function () {
+			alert("D");
+			form.action = "/code/codeXdmExls";
+			form.submit();
+		};
 		document.getElementById("btnSearch").onclick = function () {
 			form.action = "/code/codeXdmList";
 			form.submit();

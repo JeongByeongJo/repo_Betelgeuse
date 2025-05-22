@@ -1,16 +1,23 @@
 package com.bicycledoctors.module.reservation;
 
-import com.bicycledoctors.common.base.BaseDto;
+import com.bicycledoctors.module.bicycle.BicycleDto;
 
-public class ReservationDto extends BaseDto{
+public class ReservationDto extends BicycleDto{
 	private String rsrvSeq;
+	private int reservationDateCd;
 	private String reservationDate;
 	private String reservationTime;
 	private String reservedNy;
 	private String instDate;
 	private String updtDate;
+	private String shopSeq;
 	private String shop_shopSeq;
+	private String bikeSeq;
 	private String bicycle_bikeSeq;
+	private String rsrvDesc;
+	private String availableServiceCd;
+	private String userName;
+	private String userTel;
 //	-----
 	public String getRsrvSeq() {
 		return rsrvSeq;
@@ -59,6 +66,48 @@ public class ReservationDto extends BaseDto{
 	}
 	public void setBicycle_bikeSeq(String bicycle_bikeSeq) {
 		this.bicycle_bikeSeq = bicycle_bikeSeq;
+	}
+	public String getRsrvDesc() {
+		return rsrvDesc;
+	}
+	public void setRsrvDesc(String rsrvDesc) {
+		this.rsrvDesc = rsrvDesc;
+	}
+	public int getReservationDateCd() {
+		return reservationDateCd;
+	}
+	public void setReservationDateCd(int reservationDateCd) {
+		this.reservationDateCd = reservationDateCd;
+	}
+	public String getBikeSeq() {
+		return bikeSeq;
+	}
+	public void setBikeSeq(String bikeSeq) {
+		this.bikeSeq = bikeSeq;
+	}
+	public String getShopSeq() {
+		return shopSeq;
+	}
+	public void setShopSeq(String shopSeq) {
+		this.shopSeq = shopSeq;
+	}
+	public String getAvailableServiceCd() {
+		return availableServiceCd;
+	}
+	public void setAvailableServiceCd(String availableServiceCd) {
+		this.availableServiceCd = availableServiceCd;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getUserTel() {
+		return userTel;
+	}
+	public void setUserTel(String userTel) {
+		this.userTel = userTel;
 	}
 	
 }

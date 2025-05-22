@@ -32,6 +32,7 @@ public class BicycleDto extends BaseDto{
     private String shopName;
     private String shopSeq;
     private String userShopSeq;
+    private String rsrvSeq;
 //    -----
     private Integer uploadImg1Type;
 	private Integer uploadImg1MaxNumber;
@@ -226,6 +227,12 @@ public class BicycleDto extends BaseDto{
 	}
 	public void setShopSeq(String shopSeq) {
 		this.shopSeq = shopSeq;
+	}
+	public String getRsrvSeq() {
+		return rsrvSeq;
+	}
+	public void setRsrvSeq(String rsrvSeq) {
+		this.rsrvSeq = rsrvSeq;
 	}
 	
 }

@@ -9,6 +9,7 @@ public class CodeDto {
 	private String cdNameEng;
 	private String cdgSeq;
 	private String cdgName;
+	private String cdgNameEng;
 	private Integer cdUseNy;
 	private Integer cdDelNy;
 	private String cdInstDate;
@@ -91,6 +92,12 @@ public class CodeDto {
 	}
 	public void setCdUpdtDate(String cdUpdtDate) {
 		this.cdUpdtDate = cdUpdtDate;
+	}
+	public String getCdgNameEng() {
+		return cdgNameEng;
+	}
+	public void setCdgNameEng(String cdgNameEng) {
+		this.cdgNameEng = cdgNameEng;
 	}
 	
 	

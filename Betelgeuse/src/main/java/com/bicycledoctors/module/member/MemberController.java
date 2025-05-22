@@ -134,7 +134,6 @@ public class MemberController extends BaseController {
 				httpSession.setAttribute("sessNameUsr", rtMemberId.getUserName());
 				httpSession.setAttribute("sessEmailUsr", rtMemberId.getUserEmail());
 				httpSession.setAttribute("sessCateUsr", rtMemberId.getUserCate());
-				System.out.println(rtMemberId.getUserEmail());
 			} else {
 				returnMap.put("rt", "fail");
 			}

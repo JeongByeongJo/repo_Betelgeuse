@@ -222,7 +222,8 @@
 		    b.bikeDelNy,
 		    b.instDate,
 		    b.updtDate,
-		    b.userCustomer_seq
+		    b.userCustomer_seq,
+		    r.rsrvSeq
  		from
 			bicycle as b
 			left join reservation r on b.bikeSeq = r.bicycle_bikeSeq
@@ -257,7 +258,8 @@
 		    b.bikeDelNy,
 		    b.instDate,
 		    b.updtDate,
-		    b.userCustomer_seq
+		    b.userCustomer_seq,
+		    r.rsrvSeq
  		from
 			bicycle as b
 			left join reservation r on b.bikeSeq = r.bicycle_bikeSeq

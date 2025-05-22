@@ -427,7 +427,7 @@
 
           <!-- Sidebar with contact form that turns into offcanvas on screens < 992px wide (lg breakpoint) -->
           <aside class="col-lg-4 offset-xl-1">
-<form id="rsrvForm"><input type="hidden" id="shopSeq" name="shopSeq" th:value="${item?.shopSeq}"/>
+<form name="rsrvForm"><input type="hidden" id="shopSeq" name="shopSeq" th:value="${item?.shopSeq}"/>
             <div class="d-none d-lg-block" style="margin-top: -105px"></div>
             <div class="sticky-lg-top">
               <div class="d-none d-lg-block" style="height: 105px"></div>
@@ -557,39 +557,48 @@
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-20">19:30</label>
                     </div>
                   </div>
-                  <button type="button" class="btn btn-lg btn-primary w-100 mt-4" id="appoint" data-bs-toggle="modal" data-bs-target="#modalId">
+                  <button type="button" class="btn btn-lg btn-primary w-100 mt-4" id="appoint" >
                     <i class="fi-clock fs-lg me-2 ms-n1 d-lg-none d-xl-inline-flex"></i>
                     Next appointment 12:30, Tue, 12
                   </button>
                   
                 </div>
-                <!-- <div class="position-absolute top-0 start-0 w-100 h-100 d-none d-lg-block">
+                <!-- <div class="position-absolute top-0 start-0 w-100 h-100 d-none d-lg-block">data-bs-toggle="modal" data-bs-target="#modalId"
                   <span class="position-absolute top-0 start-0 w-100 h-100 bg-white rounded shadow d-none-dark"></span>
                   <span class="position-absolute top-0 start-0 w-100 h-100 bg-body-tertiary rounded d-none d-block-dark"></span>
                 </div> -->
               </div>
             </div>
-            </form>
+	        <div class="modal fade" id="modalId" tabindex="-1" role="dialog">
+	          <div class="modal-dialog" role="document">
+	            <div class="modal-content">
+	              <div class="modal-header">
+	                <h5 class="modal-title">예약하기</h5>
+	                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+	              </div>
+	              <div class="modal-body">
+	  				<textarea class="form-control" id="rsrvDesc" name="rsrvDesc" placeholder="점검,정비 요청사항을 자세히 기입해주세요." rows="3"></textarea>
+	              </div>
+	              <div class="modal-footer flex-column flex-sm-row align-items-stretch">
+	                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+	                <button type="button" id="btnReservation" class="btn btn-primary">예약하기</button>
+	              </div>
+	            </div>
+	          </div>
+	        </div>
+          </form>
           </aside>
         </div>
-        <div class="modal fade" id="modalId" tabindex="-1" role="dialog">
-          <div class="modal-dialog" role="document">
+      </div>
+
+		<div class="modal fade" id="modalAlert" tabindex="-1" role="dialog">
+          <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">예약하기</h5>
-                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <p>Modal body content goes here.</p>
-              </div>
-              <div class="modal-footer flex-column flex-sm-row align-items-stretch">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                <button type="button" id="btnReservation" class="btn btn-primary">예약하기</button>
+              <div class="modal-body" id="alertText">
               </div>
             </div>
           </div>
         </div>
-      </div>
 
       <div class="modal fade" id="reviewForm" data-bs-backdrop="static" tabindex="-1" aria-labelledby="reviewFormLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -683,7 +692,24 @@
 
  <div th:replace="~{usr/include/LoginedFooter :: LoginedFooter}"></div>
  
- 
+<script type="text/javascript">
+document.getElementById("appoint").onclick = function () {
+	if(document.getElementById('bikeSeq').value == "") {
+		document.getElementById('bikeSeq').focus();
+		document.getElementById('alertText').innerText = "예약하실 자전거를 선택해주세요.";
+		$("#modalAlert").modal("show");
+		return false;
+	}
+	if(document.getElementById('availableServiceCd').value == "") {
+		document.getElementById('availableServiceCd').focus();
+		document.getElementById('alertText').innerText = "서비스를 선택해주세요.";
+		$("#modalAlert").modal("show");
+		return false;
+	}
+	$("#modalId").modal("show");
+}
+</script>
+
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 	  const maxVisible = 3;
@@ -719,7 +745,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	  updateVisible();
 	});
-var form = document.querySelector("form[id=rsrvForm]");
+var form = document.querySelector("form[name=rsrvForm]");
 
 document.getElementById("btnReservation").onclick = function () {
 	form.action = "/shop/shopResrvInst";
