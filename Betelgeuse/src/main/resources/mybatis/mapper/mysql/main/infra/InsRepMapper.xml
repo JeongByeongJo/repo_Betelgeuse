@@ -1,0 +1,107 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bicycledoctors.module.insRep.InsRepDao">
+	
+	<resultMap type="com.bicycledoctors.module.insRep.InsRepDto" id="resultMapObj"></resultMap>
+	
+	<select id="selectList" resultMap="resultMapObj">
+			SELECT
+				irSeq
+			    ,inspectRepairDate
+			    ,drivetrainDate
+			    ,drivetrainInsCost
+			    ,drivetrainRepCost
+			    ,drivetrainInsDesc
+			    ,drivetrainRepDesc
+			    ,brakeDate
+			    ,brakeInsCost
+			    ,brakeRepCost
+			    ,brakeInsDesc
+			    ,brakeRepDesc
+			    ,wheelDate
+			    ,wheelInsCost
+			    ,wheelRepCost
+			    ,wheelInsDesc
+			    ,wheelRepDesc
+			    ,cockpits
+			    ,cockpitDate
+			    ,cockpitInsCost
+			    ,cockpitRepCost
+			    ,cockpitInsDesc
+			    ,cockpirRepDesc
+			    ,etcs
+			    ,etcDate
+			    ,etcInsCost
+			    ,etcRepCost
+			    ,etcInsDesc
+			    ,etcRepDesc
+			    ,expendables
+			    ,expendableDate
+			    ,expendableCost1
+			    ,expendableCost2
+			    ,expendableCost3
+			    ,expendableCost4
+			    ,expendableCost5
+			    ,expendableCosts
+			    ,expendableDesc
+			    ,totalPrice
+			    ,instDate
+			    ,updtDate
+			    ,reservation_rsrvSeq
+			    ,shop_shopSeq
+			    ,bicycle_bikeSeq
+			FROM inspectRepair
+	</select>
+	<select id="selectOne" resultMap="resultMapObj">
+			SELECT
+				irSeq
+			    ,inspectRepairDate
+			    ,drivetrainDate
+			    ,drivetrainInsCost
+			    ,drivetrainRepCost
+			    ,drivetrainInsDesc
+			    ,drivetrainRepDesc
+			    ,brakeDate
+			    ,brakeInsCost
+			    ,brakeRepCost
+			    ,brakeInsDesc
+			    ,brakeRepDesc
+			    ,wheelDate
+			    ,wheelInsCost
+			    ,wheelRepCost
+			    ,wheelInsDesc
+			    ,wheelRepDesc
+			    ,cockpits
+			    ,cockpitDate
+			    ,cockpitInsCost
+			    ,cockpitRepCost
+			    ,cockpitInsDesc
+			    ,cockpirRepDesc
+			    ,etcs
+			    ,etcDate
+			    ,etcInsCost
+			    ,etcRepCost
+			    ,etcInsDesc
+			    ,etcRepDesc
+			    ,expendables
+			    ,expendableDate
+			    ,expendableCost1
+			    ,expendableCost2
+			    ,expendableCost3
+			    ,expendableCost4
+			    ,expendableCost5
+			    ,expendableCosts
+			    ,expendableDesc
+			    ,totalPrice
+			    ,instDate
+			    ,updtDate
+			    ,reservation_rsrvSeq
+			    ,shop_shopSeq
+			    ,bicycle_bikeSeq
+			FROM inspectRepair as i
+			LEFT JOIN bicycle as b on i.bicycle_bikeSeq = a.bikeSeq
+			WHERE 1=1
+				bicycle_bikeSeq = #{bikeSeq}
+			
+	</select>
+</mapper>

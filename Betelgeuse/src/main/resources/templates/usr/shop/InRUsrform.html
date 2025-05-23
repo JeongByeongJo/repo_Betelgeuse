@@ -9,15 +9,14 @@
 
 
     <!-- Page content -->
-    <main class="content-wrapper"><form id="form" name="form"><input type="hidden" id="bikeSeq" name="bikeSeq"/>
+    <main class="content-wrapper"><form id="form" name="form">
+    <input type="hidden" id="bikeSeq" name="bikeSeq" th:value="${item?.bikeSeq}"/>
+    <input type="hidden" id="rsrvSeq" name="rsrvSeq" th:value="${item?.rsrvSeq}"/>
       <div class="container pt-3 pt-sm-4 pt-md-5 pb-5">
         <div class="row pt-lg-2 pt-xl-3 pb-1 pb-sm-2 pb-md-3 pb-lg-4 pb-xl-5">
-
-          <!-- Sell car form -->
           <div class="col-lg-8 col-xl-9">
             <h1 class="h2">자전거 점검,정비하기</h1>
 
-            <!-- Photos / videos -->
             <section class="position-relative bg-body rounded p-4 mt-4">
               <div class="position-relative z-1 pb-md-2 px-md-2">
                 <h2 class="h4 mb-3 mb-sm-4">구동계 정비,점검</h2>
@@ -26,58 +25,58 @@
                     <div class="row" style="margin-top: 0.5ex;">
                       <div class="col-6" style="margin-top: 1ex;">
                         <div class="input-group mb-3">
-                          <span class="input-group-text" id="addon-left">
+                          <span class="input-group-text">
                             브랜드
                           </span>
-                          <input type="text" class="form-control" id="driveTrainBrandCd" name="driveTrainBrandCd" aria-label="Username" aria-describedby="addon-left">
+                          <input type="text" class="form-control" id="drivetrainBrandCd" name="drivetrainBrandCd" th:value="${@codeService.selectOneCachedCode(item.drivetrainBrandCd!=null?item.drivetrainBrandCd:0)}" readonly>
                         </div>
                       </div>
                       <div class="col-6" style="margin-top: 1ex;">
                         <div class="input-group mb-3">
-                          <span class="input-group-text" id="addon-left">
+                          <span class="input-group-text">
                             모델명
                           </span>
-                          <input type="text" class="form-control" id="driveTrainModel" name="driveTrainModel" aria-label="Username" aria-describedby="addon-left">
+                          <input type="text" class="form-control" id="drivetrainModel" name="drivetrainModel" th:value="${item?.drivetrainModel}" readonly>
                         </div>
                       </div>
                     </div>
                   </div>
                   <div class="col">
-                    <label for="date-1" class="form-label">구동계 점검,정비일</label>
+                    <label for="drivetrainDate" class="form-label">구동계 점검,정비일</label>
                     <div class="position-relative">
-                      <input type="text" class="form-control form-icon-end" id="driveTrainDate" name="driveTrainDate" data-datepicker placeholder="날짜를 선택해주세요">
+                      <input type="text" class="form-control form-icon-end" id="drivetrainDate" name="drivetrainDate" data-datepicker placeholder="날짜를 선택해주세요">
                       <i class="fi-calendar position-absolute top-50 end-0 translate-middle-y me-3"></i>
                     </div>
                   </div>
                   <div class="col">
-                    <label class="form-label">구동계 점검비용</label>
+                    <label for="drivetrainInsCost" class="form-label">구동계 점검비용</label>
                     <div class="input-group mb-3">
                       <span class="input-group-text">
                         ₩
                       </span>
-                      <input type="text" style="text-align: right;" class="form-control" aria-label="Amount (to the nearest dollar)">
+                      <input type="text" id="drivetrainInsCost" name="drivetrainInsCost" style="text-align: right;" class="form-control">
                       <span class="input-group-text">원</span>
                     </div>
                   </div>
                   <div class="col">
-                    <label class="form-label">구동계 정비비용</label>
+                    <label for="drivetrainRepCost" class="form-label">구동계 정비비용</label>
                     <div class="input-group mb-3">
                       <span class="input-group-text">
                         ₩
                       </span>
-                      <input type="text" style="text-align: right;" class="form-control" aria-label="Amount (to the nearest dollar)">
+                      <input type="text" id="drivetrainRepCost" name="drivetrainRepCost" style="text-align: right;" class="form-control">
                       <span class="input-group-text">원</span>
                     </div>
                   </div>
                   <div class="col">
-                    <label for="description" class="form-label fs-6 fw-semibold">점검 기술서</label>
+                    <label for="drivetrainInsDesc" class="form-label fs-6 fw-semibold">점검 기술서</label>
                       <p class="fs-sm mb-2">점검 내역을 기입해주세요.</p>
-                      <textarea class="form-control form-control-lg" rows="5" id="description" placeholder="최대 2000자" required></textarea>
+                      <textarea class="form-control form-control-lg" rows="5" id="drivetrainInsDesc" name="drivetrainInsDesc" placeholder="최대 2000자" required></textarea>
                   </div>
                   <div class="col">
-                    <label for="description" class="form-label fs-6 fw-semibold">정비 기술서</label>
+                    <label for="drivetrainRepDesc" class="form-label fs-6 fw-semibold">정비 기술서</label>
                       <p class="fs-sm mb-2">정비 내역을 기입해주세요.</p>
-                      <textarea class="form-control form-control-lg" rows="5" id="description" placeholder="최대 2000자" required></textarea>
+                      <textarea class="form-control form-control-lg" rows="5" id="drivetrainRepDesc" name="drivetrainRepDesc" placeholder="최대 2000자" required></textarea>
                   </div>
                 </div>
               <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark rounded d-none d-block-dark"></div>
@@ -90,10 +89,10 @@
                     <div class="row" style="margin-top: 0.5ex;">
                       <div class="col-6" style="margin-top: 1ex;">
                         <div class="input-group mb-3">
-                          <span class="input-group-text" id="addon-left">
+                          <span class="input-group-text">
                             브랜드
                           </span>
-                          <input type="text" class="form-control" id="brakeBrandCd" name="brakeBrandCd" aria-label="Username" aria-describedby="addon-left">
+                          <input type="text" class="form-control" id="brakeBrandCd" name="brakeBrandCd" th:value="${@codeService.selectOneCachedCode(item.brakeBrandCd!=null?item.brakeBrandCd:0)}" readonly>
                         </div>
                       </div>
                       <div class="col-6" style="margin-top: 1ex;">
@@ -107,41 +106,41 @@
                     </div>
                   </div>
                   <div class="col">
-                    <label for="date-1" class="form-label">브레이크 점검,정비일</label>
+                    <label for="brakeDate" class="form-label">브레이크 점검,정비일</label>
                     <div class="position-relative">
                       <input type="text" class="form-control form-icon-end" id="brakeDate" name="brakeDate" data-datepicker placeholder="날짜를 선택해주세요">
                       <i class="fi-calendar position-absolute top-50 end-0 translate-middle-y me-3"></i>
                     </div>
                   </div>
                   <div class="col">
-                    <label class="form-label">브레이크 점검비용</label>
+                    <label for="brakeInsCost" class="form-label">브레이크 점검비용</label>
                     <div class="input-group mb-3">
                       <span class="input-group-text">
                         ₩
                       </span>
-                      <input type="text" style="text-align: right;" class="form-control" aria-label="Amount (to the nearest dollar)">
+                      <input type="text" id="brakeInsCost" name="brakeInsCost" style="text-align: right;" class="form-control">
                       <span class="input-group-text">원</span>
                     </div>
                   </div>
                   <div class="col">
-                    <label class="form-label">브레이크 정비비용</label>
+                    <label for="brakeRepCost" class="form-label">브레이크 정비비용</label>
                     <div class="input-group mb-3">
                       <span class="input-group-text">
                         ₩
                       </span>
-                      <input type="text" style="text-align: right;" class="form-control" aria-label="Amount (to the nearest dollar)">
+                      <input type="text" id="brakeRepCost" name="brakeRepCost" style="text-align: right;" class="form-control">
                       <span class="input-group-text">원</span>
                     </div>
                   </div>
                   <div class="col">
-                    <label for="description" class="form-label fs-6 fw-semibold">점검 기술서</label>
+                    <label for="brakeInsDesc" class="form-label fs-6 fw-semibold">점검 기술서</label>
                       <p class="fs-sm mb-2">점검 내역을 기입해주세요.</p>
-                      <textarea class="form-control form-control-lg" rows="5" id="description" placeholder="최대 2000자" required></textarea>
+                      <textarea class="form-control form-control-lg" rows="5" id="brakeInsDesc" name="brakeInsDesc" placeholder="최대 2000자" required></textarea>
                   </div>
                   <div class="col">
-                    <label for="description" class="form-label fs-6 fw-semibold">정비 기술서</label>
+                    <label for="brakeRepDesc" class="form-label fs-6 fw-semibold">정비 기술서</label>
                       <p class="fs-sm mb-2">정비 내역을 기입해주세요.</p>
-                      <textarea class="form-control form-control-lg" rows="5" id="description" placeholder="최대 2000자" required></textarea>
+                      <textarea class="form-control form-control-lg" rows="5" id="brakeRepDesc" name="brakeRepDesc" placeholder="최대 2000자" required></textarea>
                   </div>
               <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark rounded d-none d-block-dark"></div>
             </section>
@@ -156,7 +155,7 @@
                           <span class="input-group-text" id="addon-left">
                             브랜드
                           </span>
-                          <input type="text" class="form-control" id="wheelBrandCd" name="wheelBrandCd" aria-label="Username" aria-describedby="addon-left">
+                          <input type="text" class="form-control" id="wheelBrandCd" name="wheelBrandCd" th:value="${@codeService.selectOneCachedCode(item.wheelBrandCd!=null?item.wheelBrandCd:0)}" readonly>
                         </div>
                       </div>
                       <div class="col-6" style="margin-top: 1ex;">
@@ -164,47 +163,47 @@
                           <span class="input-group-text" id="addon-left">
                             모델명
                           </span>
-                          <input type="text" class="form-control" id="wheelModel" name="wheelModel" aria-label="Username" aria-describedby="addon-left">
+                          <input type="text" class="form-control" id="wheelModel" name="wheelModel" th:value="${item?.wheelModel}" readonly>
                         </div>
                       </div>
                     </div>
                   </div>
                   <div class="col">
-                    <label for="date-1" class="form-label">휠셋 점검,정비일</label>
+                    <label for="wheelDate" class="form-label">휠셋 점검,정비일</label>
                     <div class="position-relative">
                       <input type="text" class="form-control form-icon-end" id="wheelDate" name="wheelDate" data-datepicker placeholder="날짜를 선택해주세요">
                       <i class="fi-calendar position-absolute top-50 end-0 translate-middle-y me-3"></i>
                     </div>
                   </div>
                   <div class="col">
-                    <label class="form-label">휠셋 점검비용</label>
+                    <label for="wheelInsCost" class="form-label">휠셋 점검비용</label>
                     <div class="input-group mb-3">
                       <span class="input-group-text">
                         ₩
                       </span>
-                      <input type="text" style="text-align: right;" class="form-control" aria-label="Amount (to the nearest dollar)">
+                      <input type="text" id="wheelInsCost" name="wheelInsCost" style="text-align: right;" class="form-control">
                       <span class="input-group-text">원</span>
                     </div>
                   </div>
                   <div class="col">
-                    <label class="form-label">휠셋 정비비용</label>
+                    <label for="wheelRepCost" class="form-label">휠셋 정비비용</label>
                     <div class="input-group mb-3">
                       <span class="input-group-text">
                         ₩
                       </span>
-                      <input type="text" style="text-align: right;" class="form-control" aria-label="Amount (to the nearest dollar)">
+                      <input type="text" id="wheelRepCost" name="wheelRepCost" style="text-align: right;" class="form-control">
                       <span class="input-group-text">원</span>
                     </div>
                   </div>
                   <div class="col">
-                    <label for="description" class="form-label fs-6 fw-semibold">점검 기술서</label>
+                    <label for="wheelInsDesc" class="form-label fs-6 fw-semibold">점검 기술서</label>
                       <p class="fs-sm mb-2">점검 내역을 기입해주세요.</p>
-                      <textarea class="form-control form-control-lg" rows="5" id="description" placeholder="최대 2000자" required></textarea>
+                      <textarea class="form-control form-control-lg" rows="5" id="wheelInsDesc" name="wheelInsDesc" placeholder="최대 2000자" required></textarea>
                   </div>
                   <div class="col">
-                    <label for="description" class="form-label fs-6 fw-semibold">정비 기술서</label>
+                    <label for="wheelRepDesc" class="form-label fs-6 fw-semibold">정비 기술서</label>
                       <p class="fs-sm mb-2">정비 내역을 기입해주세요.</p>
-                      <textarea class="form-control form-control-lg" rows="5" id="description" placeholder="최대 2000자" required></textarea>
+                      <textarea class="form-control form-control-lg" rows="5" id="wheelRepDesc" name="wheelRepDesc" placeholder="최대 2000자" required></textarea>
                   </div>
               <!-- <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark rounded d-none d-block-dark"></div> -->
             </section>
@@ -213,8 +212,8 @@
                 <h2 class="h4 mb-3 mb-sm-4">콕핏 정비,점검</h2>
                 <div class="row row-cols-1 row-cols-md-2 g-3 g-md-4 mb-3 mb-md-4">
                   <div class="col">
-                    <label class="form-label">콕핏 분야 *</label>
-                    <select class="form-select" data-select multiple aria-label="Multiple select">
+                    <label for="cockpits" class="form-label">콕핏 분야 *</label>
+                    <select class="form-select" id="cockpits" name="cockpits" data-select multiple aria-label="Multiple select">
                       <option value="">Select</option>
                       <option value="핸들바">핸들바</option>
                       <option value="포크">포크</option>
@@ -225,41 +224,41 @@
                     </select>
                   </div>
                   <div class="col">
-                    <label for="date-1" class="form-label">콕핏 점검,정비일</label>
+                    <label for="cockpitDate" class="form-label">콕핏 점검,정비일</label>
                     <div class="position-relative">
-                      <input type="text" class="form-control form-icon-end" id="date-1" data-datepicker placeholder="날짜를 선택해주세요">
+                      <input type="text" class="form-control form-icon-end" id="cockpitDate" name="cockpitDate" data-datepicker placeholder="날짜를 선택해주세요">
                       <i class="fi-calendar position-absolute top-50 end-0 translate-middle-y me-3"></i>
                     </div>
                   </div>
                   <div class="col">
-                    <label class="form-label">콕핏 점검비용</label>
+                    <label for="cockpitInsCost" class="form-label">콕핏 점검비용</label>
                     <div class="input-group mb-3">
                       <span class="input-group-text">
                         ₩
                       </span>
-                      <input type="text" style="text-align: right;" class="form-control" aria-label="Amount (to the nearest dollar)">
+                      <input type="text" id="cockpitInsCost" name="cockpitInsCost" style="text-align: right;" class="form-control">
                       <span class="input-group-text">원</span>
                     </div>
                   </div>
                   <div class="col">
-                    <label class="form-label">콕핏 정비비용</label>
+                    <label for="cockpitRepCost" class="form-label">콕핏 정비비용</label>
                     <div class="input-group mb-3">
                       <span class="input-group-text">
                         ₩
                       </span>
-                      <input type="text" style="text-align: right;" class="form-control" aria-label="Amount (to the nearest dollar)">
+                      <input type="text" id="cockpitRepCost" name="cockpitRepCost" style="text-align: right;" class="form-control">
                       <span class="input-group-text">원</span>
                     </div>
                   </div>
                   <div class="col">
-                    <label for="description" class="form-label fs-6 fw-semibold">점검 기술서</label>
+                    <label for="cockpitInsDesc" class="form-label fs-6 fw-semibold">점검 기술서</label>
                       <p class="fs-sm mb-2">점검 내역을 기입해주세요.</p>
-                      <textarea class="form-control form-control-lg" rows="5" id="description" placeholder="최대 2000자" required></textarea>
+                      <textarea class="form-control form-control-lg" rows="5" id="cockpitInsDesc" name="cockpitInsDesc" placeholder="최대 2000자" required></textarea>
                   </div>
                   <div class="col">
-                    <label for="description" class="form-label fs-6 fw-semibold">정비 기술서</label>
+                    <label for="cockpirRepDesc" class="form-label fs-6 fw-semibold">정비 기술서</label>
                       <p class="fs-sm mb-2">정비 내역을 기입해주세요.</p>
-                      <textarea class="form-control form-control-lg" rows="5" id="description" placeholder="최대 2000자" required></textarea>
+                      <textarea class="form-control form-control-lg" rows="5" id="cockpirRepDesc" name="cockpirRepDesc" placeholder="최대 2000자" required></textarea>
                   </div>
               <!-- <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark rounded d-none d-block-dark"></div> -->
             </section>
@@ -268,45 +267,45 @@
                 <h2 class="h4 mb-3 mb-sm-4">기타 컴포넌트 정비,점검</h2>
                 <div class="row row-cols-1 row-cols-md-2 g-3 g-md-4 mb-3 mb-md-4">
                   <div class="col">
-                  	<label for="component" class="form-label">점검,정비 컴포넌트</label>
-                    <input type="text" class="form-control" id="component" placeholder="입력해주세요">
+                  	<label for="etcs" class="form-label">점검,정비 컴포넌트</label>
+                    <input type="text" class="form-control" id="etcs" name="etcs" placeholder="입력해주세요">
                   </div>
                   <div class="col">
-                    <label for="date-1" class="form-label">기타 컴포넌트 점검,정비일</label>
+                    <label for="etcDate" class="form-label">기타 컴포넌트 점검,정비일</label>
                     <div class="position-relative">
-                      <input type="text" class="form-control form-icon-end" id="date-1" data-datepicker placeholder="날짜를 선택해주세요">
+                      <input type="text" class="form-control form-icon-end" id="etcDate" name="etcDate" data-datepicker placeholder="날짜를 선택해주세요">
                       <i class="fi-calendar position-absolute top-50 end-0 translate-middle-y me-3"></i>
                     </div>
                   </div>
                   <div class="col">
-                    <label class="form-label">기타 컴포넌트 점검비용</label>
+                    <label for="etcInsCost" class="form-label">기타 컴포넌트 점검비용</label>
                     <div class="input-group mb-3">
                       <span class="input-group-text">
                         ₩
                       </span>
-                      <input type="text" style="text-align: right;" class="form-control" aria-label="Amount (to the nearest dollar)">
+                      <input type="text" id="etcInsCost" name="etcInsCost" style="text-align: right;" class="form-control">
                       <span class="input-group-text">원</span>
                     </div>
                   </div>
                   <div class="col">
-                    <label class="form-label">기타 컴포넌트 정비비용</label>
+                    <label for="etcRepCost" class="form-label">기타 컴포넌트 정비비용</label>
                     <div class="input-group mb-3">
                       <span class="input-group-text">
                         ₩
                       </span>
-                      <input type="text" style="text-align: right;" class="form-control" aria-label="Amount (to the nearest dollar)">
+                      <input type="text" id="etcRepCost" name="etcRepCost" style="text-align: right;" class="form-control">
                       <span class="input-group-text">원</span>
                     </div>
                   </div>
                   <div class="col">
-                    <label for="description" class="form-label fs-6 fw-semibold">점검 기술서</label>
+                    <label for="etcInsDesc" class="form-label fs-6 fw-semibold">점검 기술서</label>
                       <p class="fs-sm mb-2">점검 내역을 기입해주세요.</p>
-                      <textarea class="form-control form-control-lg" rows="5" id="description" placeholder="최대 2000자" required></textarea>
+                      <textarea class="form-control form-control-lg" rows="5" id="etcInsDesc" name="etcInsDesc" placeholder="최대 2000자" required></textarea>
                   </div>
                   <div class="col">
-                    <label for="description" class="form-label fs-6 fw-semibold">정비 기술서</label>
+                    <label for="etcRepDesc" class="form-label fs-6 fw-semibold">정비 기술서</label>
                       <p class="fs-sm mb-2">정비 내역을 기입해주세요.</p>
-                      <textarea class="form-control form-control-lg" rows="5" id="description" placeholder="최대 2000자" required></textarea>
+                      <textarea class="form-control form-control-lg" rows="5" id="etcRepDesc" name="etcRepDesc" placeholder="최대 2000자" required></textarea>
                   </div>
               <!-- <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark rounded d-none d-block-dark"></div> -->
             </section>
@@ -316,89 +315,89 @@
                 <h2 class="h4 mb-3 mb-sm-4">소모품 교체</h2>
                 <div class="row row-cols-1 row-cols-md-2 g-3 g-md-4 mb-3 mb-md-4">
                   <div class="col">
-                    <label class="form-label">소모품 *</label>
-                    <select class="form-select" data-select multiple aria-label="Multiple select">
+                    <label for="expendables" class="form-label">소모품 *</label>
+                    <select class="form-select" id="expendables" name="expendables" data-select multiple aria-label="Multiple select">
                       <option value="">Select</option>
-                      <option value="1">타이어</option>
-                      <option value="2">튜브</option>
-                      <option value="3">실란트</option>
-                      <option value="4">케이블</option>
-                      <option value="5">바테이프</option>
-                      <option value="6">클릿</option>
-                      <option value="7">기타</option>
+                      <option value="타이어">타이어</option>
+                      <option value="튜브">튜브</option>
+                      <option value="실란트">실란트</option>
+                      <option value="케이블">케이블</option>
+                      <option value="바테이프">바테이프</option>
+                      <option value="클릿">클릿</option>
+                      <option value="기타">기타</option>
                     </select>
                   </div>
                   <div class="col">
-                    <label for="date-1" class="form-label">소모품 교체일</label>
+                    <label for="expendableDate" class="form-label">소모품 교체일</label>
                     <div class="position-relative">
-                      <input type="text" class="form-control form-icon-end" id="date-1" data-datepicker placeholder="날짜를 선택해주세요">
+                      <input type="text" class="form-control form-icon-end" id="expendableDate" name="expendableDate" data-datepicker placeholder="날짜를 선택해주세요">
                       <i class="fi-calendar position-absolute top-50 end-0 translate-middle-y me-3"></i>
                     </div>
                   </div>
                   <div class="col">
-                    <label class="form-label">소모품1 교체비용</label>
+                    <label for="expendableCost1" class="form-label">소모품1 교체비용</label>
                     <div class="input-group mb-3">
                       <span class="input-group-text">
                         ₩
                       </span>
-                      <input type="text" style="text-align: right;" class="form-control" aria-label="Amount (to the nearest dollar)">
+                      <input type="text" id="expendableCost1" name="expendableCost1" style="text-align: right;" class="form-control">
                       <span class="input-group-text">원</span>
                     </div>
                   </div>
                   <div class="col">
-                    <label class="form-label">소모품2 교체비용</label>
+                    <label for="expendableCost2" class="form-label">소모품2 교체비용</label>
                     <div class="input-group mb-3">
                       <span class="input-group-text">
                         ₩
                       </span>
-                      <input type="text" style="text-align: right;" class="form-control" aria-label="Amount (to the nearest dollar)">
+                      <input type="text" id="expendableCost2" name="expendableCost2" style="text-align: right;" class="form-control">
                       <span class="input-group-text">원</span>
                     </div>
                   </div>
                   <div class="col">
-                    <label class="form-label">소모품3 교체비용</label>
+                    <label for="expendableCost3" class="form-label">소모품3 교체비용</label>
                     <div class="input-group mb-3">
                       <span class="input-group-text">
                         ₩
                       </span>
-                      <input type="text" style="text-align: right;" class="form-control" aria-label="Amount (to the nearest dollar)">
+                      <input type="text" id="expendableCost3" name="expendableCost3" style="text-align: right;" class="form-control">
                       <span class="input-group-text">원</span>
                     </div>
                   </div>
                   <div class="col">
-                    <label class="form-label">소모품4 교체비용</label>
+                    <label for="expendableCost4" class="form-label">소모품4 교체비용</label>
                     <div class="input-group mb-3">
                       <span class="input-group-text">
                         ₩
                       </span>
-                      <input type="text" style="text-align: right;" class="form-control" aria-label="Amount (to the nearest dollar)">
+                      <input type="text" id="expendableCost4" name="expendableCost4" style="text-align: right;" class="form-control">
                       <span class="input-group-text">원</span>
                     </div>
                   </div>
                   <div class="col">
-                    <label class="form-label">소모품5 교체비용</label>
+                    <label for="expendableCost5" class="form-label">소모품5 교체비용</label>
                     <div class="input-group mb-3">
                       <span class="input-group-text">
                         ₩
                       </span>
-                      <input type="text" style="text-align: right;" class="form-control" aria-label="Amount (to the nearest dollar)">
+                      <input type="text" id="expendableCost5" name="expendableCost5" style="text-align: right;" class="form-control">
                       <span class="input-group-text">원</span>
                     </div>
                   </div>                  
                   <div class="col">
-                    <label class="form-label">총 소모품 교체비용</label>
+                    <label for="expendableCosts" class="form-label">총 소모품 교체비용</label>
                     <div class="input-group mb-3">
                       <span class="input-group-text">
                         ₩
                       </span>
-                      <input type="text" style="text-align: right;" class="form-control" aria-label="Amount (to the nearest dollar)">
+                      <input type="text" id="expendableCosts" name="expendableCosts" style="text-align: right;" class="form-control">
                       <span class="input-group-text">원</span>
                     </div>
                   </div>
                 </div>
-                <label for="description" class="form-label fs-6 fw-semibold">소모품 교체 기술서 *</label>
+                <label for="expendableDesc" class="form-label fs-6 fw-semibold">소모품 교체 기술서 *</label>
                 <p class="fs-sm mb-2">소모품 교체 상세내역을 기입해주세요.</p>
-                <textarea class="form-control form-control-lg" rows="5" id="description" placeholder="최대 2000자" required></textarea>
+                <textarea class="form-control form-control-lg" rows="5" id="expendableDesc" name="expendableDesc" placeholder="최대 2000자" required></textarea>
               </div>
               <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark rounded d-none d-block-dark"></div>
             </section>
@@ -454,9 +453,9 @@
                         </button>
                       </div>
                     </div>
-                    <h3 class="h6 mb-2">
-                      <a class="hover-effect-underline stretched-link me-1" href="#!">Look 795 Light RS</a>
-                      <span class="fs-xs fw-normal text-body-secondary">(2021)</span>
+                    <h3 class="h4 mb-2">
+                      <span th:text="${@codeService.selectOneCachedCodeEng(item.bicycleBrandCd!=null?item.bicycleBrandCd:0)}"></span>&nbsp;<span th:text="${item?.bicycleModel}"></span>
+                      <span class="fs-xs fw-normal text-body-secondary" th:text="${item?.bicycleYears}"></span><h6>(<span th:text="${item?.userName}"></span>, <span th:text="${item?.userTel}"></span>)</h6>
                     </h3>
                     <p><i class="fi-search"></i><span style="font-size: medium;">점검</span><i class="fi-tool"></i>정비</p>
                     <table>

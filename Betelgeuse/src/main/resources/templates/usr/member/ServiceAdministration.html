@@ -4,7 +4,9 @@
 
 
     <!-- Page content -->
-    <main class="content-wrapper"><form id="formList" name="formList" method="get"><input type="hidden" name="bikeSeq"/>
+    <main class="content-wrapper"><form id="formList" name="formList" method="post">
+    <input type="hidden" name="bikeSeq"/>
+    <input type="hidden" name="rsrvSeq"/>
       <div class="container pt-4 pt-sm-5 pb-5 mb-xxl-3">
         <div class="row pt-2 pt-sm-0 pt-lg-2 pb-2 pb-sm-3 pb-md-4 pb-lg-5">
 
@@ -256,7 +258,7 @@
 	                                  </button>
 	                                  <ul class="dropdown-menu dropdown-menu-end">
 	                                    <li>
-	                                      <a class="dropdown-item" href = "/shop/inspectNrepairUsrForm" th:attr="onclick=|goInR('${listR.bikeSeq}')|">
+	                                      <a class="dropdown-item" th:attr="onclick=|goInR('${listR.rsrvSeq}')|">
 	                                        <i class="fi-edit opacity-75 me-2"></i>
 	                                        점검,정비 입력
 	                                      </a>
@@ -473,11 +475,11 @@ goNeservation = function (keyValue) {
 	});
 }
 let form = document.querySelector("form[name=formList]");
-let seq = document.querySelector("input[name=bikeSeq]");
+let seq = document.querySelector("input[name=rsrvSeq]");
 
 goInR = function (keyValue) {
     seq.value = keyValue;
-    form.action = "/shop/inspectNrepairUsrForm";
+    form.action = "/shop/InRUsrform";
     form.submit();
 }
 

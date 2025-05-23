@@ -41,6 +41,11 @@ public class ReservationController {
 		model.addAttribute("serviceList", service.selectList4ServiceView(vo));
 		return "usr/member/ServiceAdministration :: modalContent";
 	}
+	@RequestMapping(value = "/shop/InRUsrform")
+	public String inRUsrform(Model model, ReservationVo vo) {
+		model.addAttribute("item", service.selectOne4View(vo));
+		return "usr/shop/InRUsrform";
+	}
 
 	@ResponseBody
 	@RequestMapping(value = "/shop/resrvUsrProc")

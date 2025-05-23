@@ -40,7 +40,6 @@ public class CodeController extends BaseController {
 	
 	@RequestMapping(value = "/code/codeXdmForm")
 	public String codeXdmForm(@ModelAttribute("vo") CodeVo vo, Model model) {
-//		model.addAttribute("list", codeService.selectGroupList());
 		model.addAttribute("list", codeGroupService.selectListWithoutPaging());
 		
 		if (vo.getCdSeq().equals("0") || vo.getCdSeq().equals("")) {
