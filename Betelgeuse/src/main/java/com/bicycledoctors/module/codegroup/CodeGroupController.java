@@ -51,10 +51,10 @@ public class CodeGroupController extends BaseController {
 		return "xdm/codegroup/CodegroupXdmForm";
 	}
 	
-	@RequestMapping(value = "/codegroup/codegroupXdmMfom")
-	public String codegroupXdmMfom(Model model, CodeGroupDto codeGroupDto) {
+	@RequestMapping(value = "/codegroup/codegroupXdmUpExls")
+	public String codegroupXdmUpExls(Model model, CodeGroupDto codeGroupDto) {
 		model.addAttribute("item", service.selectOne(codeGroupDto));
-		return "xdm/codegroup/CodegroupXdmMfom";
+		return "xdm/codegroup/CodegroupXdmUpExls";
 	}
 	
 	@RequestMapping(value = "/codegroup/codegroupXdmInst")

@@ -9,4 +9,7 @@ public class InsRepService {
 	@Autowired
 	InsRepDao dao;
 
+	public int insert(InsRepDto dto) {
+		return dao.insert(dto);
+	}
 }

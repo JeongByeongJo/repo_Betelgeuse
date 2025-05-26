@@ -7,42 +7,42 @@ public class InsRepDto extends BicycleDto {
 	private String irSeq;
     private String inspectRepairDate;
     private String drivetrainDate;
-    private double drivetrainInsCost;
-    private double drivetrainRepCost;
+    private Integer drivetrainInsCost;
+    private Integer drivetrainRepCost;
     private String drivetrainInsDesc;
     private String drivetrainRepDesc;
     private String brakeDate;
-    private double brakeInsCost;
-    private double brakeRepCost;
+    private Integer brakeInsCost;
+    private Integer brakeRepCost;
     private String brakeInsDesc;
     private String brakeRepDesc;
     private String wheelDate;
-    private double wheelInsCost;
-    private double wheelRepCost;
+    private Integer wheelInsCost;
+    private Integer wheelRepCost;
     private String wheelInsDesc;
     private String wheelRepDesc;
     private String cockpits;
     private String cockpitDate;
-    private double cockpitInsCost;
-    private double cockpitRepCost;
+    private Integer cockpitInsCost;
+    private Integer cockpitRepCost;
     private String cockpitInsDesc;
     private String cockpirRepDesc;
     private String etcs;
     private String etcDate;
-    private double etcInsCost;
-    private double etcRepCost;
+    private Integer etcInsCost;
+    private Integer etcRepCost;
     private String etcInsDesc;
     private String etcRepDesc;
     private String expendables;
     private String expendableDate;
-    private double expendableCost1;
-    private double expendableCost2;
-    private double expendableCost3;
-    private double expendableCost4;
-    private double expendableCost5;
-    private double expendableCosts;
+    private Integer expendableCost1;
+    private Integer expendableCost2;
+    private Integer expendableCost3;
+    private Integer expendableCost4;
+    private Integer expendableCost5;
+    private Integer expendableCosts;
     private String expendableDesc;
-    private double totalPrice;
+    private Integer totalPrice;
     private String instDate;
     private String updtDate;
     private String reservation_rsrvSeq;
@@ -67,16 +67,16 @@ public class InsRepDto extends BicycleDto {
 	public void setDrivetrainDate(String drivetrainDate) {
 		this.drivetrainDate = drivetrainDate;
 	}
-	public double getDrivetrainInsCost() {
+	public Integer getDrivetrainInsCost() {
 		return drivetrainInsCost;
 	}
-	public void setDrivetrainInsCost(double drivetrainInsCost) {
+	public void setDrivetrainInsCost(Integer drivetrainInsCost) {
 		this.drivetrainInsCost = drivetrainInsCost;
 	}
-	public double getDrivetrainRepCost() {
+	public Integer getDrivetrainRepCost() {
 		return drivetrainRepCost;
 	}
-	public void setDrivetrainRepCost(double drivetrainRepCost) {
+	public void setDrivetrainRepCost(Integer drivetrainRepCost) {
 		this.drivetrainRepCost = drivetrainRepCost;
 	}
 	public String getDrivetrainInsDesc() {
@@ -97,16 +97,16 @@ public class InsRepDto extends BicycleDto {
 	public void setBrakeDate(String brakeDate) {
 		this.brakeDate = brakeDate;
 	}
-	public double getBrakeInsCost() {
+	public Integer getBrakeInsCost() {
 		return brakeInsCost;
 	}
-	public void setBrakeInsCost(double brakeInsCost) {
+	public void setBrakeInsCost(Integer brakeInsCost) {
 		this.brakeInsCost = brakeInsCost;
 	}
-	public double getBrakeRepCost() {
+	public Integer getBrakeRepCost() {
 		return brakeRepCost;
 	}
-	public void setBrakeRepCost(double brakeRepCost) {
+	public void setBrakeRepCost(Integer brakeRepCost) {
 		this.brakeRepCost = brakeRepCost;
 	}
 	public String getBrakeInsDesc() {
@@ -127,16 +127,16 @@ public class InsRepDto extends BicycleDto {
 	public void setWheelDate(String wheelDate) {
 		this.wheelDate = wheelDate;
 	}
-	public double getWheelInsCost() {
+	public Integer getWheelInsCost() {
 		return wheelInsCost;
 	}
-	public void setWheelInsCost(double wheelInsCost) {
+	public void setWheelInsCost(Integer wheelInsCost) {
 		this.wheelInsCost = wheelInsCost;
 	}
-	public double getWheelRepCost() {
+	public Integer getWheelRepCost() {
 		return wheelRepCost;
 	}
-	public void setWheelRepCost(double wheelRepCost) {
+	public void setWheelRepCost(Integer wheelRepCost) {
 		this.wheelRepCost = wheelRepCost;
 	}
 	public String getWheelInsDesc() {
@@ -163,16 +163,16 @@ public class InsRepDto extends BicycleDto {
 	public void setCockpitDate(String cockpitDate) {
 		this.cockpitDate = cockpitDate;
 	}
-	public double getCockpitInsCost() {
+	public Integer getCockpitInsCost() {
 		return cockpitInsCost;
 	}
-	public void setCockpitInsCost(double cockpitInsCost) {
+	public void setCockpitInsCost(Integer cockpitInsCost) {
 		this.cockpitInsCost = cockpitInsCost;
 	}
-	public double getCockpitRepCost() {
+	public Integer getCockpitRepCost() {
 		return cockpitRepCost;
 	}
-	public void setCockpitRepCost(double cockpitRepCost) {
+	public void setCockpitRepCost(Integer cockpitRepCost) {
 		this.cockpitRepCost = cockpitRepCost;
 	}
 	public String getCockpitInsDesc() {
@@ -199,16 +199,16 @@ public class InsRepDto extends BicycleDto {
 	public void setEtcDate(String etcDate) {
 		this.etcDate = etcDate;
 	}
-	public double getEtcInsCost() {
+	public Integer getEtcInsCost() {
 		return etcInsCost;
 	}
-	public void setEtcInsCost(double etcInsCost) {
+	public void setEtcInsCost(Integer etcInsCost) {
 		this.etcInsCost = etcInsCost;
 	}
-	public double getEtcRepCost() {
+	public Integer getEtcRepCost() {
 		return etcRepCost;
 	}
-	public void setEtcRepCost(double etcRepCost) {
+	public void setEtcRepCost(Integer etcRepCost) {
 		this.etcRepCost = etcRepCost;
 	}
 	public String getEtcInsDesc() {
@@ -235,40 +235,40 @@ public class InsRepDto extends BicycleDto {
 	public void setExpendableDate(String expendableDate) {
 		this.expendableDate = expendableDate;
 	}
-	public double getExpendableCost1() {
+	public Integer getExpendableCost1() {
 		return expendableCost1;
 	}
-	public void setExpendableCost1(double expendableCost1) {
+	public void setExpendableCost1(Integer expendableCost1) {
 		this.expendableCost1 = expendableCost1;
 	}
-	public double getExpendableCost2() {
+	public Integer getExpendableCost2() {
 		return expendableCost2;
 	}
-	public void setExpendableCost2(double expendableCost2) {
+	public void setExpendableCost2(Integer expendableCost2) {
 		this.expendableCost2 = expendableCost2;
 	}
-	public double getExpendableCost3() {
+	public Integer getExpendableCost3() {
 		return expendableCost3;
 	}
-	public void setExpendableCost3(double expendableCost3) {
+	public void setExpendableCost3(Integer expendableCost3) {
 		this.expendableCost3 = expendableCost3;
 	}
-	public double getExpendableCost4() {
+	public Integer getExpendableCost4() {
 		return expendableCost4;
 	}
-	public void setExpendableCost4(double expendableCost4) {
+	public void setExpendableCost4(Integer expendableCost4) {
 		this.expendableCost4 = expendableCost4;
 	}
-	public double getExpendableCost5() {
+	public Integer getExpendableCost5() {
 		return expendableCost5;
 	}
-	public void setExpendableCost5(double expendableCost5) {
+	public void setExpendableCost5(Integer expendableCost5) {
 		this.expendableCost5 = expendableCost5;
 	}
-	public double getExpendableCosts() {
+	public Integer getExpendableCosts() {
 		return expendableCosts;
 	}
-	public void setExpendableCosts(double expendableCosts) {
+	public void setExpendableCosts(Integer expendableCosts) {
 		this.expendableCosts = expendableCosts;
 	}
 	public String getExpendableDesc() {
@@ -277,10 +277,10 @@ public class InsRepDto extends BicycleDto {
 	public void setExpendableDesc(String expendableDesc) {
 		this.expendableDesc = expendableDesc;
 	}
-	public double getTotalPrice() {
+	public Integer getTotalPrice() {
 		return totalPrice;
 	}
-	public void setTotalPrice(double totalPrice) {
+	public void setTotalPrice(Integer totalPrice) {
 		this.totalPrice = totalPrice;
 	}
 	public String getInstDate() {

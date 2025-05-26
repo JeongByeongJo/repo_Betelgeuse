@@ -79,6 +79,7 @@
 		    ,b.userCustomer_seq
 		    ,u.userName
 		    ,u.userTel
+		    ,u.userShopSeq
  		from
 			reservation r
 			left join bicycle as b on r.bicycle_bikeSeq = b.bikeSeq
