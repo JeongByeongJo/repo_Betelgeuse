@@ -515,7 +515,6 @@ public class MemberController extends BaseController {
 		    	model.addAttribute("item", dto);
 		    	return "usr/member/SignupUsrForm";
 			}
-	        //return "redirect:/member/signinUsrForm";
 	    }
 
 	
