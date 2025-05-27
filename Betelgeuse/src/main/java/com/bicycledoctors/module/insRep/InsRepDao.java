@@ -5,5 +5,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface InsRepDao {
 
+	public InsRepDto selectOne4IrSeq(InsRepVo vo);
+	public InsRepDto selectOne(InsRepVo vo);
 	public int insert(InsRepDto dto);
+	public int update(InsRepDto dto);
 }

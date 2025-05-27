@@ -1,5 +1,6 @@
 package com.bicycledoctors.module.member;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,10 +13,15 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 
 import com.bicycledoctors.common.base.BaseController;
 import com.bicycledoctors.common.util.UtilDateTime;
@@ -333,7 +339,6 @@ public class MemberController extends BaseController {
 		model.addAttribute("listR", reservationService.selectList4iNr(reservationVo));
 		return "usr/member/ServiceAdministration";
 	}
-
 	
 	@RequestMapping("/member/excelDownload")
     public void excelDownload(MemberVo vo, HttpServletResponse httpServletResponse) throws Exception {
@@ -458,4 +463,60 @@ public class MemberController extends BaseController {
 	        workbook.close();
 		}
     }
+	
+	 	@Value("${google.client.id}")
+	    private String googleClientId;
+	    @Value("${google.client.pw}")
+	    private String googleClientPw;
+
+	   
+	    @RequestMapping(value="/api/v1/oauth2/google", method = RequestMethod.POST)
+	    public void loginUrlGoogle(HttpServletResponse response) throws IOException{
+	        String reqUrl = "https://accounts.google.com/o/oauth2/v2/auth?client_id=" + googleClientId
+	                + "&redirect_uri=http://localhost:8080/api/v1/oauth2/google&response_type=code&scope=email%20profile%20openid&access_type=offline";
+	        //return reqUrl;
+	        response.sendRedirect(reqUrl);
+	    }
+	    
+	    
+	    @RequestMapping(value="/api/v1/oauth2/google", method = RequestMethod.GET)
+	    public String loginGoogle(@RequestParam(value = "code") String authCode, MemberDto dto, HttpSession httpSession, Model model){
+	        RestTemplate restTemplate = new RestTemplate();
+	        GoogleRequestDto googleOAuthRequestParam = new GoogleRequestDto();
+	        googleOAuthRequestParam.setClientId(googleClientId);
+	        googleOAuthRequestParam.setClientSecret(googleClientPw);
+	        googleOAuthRequestParam.setCode(authCode);
+	        googleOAuthRequestParam.setRedirectUri("http://localhost:8080/api/v1/oauth2/google");
+	        googleOAuthRequestParam.setGrantType("authorization_code");
+	        ResponseEntity<GoogleResponseDto> resultEntity = restTemplate.postForEntity("https://oauth2.googleapis.com/token",
+	                googleOAuthRequestParam, GoogleResponseDto.class);
+	        String jwtToken=resultEntity.getBody().getId_token();
+	        Map<String, String> map=new HashMap<>();
+	        map.put("id_token",jwtToken);
+	        ResponseEntity<GoogleInfResponseDto> resultEntity2 = restTemplate.postForEntity("https://oauth2.googleapis.com/tokeninfo",
+	                map, GoogleInfResponseDto.class);
+	        String email=resultEntity2.getBody().getEmail();
+	        String name=resultEntity2.getBody().getFamily_name() + resultEntity2.getBody().getGiven_name();
+	        dto.setUserEmail(email);
+	        System.out.println(name);
+	        MemberDto rtMemberEmail = service.selectOneEmailChk(dto);
+	        if(rtMemberEmail != null) {
+				httpSession.setMaxInactiveInterval(60 * 30); 						// 60second * 30 = 30minute
+				httpSession.setAttribute("sessSeqUsr", rtMemberEmail.getSeq());
+				httpSession.setAttribute("sessIdUsr", rtMemberEmail.getUserId());
+				httpSession.setAttribute("sessNameUsr", rtMemberEmail.getUserName());
+				httpSession.setAttribute("sessEmailUsr", rtMemberEmail.getUserEmail());
+				httpSession.setAttribute("sessCateUsr", rtMemberEmail.getUserCate());
+				return "redirect:/index/homeUsr";
+			} else {
+				dto.setUserId(resultEntity2.getBody().getEmail().split("@")[0]);
+		    	dto.setUserEmail(resultEntity2.getBody().getEmail());
+		    	dto.setUserName(resultEntity2.getBody().getName());
+		    	model.addAttribute("item", dto);
+		    	return "usr/member/SignupUsrForm";
+			}
+	        //return "redirect:/member/signinUsrForm";
+	    }
+
+	
 }

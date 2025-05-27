@@ -213,6 +213,7 @@
 				,userId
 			    ,userEmail
 			    ,userName
+			    ,userCate
 			    ,delNy
 		    from
 		    	usercustomer

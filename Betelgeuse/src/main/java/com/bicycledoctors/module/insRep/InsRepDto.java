@@ -26,7 +26,7 @@ public class InsRepDto extends BicycleDto {
     private Integer cockpitInsCost;
     private Integer cockpitRepCost;
     private String cockpitInsDesc;
-    private String cockpirRepDesc;
+    private String cockpitRepDesc;
     private String etcs;
     private String etcDate;
     private Integer etcInsCost;
@@ -181,11 +181,11 @@ public class InsRepDto extends BicycleDto {
 	public void setCockpitInsDesc(String cockpitInsDesc) {
 		this.cockpitInsDesc = cockpitInsDesc;
 	}
-	public String getCockpirRepDesc() {
-		return cockpirRepDesc;
+	public String getCockpitRepDesc() {
+		return cockpitRepDesc;
 	}
-	public void setCockpirRepDesc(String cockpirRepDesc) {
-		this.cockpirRepDesc = cockpirRepDesc;
+	public void setCockpitRepDesc(String cockpirRepDesc) {
+		this.cockpitRepDesc = cockpirRepDesc;
 	}
 	public String getEtcs() {
 		return etcs;

@@ -17,4 +17,9 @@ public class InsRepController {
 		service.insert(dto);
 		return "redirect:/member/shopUsrServiceAdmin";
 	}
+	@RequestMapping(value = "/shop/InsRepUsrUpdt")
+	public String InsRepUsrUpdt(InsRepDto dto, Model model) {
+		service.update(dto);
+		return "redirect:/member/shopUsrServiceAdmin";
+	}
 }

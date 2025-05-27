@@ -264,7 +264,7 @@
 	                                      </a>
 	                                    </li>
 	                                    <li>
-	                                      <a class="dropdown-item" href="#!">
+	                                      <a class="dropdown-item" th:attr="onclick=|goInRMfom('${listR.rsrvSeq}')|">
 	                                        <i class="fi-zap fs-base opacity-75 me-2"></i>
 	                                        점검,정비내역 수정
 	                                      </a>
@@ -479,7 +479,12 @@ let seq = document.querySelector("input[name=rsrvSeq]");
 
 goInR = function (keyValue) {
     seq.value = keyValue;
-    form.action = "/shop/InRUsrform";
+    form.action = "/shop/InRUsrForm";
+    form.submit();
+}
+goInRMfom = function (keyValue) {
+    seq.value = keyValue;
+    form.action = "/shop/InRUsrMfom";
     form.submit();
 }
 

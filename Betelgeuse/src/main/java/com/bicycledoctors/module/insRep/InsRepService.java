@@ -9,7 +9,15 @@ public class InsRepService {
 	@Autowired
 	InsRepDao dao;
 
+	public InsRepDto selectOne(InsRepVo vo) {
+		return dao.selectOne(vo);
+	}
+	
 	public int insert(InsRepDto dto) {
 		return dao.insert(dto);
 	}
+	public int update(InsRepDto dto) {
+		return dao.update(dto);
+	}
+	
 }
