@@ -103,36 +103,14 @@
                         <div class="invalid-tooltip bg-transparent p-0">이름을 입력해주세요!</div>
                       </div>
                       <div class="col position-relative">
-                        <label for="ln" class="form-label fs-base">성 별 *</label><br>
-                        <div class="form-check ">
-                          <input type="radio" class="form-check-input" id="ex-radio-1" name="radio">
-                          <label for="ex-radio-1" class="form-check-label">남 성</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                          <input type="radio" class="form-check-input" id="ex-radio-2" name="radio">
-                          <label for="ex-radio-2" class="form-check-label">여 성</label>
-                        </div>
-                      </div>
-                      <div class="col position-relative">
-                        <label for="email" class="form-label d-flex align-items-center fs-base">이메일 | Email * <span class="badge text-danger bg-danger-subtle ms-2">Verify email</span></label>
+                        <label for="email" class="form-label d-flex align-items-center fs-base">이메일 | Email *</label>
                         <input type="email" class="form-control form-control-lg" id="userEmail" th:value="${item?.userEmail}" required>
                         <div class="invalid-tooltip bg-transparent p-0">유효한 이메일주소를 입력해주세요!</div>
                       </div>
                       <div class="col position-relative">
-                        <label for="phone" class="form-label d-flex align-items-center fs-base">전화번호 * <span class="badge bg-success ms-2">Verified</span></label>
+                        <label for="phone" class="form-label d-flex align-items-center fs-base">전화번호 *</label>
                         <input type="tel" class="form-control form-control-lg" id="userTel" name="userTel" th:value="${item?.userTel}" data-input-format='{"numericOnly": true, "delimiters": [" ", "- ", " ", "- ", " "], "blocks": [3, 0, 4, 0, 4]}' value=" " placeholder="___- ____-____" required>
                         <div class="invalid-tooltip bg-transparent p-0">유효한 전화번호를 입력해주세요!</div>
-                      </div>
-                      <div class="col position-relative">
-                        <label class="form-label fs-base">관심 정비분야</label>
-                        <select class="form-select form-select-lg" data-select multiple aria-label="gear select">
-                          <option value="">관심 정비분야 선택</option>
-                          <option value="English">구동계</option>
-                          <option value="Spanish">휠셋</option>
-                          <option value="French">핸들바,스템,싯포스트</option>
-                          <option value="German">기타 컴포넌트</option>
-                          <option value="Italian">소모품 주기관리</option>
-                        </select>
                       </div>
                       <div class="col position-relative">
                         <label for="birth-date" class="form-label fs-base">생년월일</label>

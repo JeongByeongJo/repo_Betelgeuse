@@ -89,64 +89,14 @@
               <li class="nav-item py-lg-2 me-lg-n2 me-xl-0">
                 <a class="nav-link" href="/shop/shopUsrList">점검 & 정비</a>
               </li>
-              <li class="nav-item dropdown py-lg-2 me-lg-n1 me-xl-0">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-trigger="hover" data-bs-auto-close="outside" aria-expanded="false">Pages</a>
-                <ul class="dropdown-menu">
-                  <li class="dropend">
-                    <a class="dropdown-item dropdown-toggle" href="#!" role="button" data-bs-toggle="dropdown" data-bs-trigger="hover" aria-expanded="false">About</a>
-                    <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="about-v1.html">About v.1</a></li>
-                      <li><a class="dropdown-item" href="about-v2.html">About v.2</a></li>
-                    </ul>
-                  </li>
-                  <li class="dropend">
-                    <a class="dropdown-item dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-trigger="hover" aria-expanded="false">Blog</a>
-                    <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="blog-layout-v1.html">Blog Layout v.1</a></li>
-                      <li><a class="dropdown-item" href="blog-layout-v2.html">Blog Layout v.2</a></li>
-                      <li><a class="dropdown-item" href="blog-layout-v3.html">Blog Layout v.3</a></li>
-                      <li><a class="dropdown-item" href="blog-layout-v4.html">Blog Layout v.4</a></li>
-                      <li><a class="dropdown-item" href="blog-single-v1.html">Single Post v.1</a></li>
-                      <li><a class="dropdown-item" href="blog-single-v2.html">Single Post v.2</a></li>
-                      <li><a class="dropdown-item" href="blog-single-v3.html">Single Post v.3</a></li>
-                    </ul>
-                  </li>
-                  <li class="dropend">
-                    <a class="dropdown-item dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-trigger="hover" aria-expanded="false">Contact</a>
-                    <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="contact-v1.html">Contact v.1</a></li>
-                      <li><a class="dropdown-item" href="contact-v2.html">Contact v.2</a></li>
-                      <li><a class="dropdown-item" href="contact-v3.html">Contact v.3</a></li>
-                    </ul>
-                  </li>
-                  <li class="dropend">
-                    <a class="dropdown-item dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-trigger="hover" aria-expanded="false">Help Center</a>
-                    <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="help-topics-v1.html">Help Topics v.1</a></li>
-                      <li><a class="dropdown-item" href="help-topics-v2.html">Help Topics v.2</a></li>
-                      <li><a class="dropdown-item" href="help-topics-v3.html">Help Topics v.3</a></li>
-                      <li><a class="dropdown-item" href="help-single-article-v1.html">Help Single Article v.1</a></li>
-                      <li><a class="dropdown-item" href="help-single-article-v2.html">Help Single Article v.2</a></li>
-                      <li><a class="dropdown-item" href="help-single-article-v3.html">Help Single Article v.3</a></li>
-                    </ul>
-                  </li>
-                  <li class="dropend">
-                    <a class="dropdown-item dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-trigger="hover" aria-expanded="false">404 Error</a>
-                    <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="404-bg-image.html">Background Image (Real Estate)</a></li>
-                      <li><a class="dropdown-item" href="404-icon.html">Icon Image (Cars)</a></li>
-                      <li><a class="dropdown-item" href="404-split-screen.html">Split Screen (Contractors)</a></li>
-                      <li><a class="dropdown-item" href="404-illustration.html">Illustration (City Guide)</a></li>
-                    </ul>
-                  </li>
-                  <li><a class="dropdown-item" href="terms-and-conditions.html">Terms &amp; Conditions</a></li>
-                </ul>
+              <li class="nav-item dropdown py-lg-2 me-lg-n1 me-xl-0" th:if="${session.sessCateUsr} == 4">
+                <a class="nav-link" href="/member/shopUsrServiceAdmin">예약,점검정비 관리</a>
               </li>
               <li class="nav-item py-lg-2 me-lg-n2 me-xl-0">
-                <a class="nav-link" href="docs/installation.html">Docs</a>
+                <a class="nav-link" href="https://finder-html.createx.studio/docs/installation.html">Docs</a>
               </li>
               <li class="nav-item py-lg-2 me-lg-n2 me-xl-0">
-                <a class="nav-link" href="docs/typography.html">Components</a>
+                <a class="nav-link" href="https://finder-html.createx.studio/docs/typography.html">Components</a>
               </li>
             </ul>
           </div>

@@ -199,8 +199,7 @@
 		    ,a.userCustomer_seq
 		    ,b.seq
 		    ,(select path from filesUploaded where pSeq = shopSeq and sort = 3001) as path
-		FROM shop as a
-		left join usercustomer b on a.userCustomer_seq = b.seq
+		<include refid = "selectCommon"></include>
 	</select>
 	
 	<select id="selectOneList4Pic" resultMap="resultMapObj">

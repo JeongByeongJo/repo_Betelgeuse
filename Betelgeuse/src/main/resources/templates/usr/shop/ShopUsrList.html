@@ -4,7 +4,8 @@
 <!-- Filters offcanvas -->
     <div class="offcanvas offcanvas-end" id="filters" tabindex="-1" style="width: 400px">
     <form id="formFilter" name="formFilter">
-
+<input type="hidden" id="shOption" name="shOption" th:value="${shopVo?.shOption}">
+<input type="hidden" id="shValue" name="shValue" th:value="${shopVo?.shValue}">
       <!-- Header -->
       <div class="offcanvas-header px-sm-5">
         <h4 class="h5 offcanvas-title">검색 필터</h4>
@@ -106,7 +107,8 @@
                   "marker": "<div class=\"map-marker\"><i class=\"fi-map-pin-filled text-primary fs-4\"></i><span class=\"map-marker-price\">{{shopName}}</span></div>",
                   "popup": "<div class=\"card bg-transparent border-0\" data-bs-theme=\"light\"><div class=\"card-img-top position-relative bg-body-tertiary overflow-hidden\"><div class=\"ratio d-block\" style=\"--fn-aspect-ratio: calc(248 / 362 * 100%)\"><img src=\"{{image}}\" alt=\"Image\"></div></div><div class=\"card-body p-3\"><div class=\"h5 mb-2\">{{shopName}}</div><h3 class=\"fs-sm fw-normal text-body mb-2\"><a class=\"stretched-link text-body\" href=\"/shop/shopUsrView?shopSeq={{shopSeq}}\">{{shopAddress}}</a></h3><div class=\"h6 fs-sm mb-0\">{{shopTel}}</div></div><div class=\"card-footer d-flex gap-2 border-0 bg-transparent pt-0 pb-3 px-3 mt-n1\"></div></div></div>"
                 }
-              }' data-map-markers="/usr/template/Finder/assets/json/map-real-estate.json">
+              }' data-map-markers="/map-real-estate.json">
+              
               </div>
             </div>
           </div>											
@@ -309,37 +311,12 @@
           <!-- Footer -->
           <footer class="text-center pt-4 pt-md-5">
             <hr class="pb-4">
-            <a class="d-inline-flex align-items-center text-dark-emphasis text-decoration-none mb-4" href="home-real-estate.html">
+            <a class="d-inline-flex align-items-center text-dark-emphasis text-decoration-none mb-4" href="/index/homeUsr">
               <span class="flex-shrink-0 text-primary rtl-flip me-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="35" height="34"><path d="M34.5 16.894v10.731c0 3.506-2.869 6.375-6.375 6.375H17.5h-.85C7.725 33.575.5 26.138.5 17c0-9.35 7.65-17 17-17s17 7.544 17 16.894z" fill="currentColor"></path><g fill-rule="evenodd"><path d="M17.5 13.258c-3.101 0-5.655 2.554-5.655 5.655s2.554 5.655 5.655 5.655 5.655-2.554 5.655-5.655-2.554-5.655-5.655-5.655zm-9.433 5.655c0-5.187 4.246-9.433 9.433-9.433s9.433 4.246 9.433 9.433a9.36 9.36 0 0 1-1.569 5.192l2.397 2.397a1.89 1.89 0 0 1 0 2.671 1.89 1.89 0 0 1-2.671 0l-2.397-2.397a9.36 9.36 0 0 1-5.192 1.569c-5.187 0-9.433-4.246-9.433-9.433z" fill="#000" fill-opacity=".05"></path><g fill="#fff"><path d="M17.394 10.153c-3.723 0-6.741 3.018-6.741 6.741s3.018 6.741 6.741 6.741 6.741-3.018 6.741-6.741-3.018-6.741-6.741-6.741zM7.347 16.894A10.05 10.05 0 0 1 17.394 6.847 10.05 10.05 0 0 1 27.44 16.894 10.05 10.05 0 0 1 17.394 26.94 10.05 10.05 0 0 1 7.347 16.894z"></path><path d="M23.025 22.525c.645-.645 1.692-.645 2.337 0l3.188 3.188c.645.645.645 1.692 0 2.337s-1.692.645-2.337 0l-3.187-3.187c-.645-.646-.645-1.692 0-2.337z"></path></g></g><path d="M23.662 14.663c2.112 0 3.825-1.713 3.825-3.825s-1.713-3.825-3.825-3.825-3.825 1.713-3.825 3.825 1.713 3.825 3.825 3.825z" fill="#fff"></path><path fill-rule="evenodd" d="M23.663 8.429a2.41 2.41 0 0 0-2.408 2.408 2.41 2.41 0 0 0 2.408 2.408 2.41 2.41 0 0 0 2.408-2.408 2.41 2.41 0 0 0-2.408-2.408zm-5.242 2.408c0-2.895 2.347-5.242 5.242-5.242s5.242 2.347 5.242 5.242-2.347 5.242-5.242 5.242-5.242-2.347-5.242-5.242z" fill="currentColor"></path></svg>
               </span>
-              <span class="fs-4 fw-semibold">Finder</span>
+              <span class="fs-4 fw-semibold">Bicycle Doctors</span>
             </a>
-            <ul class="list-inline justify-content-center gap-2">
-              <li class="me-3">
-                <div class="position-relative d-flex align-items-center">
-                  <i class="fi-mail fs-lg text-body me-2"></i>
-                  <a class="text-dark-emphasis text-decoration-none hover-effect-underline stretched-link" href="mailto:contact@example.com">contact@example.com</a>
-                </div>
-              </li>
-              <li>
-                <div class="position-relative d-flex align-items-center">
-                  <i class="fi-phone-call fs-lg text-body me-2"></i>
-                  <a class="text-dark-emphasis text-decoration-none hover-effect-underline stretched-link" href="tel:+15053753082">+1&nbsp;50&nbsp;537&nbsp;53&nbsp;082</a>
-                </div>
-              </li>
-            </ul>
-            <div class="d-flex justify-content-center pt-2 mt-3">
-              <a class="btn btn-icon fs-base btn-outline-secondary border-0" href="#!" data-bs-toggle="tooltip" data-bs-template='<div class="tooltip fs-xs mb-n2" role="tooltip"><div class="tooltip-inner bg-transparent text-body opacity-75 p-0"></div></div>' title="Instagram" aria-label="Follow us on Instagram">
-                <i class="fi-instagram"></i>
-              </a>
-              <a class="btn btn-icon fs-base btn-outline-secondary border-0" href="#!" data-bs-toggle="tooltip" data-bs-template='<div class="tooltip fs-xs mb-n2" role="tooltip"><div class="tooltip-inner bg-transparent text-body opacity-75 p-0"></div></div>' title="Facebook" aria-label="Follow us on Facebook">
-                <i class="fi-facebook"></i>
-              </a>
-              <a class="btn btn-icon fs-base btn-outline-secondary border-0" href="#!" data-bs-toggle="tooltip" data-bs-template='<div class="tooltip fs-xs mb-n2" role="tooltip"><div class="tooltip-inner bg-transparent text-body opacity-75 p-0"></div></div>' title="X (Twitter)" aria-label="Follow us on X (Twitter)">
-                <i class="fi-x"></i>
-              </a>
-            </div>
             <div class="py-4">
               <p class="text-body-secondary fs-sm mb-0 mb-sm-2">&copy; All rights reserved. Made by <a class="text-body fw-medium text-decoration-none hover-effect-underline" href="#" target="_blank" rel="noreferrer">JeongByeongJo</a></p>
             </div>
@@ -375,25 +352,6 @@
 
     <!-- Page specific scripts -->
     
-    
-    <script>
-
-      // Dynamically update count number of selected items inside filter dropdown
-      window.onload = () => {
-        updateFilterCount('typeCount')
-        updateFilterCount('typeCountOffcanvas')
-      }
-
-      const updateFilterCount = (countId) => {
-        const checkedCheckboxes = document.querySelectorAll(`[data-count-id="${countId}"]:checked`)
-        const countElement = document.getElementById(countId)
-        if (checkedCheckboxes.length > 0) {
-            countElement.textContent = '(' + checkedCheckboxes.length + ')'
-        } else {
-            countElement.textContent = ''
-        }
-      }
-    </script>
     <script type="text/javascript">
     let formH = document.querySelector("form[name=formH]");
 	let seqH = document.querySelector("input[name=userCustomer_seq]");
@@ -453,9 +411,7 @@
     		async: true 
     		,cache: false
     		,type: "post"
-    		/* ,dataType:"json" */
     		,url: "/shop/shopFilterUsrProc"
-    		/* ,data : $("#formLogin").serialize() */
     		,data : { "availableServiceCd" : $("#availableServiceCd").val()}
     		,traditional: true
     		,success: function(response) {
@@ -467,7 +423,6 @@
     	});
     })
 	</script>
-    
    
   </body>
 </html>

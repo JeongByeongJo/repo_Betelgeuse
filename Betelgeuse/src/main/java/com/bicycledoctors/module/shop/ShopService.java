@@ -34,8 +34,8 @@ public class ShopService extends BaseService {
 	public List<ShopDto> selectList(ShopDto dto) {
 		return dao.selectList(dto);
 	}
-	public List<ShopDto> selectList4Marker(ShopDto dto) {
-		return dao.selectList4Marker(dto);
+	public List<ShopDto> selectList4Marker(ShopVo vo) {
+		return dao.selectList4Marker(vo);
 	}
 	public List<BaseDto> selectOneList4Pic(ShopDto dto) {
 		return dao.selectOneList4Pic(dto);

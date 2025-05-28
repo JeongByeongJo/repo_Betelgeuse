@@ -470,7 +470,7 @@ public class MemberController extends BaseController {
 	    private String googleClientPw;
 
 	   
-	    @RequestMapping(value="/api/v1/oauth2/google", method = RequestMethod.POST)
+	    @RequestMapping(value="/google/oauth2")
 	    public void loginUrlGoogle(HttpServletResponse response) throws IOException{
 	        String reqUrl = "https://accounts.google.com/o/oauth2/v2/auth?client_id=" + googleClientId
 	                + "&redirect_uri=http://localhost:8080/api/v1/oauth2/google&response_type=code&scope=email%20profile%20openid&access_type=offline";
@@ -491,10 +491,8 @@ public class MemberController extends BaseController {
 	        ResponseEntity<GoogleResponseDto> resultEntity = restTemplate.postForEntity("https://oauth2.googleapis.com/token",
 	                googleOAuthRequestParam, GoogleResponseDto.class);
 	        String jwtToken=resultEntity.getBody().getId_token();
-	        Map<String, String> map=new HashMap<>();
-	        map.put("id_token",jwtToken);
-	        ResponseEntity<GoogleInfResponseDto> resultEntity2 = restTemplate.postForEntity("https://oauth2.googleapis.com/tokeninfo",
-	                map, GoogleInfResponseDto.class);
+	        String tokenInfoUrl = "https://oauth2.googleapis.com/tokeninfo?id_token=" + jwtToken;
+	        ResponseEntity<GoogleInfResponseDto> resultEntity2 = restTemplate.getForEntity(tokenInfoUrl, GoogleInfResponseDto.class);
 	        String email=resultEntity2.getBody().getEmail();
 	        String name=resultEntity2.getBody().getFamily_name() + resultEntity2.getBody().getGiven_name();
 	        dto.setUserEmail(email);

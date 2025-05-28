@@ -144,10 +144,10 @@
 
           <!-- Social login -->
           <div class="d-flex flex-column flex-sm-row gap-3 pb-4 mb-3 mb-lg-4">
-            <button type="button" class="btn btn-lg btn-outline-secondary w-100 px-2">
+            <a type="button" href="/google/oauth2" id="googleLogin" class="btn btn-lg btn-outline-secondary w-100 px-2">
               <i class="fi-google ms-1 me-1"></i>
               Google
-            </button>
+            </a>
             <button type="button" class="btn btn-lg btn-outline-secondary w-100 px-2">
               <i class="fi-facebook ms-1 me-1"></i>
               Facebook
@@ -157,22 +157,6 @@
               Apple
             </button>
           </div>
-<div id="g_id_onload"
-     data-client_id="855437050691-1fl75ij4h1tgq4iqq5bjr6tsga1nea0g.apps.googleusercontent.com"
-     data-context="signin"
-     data-ux_mode="popup"
-     data-login_uri="http://localhost:8080/api/v1/oauth2/google"
-     data-auto_prompt="false">
-</div>
-
-<div class="g_id_signin"
-     data-type="standard"
-     data-shape="pill"
-     data-theme="outline"
-     data-text="signin"
-     data-size="large"
-     data-logo_alignment="left">
-</div>
           <!-- Footer -->
           <footer class="mt-auto">
             <div class="nav mb-4">
@@ -529,6 +513,5 @@ $("#btnSignUp").on("click", function(){
     <script src="/usr/template/Finder/assets/vendor/flatpickr/dist/flatpickr.min.js"></script>
     <!-- Bootstrap + Theme scripts -->
     <script src="/usr/template/Finder/assets/js/theme.min.js"></script>
-    <script src="https://accounts.google.com/gsi/client" async></script>
   </body>
 </html>

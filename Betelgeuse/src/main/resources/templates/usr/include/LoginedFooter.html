@@ -145,10 +145,14 @@
     <script src="/usr/template/Finder/assets/js/theme.min.js"></script>
     
     <script type="text/javascript">
+    let formS = document.querySelector("form[name=formSearch]");
     let formH = document.querySelector("form[name=formH]");
 	let seqH = document.querySelector("input[name=userCustomer_seq]");
 	
-	
+	document.getElementById("btnSearch").onclick = function () {
+		formS.action = "/shop/shopUsrList";
+		formS.submit();
+	};
 	
 	goFormH = function (keyValue) {
 	    seqH.value = keyValue;

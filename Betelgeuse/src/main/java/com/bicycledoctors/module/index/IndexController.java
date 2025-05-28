@@ -3,7 +3,10 @@
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.bicycledoctors.module.shop.ShopVo;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -22,7 +25,7 @@ public class IndexController {
 		return "usr/index/home";
 	}
 	@RequestMapping(value = "/index/homeUsr")
-	public String homelogined(Model model, IndexVo vo, HttpSession httpSession) {
+	public String homelogined(Model model, IndexVo vo, @ModelAttribute ShopVo shopVo, HttpSession httpSession) {
 		vo.setSeq(httpSession.getAttribute("sessSeqUsr").toString());
 		model.addAttribute("itemH", service.selectOneUserShopSeq(vo));
 		return "usr/index/home-logined";
