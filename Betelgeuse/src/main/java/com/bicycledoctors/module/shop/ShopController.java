@@ -47,7 +47,7 @@ public class ShopController extends BaseController {
 
 	
 	@RequestMapping(value = "/shop/shopUsrList")
-	public String shopUsrList(Model model, IndexVo vo, ShopDto dto, ShopVo shopVo, HttpSession httpSession) throws JsonProcessingException {
+	public String shopUsrList(Model model, IndexVo vo, ShopDto dto,@ModelAttribute ShopVo shopVo, HttpSession httpSession) throws JsonProcessingException {
 		vo.setSeq(httpSession.getAttribute("sessSeqUsr").toString());
 		model.addAttribute("itemH", indexService.selectOneUserShopSeq(vo));
 		

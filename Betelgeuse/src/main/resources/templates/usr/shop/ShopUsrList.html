@@ -19,7 +19,7 @@
             <h6>위치를 검색합니다.</h6>
             <div class="position-relative w-100">
               <i class="fi-map-pin position-absolute top-50 start-0 translate-middle-y z-1 ms-3"></i>
-              <input type="search" class="form-control form-icon-start" value=" " placeholder="Search for location">
+              <input type="search" id="locationSearch" onclick="getLatLng()" class="form-control form-icon-start" placeholder="Search for location">
             </div>
           </div>
         </div>
@@ -108,7 +108,6 @@
                   "popup": "<div class=\"card bg-transparent border-0\" data-bs-theme=\"light\"><div class=\"card-img-top position-relative bg-body-tertiary overflow-hidden\"><div class=\"ratio d-block\" style=\"--fn-aspect-ratio: calc(248 / 362 * 100%)\"><img src=\"{{image}}\" alt=\"Image\"></div></div><div class=\"card-body p-3\"><div class=\"h5 mb-2\">{{shopName}}</div><h3 class=\"fs-sm fw-normal text-body mb-2\"><a class=\"stretched-link text-body\" href=\"/shop/shopUsrView?shopSeq={{shopSeq}}\">{{shopAddress}}</a></h3><div class=\"h6 fs-sm mb-0\">{{shopTel}}</div></div><div class=\"card-footer d-flex gap-2 border-0 bg-transparent pt-0 pb-3 px-3 mt-n1\"></div></div></div>"
                 }
               }' data-map-markers="/map-real-estate.json">
-              
               </div>
             </div>
           </div>											
@@ -126,23 +125,13 @@
             <div class="d-flex gap-2 gap-sm-3 py-2 py-sm-3">
               <div class="position-relative" style="width: 500px">
                 <i class="fi-map-pin position-absolute top-50 start-0 translate-middle-y z-1 ms-3"></i>
-                <input type="search" class="form-control form-icon-start" value="New York, Brooklyn" placeholder="Search for location">
+                <input type="search" id="shValue" name="shValue" class="form-control form-icon-start" placeholder="점검, 정비샵 찾기">
               </div>
               <div class="flex-shrink-0 d-none d-md-block" style="width: 140px">
                 <div class="position-relative">
-                  <i class="fi-navigation position-absolute top-50 start-0 translate-middle-y z-1 ms-3"></i>
-                  <select class="form-select form-icon-start bg-transparent" data-select='{
-                    "classNames": {
-                      "containerInner": ["form-select", "form-icon-start", "bg-transparent"]
-                    }
-                  }' aria-label="Location radius select">
-                    <option value="">Any radius</option>
-                    <option value="5 mi" selected>5 mi</option>
-                    <option value="10 mi">10 mi</option>
-                    <option value="20 mi">20 mi</option>
-                    <option value="30 mi">30 mi</option>
-                    <option value="40 mi">40 mi</option>
-                    <option value="50 mi">50 mi</option>
+                  <select id="shOption" name="shOption" class="form-select bg-transparent">
+                    <option value="3" th:selected="${shopVo?.shOption == 3}">위치(시,군,구)</option>
+                    <option value="2" th:selected="${shopVo?.shOption == 2}">샵 이름</option>
                   </select>
                 </div>
               </div>
@@ -346,6 +335,8 @@
     <script src="/usr/template/Finder/assets/vendor/swiper/swiper-bundle.min.js"></script>
     <script src="/usr/template/Finder/assets/vendor/choices.js/public/assets/scripts/choices.min.js"></script>
     <script src="/usr/template/Finder/assets/vendor/flatpickr/dist/flatpickr.min.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f7d210607aa49a67c830e2baeb80358f&libraries=services"></script>
 
     <!-- Bootstrap + Theme scripts -->
     <script src="/usr/template/Finder/assets/js/theme.min.js"></script>
@@ -423,6 +414,38 @@
     	});
     })
 	</script>
-   
+<script>
+    var geocoder = new daum.maps.services.Geocoder();
+
+    function getLatLng() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                var addr = data.address; // 최종 주소 변수
+
+                document.getElementById("locationSearch").value = addr;
+                geocoder.addressSearch(data.address, function(results, status) {
+                    if (status === daum.maps.services.Status.OK) {
+
+                        var result = results[0]; //첫번째 결과의 값을 활용
+
+                        var coords = new daum.maps.LatLng(result.y, result.x);
+                        var lat = parseFloat(result.y);
+                        var lng = parseFloat(result.x);
+
+                        console.log(lat);
+                        console.log(lng);
+                        // Leaflet 지도 이동 및 마커 표시
+                        map.setView([lat, lng], 15);
+                        L.marker([lat, lng]).addTo(map)
+                          .bindPopup(addr)
+                          .openPopup();
+                      } else {
+                        alert("좌표를 찾을 수 없습니다.");
+                      }
+                });
+            }
+        }).open();
+    }
+</script>
   </body>
 </html>
