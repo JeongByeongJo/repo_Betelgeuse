@@ -16,15 +16,6 @@
       <div class="offcanvas-body pt-2 pb-3 px-sm-5">
         <div class="row g-4 pb-3 mb-3">
           <div class="col">
-            <h6>위치를 검색합니다.</h6>
-            <div class="position-relative w-100">
-              <i class="fi-map-pin position-absolute top-50 start-0 translate-middle-y z-1 ms-3"></i>
-              <input type="search" id="locationSearch" onclick="getLatLng()" class="form-control form-icon-start" placeholder="Search for location">
-            </div>
-          </div>
-        </div>
-        <div class="row g-4 pb-3 mb-3">
-          <div class="col">
           <h6>서비스 필터</h6>
             <select class="form-select form-select-lg" id="availableServiceCd" name="availableServiceCd" data-select='{
               "classNames": {
@@ -93,7 +84,8 @@
       <div class="d-lg-flex flex-grow-1">
 
         <!-- Interactive map that turns into offcanvas on screens < 992px wide (lg breakpoint) -->
-        <div class="map-section">
+        <div class="map-section" th:if="${#lists.isEmpty(list)}"><img src="https://cdn.mos.cms.futurecdn.net/acbrccq5yGLhQUX2fNj7kU-1920-80.jpg.webp" style="width: 100%; height: 55em; object-fit: cover;"></div>
+        <div class="map-section" th:if="${!#lists.isEmpty(list)}">
           <div class="offcanvas-lg offcanvas-start d-flex flex-column w-100 h-100" id="map">
             <div class="offcanvas-body position-relative h-100 p-0">
               <button type="button" class="btn btn-icon btn-outline-secondary bg-body shadow position-absolute top-0 z-5 mt-2 d-lg-none" style="right: 0; margin-right: 8px; z-index: 500" data-bs-dismiss="offcanvas" data-bs-target="#map" aria-label="Close">
@@ -110,7 +102,7 @@
               }' data-map-markers="/map-real-estate.json">
               </div>
             </div>
-          </div>											
+          </div>
         </div>
 
 
@@ -122,12 +114,12 @@
             <div class="d-md-none" style="height: 64px;  margin-top: -64px"></div>
             <div class="d-none d-md-block d-lg-none" style="height: 72px;  margin-top: -72px"></div>
             <div class="d-none d-lg-block" style="height: 76px; margin-top: -76px"></div>
-            <div class="d-flex gap-2 gap-sm-3 py-2 py-sm-3">
-              <div class="position-relative" style="width: 500px">
+            <form id="searchForm" name="searchForm" class="d-flex gap-2 gap-sm-3 py-2 py-sm-3">
+              <div class="position-relative" style="width: 600px">
                 <i class="fi-map-pin position-absolute top-50 start-0 translate-middle-y z-1 ms-3"></i>
                 <input type="search" id="shValue" name="shValue" class="form-control form-icon-start" placeholder="점검, 정비샵 찾기">
               </div>
-              <div class="flex-shrink-0 d-none d-md-block" style="width: 140px">
+              <div class="flex-shrink-0 d-none d-md-block" style="width: 200px">
                 <div class="position-relative">
                   <select id="shOption" name="shOption" class="form-select bg-transparent">
                     <option value="3" th:selected="${shopVo?.shOption == 3}">위치(시,군,구)</option>
@@ -136,8 +128,7 @@
                 </div>
               </div>
               <div class="position-relative" style="width: 180px">
-                <input type="text" class="form-control form-icon-end" id="date-1" data-datepicker placeholder="Choose date">
-                <i class="fi-calendar position-absolute top-50 end-0 translate-middle-y me-3"></i>
+                <button type="button" id="btnSearch" class="btn btn-md btn-primary">검색</button>
               </div>
 
               <!-- Map offcanvas toggle button visible on screens < 992px wide (lg breakpoint) -->
@@ -153,35 +144,21 @@
                   <i class="fi-sliders fs-base"></i>
                 </button>
               </div>
-            </div>
+            </form>
           </div>
 
 
           <!-- Sort selector -->
           <div class="d-flex align-items-center gap-2 gap-sm-3 mb-3">
-            <div class="fs-sm text-nowrap">Showing 156 results</div>
-            <div class="position-relative ms-auto" style="width: 150px">
-              <i class="fi-sort position-absolute top-50 start-0 translate-middle-y z-2"></i>
-              <select class="form-select border-0 rounded-0 ps-4 pe-1" data-select='{
-                "removeItemButton": false,
-                "classNames": {
-                  "containerInner": ["form-select", "border-0", "rounded-0", "ps-4", "pe-1"]
-                }
-              }'>
-              <option value="Distance Asc">거리순</option>
-              <option value="Hit Desc">조회순</option>
-              <option value="Recommend Asc">추천순</option>
-              <option value="Updated">업데이트순</option>
-              </select>
-            </div>
+            <div class="fs-sm text-nowrap">Showing <span class="align-middle" th:text="'Total: '+${shopVo.totalRows}"></span> results</div>
           </div>
-
 
           <!-- Listings grid -->
           <div class="row row-cols-1 row-cols-sm-2 g-4">
 
             <!-- Listing -->
-            <div class="col" th:each = "list : ${list}">
+            <div class="col" th:if="${#lists.isEmpty(list)}"><h4>해당 샵이 존재하지 않습니다.</h4></div>
+            <div class="col" th:if="${!#lists.isEmpty(list)}" th:each="list : ${list}">
             <input type="hidden" name="shopSeq" th:value="${list?.shopSeq}"/>
               <article class="card hover-effect-opacity h-100" th:data-map-bind-to-marker="${list?.userCustomer_seq}">
                 <div class="card-img-top position-relative bg-body-tertiary overflow-hidden">
@@ -270,30 +247,25 @@
           <!-- Pagination -->
           <nav class="pt-3 mt-3" aria-label="Listings pagination">
             <ul class="pagination pagination-lg justify-content-center">
-              <li class="page-item active" aria-current="page">
-                <span class="page-link">
-                  1
-                  <span class="visually-hidden">(current)</span>
-                </span>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#!">2</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#!">3</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#!">4</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#!">5</a>
-              </li>
-              <li class="page-item">
-                <span class="page-link px-2 pe-none">...</span>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="#!">16</a>
-              </li>
+<!--               <li class="page-item active" aria-current="page"> -->
+<!--                 <span class="page-link"> -->
+<!--                   1 -->
+<!--                   <span class="visually-hidden">(current)</span> -->
+<!--                 </span> -->
+<!--               </li> -->
+				<li th:if="${shopVo.startPage gt shopVo.pageNumToShow}" class="page-item" style="cursor: pointer;">
+					<a class="page-link" href="javascript:goList(${shopVo.startPage - 1})" th:attr="onclick=|goList('${shopVo.startPage - 1}')|">
+						&laquo;
+					</a>
+				</li>
+				<li th:each="num: ${#numbers.sequence(shopVo.startPage, shopVo.endPage)}" th:classappend="${num eq shopVo.thisPage} ? active : ''" class="page-item" style="cursor: pointer;">
+					<a class="page-link" th:attr="onclick=|goList('${num}')|" th:text="${num}"><!-- ${i.index} --></a>
+				</li>
+				<li th:if="${shopVo.endPage ne shopVo.totalPages}" class="page-item" style="cursor: pointer;">
+					<a class="page-link" th:attr="onclick=|goList('${shopVo.endPage + 1}')|">
+						&raquo;
+					</a>
+				</li>
             </ul>
           </nav>
 
@@ -335,8 +307,6 @@
     <script src="/usr/template/Finder/assets/vendor/swiper/swiper-bundle.min.js"></script>
     <script src="/usr/template/Finder/assets/vendor/choices.js/public/assets/scripts/choices.min.js"></script>
     <script src="/usr/template/Finder/assets/vendor/flatpickr/dist/flatpickr.min.js"></script>
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f7d210607aa49a67c830e2baeb80358f&libraries=services"></script>
 
     <!-- Bootstrap + Theme scripts -->
     <script src="/usr/template/Finder/assets/js/theme.min.js"></script>
@@ -345,14 +315,31 @@
     
     <script type="text/javascript">
     let formH = document.querySelector("form[name=formH]");
+    let formS = document.querySelector("form[name=searchForm]");
 	let seqH = document.querySelector("input[name=userCustomer_seq]");
-	
-	
 	
 	goFormH = function (keyValue) {
 	    seqH.value = keyValue;
 	    formH.action = "/shop/shopaddlocationUsrForm";
 	    formH.submit();
+	}
+	
+	document.getElementById("btnSearch").onclick = function () {
+		formS.action = "/shop/shopUsrList";
+		formS.submit();
+	};
+	
+	document.getElementById("shValue").addEventListener("keydown", function (e) {
+		  if (e.key === "Enter") {
+		    e.preventDefault();
+		    document.getElementById("btnSearch").click();
+		  }
+		});
+	
+	goList = function (thisPage) {
+	    document.querySelector("input[name=thisPage]").value = thisPage;
+	    form.action = "/shop/shopUsrList";
+	    form.submit();
 	}
     
 	$("#btnSignout").on("click", function(){
@@ -414,38 +401,5 @@
     	});
     })
 	</script>
-<script>
-    var geocoder = new daum.maps.services.Geocoder();
-
-    function getLatLng() {
-        new daum.Postcode({
-            oncomplete: function(data) {
-                var addr = data.address; // 최종 주소 변수
-
-                document.getElementById("locationSearch").value = addr;
-                geocoder.addressSearch(data.address, function(results, status) {
-                    if (status === daum.maps.services.Status.OK) {
-
-                        var result = results[0]; //첫번째 결과의 값을 활용
-
-                        var coords = new daum.maps.LatLng(result.y, result.x);
-                        var lat = parseFloat(result.y);
-                        var lng = parseFloat(result.x);
-
-                        console.log(lat);
-                        console.log(lng);
-                        // Leaflet 지도 이동 및 마커 표시
-                        map.setView([lat, lng], 15);
-                        L.marker([lat, lng]).addTo(map)
-                          .bindPopup(addr)
-                          .openPopup();
-                      } else {
-                        alert("좌표를 찾을 수 없습니다.");
-                      }
-                });
-            }
-        }).open();
-    }
-</script>
   </body>
 </html>

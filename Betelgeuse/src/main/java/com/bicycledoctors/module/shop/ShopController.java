@@ -50,7 +50,7 @@ public class ShopController extends BaseController {
 	public String shopUsrList(Model model, IndexVo vo, ShopDto dto,@ModelAttribute ShopVo shopVo, HttpSession httpSession) throws JsonProcessingException {
 		vo.setSeq(httpSession.getAttribute("sessSeqUsr").toString());
 		model.addAttribute("itemH", indexService.selectOneUserShopSeq(vo));
-		
+		shopVo.setParamsPaging(service.selectOneCount(shopVo));
 		List<ShopDto> shopList = service.selectList(shopVo);  // 가게 정보 리스트
 		List<BaseDto> picList = service.selectOneList4Pic(dto);  // 이미지 정보 리스트
 		
