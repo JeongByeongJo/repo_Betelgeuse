@@ -134,8 +134,7 @@
             <h2 class="h5 pt-4 pt-sm-5 mt-3 mt-sm-0">위치</h2>            
 
             <!-- Google map -->
-            <iframe class="border rounded" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2311.3724100313693!2d-73.82417211551919!3d42.62335692577899!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89dde016efd1fe73%3A0x6861561b35064fe9!2sGlendale%20Ave!5e0!3m2!1sen!2suk!4v1726842151281!5m2!1sen!2suk" width="600" height="350" style="border: 0" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Map"></iframe>
-
+<iframe class="border rounded" width="600" height="350" style=" 메뉴:0"loading="latency" allowfullscreen th:src="'https://www.google.com/maps/embed/v1/place?q=' + ${item.shopAddress1} + '&key=AIzaSyARuUf1r02-IOkpvbaEnxeIgEnfhtnlad0'"></iframe>  
             <div class="position-relative p-4 mt-4" id="reviews" style="scroll-margin-top: 98px">
               <div class="position-relative z-1 p-xl-2">
                 <div class="d-flex align-items-center justify-content-between mb-4">
@@ -658,7 +657,7 @@
                     "value": "4",
                     "label": "<span class=\"visually-hidden\">4 stars</span>",
                     "customProperties": {
-                      "icon": "<span class=\"d-flex gap-1 py-1\"><i class=\"fi-star-filled text-warning\"></i><i class=\"fi-star-filled text-warning\"></i><i class=\"fi-star-filled text-warning\"></i><i class=\"ci-star-filled text-warning\"></i></span>",
+                      "icon": "<span class=\"d-flex gap-1 py-1\"><i class=\"fi-star-filled text-warning\"></i><i class=\"fi-star-filled text-warning\"></i><i class=\"fi-star-filled text-warning\"></i><i class=\"fi-star-filled text-warning\"></i></span>",
                       "selected": "4 stars"
                     }
                   },
@@ -666,7 +665,7 @@
                     "value": "5",
                     "label": "<span class=\"visually-hidden\">5 stars</span>",
                     "customProperties": {
-                      "icon": "<span class=\"d-flex gap-1 py-1\"><i class=\"fi-star-filled text-warning\"></i><i class=\"fi-star-filled text-warning\"></i><i class=\"fi-star-filled text-warning\"></i><i class=\"fi-star-filled text-warning\"></i><i class=\"ci-star-filled text-warning\"></i></span>",
+                      "icon": "<span class=\"d-flex gap-1 py-1\"><i class=\"fi-star-filled text-warning\"></i><i class=\"fi-star-filled text-warning\"></i><i class=\"fi-star-filled text-warning\"></i><i class=\"fi-star-filled text-warning\"></i><i class=\"fi-star-filled text-warning\"></i></span>",
                       "selected": "5 stars"
                     }
                   }
@@ -691,7 +690,6 @@
     </main>
 
  <div th:replace="~{usr/include/LoginedFooter :: LoginedFooter}"></div>
- 
 <script type="text/javascript">
 document.getElementById("appoint").onclick = function () {
 	if(document.getElementById('bikeSeq').value == "") {
@@ -752,9 +750,6 @@ document.getElementById("btnReservation").onclick = function () {
 	form.submit();
 }
 </script>
-
- 
-
     
   </body>
 </html>
