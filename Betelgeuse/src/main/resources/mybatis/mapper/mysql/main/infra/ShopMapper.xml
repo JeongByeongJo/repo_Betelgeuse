@@ -146,6 +146,11 @@
 		where 1=1
 			<if test="bikeBrandCd != null and !bikeBrandCd.equals('')">and bikeBrandCd = #{bikeBrandCd}</if>
 			<if test="wheelBrandCd != null and !wheelBrandCd.equals('')">and wheelBrandCd = #{wheelBrandCd}</if>
+			<if test="parkingNy == 1">and parkingNy is not null</if>
+			<if test="wifiNy == 1">and wifiNy is not null</if>
+			<if test="cctvNy == 1">and cctvNy is not null</if>
+			<if test="cafeNy == 1">and cafeNy is not null</if>
+			<if test="petNy == 1">and petNy is not null</if>
 	        <if test="availableServiceCd != null and !availableServiceCd.equals('')">and availableServiceCd in 
 			<foreach item="availableServiceCd" collection="availableServiceCd" open="(" separator="," close=")">
 		    	#{availableServiceCd}

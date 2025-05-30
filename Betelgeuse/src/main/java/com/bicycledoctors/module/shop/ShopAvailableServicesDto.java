@@ -12,6 +12,11 @@ public class ShopAvailableServicesDto {
 	private String rsrvSeq;
 	private Integer bikeBrandCd;
 	private Integer wheelBrandCd;
+	private String parkingNy;
+    private String wifiNy;
+    private String cctvNy;
+    private String cafeNy;
+    private String petNy;
 //	-----
 	public List<Integer> getAvailableServiceCd() {
 		return availableServiceCd;
@@ -60,6 +65,36 @@ public class ShopAvailableServicesDto {
 	}
 	public void setWheelBrandCd(Integer wheelBrandCd) {
 		this.wheelBrandCd = wheelBrandCd;
+	}
+	public String getParkingNy() {
+		return parkingNy;
+	}
+	public void setParkingNy(String parkingNy) {
+		this.parkingNy = parkingNy;
+	}
+	public String getWifiNy() {
+		return wifiNy;
+	}
+	public void setWifiNy(String wifiNy) {
+		this.wifiNy = wifiNy;
+	}
+	public String getCctvNy() {
+		return cctvNy;
+	}
+	public void setCctvNy(String cctvNy) {
+		this.cctvNy = cctvNy;
+	}
+	public String getCafeNy() {
+		return cafeNy;
+	}
+	public void setCafeNy(String cafeNy) {
+		this.cafeNy = cafeNy;
+	}
+	public String getPetNy() {
+		return petNy;
+	}
+	public void setPetNy(String petNy) {
+		this.petNy = petNy;
 	}
 	
 	
