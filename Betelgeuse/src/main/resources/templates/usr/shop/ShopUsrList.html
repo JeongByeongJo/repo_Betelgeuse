@@ -16,7 +16,7 @@
       <div class="offcanvas-body pt-2 pb-3 px-sm-5">
         <div class="row g-4 pb-3 mb-3">
           <div class="col">
-          <h6>서비스 필터</h6>
+          <h6>점검,정비분야</h6>
             <select class="form-select form-select-lg" id="availableServiceCd" name="availableServiceCd" data-select='{
               "classNames": {
                 "containerInner": ["form-select", "form-select-lg"]
@@ -29,14 +29,23 @@
         </div>
         <div class="row g-4 pb-3 mb-3">
           <div class="col">
-          <h6>취급브랜드 필터</h6>
+          <h6>취급 자전거 브랜드</h6>
             <select class="form-select form-select-lg" id="bikeBrandCd" name="bikeBrandCd" data-select='{
-              "classNames": {
-                "containerInner": ["form-select", "form-select-lg"]
-              }
-            }' multiple aria-label="Select categories">
-	            <option value="">원하시는 브랜드를 선택해주세요.&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</option>
+              "searchEnabled": true
+            }'>
+	            <option value="">원하시는 브랜드를 선택해주세요.&emsp;&emsp;</option>
 	            <option th:each="list : ${@codeService.selectListCachedCode(4)}" th:value="${list.cdSeq}" th:text="${list.cdName}"></option>
+            </select>
+          </div>
+        </div>
+        <div class="row g-4 pb-3 mb-3">
+          <div class="col">
+          <h6>취급 휠셋 브랜드</h6>
+            <select class="form-select form-select-lg" id="wheelBrandCd" name="wheelBrandCd" data-select='{
+              "searchEnabled": true
+            }'>
+	            <option value="">원하시는 브랜드를 선택해주세요.&emsp;&emsp;</option>
+	            <option th:each="list : ${@codeService.selectListCachedCode(6)}" th:value="${list.cdSeq}" th:text="${list.cdName}"></option>
             </select>
           </div>
         </div>
@@ -71,10 +80,10 @@
       <!-- Footer: Action buttons -->
       <div class="row pt-2 pb-3 px-sm-5">
           <div class="col pt-3">
-          	<a class="nav-link fs-xs text-decoration-underline text-nowrap p-0" href="#!">Clear all</a>
+          	<a class="nav-link fs-xs text-decoration-underline text-nowrap p-0" id="resetFilter" style="cursor: pointer;">Clear all</a>
           </div>
           <div class="col">
-        	<button type="button" class="btn btn-primary" data-bs-dismiss="offcanvas">See 156 properties</button>
+        	<button type="button" class="btn btn-primary" data-bs-dismiss="offcanvas">See 156 shops</button>
           </div>
       </div>
       </form>
@@ -146,129 +155,9 @@
               </div>
             </form>
           </div>
-
-
-          <!-- Sort selector -->
-          <div class="d-flex align-items-center gap-2 gap-sm-3 mb-3">
-            <div class="fs-sm text-nowrap">Showing <span class="align-middle" th:text="'Total: '+${shopVo.totalRows}"></span> results</div>
-          </div>
-
-          <!-- Listings grid -->
-          <div class="row row-cols-1 row-cols-sm-2 g-4">
-
-            <!-- Listing -->
-            <div class="col" th:if="${#lists.isEmpty(list)}"><h4>해당 샵이 존재하지 않습니다.</h4></div>
-            <div class="col" th:if="${!#lists.isEmpty(list)}" th:each="list : ${list}">
-            <input type="hidden" name="shopSeq" th:value="${list?.shopSeq}"/>
-              <article class="card hover-effect-opacity h-100" th:data-map-bind-to-marker="${list?.userCustomer_seq}">
-                <div class="card-img-top position-relative bg-body-tertiary overflow-hidden">
-                  <div class="swiper z-2" data-swiper='{
-                    "pagination": {
-                      "el": ".swiper-pagination"
-                    },
-                    "navigation": {
-                      "prevEl": ".btn-prev",
-                      "nextEl": ".btn-next"
-                    },
-                    "breakpoints": {
-                      "991": {
-                        "allowTouchMove": false
-                      }
-                    }
-                  }'>
-                    <a class="swiper-wrapper" th:href="@{/shop/shopUsrView(shopSeq=${list.shopSeq})}">
-                      <div class="swiper-slide" th:each = "listPic : ${list.picList}">
-                        <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
-                          <img th:src="@{${listPic.path}}" alt="Image">
-                          <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
-                        </div>
-                      </div>
-                    </a>
-                    <div class="d-flex flex-column gap-2 align-items-start position-absolute top-0 start-0 z-1 pt-1 pt-sm-0 ps-1 ps-sm-0 mt-2 mt-sm-3 ms-2 ms-sm-3">
-                      <span class="badge text-bg-primary">New</span>
-                    </div>
-                    <div class="position-absolute top-0 end-0 z-1 hover-effect-target opacity-0 pt-1 pt-sm-0 pe-1 pe-sm-0 mt-2 mt-sm-3 me-2 me-sm-3">
-                      <button type="button" class="btn btn-sm btn-icon btn-light bg-light border-0 rounded-circle animate-pulse" aria-label="Add to wishlist">
-                        <i class="fi-heart animate-target fs-sm"></i>
-                      </button>
-                    </div>
-                    <div class="position-absolute top-50 start-0 z-1 translate-middle-y d-none d-lg-block hover-effect-target opacity-0 ms-3">
-                      <button type="button" class="btn btn-sm btn-prev btn-icon btn-light bg-light rounded-circle animate-slide-start" aria-label="Prev">
-                        <i class="fi-chevron-left fs-lg animate-target"></i>
-                      </button>
-                    </div>
-                    <div class="position-absolute top-50 end-0 z-1 translate-middle-y d-none d-lg-block hover-effect-target opacity-0 me-3">
-                      <button type="button" class="btn btn-sm btn-next btn-icon btn-light bg-light rounded-circle animate-slide-end" aria-label="Next">
-                        <i class="fi-chevron-right fs-lg animate-target"></i>
-                      </button>
-                    </div>
-                    <div class="swiper-pagination bottom-0 mb-2" data-bs-theme="light"></div>
-                  </div>
-                </div>
-                <div class="card-body p-4 pb-3">
-                  <div class="h5 mb-2" th:text="${list?.shopName}"></div>
-                  <h3 class="fs-sm fw-normal text-body mb-2" th:text="${list?.shopAddress1} + '  ' + ${list?.shopAddress3}"> </h3>                   
-                  <h4 class="fs-sm fw-normal text-body mb-2" th:text="${list?.shopTel}"></h4>
-                </div>
-                <div class="card-footer gap-2 border-0 bg-transparent pt-0 pb-0 px-3 mt-n1">
-                  <div class="row px-2">
-                    <div class="col-sm-5">
-                      <a class="btn btn-outline-secondary mb-3" th:href="'#collapse' + ${list?.shopSeq}" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapsebklnd">
-                        영업시간
-                      </a>
-                    </div>
-                    <div class="col-sm-7">
-                      <a type="button" class="btn btn-outline-primary ms-auto d-block" th:href="@{/shop/shopUsrView(shopSeq=${list.shopSeq})}">
-                        점검&정비 예약하기
-                      </a>
-                    </div>
-                  </div>
-                  <div class="row px-2">
-                    <div class="col">
-                      <div class="collapse" th:id="'collapse' + ${list?.shopSeq}">
-                        <ul class="list-unstyled align-items-start small">
-                          <li>월요일 <span th:if="${list?.mondayNy} == null">휴무</span> <span th:if="${list?.mondayNy} != null" th:text="${#strings.substring(list.mondayOpentime, 0, 5)} + ' ~ '"></span><span th:if="${list?.mondayNy} != null" th:text="${#strings.substring(list.mondayClosetime, 0, 5)}"></span></li>
-                          <li>화요일 <span th:if="${list?.tuesdayNy} == null">휴무</span> <span th:if="${list?.tuesdayNy} != null" th:text="${#strings.substring(list.tuesdayOpentime, 0, 5)} + ' ~ '"></span><span th:if="${list?.tuesdayNy} != null" th:text="${#strings.substring(list.tuesdayClosetime, 0, 5)}"></span></li>
-                          <li>수요일 <span th:if="${list?.wednesdayNy} == null">휴무</span> <span th:if="${list?.wednesdayNy} != null" th:text="${#strings.substring(list.wednesdayOpentime, 0, 5)} + ' ~ '"></span><span th:if="${list?.wednesdayNy} != null" th:text="${#strings.substring(list.wednesdayClosetime, 0, 5)}"></span></li>
-                          <li>목요일 <span th:if="${list?.thursdayNy} == null">휴무</span> <span th:if="${list?.thursdayNy} != null" th:text="${#strings.substring(list.thursdayOpentime, 0, 5)} + ' ~ '"></span><span th:if="${list?.thursdayNy} != null" th:text="${#strings.substring(list.thurdayClosetime, 0, 5)}"></span></li>
-                          <li>금요일 <span th:if="${list?.fridayNy} == null">휴무</span> <span th:if="${list?.fridayNy} != null" th:text="${#strings.substring(list.fridayOpentime, 0, 5)} + ' ~ '"></span><span th:if="${list?.fridayNy} != null" th:text="${#strings.substring(list.fridayClosetime, 0, 5)}"></span></li>
-                          <li>토요일 <span th:if="${list?.saturdayNy} == null">휴무</span> <span th:if="${list?.saturdayNy} != null" th:text="${#strings.substring(list.saturdayOpentime, 0, 5)} + ' ~ '"></span><span th:if="${list?.saturdayNy} != null" th:text="${#strings.substring(list.saturdayClosetime, 0, 5)}"></span></li>
-                          <li>일요일 <span th:if="${list?.sundayNy} == null">휴무</span> <span th:if="${list?.sundayNy} != null" th:text="${#strings.substring(list.sundayOpentime, 0, 5)} + ' ~ '"></span><span th:if="${list?.sundayNy} != null" th:text="${#strings.substring(list.sundayClosetime, 0, 5)}"></span></li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>                   
-                </div>
-              </article>
-            </div>
-
-          </div>
-
-          <!-- Pagination -->
-          <nav class="pt-3 mt-3" aria-label="Listings pagination">
-            <ul class="pagination pagination-lg justify-content-center">
-<!--               <li class="page-item active" aria-current="page"> -->
-<!--                 <span class="page-link"> -->
-<!--                   1 -->
-<!--                   <span class="visually-hidden">(current)</span> -->
-<!--                 </span> -->
-<!--               </li> -->
-				<li th:if="${shopVo.startPage gt shopVo.pageNumToShow}" class="page-item" style="cursor: pointer;">
-					<a class="page-link" href="javascript:goList(${shopVo.startPage - 1})" th:attr="onclick=|goList('${shopVo.startPage - 1}')|">
-						&laquo;
-					</a>
-				</li>
-				<li th:each="num: ${#numbers.sequence(shopVo.startPage, shopVo.endPage)}" th:classappend="${num eq shopVo.thisPage} ? active : ''" class="page-item" style="cursor: pointer;">
-					<a class="page-link" th:attr="onclick=|goList('${num}')|" th:text="${num}"><!-- ${i.index} --></a>
-				</li>
-				<li th:if="${shopVo.endPage ne shopVo.totalPages}" class="page-item" style="cursor: pointer;">
-					<a class="page-link" th:attr="onclick=|goList('${shopVo.endPage + 1}')|">
-						&raquo;
-					</a>
-				</li>
-            </ul>
-          </nav>
-
+<div id="shopListContainer">
+<th:block th:replace="usr/shop/ShopListFragment :: shopListFragment"></th:block>
+</div>
           <!-- Footer -->
           <footer class="text-center pt-4 pt-md-5">
             <hr class="pb-4">
@@ -384,22 +273,47 @@
 	});
 	</script>
 	<script th:inline="javascript">
-    $('#availableServiceCd').on("change", function() {
+    
+    $(".form-select-lg").on("change", function() {
+    	filter();
+    })
+    
+    $('#resetFilter').on("click", function() {
+    	$("#formFilter")[0].reset();
+    	filter();
+    })
+    
+    function filter () {
     	$.ajax({
     		async: true 
     		,cache: false
     		,type: "post"
     		,url: "/shop/shopFilterUsrProc"
-    		,data : { "availableServiceCd" : $("#availableServiceCd").val()}
+    		,data : { "availableServiceCd" : $("#availableServiceCd").val(), "bikeBrandCd" : $("#bikeBrandCd").val(), "wheelBrandCd" : $("#wheelBrandCd").val()}
     		,traditional: true
     		,success: function(response) {
+    			const shopSeqList = response.map(shop => shop.shopSeq);
     			
+    			$.ajax({
+    	    		async: true 
+    	    		,cache: false
+    	    		,type: "post"
+    	    		,url: "/shop/shopUsrListFiltered"
+    	    		,data : { "shopSeqList" : shopSeqList}
+    	    		,traditional: true
+    	    		,success: function(htmlFragment) {
+    	    	        $("#shopListContainer").html(htmlFragment);  // 화면 갱신
+    	    	    }
+    	    		,error : function(jqXHR, textStatus, errorThrown){
+    	    			alert("ajaxUpdate44 " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+    	    		}
+    	    	});
     		}
     		,error : function(jqXHR, textStatus, errorThrown){
-    			alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+    			alert("ajaxUpdate33 " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
     		}
     	});
-    })
+    }
 	</script>
   </body>
 </html>

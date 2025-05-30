@@ -27,6 +27,13 @@
             <when test="shOption == 3">AND a.shopAddress1 LIKE CONCAT('%',#{shValue},'%')</when>
             <when test="shOption == 4">AND a.shopTel LIKE CONCAT('%',#{shValue},'%')</when>
         </choose>
+        
+        <if test="shopSeqList != null and shopSeqList.size() > 0">
+        AND a.shopSeq IN 
+        <foreach collection="shopSeqList" item="seq" open="(" separator="," close=")">
+            #{seq}
+        </foreach>
+    </if>
     </sql>
 	
 	
@@ -86,7 +93,7 @@
 	</select>
 	
 	<select id="selectOneCount" resultType="Integer">
-    	select count(*) FROM shop
+    	select count(*) <include refid = "selectCommon"></include>
     </select>
 	
 	<select id="selectOne" resultMap="resultMapObj">
@@ -127,60 +134,27 @@
 		AND shopSeq = #{shopSeq}
 	</select>
 	
-	<select id="select4Filter" resultMap="resultMapObj">
+	<select id="select4ASFilter" resultMap="resultMapObj">
 		select distinct
 			s.shop_shopSeq
 			,a.shopSeq
-		    ,a.shopName
-		    ,a.shopTel
-		    ,a.shopEmail
-		    ,a.shopZip
-		    ,a.shopAddress1
-		    ,a.shopAddress2
-		    ,a.shopAddress3
-		    ,a.shopAddress4
-		    ,a.shopLatitude
-		    ,a.shopLongitude
-		    ,a.shopDescribe
-		    ,a.parkingNy
-		    ,a.wifiNy
-		    ,a.cctvNy
-		    ,a.cafeNy
-		    ,a.petNy
-		    ,a.customerFavoriteNy
-		    ,a.mondayNy
-		    ,a.tuesdayNy
-		    ,a.wednesdayNy
-		    ,a.thursdayNy
-		    ,a.fridayNy
-		    ,a.saturdayNy
-		    ,a.sundayNy
-		    ,a.mondayOpentime
-		    ,a.mondayClosetime
-		    ,a.tuesdayOpentime
-		    ,a.tuesdayClosetime
-		    ,a.wednesdayOpentime
-		    ,a.wednesdayClosetime
-		    ,a.thursdayOpentime
-		    ,a.thurdayClosetime
-		    ,a.fridayOpentime
-		    ,a.fridayClosetime
-		    ,a.saturdayOpentime
-		    ,a.saturdayClosetime
-		    ,a.sundayOpentime
-		    ,a.sundayClosetime
-		    ,a.verifiedNy
-		    ,a.featuredNy
-		    ,a.delNy
-		    ,a.homepage
-		    ,a.youtube
-		    ,a.shopInstDate
-		    ,a.shopUpdtDate
 		    ,a.userCustomer_seq
-		from availableService as s
-		left join shop as a on s.shop_shopSeq = a.shopSeq
+		from shop as a
+		left join availableService as s on s.shop_shopSeq = a.shopSeq
+		left join handlingBicycleBrand as hb on a.shopSeq = hb.shop_shopSeq
+		left join handlingWheelBrand as hw on a.shopSeq = hw.shop_shopSeq
 		where 1=1
-	        and availableServiceCd in (#{availableServiceCd})
+			<if test="bikeBrandCd != null and !bikeBrandCd.equals('')">and bikeBrandCd = #{bikeBrandCd}</if>
+			<if test="wheelBrandCd != null and !wheelBrandCd.equals('')">and wheelBrandCd = #{wheelBrandCd}</if>
+	        <if test="availableServiceCd != null and !availableServiceCd.equals('')">and availableServiceCd in 
+			<foreach item="availableServiceCd" collection="availableServiceCd" open="(" separator="," close=")">
+		    	#{availableServiceCd}
+		    </foreach>
+		    GROUP BY
+		    s.shop_shopSeq
+			,a.shopSeq
+		    ,a.userCustomer_seq
+			HAVING COUNT(DISTINCT s.availableServiceCd) = ${availableServiceCd.size}</if>
 	</select>
 	
 	<select id="selectList4Marker" resultMap="resultMapObj">

@@ -10,6 +10,8 @@ public class ShopAvailableServicesDto {
 	private String seq;
 	private String reservation_rsrvSeq;
 	private String rsrvSeq;
+	private Integer bikeBrandCd;
+	private Integer wheelBrandCd;
 //	-----
 	public List<Integer> getAvailableServiceCd() {
 		return availableServiceCd;
@@ -46,6 +48,18 @@ public class ShopAvailableServicesDto {
 	}
 	public void setRsrvSeq(String rsrvSeq) {
 		this.rsrvSeq = rsrvSeq;
+	}
+	public Integer getBikeBrandCd() {
+		return bikeBrandCd;
+	}
+	public void setBikeBrandCd(Integer bikeBrandCd) {
+		this.bikeBrandCd = bikeBrandCd;
+	}
+	public Integer getWheelBrandCd() {
+		return wheelBrandCd;
+	}
+	public void setWheelBrandCd(Integer wheelBrandCd) {
+		this.wheelBrandCd = wheelBrandCd;
 	}
 	
 	

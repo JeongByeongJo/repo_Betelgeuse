@@ -25,8 +25,8 @@ public class ShopService extends BaseService {
 	public List<ShopDto> select4Filter(List<ShopAvailableServiceDto> dtoList) {
 		return dao.select4Filter(dtoList);
 	}
-	public List<ShopDto> select4Filter(ShopAvailableServicesDto dtos) {
-		return dao.select4Filter(dtos);
+	public List<ShopDto> select4ASFilter(ShopAvailableServicesDto dtos) {
+		return dao.select4ASFilter(dtos);
 	}
 	public List<ShopDto> selectList(ShopVo vo) {
 		return dao.selectList(vo);

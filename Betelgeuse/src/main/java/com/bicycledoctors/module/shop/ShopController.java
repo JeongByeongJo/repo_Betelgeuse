@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bicycledoctors.common.base.BaseController;
@@ -208,25 +210,47 @@ public class ShopController extends BaseController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/shop/shopFilterUsrProc")
-	public String shopFilterUsrProc(Model model, IndexVo vo, ShopDto dto, ShopVo shopVo, HttpSession httpSession, ShopAvailableServicesDto dtos) {
+	public List<ShopDto> shopFilterUsrProc(ShopAvailableServicesDto dtos) {
 		
-		vo.setSeq(httpSession.getAttribute("sessSeqUsr").toString());
-		model.addAttribute("itemH", indexService.selectOneUserShopSeq(vo));
+		List<ShopDto> shopList = service.select4ASFilter(dtos);// 가게 정보 리스트
 		
-		List<ShopDto> shopList = service.select4Filter(dtos);// 가게 정보 리스트
-		List<BaseDto> picList = service.selectOneList4Pic(dto);  // 이미지 정보 리스트
-		
-		// 각 가게에 해당하는 이미지들만 매칭하여 picList에 할당합니다.
-		for (ShopDto shop : shopList) {
-		    List<BaseDto> matchedPics = picList.stream()
-		        .filter(pic -> pic.getPseq().equals(shop.getShopSeq())) // shopSeq와 pSeq가 일치하는 것만 찾기
-		        .collect(Collectors.toList());
-		    
-		    shop.setPicList(matchedPics); // ShopDto에 picList 필드를 추가하여 연결
-		}
-		model.addAttribute("list", shopList);  // 가게 정보 리스트
-		model.addAttribute("listPic", picList);  // 이미지 정보 리스트 (혹시 필요하다면)
-		
-		return "usr/shop/ShopUsrList";
+		return shopList;
+	}
+
+	@PostMapping("/shop/shopUsrListFiltered")
+	public String shopUsrListFiltered(
+	    @RequestParam(value = "shopSeqList", required = false) List<String> shopSeqList,
+	    Model model,
+	    HttpSession session,
+	    ShopVo shopVo,
+	    ShopDto dto,
+	    IndexVo vo
+	) throws JsonProcessingException {
+
+	    vo.setSeq(session.getAttribute("sessSeqUsr").toString());
+	    model.addAttribute("itemH", indexService.selectOneUserShopSeq(vo));
+
+	    shopVo.setShopSeqList(shopSeqList);  // 핵심: 필터된 shopSeq만 세팅
+
+	    shopVo.setParamsPaging(service.selectOneCount(shopVo));
+	    List<ShopDto> shopList = service.selectList(shopVo);  // 기존 방식 그대로 재사용
+
+	    if (shopSeqList == null || shopSeqList.isEmpty()) {
+	    	model.addAttribute("list", null);
+	    } else {
+	    	
+	    	List<BaseDto> picList = service.selectOneList4Pic(dto);
+	    	for (ShopDto shop : shopList) {
+	    		List<BaseDto> matchedPics = picList.stream()
+	    				.filter(pic -> pic.getPseq().equals(shop.getShopSeq()))
+	    				.collect(Collectors.toList());
+	    		shop.setPicList(matchedPics);
+	    	}
+	    	
+	    	model.addAttribute("list", shopList);
+	    	model.addAttribute("listPic", picList);
+	    }
+
+	    return "usr/shop/ShopListFragment :: shopListFragment";
 	}
 }

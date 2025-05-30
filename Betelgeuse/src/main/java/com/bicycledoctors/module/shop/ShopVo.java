@@ -1,5 +1,7 @@
 package com.bicycledoctors.module.shop;
 
+import java.util.List;
+
 import com.bicycledoctors.common.base.BaseVo;
 
 public class ShopVo extends BaseVo{
@@ -7,6 +9,7 @@ public class ShopVo extends BaseVo{
 	private String seq;
 	private String shopSeq;
     private String userCustomer_seq;
+    private List<String> shopSeqList;
 //-----
 	public String getSeq() {
 		return seq;
@@ -25,6 +28,12 @@ public class ShopVo extends BaseVo{
 	}
 	public void setUserCustomer_seq(String userCustomer_seq) {
 		this.userCustomer_seq = userCustomer_seq;
+	}
+	public List<String> getShopSeqList() {
+		return shopSeqList;
+	}
+	public void setShopSeqList(List<String> shopSeqList) {
+		this.shopSeqList = shopSeqList;
 	}
     
 }
