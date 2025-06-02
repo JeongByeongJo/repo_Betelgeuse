@@ -601,27 +601,29 @@
 
       <div class="modal fade" id="reviewForm" data-bs-backdrop="static" tabindex="-1" aria-labelledby="reviewFormLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <form class="modal-content needs-validation" novalidate>
+        <form class="modal-content needs-validation" id="reviewForm" name="reviewForm" novalidate>
+        <input type="hidden" name="shop_shopSeq" th:value="${item?.shopSeq}"/>
+        <input type="hidden" name="userCustomer_seq" th:value="${item?.shopSeq}"/>
           <div class="modal-header border-0">
             <h5 class="modal-title" id="reviewFormLabel">리뷰를 남겨주세요.</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body pb-3 pt-0">
             <div class="mb-3">
-              <label for="review-name" class="form-label">성함 <span class="text-danger">*</span></label>
-              <input type="text" class="form-control" id="review-name" required>
+              <label for="userName" class="form-label">성함 <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="userName" name="userName" th:value="${session.sessNameUsr}" required>
               <div class="invalid-feedback">성함을 입력해주세요!</div>
               <small class="form-text">리뷰에 사용될 이름입니다.</small>
             </div>
             <div class="mb-3">
-              <label for="review-email" class="form-label">이메일 <span class="text-danger">*</span></label>
-              <input type="email" class="form-control" id="review-email" required>
+              <label for="userEmail" class="form-label">이메일 <span class="text-danger">*</span></label>
+              <input type="email" class="form-control" id="userEmail" name="userEmail" th:value="${session.sessEmailUsr}" required>
               <div class="invalid-feedback">유효한 이메일 주소를 입력해주세요!</div>
               <small class="form-text">리뷰작성 외에 이메일주소를 사용하지 않습니다.</small>
             </div>
             <div class="mb-3">
               <label class="form-label">별점 <span class="text-danger">*</span></label>
-              <select class="form-select" data-select='{
+              <select class="form-select" id="revwRate" name="revwRate" data-select='{
                 "placeholderValue": "Select rating",
                 "choices": [
                   {
@@ -674,15 +676,15 @@
               <div class="invalid-feedback">별점을 메겨주세요!</div>
             </div>
             <div>
-              <label class="form-label" for="review-text">리뷰 <span class="text-danger">*</span></label>
-              <textarea class="form-control" rows="4" id="review-text" required></textarea>
+              <label class="form-label" for="revwReviews">리뷰 <span class="text-danger">*</span></label>
+              <textarea class="form-control" rows="4" id="revwReviews" name="revwReviews" required></textarea>
               <div class="invalid-feedback">리뷰를 적어주세요!</div>
               <!-- <small class="form-text">Your review must be at least 50 characters.</small> -->
             </div>
           </div>
           <div class="modal-footer flex-nowrap gap-3 border-0 px-4">
             <button type="reset" class="btn btn-secondary w-100 m-0" data-bs-dismiss="modal">취소</button>
-            <button type="submit" class="btn btn-primary w-100 m-0">리뷰 작성</button>
+            <button type="button" id="btnReview" class="btn btn-primary w-100 m-0">리뷰 작성</button>
           </div>
         </form>
       </div>
@@ -744,10 +746,16 @@ document.addEventListener('DOMContentLoaded', () => {
 	  updateVisible();
 	});
 var form = document.querySelector("form[name=rsrvForm]");
+var formRV = document.querySelector("form[name=reviewForm]");
 
 document.getElementById("btnReservation").onclick = function () {
 	form.action = "/shop/shopResrvInst";
 	form.submit();
+}
+
+document.getElementById("btnReview").onclick = function () {
+    formRV.action = "/review/reviewUsrInst";
+    formRV.submit();
 }
 </script>
     
