@@ -19,6 +19,8 @@ import com.bicycledoctors.module.bicycle.BicycleService;
 import com.bicycledoctors.module.bicycle.BicycleVo;
 import com.bicycledoctors.module.index.IndexService;
 import com.bicycledoctors.module.index.IndexVo;
+import com.bicycledoctors.module.review.ReviewService;
+import com.bicycledoctors.module.review.ReviewVo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import jakarta.servlet.http.HttpSession;
@@ -35,6 +37,9 @@ public class ShopController extends BaseController {
 	
 	@Autowired
 	BicycleService bicycleService;
+	
+	@Autowired
+	ReviewService reviewService;
 	
 	@RequestMapping(value = "/shop/shopXdmList")
 	public String shopXdmList(@ModelAttribute("vo") ShopVo vo, ShopDto dto, Model model) {
@@ -70,7 +75,7 @@ public class ShopController extends BaseController {
 		return "usr/shop/ShopUsrList";
 	}
 	@RequestMapping(value = "/shop/shopUsrView")
-	public String shopUsrView(Model model, IndexVo vo, ShopDto dto, ShopVo shopVo, BicycleVo bicycleVo,  HttpSession httpSession) {
+	public String shopUsrView(Model model, IndexVo vo, ShopDto dto, ShopVo shopVo, BicycleVo bicycleVo,@ModelAttribute ReviewVo reviewVo, HttpSession httpSession) {
 		vo.setSeq(httpSession.getAttribute("sessSeqUsr").toString());
 		bicycleVo.setUserCustomer_seq(httpSession.getAttribute("sessSeqUsr").toString());
 		model.addAttribute("itemH", indexService.selectOneUserShopSeq(vo));
@@ -79,7 +84,9 @@ public class ShopController extends BaseController {
 		model.addAttribute("list", service.selectShopService(shopVo));
 		model.addAttribute("visitDays", service.getNext7Days());
 		model.addAttribute("listBike", bicycleService.selectOneList(bicycleVo));
-		
+		reviewVo.setParamsPaging(reviewService.selectOneCount(reviewVo));
+		model.addAttribute("listRV", reviewService.selectList4Shop(reviewVo));
+		model.addAttribute("itemRV", reviewService.selectCount4Reviews(reviewVo));
 		return "usr/shop/ShopUsrView";
 	}
 	@RequestMapping(value = "/shop/shopaddlocationUsrForm")

@@ -10,15 +10,44 @@
 		revwRate
 		,revwReviews
 		,revwDate
-		,userCustomer_seq
+		,r.userCustomer_seq
 		,shop_shopSeq
 		,s.shopSeq
+		,u.userName
+		,(select count(revwRate) from reviews where revwRate = 1) as star1Count
+        ,(select count(revwRate) from reviews where revwRate = 2) as star2Count
+        ,(select count(revwRate) from reviews where revwRate = 3) as star3Count
+        ,(select count(revwRate) from reviews where revwRate = 4) as star4Count
+        ,(select count(revwRate) from reviews where revwRate = 5) as star5Count
 	FROM reviews as r
 	left join usercustomer as u on u.seq = r.userCustomer_seq
 	left join shop as s on s.shopSeq = r.shop_shopSeq
 	WHERE 1=1
 	AND shop_shopSeq = #{shopSeq}
 	</select>
+	<select id="selectCount4Reviews" resultMap="resultMapObj">
+	SELECT distinct
+		(select count(revwRate) from reviews where revwRate = 1 and shop_shopSeq = #{shopSeq}) as star1Count
+        ,(select count(revwRate) from reviews where revwRate = 2 and shop_shopSeq = #{shopSeq}) as star2Count
+        ,(select count(revwRate) from reviews where revwRate = 3 and shop_shopSeq = #{shopSeq}) as star3Count
+        ,(select count(revwRate) from reviews where revwRate = 4 and shop_shopSeq = #{shopSeq}) as star4Count
+        ,(select count(revwRate) from reviews where revwRate = 5 and shop_shopSeq = #{shopSeq}) as star5Count
+        ,(select sum(revwRate) from reviews where shop_shopSeq = #{shopSeq}) as starsSum
+	FROM reviews as r
+	left join usercustomer as u on u.seq = r.userCustomer_seq
+	left join shop as s on s.shopSeq = r.shop_shopSeq
+	WHERE 1=1
+	AND shop_shopSeq = #{shopSeq}
+	</select>
+	
+	<select id="selectOneCount" resultType="Integer">
+    	select count(*) FROM 
+    	reviews as r
+		left join usercustomer as u on u.seq = r.userCustomer_seq
+		left join shop as s on s.shopSeq = r.shop_shopSeq
+		WHERE 1=1
+		AND shop_shopSeq = #{shopSeq}
+    </select>
 	
 	<insert id="insert">
 	INSERT INTO reviews (
