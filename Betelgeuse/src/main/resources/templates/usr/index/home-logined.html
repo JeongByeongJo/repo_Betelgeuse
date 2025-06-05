@@ -124,6 +124,15 @@
 
  <div th:replace="~{usr/include/LoginedFooter :: LoginedFooter}"></div>
     
-    
+<script type="text/javascript">
+let formS = document.querySelector("form[name=formSearch]");
+
+document.getElementById("btnSearch").onclick = function () {
+	formS.action = "/shop/shopUsrList";
+	formS.submit();
+};
+
+</script>
+
   </body>
 </html>

@@ -26,6 +26,8 @@
     <select id="selectOneCount" resultType="Integer">
     	select count(*)
     	 <include refid = "selectCommon"></include>
+    	 <if test="userCustomer_seq != null and !userCustomer_seq.equals('')">AND a.userCustomer_seq = #{userCustomer_seq}</if>
+    	 <if test="bikeStatus != null and !bikeStatus.equals('')">AND a.bikeStatus = #{bikeStatus}</if>
     </select>
 
 	<select id="selectList" resultMap="resultMapObj">

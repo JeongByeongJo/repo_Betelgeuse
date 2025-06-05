@@ -12,6 +12,7 @@ public class ReviewDto extends BaseDto {
     private String revwUseNy;
     private String userCustomer_seq;
     private String shop_shopSeq;
+    private String shopName;
     private String userName;
     private Integer star1Count;
     private Integer star2Count;
@@ -82,31 +83,31 @@ public class ReviewDto extends BaseDto {
 		this.userName = userName;
 	}
 	public Integer getStar1Count() {
-		return star1Count;
+		return star1Count != null ? star1Count : 0;
 	}
 	public void setStar1Count(Integer star1Count) {
 		this.star1Count = star1Count;
 	}
 	public Integer getStar2Count() {
-		return star2Count;
+		return star2Count != null ? star2Count : 0;
 	}
 	public void setStar2Count(Integer star2Count) {
 		this.star2Count = star2Count;
 	}
 	public Integer getStar3Count() {
-		return star3Count;
+		return star3Count != null ? star3Count : 0;
 	}
 	public void setStar3Count(Integer star3Count) {
 		this.star3Count = star3Count;
 	}
 	public Integer getStar4Count() {
-		return star4Count;
+		return star4Count != null ? star4Count : 0;
 	}
 	public void setStar4Count(Integer star4Count) {
 		this.star4Count = star4Count;
 	}
 	public Integer getStar5Count() {
-		return star5Count;
+		return star5Count != null ? star5Count : 0;
 	}
 	public void setStar5Count(Integer star5Count) {
 		this.star5Count = star5Count;
@@ -165,6 +166,12 @@ public class ReviewDto extends BaseDto {
 	}
 	public void setStarsSum(Integer starsSum) {
 		this.starsSum = starsSum;
+	}
+	public String getShopName() {
+		return shopName;
+	}
+	public void setShopName(String shopName) {
+		this.shopName = shopName;
 	}
 
 }

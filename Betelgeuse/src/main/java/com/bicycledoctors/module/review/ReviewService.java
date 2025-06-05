@@ -16,7 +16,16 @@ public class ReviewService extends BaseService {
 	public int insert(ReviewDto dto) {
 		return dao.insert(dto);
 	}
+	public int update(ReviewDto dto) {
+		return dao.update(dto);
+	}
+	public int uelete(ReviewDto dto) {
+		return dao.uelete(dto);
+	}
 
+	public ReviewDto selectOne(ReviewVo vo) {
+		return dao.selectOne(vo);
+	}
 	public int selectOneCount(ReviewVo vo) {
 		return dao.selectOneCount(vo);
 	}
@@ -24,6 +33,10 @@ public class ReviewService extends BaseService {
 		return dao.selectList4Shop(vo);
 	}
 
+	public List<ReviewDto> selectList(ReviewVo vo) {
+		return dao.selectList(vo);
+	}
+	
 	public ReviewDto selectCount4Reviews(ReviewVo vo) {
 		return dao.selectCount4Reviews(vo);
 	}

@@ -5,6 +5,7 @@ import com.bicycledoctors.common.base.BaseVo;
 public class BicycleVo extends BaseVo{
 	private String bikeSeq;
 	private String userCustomer_seq;
+	private String bikeStatus;
 //	-----
 
 	public String getBikeSeq() {
@@ -21,6 +22,14 @@ public class BicycleVo extends BaseVo{
 
 	public void setUserCustomer_seq(String userCustomer_seq) {
 		this.userCustomer_seq = userCustomer_seq;
+	}
+
+	public String getBikeStatus() {
+		return bikeStatus;
+	}
+
+	public void setBikeStatus(String bikeStatus) {
+		this.bikeStatus = bikeStatus;
 	}
 	
 }

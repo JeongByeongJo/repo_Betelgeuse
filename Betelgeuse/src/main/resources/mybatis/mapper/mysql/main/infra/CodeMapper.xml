@@ -28,7 +28,7 @@
     
     <select id="selectOneCount" resultType="Integer">
     	select count(*)
-    	 <include refid = "selectCommon"></include>
+    	<include refid = "selectCommon"></include>
     </select>
 
 	<select id="selectList" resultMap="resultMapObj">

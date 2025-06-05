@@ -18,19 +18,16 @@
               <div class="accordion-collapse collapse d-sm-block" id="forPatients" aria-labelledby="forPatientsHeading" data-bs-parent="#footerLinks">
                 <ul class="nav flex-column gap-2 pt-sm-1 pt-lg-2 pb-3 pb-sm-0 mt-n1 mb-1 mb-sm-0">
                   <li class="pt-1">
-                    <a class="nav-link hover-effect-underline d-inline text-body fw-normal p-0" href="#!">자전거 등록</a>
+                    <a class="nav-link hover-effect-underline d-inline text-body fw-normal p-0" href="/bicycle/bicycleUsrForm">자전거 등록</a>
                   </li>
                   <li class="pt-1">
-                    <a class="nav-link hover-effect-underline d-inline text-body fw-normal p-0" href="#!">점검&정비 예약</a>
+                    <a class="nav-link hover-effect-underline d-inline text-body fw-normal p-0" href="/shop/shopUsrList">점검&정비 예약</a>
                   </li>
                   <li class="pt-1">
-                    <a class="nav-link hover-effect-underline d-inline text-body fw-normal p-0" href="#!">점검&정비 이력</a>
+                    <a class="nav-link hover-effect-underline d-inline text-body fw-normal p-0" href="/member/userBicycleUsrList">점검&정비 이력</a>
                   </li>
                   <li class="pt-1">
-                    <a class="nav-link hover-effect-underline d-inline text-body fw-normal p-0" href="#!">계정정보</a>
-                  </li>
-                  <li class="pt-1">
-                    <a class="nav-link hover-effect-underline d-inline text-body fw-normal p-0" href="#!">고객센터</a>
+                    <a class="nav-link hover-effect-underline d-inline text-body fw-normal p-0" href="/member/userInfosettingUsrForm">계정정보</a>
                   </li>
                 </ul>
               </div>
@@ -45,20 +42,14 @@
               </h6>
               <div class="accordion-collapse collapse d-sm-block" id="forProviders" aria-labelledby="forProvidersHeading" data-bs-parent="#footerLinks">
                 <ul class="nav flex-column gap-2 pt-sm-1 pt-lg-2 pb-3 pb-sm-0 mt-n1 mb-1 mb-sm-0">
-                  <li class="pt-1">
-                    <a class="nav-link hover-effect-underline d-inline text-body fw-normal p-0" href="#!">Shop Owner log in</a>
+                  <li class="pt-1" th:if="${session.sessCateUsr} == 4">
+                    <a class="nav-link hover-effect-underline d-inline text-body fw-normal p-0" href="/member/shopUsrServiceAdmin">Reservation</a>
                   </li>
                   <li class="pt-1">
-                    <a class="nav-link hover-effect-underline d-inline text-body fw-normal p-0" href="#!">Reservation</a>
+                    <a class="nav-link hover-effect-underline d-inline text-body fw-normal p-0" href = "javascript:void(0);" th:attr="onclick=|goFormH ('${itemH?.userCustomer_seq != null ? itemH.userCustomer_seq : 0}')|">Shop Settings</a>
                   </li>
                   <li class="pt-1">
-                    <a class="nav-link hover-effect-underline d-inline text-body fw-normal p-0" href="#!">Shop Settings</a>
-                  </li>
-                  <li class="pt-1">
-                    <a class="nav-link hover-effect-underline d-inline text-body fw-normal p-0" href="#!">Customer Management</a>
-                  </li>
-                  <li class="pt-1">
-                    <a class="nav-link hover-effect-underline d-inline text-body fw-normal p-0" href="#!">Help center</a>
+                    <a class="nav-link hover-effect-underline d-inline text-body fw-normal p-0" href="/member/shopUsrServiceAdmin">Customer Management</a>
                   </li>
                 </ul>
               </div>
@@ -145,14 +136,8 @@
     <script src="/usr/template/Finder/assets/js/theme.min.js"></script>
     
     <script type="text/javascript">
-    let formS = document.querySelector("form[name=formSearch]");
     let formH = document.querySelector("form[name=formH]");
 	let seqH = document.querySelector("input[name=userCustomer_seq]");
-	
-	document.getElementById("btnSearch").onclick = function () {
-		formS.action = "/shop/shopUsrList";
-		formS.submit();
-	};
 	
 	goFormH = function (keyValue) {
 	    seqH.value = keyValue;

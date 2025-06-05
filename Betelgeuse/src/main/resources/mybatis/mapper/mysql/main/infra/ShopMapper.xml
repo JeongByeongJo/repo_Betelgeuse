@@ -290,19 +290,18 @@
 		    ,a.shopLatitude
 		    ,a.shopLongitude
 		    ,a.shopDescribe
-		    
 		    ,a.parkingNy
 		    ,a.wifiNy
 		    ,a.cctvNy
 		    ,a.cafeNy
 		    ,a.petNy
-		    
 		    ,a.shopInstDate
 		    ,a.shopUpdtDate
 		    ,a.userCustomer_seq
 		    ,b.seq
 		    ,b.userId
 		    ,b.userName
+		    ,b.userShopSeq
 		FROM shop as a
 		left join usercustomer b on a.userCustomer_seq = b.seq
 		WHERE 1=1
@@ -324,7 +323,7 @@
 	</select>
 	
 	<select id="selectShopServiceCd" resultMap="resultMapObjas">
-		select
+		select distinct
 			cdSeq
 		    ,cdName
 		    ,cdNameEng
@@ -337,9 +336,9 @@
 			cdSeq
 		from availableService as se
 		left join code as cd on cd.cdSeq = se.availableServiceCd
-		left join usercustomer as uc on uc.seq = se.shop_shopSeq
+		left join shop as s on s.shopSeq = se.shop_shopSeq
 		where 1=1
-		and shop_shopSeq = #{seq})
+		and s.userCustomer_seq = #{seq})
 	</select>
 	
 	<select id="selectShopBrand" resultMap="resultMapObjBb">
@@ -357,7 +356,7 @@
 	</select>
 	
 	<select id="selectShopBrandCd" resultMap="resultMapObjBb">
-		select
+		select distinct
 			cdSeq
 		    ,cdName
 		    ,cdNameEng
@@ -369,9 +368,9 @@
 			cdSeq
 		from handlingBicycleBrand as se
 		left join code as cd on cd.cdSeq = se.bikeBrandCd
-		left join usercustomer as uc on uc.seq = se.shop_shopSeq
+		left join shop as s on s.shopSeq = se.shop_shopSeq
 		where 1=1
-		and shop_shopSeq = #{seq})
+		and s.userCustomer_seq = #{seq})
 	</select>
 	
 	<select id="selectShopWBrand" resultMap="resultMapObjWb">
@@ -389,7 +388,7 @@
 	</select>
 	
 	<select id="selectShopWBrandCd" resultMap="resultMapObjWb">
-		select
+		select distinct
 			cdSeq
 		    ,cdName
 		    ,cdNameEng
@@ -401,9 +400,9 @@
 			cdSeq
 		from handlingWheelBrand as se
 		left join code as cd on cd.cdSeq = se.wheelBrandCd
-		left join usercustomer as uc on uc.seq = se.shop_shopSeq
+		left join shop as s on s.shopSeq = se.shop_shopSeq
 		where 1=1
-		and shop_shopSeq = #{seq})
+		and s.userCustomer_seq = #{seq})
 	</select>
 	
 	
@@ -509,13 +508,12 @@
 	</insert>
 	<delete id="deleteByShopSeq">
 	    DELETE FROM availableService
-	    WHERE shop_shopSeq = #{seq}
+	    WHERE shop_shopSeq = (select userShopSeq from usercustomer where seq = #{seq})
 	</delete>
 	<insert id="insertAvailableServices">
 		INSERT INTO availableService (
 			availableServiceCd
 			,shop_shopSeq
-
 		) VALUES 
 		<foreach collection="listAS" item="dto" separator=",">
 	        (#{dto.availableServiceCd}
@@ -524,13 +522,12 @@
 	</insert>
 	<delete id="deleteSBByShopSeq">
 	    DELETE FROM handlingBicycleBrand
-	    WHERE shop_shopSeq = #{seq}
+	    WHERE shop_shopSeq = (select userShopSeq from usercustomer where seq = #{seq})
 	</delete>
 	<insert id="insertHandlingBicycleBrands">
 		INSERT INTO handlingBicycleBrand (
 			bikeBrandCd
 			,shop_shopSeq
-
 		) VALUES 
 		<foreach collection="listBB" item="dto" separator=",">
 	        (#{dto.bikeBrandCd}
@@ -540,13 +537,12 @@
 	
 	<delete id="deleteWBByShopSeq">
 	    DELETE FROM handlingWheelBrand
-	    WHERE shop_shopSeq = #{seq}
+	    WHERE shop_shopSeq = (select userShopSeq from usercustomer where seq = #{seq})
 	</delete>
 	<insert id="insertHandlingWheelBrands">
 		INSERT INTO handlingWheelBrand (
 			wheelBrandCd
 			,shop_shopSeq
-
 		) VALUES 
 		<foreach collection="listWB" item="dto" separator=",">
 	        (#{dto.wheelBrandCd}

@@ -5,9 +5,50 @@
 	
 	<resultMap type="com.bicycledoctors.module.review.ReviewDto" id="resultMapObj"></resultMap>
 	
+	<sql id="selectCommon">	    
+	    FROM
+		    reviews as r
+			left join usercustomer as u on u.seq = r.userCustomer_seq
+			left join shop as s on s.shopSeq = r.shop_shopSeq
+		WHERE 1=1
+    </sql>
+	
+	
+	<select id="selectList" resultMap="resultMapObj">
+	SELECT
+		revwSeq
+		,revwRate
+		,revwReviews
+		,revwDate
+		,r.userCustomer_seq
+		,shop_shopSeq
+		,s.shopSeq
+		,s.shopName
+		,u.userName
+	<include refid = "selectCommon"></include>
+	AND r.userCustomer_seq = #{seq}
+	AND revwDelNy = 0
+	</select>
+	
+	<select id="selectOne" resultMap="resultMapObj">
+	SELECT
+		revwSeq
+		,revwRate
+		,revwReviews
+		,revwDate
+		,r.userCustomer_seq
+		,shop_shopSeq
+		,s.shopSeq
+		,s.shopName
+		,u.userName
+	<include refid = "selectCommon"></include>
+	AND revwSeq = #{revwSeq}
+	</select>
+	
 	<select id="selectList4Shop" resultMap="resultMapObj">
 	SELECT
-		revwRate
+		revwSeq
+		,revwRate
 		,revwReviews
 		,revwDate
 		,r.userCustomer_seq
@@ -19,12 +60,11 @@
         ,(select count(revwRate) from reviews where revwRate = 3) as star3Count
         ,(select count(revwRate) from reviews where revwRate = 4) as star4Count
         ,(select count(revwRate) from reviews where revwRate = 5) as star5Count
-	FROM reviews as r
-	left join usercustomer as u on u.seq = r.userCustomer_seq
-	left join shop as s on s.shopSeq = r.shop_shopSeq
-	WHERE 1=1
+	<include refid = "selectCommon"></include>
 	AND shop_shopSeq = #{shopSeq}
+	AND revwDelNy = 0
 	</select>
+	
 	<select id="selectCount4Reviews" resultMap="resultMapObj">
 	SELECT distinct
 		(select count(revwRate) from reviews where revwRate = 1 and shop_shopSeq = #{shopSeq}) as star1Count
@@ -33,20 +73,17 @@
         ,(select count(revwRate) from reviews where revwRate = 4 and shop_shopSeq = #{shopSeq}) as star4Count
         ,(select count(revwRate) from reviews where revwRate = 5 and shop_shopSeq = #{shopSeq}) as star5Count
         ,(select sum(revwRate) from reviews where shop_shopSeq = #{shopSeq}) as starsSum
-	FROM reviews as r
-	left join usercustomer as u on u.seq = r.userCustomer_seq
-	left join shop as s on s.shopSeq = r.shop_shopSeq
-	WHERE 1=1
+	<include refid = "selectCommon"></include>
 	AND shop_shopSeq = #{shopSeq}
+	AND revwDelNy = 0
 	</select>
 	
 	<select id="selectOneCount" resultType="Integer">
-    	select count(*) FROM 
-    	reviews as r
-		left join usercustomer as u on u.seq = r.userCustomer_seq
-		left join shop as s on s.shopSeq = r.shop_shopSeq
-		WHERE 1=1
-		AND shop_shopSeq = #{shopSeq}
+    	select count(*)
+    	<include refid = "selectCommon"></include>
+		<if test="shopSeq != null and !shopSeq.equals('')">AND shop_shopSeq = #{shopSeq}</if>
+		<if test="seq != null and !seq.equals('')">AND shop_shopSeq = #{shopSeq}</if>
+		AND revwDelNy = 0
     </select>
 	
 	<insert id="insert">
@@ -65,4 +102,19 @@
 	)
 	</insert>
 
+	<update id="update">
+	UPDATE reviews SET
+		revwRate = #{revwRate}
+		,revwReviews = #{revwReviews}
+		,revwDate = DATE_FORMAT(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul'), '%Y-%m-%d %H:%i:%S')
+	WHERE
+		revwSeq = #{revwSeq}
+	</update>
+	
+	<update id="uelete">
+	UPDATE reviews SET
+		revwDelNy = 1
+	WHERE
+		revwSeq = #{revwSeq}
+	</update>
 </mapper>

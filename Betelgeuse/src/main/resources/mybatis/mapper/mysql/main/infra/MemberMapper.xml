@@ -166,7 +166,7 @@
 	</update>
 	<update id="updateShopSeq">
 		update usercustomer set
-		    shopSeq = #{shopSeq}
+		    userShopSeq = #{shopSeq}
 		where 1=1
 			and seq = #{seq}
 	</update>

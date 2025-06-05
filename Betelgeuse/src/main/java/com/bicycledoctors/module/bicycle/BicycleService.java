@@ -75,4 +75,22 @@ public class BicycleService extends BaseService{
 		return 1;
 	}
 	
+	public Integer bicycleCount(String userCustomer_seq) {
+		BicycleVo vo = new BicycleVo();
+		vo.setUserCustomer_seq(userCustomer_seq);
+		
+		return bicycleDao.selectOneCount(vo);
+	}
+	public Integer bicycleRCount(String userCustomer_seq) {
+		BicycleVo vo = new BicycleVo();
+		vo.setUserCustomer_seq(userCustomer_seq);
+		vo.setBikeStatus("122");
+		return bicycleDao.selectOneCount(vo);
+	}
+	public Integer bicycleINRCount(String userCustomer_seq) {
+		BicycleVo vo = new BicycleVo();
+		vo.setUserCustomer_seq(userCustomer_seq);
+		vo.setBikeStatus("123");
+		return bicycleDao.selectOneCount(vo);
+	}
 }

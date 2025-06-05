@@ -5,6 +5,7 @@ public class ShopWheelBrandDto {
 	private Integer wheelBrandCd;
 	private String shop_shopSeq;
 	private String shopSeq;
+	private String userShopSeq;
 	
 	private String seq;
 	
@@ -61,6 +62,12 @@ public class ShopWheelBrandDto {
 	}
 	public void setSeq(String seq) {
 		this.seq = seq;
+	}
+	public String getUserShopSeq() {
+		return userShopSeq;
+	}
+	public void setUserShopSeq(String userShopSeq) {
+		this.userShopSeq = userShopSeq;
 	}
 
 }
