@@ -4,16 +4,21 @@ import java.util.List;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.bicycledoctors.common.base.BaseController;
 import com.bicycledoctors.common.util.UtilDateTime;
@@ -163,4 +168,51 @@ public class CodeGroupController extends BaseController {
 	        workbook.close();
 		}
     }
+	
+	@RequestMapping(value = "/readExcel")
+	public String readExcel(CodeGroupDto dto,@RequestParam("file") MultipartFile file) throws Exception { 
+
+		XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
+		XSSFSheet worksheet = workbook.getSheetAt(0);
+		
+		for(int i=1;i<worksheet.getPhysicalNumberOfRows() ;i++) {
+			CodeGroupDto excel = new CodeGroupDto();
+		       
+		    
+		    DataFormatter formatter = new DataFormatter();		        
+		    XSSFRow row = worksheet.getRow(i);
+		    	    	
+		    String pSeq = formatter.formatCellValue(row.getCell(0));
+		    String seq = formatter.formatCellValue(row.getCell(2));
+		    String name = formatter.formatCellValue(row.getCell(4));
+		    String useNy = formatter.formatCellValue(row.getCell(6));
+//		    String delNy = formatter.formatCellValue(row.getCell(2));
+		    String order = formatter.formatCellValue(row.getCell(7));
+	        String regDate = formatter.formatCellValue(row.getCell(8));
+	        String modDate = formatter.formatCellValue(row.getCell(9));
+		
+//			if (delNy.equals("N")) {
+//				delNy = "0";
+//			} else {
+//				delNy = "1";
+//			}
+			
+			if (useNy.equals("N")) {
+				useNy = "0";
+			} else {
+				useNy = "1";
+			}
+			
+			excel.setCdgSeq(seq);
+			excel.setCdgName(name);
+			excel.setCdgUseNy(Integer.parseInt(useNy));
+//			excel.setIfcdDelNy(Integer.parseInt(delNy));
+//	        excel.setRegDateTime(UtilDateTime.stringToDateTime(regDate));
+//	        excel.setModDateTime(UtilDateTime.stringToDateTime(modDate));
+	
+		    service.insert(excel);
+		} 
+		
+		return "xdm/codegroup/CodegroupXdmList";
+	}
 }
