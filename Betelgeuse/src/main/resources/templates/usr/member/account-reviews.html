@@ -102,10 +102,13 @@
                               </a>
                             </li>
                             <li>
-                              <a class="dropdown-item text-danger" href = "javascript:void(0);" th:attr="onclick=|goFormUele (${list.revwSeq})|">
-                                <i class="fi-trash opacity-75 me-2"></i>
-                                삭제하기
-                              </a>
+                              <a class="dropdown-item text-danger"
+   href="javascript:void(0);"
+   th:attr="data-revwseq=${list.revwSeq}"
+   onclick="openConfirmModal(this)">
+   <i class="fi-trash opacity-75 me-2"></i>
+   삭제하기
+</a>
                             </li>
                           </ul>
                         </div>
@@ -234,6 +237,24 @@
         </form>
       </div>
     </div>
+    
+    	<div class="modal fade" id="modalConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="modalConfirmTitle">title</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body" id="modalConfirmBody">
+						body
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">닫힘</button>
+						<button type="button" class="btn btn-danger" id="btnModalUelete">삭제</button>
+					</div>
+				</div>
+			</div>
+		</div>
         <div th:replace="~{usr/include/LoginedFooter :: LoginedFooter}"></div>
 <script type="text/javascript">
 let formReview = document.querySelector("form[name=reviewForm]");
@@ -277,5 +298,26 @@ document.getElementById("btnReview").onclick = function () {
 	formReviewUpdt.submit();
 }
 </script>
+<script>
+  function openConfirmModal(element) {
+    const revwSeq = element.getAttribute("data-revwseq");
+
+    document.getElementById("modalConfirmTitle").textContent = "삭제안내";
+    document.getElementById("modalConfirmBody").textContent = "정말 삭제하시겠습니까?";
+
+    const btn = document.getElementById("btnModalUelete");
+    btn.setAttribute("data-revwseq", revwSeq);
+
+    const modal = new bootstrap.Modal(document.getElementById('modalConfirm'));
+    modal.show();
+  }
+
+  document.getElementById("btnModalUelete").addEventListener("click", function () {
+    const revwSeq = this.getAttribute("data-revwseq");
+    
+    goFormUele(revwSeq);
+  });
+</script>
+
   </body>
 </html>

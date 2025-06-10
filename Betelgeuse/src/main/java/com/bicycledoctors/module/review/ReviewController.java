@@ -49,9 +49,15 @@ public class ReviewController extends BaseController{
 	@RequestMapping(value="/review/reviewUsrList")
 	public String reviewUsrList(@ModelAttribute("vo") ReviewVo vo, Model model, HttpSession httpSession) {
 		vo.setSeq((String)httpSession.getAttribute("sessSeqUsr"));
+		vo.setParamsPaging(service.selectOneCount4Shop(vo));
+		model.addAttribute("list", service.selectListByUser(vo));
+		return "usr/member/account-reviews";
+	}
+	@RequestMapping(value="/review/reviewXdmList")
+	public String reviewXdmList(@ModelAttribute("vo") ReviewVo vo, Model model) {
 		vo.setParamsPaging(service.selectOneCount(vo));
 		model.addAttribute("list", service.selectList(vo));
-		return "usr/member/account-reviews";
+		return "xdm/review/ReviewXdmList";
 	}
 	
 }

@@ -83,7 +83,7 @@ public class ShopController extends BaseController {
 		model.addAttribute("item", service.selectOne(shopVo));
 		model.addAttribute("list", service.selectShopService(shopVo));
 		model.addAttribute("visitDays", service.getNext7Days());
-		model.addAttribute("listBike", bicycleService.selectOneList(bicycleVo));
+		model.addAttribute("listBike", bicycleService.selectList4Appoint(bicycleVo));
 		reviewVo.setParamsPaging(reviewService.selectOneCount(reviewVo));
 		model.addAttribute("listRV", reviewService.selectList4Shop(reviewVo));
 		model.addAttribute("itemRV", reviewService.selectCount4Reviews(reviewVo));

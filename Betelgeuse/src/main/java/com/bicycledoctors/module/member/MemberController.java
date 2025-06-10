@@ -311,18 +311,6 @@ public class MemberController extends BaseController {
 	}
 
 
-	@RequestMapping(value = "/member/userProfileUsrForm")
-	public String userProfileUsrForm(MemberDto memberDto, Model model, HttpSession httpSession) {
-		memberDto.setSeq((String)httpSession.getAttribute("sessSeqUsr"));
-		model.addAttribute("item", service.selectOne(memberDto));
-		return "usr/member/account-profile";
-	}
-	@RequestMapping(value = "/member/userBicycleUsrForm")
-	public String userBicycleUsrForm(MemberDto memberDto, Model model, HttpSession httpSession) {
-		memberDto.setSeq((String)httpSession.getAttribute("sessSeqUsr"));
-		model.addAttribute("item", service.selectOne(memberDto));
-		return "usr/member/account-profile";
-	}
 	@RequestMapping(value = "/member/userBicycleUsrList")
 	public String userBicycleUsrList(Model model, HttpSession httpSession, BicycleDto bicycleDto) {
 		bicycleDto.setUserCustomer_seq((String)httpSession.getAttribute("sessSeqUsr"));

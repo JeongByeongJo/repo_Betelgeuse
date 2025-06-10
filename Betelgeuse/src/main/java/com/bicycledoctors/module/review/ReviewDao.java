@@ -11,9 +11,11 @@ public interface ReviewDao {
 	public int update(ReviewDto dto);
 	public int uelete(ReviewDto dto);
 	public int selectOneCount(ReviewVo vo);
+	public int selectOneCount4Shop(ReviewVo vo);
+	public List<ReviewDto> selectList(ReviewVo vo);
 	public List<ReviewDto> selectList4Shop(ReviewVo vo);
 	public ReviewDto selectCount4Reviews(ReviewVo vo);
 	public ReviewDto selectOne(ReviewVo vo);
-	public List<ReviewDto> selectList(ReviewVo vo);
+	public List<ReviewDto> selectListByUser(ReviewVo vo);
 
 }

@@ -124,6 +124,20 @@
 	order by sort asc
 	</select>
 	
+	<select id="selectList4Appoint" resultMap="resultMapObj">
+		SELECT 
+			a.bikeSeq,
+		    a.bicycleName,
+		    a.bikeStatus,
+		    a.userCustomer_seq,
+			b.userName
+ 		from
+			bicycle as a
+			left join usercustomer b on a.userCustomer_seq = b.seq
+		where 1=1
+			and a.userCustomer_seq = #{userCustomer_seq}
+			AND (a.bikeStatus IS NULL OR a.bikeStatus &lt; 121 OR a.bikeStatus &gt; 123)
+	</select>
 	<select id="selectOneList" resultMap="resultMapObj">
 		SELECT 
 			a.bikeSeq,

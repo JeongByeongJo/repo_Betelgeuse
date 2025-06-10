@@ -242,8 +242,7 @@
 		where 1=1
 			and r.shop_shopSeq = #{userShopSeq}
 			and b.bikeStatus = 121
-<!-- 			and a.bikeStatus &gt;= 120 -->
-<!-- 			and a.bikeStatus &lt;= 121 -->
+			and r.rsrvDelNy = 0
 	</select>
 	<select id="selectList4iNr" resultMap="resultMapObj">
 		SELECT 
@@ -321,6 +320,8 @@
 		where 1=1
 			and r.shop_shopSeq = (select userShopSeq from usercustomer where seq = #{seq})
 			and b.bikeStatus = 121
+			and r.rsrvDelNy = 0
+			
     </select>
 	<select id="selectOneCountInRList" resultType="Integer">
     	SELECT count(*)

@@ -11,10 +11,43 @@
 			left join usercustomer as u on u.seq = r.userCustomer_seq
 			left join shop as s on s.shopSeq = r.shop_shopSeq
 		WHERE 1=1
+		<if test="shDelNy != null and !shDelNy.equals('')">AND revwDelNy = #{shDelNy}</if>
+				<choose>
+					<when test="shOptionDate == 1">AND revwDate BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+				</choose>
+        <choose>
+            <when test="shOption == 1">AND revwSeq = #{shValue}</when>
+            <when test="shOption == 2">AND revwRate = #{shValue}</when>
+            <when test="shOption == 3">AND u.userName LIKE CONCAT('%',#{shValue},'%')</when>
+            <when test="shOption == 4">AND s.shopName LIKE CONCAT('%',#{shValue},'%')</when>
+            <when test="shOption == 5">AND revwReviews LIKE CONCAT('%',#{shValue},'%')</when>
+        </choose>
     </sql>
 	
+	<select id="selectOneCount" resultType="Integer">
+    	select count(*)
+    	<include refid = "selectCommon"></include>
+    </select>
 	
 	<select id="selectList" resultMap="resultMapObj">
+	select aa.* from (
+	SELECT
+		revwSeq
+		,revwRate
+		,revwReviews
+		,revwDate
+		,r.userCustomer_seq
+		,shop_shopSeq
+		,s.shopSeq
+		,s.shopName
+		,u.userName
+	<include refid = "selectCommon"></include>
+	order by revwSeq desc
+		) aa
+	limit #{rowNumToShow} offset #{startRnumForMysql}
+	</select>
+	
+	<select id="selectListByUser" resultMap="resultMapObj">
 	SELECT
 		revwSeq
 		,revwRate
@@ -78,7 +111,8 @@
 	AND revwDelNy = 0
 	</select>
 	
-	<select id="selectOneCount" resultType="Integer">
+
+	<select id="selectOneCount4Shop" resultType="Integer">
     	select count(*)
     	<include refid = "selectCommon"></include>
 		<if test="shopSeq != null and !shopSeq.equals('')">AND shop_shopSeq = #{shopSeq}</if>

@@ -24,6 +24,9 @@ public class BicycleService extends BaseService{
 	public List<BicycleDto> selectOneList(BicycleVo vo) {
 		return bicycleDao.selectOneList(vo);
 	}
+	public List<BicycleDto> selectList4Appoint(BicycleVo vo) {
+		return bicycleDao.selectList4Appoint(vo);
+	}
 	public List<BicycleDto> selectOneList(BicycleDto dto) {
 		return bicycleDao.selectOneList(dto);
 	}
@@ -84,13 +87,19 @@ public class BicycleService extends BaseService{
 	public Integer bicycleRCount(String userCustomer_seq) {
 		BicycleVo vo = new BicycleVo();
 		vo.setUserCustomer_seq(userCustomer_seq);
+		vo.setBikeStatus("121");
+		Integer bikeStatus121 = bicycleDao.selectOneCount(vo);
 		vo.setBikeStatus("122");
-		return bicycleDao.selectOneCount(vo);
+		Integer bikeStatus122 = bicycleDao.selectOneCount(vo);
+		return bikeStatus121+bikeStatus122;
 	}
 	public Integer bicycleINRCount(String userCustomer_seq) {
 		BicycleVo vo = new BicycleVo();
 		vo.setUserCustomer_seq(userCustomer_seq);
+		vo.setBikeStatus("122");
+		Integer bikeStatus122 = bicycleDao.selectOneCount(vo);
 		vo.setBikeStatus("123");
-		return bicycleDao.selectOneCount(vo);
+		Integer bikeStatus123 = bicycleDao.selectOneCount(vo);
+		return bikeStatus122+bikeStatus123;
 	}
 }

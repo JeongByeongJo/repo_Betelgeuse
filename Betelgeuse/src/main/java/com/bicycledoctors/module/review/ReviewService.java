@@ -29,12 +29,18 @@ public class ReviewService extends BaseService {
 	public int selectOneCount(ReviewVo vo) {
 		return dao.selectOneCount(vo);
 	}
+	public int selectOneCount4Shop(ReviewVo vo) {
+		return dao.selectOneCount4Shop(vo);
+	}
+	public List<ReviewDto> selectList(ReviewVo vo) {
+		return dao.selectList(vo);
+	}
 	public List<ReviewDto> selectList4Shop(ReviewVo vo) {
 		return dao.selectList4Shop(vo);
 	}
 
-	public List<ReviewDto> selectList(ReviewVo vo) {
-		return dao.selectList(vo);
+	public List<ReviewDto> selectListByUser(ReviewVo vo) {
+		return dao.selectListByUser(vo);
 	}
 	
 	public ReviewDto selectCount4Reviews(ReviewVo vo) {
