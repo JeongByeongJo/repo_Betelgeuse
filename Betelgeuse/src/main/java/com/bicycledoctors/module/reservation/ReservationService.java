@@ -16,6 +16,15 @@ public class ReservationService extends BaseService {
 	@Autowired
 	ReservationDao dao;
 	
+	public List<ReservationDto> selectList(ReservationVo vo) {
+		return dao.selectList(vo);
+	}
+	public int selectOneCount(ReservationVo vo) {
+		return dao.selectOneCount(vo);
+	}
+	public ReservationDto selectOne(ReservationVo vo) {
+		return dao.selectOne(vo);
+	}
 	public int insert(ReservationDto dto) {
 		dao.bikeStatusUpdt(dto);
 		dto.setReservationDate(num2Date(dto.getReservationDateCd()).toString());
@@ -24,7 +33,9 @@ public class ReservationService extends BaseService {
 	public int rsrvServicesInst(@Param("listAS")List<ShopAvailableServiceDto> listAS) {
 		return dao.rsrvServicesInst(listAS);
 	}
-	
+	public int rsrvUpdt(ReservationDto dto) {
+		return dao.rsrvUpdt(dto);
+	}
 	public int rsrvYesUpdt(ReservationDto dto) {
 		return dao.rsrvYesUpdt(dto);
 	}

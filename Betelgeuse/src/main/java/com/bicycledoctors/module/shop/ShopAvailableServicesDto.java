@@ -5,6 +5,7 @@ import java.util.List;
 public class ShopAvailableServicesDto {
 
 	private List<Integer> availableServiceCd;
+	private List<Integer> reservServicesCd;
 	private String shopSeq;
 	private String shop_shopSeq;
 	private String seq;
@@ -95,6 +96,12 @@ public class ShopAvailableServicesDto {
 	}
 	public void setPetNy(String petNy) {
 		this.petNy = petNy;
+	}
+	public List<Integer> getReservServicesCd() {
+		return reservServicesCd;
+	}
+	public void setReservServicesCd(List<Integer> reservServicesCd) {
+		this.reservServicesCd = reservServicesCd;
 	}
 	
 	

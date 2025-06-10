@@ -325,9 +325,8 @@
                     <option value="">예약할 자전거를 선택해주세요.&emsp;&emsp;&emsp;&emsp;</option>
                     <option th:each="listBike : ${listBike}" th:value="${listBike?.bikeSeq}" th:text="${listBike?.bicycleName}"> </option>
                   </select>
-                  
-                  <label class="form-label fs-base pt-3" for="availableServiceCd">점검 & 정비</label>
-                  <select class="form-select form-select-lg" id="availableServiceCd" name="availableServiceCd" data-select multiple aria-label="gear select">
+                  <label class="form-label fs-base pt-3" for="reservServicesCd">점검 & 정비</label>
+                  <select class="form-select form-select-lg" id="reservServicesCd" name="reservServicesCd" data-select multiple aria-label="gear select">
                     <option value="">선택해주세요.&emsp;&emsp;&emsp;&emsp;</option>
                     <option th:each="list : ${list}" th:value="${list?.availableServiceCd}" th:text="${@codeService.selectOneCachedCode(list.availableServiceCd)}">구동계</option>
                   </select>
@@ -363,89 +362,89 @@
 </div>
                   <div class="row row-cols-4 g-2 pt-4 pb-2">
                     <div class="col">
-                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-1" th:value="1">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-1" th:value="100">
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-1">10:00</label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-2" th:value="2">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-2" th:value="101">
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-2">10:30</label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-3" th:value="3">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-3" th:value="102">
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-3">11:00</label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-4" th:value="4">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-4" th:value="103">
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-4">11:30</label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-5" th:value="5">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-5" th:value="104">
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-5">12:00</label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-6" th:value="6" checked>
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-6" th:value="105" checked>
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-6">12:30</label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-7" th:value="7">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-7" th:value="106">
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-7">13:00</label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-8" th:value="8">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-8" th:value="107">
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-8">13:30</label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-9" th:value="9">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-9" th:value="108">
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-9">14:00</label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-10" th:value="10">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-10" th:value="109">
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-10">14:30</label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-11" th:value="11">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-11" th:value="110">
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-11">15:00</label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-12" th:value="12">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-12" th:value="111">
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-12">15:30</label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-13" th:value="13">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-13" th:value="112">
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-13">16:00</label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-14" th:value="14">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-14" th:value="113">
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-14">16:30</label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-15" th:value="15">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-15" th:value="114">
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-15">17:00</label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-16" th:value="16">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-16" th:value="115">
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-16">17:30</label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-17" th:value="17">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-17" th:value="116">
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-17">18:00</label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-18" th:value="18">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-18" th:value="117">
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-18">18:30</label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-19" th:value="19">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-19" th:value="118">
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-19">19:00</label>
                     </div>
                     <div class="col">
-                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-20" th:value="20" disabled>
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-20" th:value="119" disabled>
                       <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-20">19:30</label>
                     </div>
                   </div>
                   <button type="button" class="btn btn-lg btn-primary w-100 mt-4" id="appoint" >
                     <i class="fi-clock fs-lg me-2 ms-n1 d-lg-none d-xl-inline-flex"></i>
-                    Next appointment 12:30, Tue, 12
+                    예약하기
                   </button>
                   
                 </div>
@@ -587,8 +586,8 @@ document.getElementById("appoint").onclick = function () {
 		$("#modalAlert").modal("show");
 		return false;
 	}
-	if(document.getElementById('availableServiceCd').value == "") {
-		document.getElementById('availableServiceCd').focus();
+	if(document.getElementById('reservServicesCd').value == "") {
+		document.getElementById('reservServicesCd').focus();
 		document.getElementById('alertText').innerText = "서비스를 선택해주세요.";
 		$("#modalAlert").modal("show");
 		return false;

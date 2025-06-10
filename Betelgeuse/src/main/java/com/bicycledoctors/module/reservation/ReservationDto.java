@@ -8,14 +8,16 @@ public class ReservationDto extends BicycleDto {
 	private String reservationDate;
 	private String reservationTime;
 	private String reservedNy;
-	private String instDate;
-	private String updtDate;
+	private String rsrvInstDate;
+	private String rsrvUpdtDate;
 	private String shopSeq;
 	private String shop_shopSeq;
 	private String bikeSeq;
 	private String bicycle_bikeSeq;
 	private String rsrvDesc;
+	private String rsrvDelNy;
 	private String availableServiceCd;
+	private String reservServicesCd;
 	private String userName;
 	private String userTel;
 	private Integer xCount;
@@ -44,17 +46,17 @@ public class ReservationDto extends BicycleDto {
 	public void setReservedNy(String reservedNy) {
 		this.reservedNy = reservedNy;
 	}
-	public String getInstDate() {
-		return instDate;
+	public String getRsrvInstDate() {
+		return rsrvInstDate;
 	}
-	public void setInstDate(String instDate) {
-		this.instDate = instDate;
+	public void setRsrvInstDate(String rsrvInstDate) {
+		this.rsrvInstDate = rsrvInstDate;
 	}
-	public String getUpdtDate() {
-		return updtDate;
+	public String getRsrvUpdtDate() {
+		return rsrvUpdtDate;
 	}
-	public void setUpdtDate(String updtDate) {
-		this.updtDate = updtDate;
+	public void setRsrvUpdtDate(String rsrvUpdtDate) {
+		this.rsrvUpdtDate = rsrvUpdtDate;
 	}
 	public String getShop_shopSeq() {
 		return shop_shopSeq;
@@ -115,6 +117,18 @@ public class ReservationDto extends BicycleDto {
 	}
 	public void setxCount(Integer xCount) {
 		this.xCount = xCount;
+	}
+	public String getRsrvDelNy() {
+		return rsrvDelNy;
+	}
+	public void setRsrvDelNy(String rsrvDelNy) {
+		this.rsrvDelNy = rsrvDelNy;
+	}
+	public String getReservServicesCd() {
+		return reservServicesCd;
+	}
+	public void setReservServicesCd(String reservServicesCd) {
+		this.reservServicesCd = reservServicesCd;
 	}
 	
 }

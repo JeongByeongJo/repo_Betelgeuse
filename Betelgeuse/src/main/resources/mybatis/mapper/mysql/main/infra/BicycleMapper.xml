@@ -185,8 +185,8 @@
 		    a.instDate,
 		    a.updtDate,
 		    a.userCustomer_seq,
-		    (select s.shopName from reservation as r left join shop as s on r.shop_shopSeq = s.shopSeq where r.bicycle_bikeSeq = a.bikeSeq) as shopName,
-		    (select s.shopSeq from reservation as r left join shop as s on r.shop_shopSeq = s.shopSeq where r.bicycle_bikeSeq = a.bikeSeq) as shopSeq,
+		    (select distinct s.shopName from reservation as r left join shop as s on r.shop_shopSeq = s.shopSeq where r.bicycle_bikeSeq = a.bikeSeq) as shopName,
+		    (select distinct s.shopSeq from reservation as r left join shop as s on r.shop_shopSeq = s.shopSeq where r.bicycle_bikeSeq = a.bikeSeq) as shopSeq,
 		    b.seq,
 			b.userID,
 			b.userName

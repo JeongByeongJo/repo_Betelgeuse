@@ -4,6 +4,28 @@
 	
 	<resultMap type="com.bicycledoctors.module.reservation.ReservationDto" id="resultMapObj"></resultMap>
 	
+	<sql id="selectCommon">	    
+	    from
+			reservation r
+			left join shop as s on r.shop_shopSeq = s.shopSeq
+			left join bicycle as b on r.bicycle_bikeSeq = b.bikeSeq
+			left join usercustomer as u on b.userCustomer_seq = u.seq
+		where 1=1
+        <if test="shDelNy != null and !shDelNy.equals('')">AND rsrvDelNy = #{shDelNy}</if>
+				<choose>
+					<when test="shOptionDate == 1">AND rsrvInstDate BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+					<when test="shOptionDate == 2">AND rsrvUpdtDate BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+					<when test="shOptionDate == 3">AND reservationDate BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+				</choose>
+        <choose>
+            <when test="shOption == 1">AND rsrvSeq = #{shValue}</when>
+            <when test="shOption == 2">AND s.shopName LIKE CONCAT('%',#{shValue},'%')</when>
+            <when test="shOption == 3">AND u.userName LIKE CONCAT('%',#{shValue},'%')</when>
+            <when test="shOption == 4">AND u.userId LIKE CONCAT('%',#{shValue},'%')</when>
+            <when test="shOption == 5">AND b.bicycleName LIKE CONCAT('%',#{shValue},'%')</when>
+        </choose>
+    </sql>
+	
 	<insert id="insert">
 	INSERT INTO reservation (
 		reservationDate
@@ -24,26 +46,114 @@
 	</insert>
 
 	<insert id="rsrvServicesInst">
-	INSERT INTO availableService (
-			availableServiceCd
+	INSERT INTO reservServices (
+			reservServicesCd
 			,shop_shopSeq
 			,reservation_rsrvSeq
 		) VALUES 
 		<foreach collection="listAS" item="dto" separator=",">
-	        (#{dto.availableServiceCd}
+	        (#{dto.reservServicesCd}
 			,#{dto.shopSeq}
 			,#{dto.rsrvSeq})
 	    </foreach>
 	</insert>
 	
-	<update id="bikeStatusUpdt">
-		update bicycle set
-			bikeStatus = 121
-		    ,updtDate = CURRENT_TIMESTAMP
-		where
-			bikeSeq = #{bikeSeq}
-	</update>
-	
+	<select id="selectOneCount" resultType="Integer">
+    	select count(*)
+    	<include refid = "selectCommon"></include>
+   	</select>
+	<select id="selectList" resultMap="resultMapObj">
+	select aa.* from (
+		SELECT 
+		    r.rsrvSeq
+		    ,r.shop_shopSeq
+		    ,r.bicycle_bikeSeq
+		    ,r.reservationDate
+		    ,r.reservationTime
+		    ,r.rsrvDesc
+		    ,r.reservedNy
+		    ,shopName
+		    ,shopTel
+			,b.bikeSeq
+		    ,b.bicycleName
+		    ,b.bicycleCateCd
+		    ,b.bicycleBrandCd
+		    ,b.bicycleModel
+		    ,b.bicycleYears
+		    ,b.bicycleMiles
+		    ,b.bicycleSN
+		    ,b.drivetrainBrandCd
+		    ,b.drivetrainModel
+		    ,b.brakeBrandCd
+		    ,b.isElectDrivetrain
+		    ,b.isDiskBrakes
+		    ,b.isHydrauric
+		    ,b.isInternal
+		    ,b.wheelBrandCd
+		    ,b.wheelModel
+		    ,b.bicycleDescribe
+		    ,b.bikeStatus
+		    ,b.latestiNrDate
+		    ,b.bikeDelNy
+		    ,b.instDate
+		    ,b.updtDate
+		    ,b.userCustomer_seq
+		    ,u.userName
+		    ,u.userId
+		    ,u.userTel
+		    ,u.userShopSeq
+ 		<include refid = "selectCommon"></include>
+ 		order by rsrvSeq desc
+		) aa
+	limit #{rowNumToShow} offset #{startRnumForMysql}
+	</select>
+	<select id="selectOne" resultMap="resultMapObj">
+		SELECT 
+		    r.rsrvSeq
+		    ,r.shop_shopSeq
+		    ,r.bicycle_bikeSeq
+		    ,r.reservationDate
+		    ,r.reservationTime
+		    ,r.rsrvDesc
+		    ,r.rsrvDelNy
+		    ,r.reservedNy
+			,b.bikeSeq
+		    ,b.bicycleName
+		    ,b.bicycleCateCd
+		    ,b.bicycleBrandCd
+		    ,b.bicycleModel
+		    ,b.bicycleYears
+		    ,b.bicycleMiles
+		    ,b.bicycleSN
+		    ,b.drivetrainBrandCd
+		    ,b.drivetrainModel
+		    ,b.brakeBrandCd
+		    ,b.isElectDrivetrain
+		    ,b.isDiskBrakes
+		    ,b.isHydrauric
+		    ,b.isInternal
+		    ,b.wheelBrandCd
+		    ,b.wheelModel
+		    ,b.bicycleDescribe
+		    ,b.bikeStatus
+		    ,b.latestiNrDate
+		    ,b.bikeDelNy
+		    ,b.instDate
+		    ,b.updtDate
+		    ,b.userCustomer_seq
+		    ,u.userName
+		    ,u.userId
+		    ,u.userTel
+		    ,u.userShopSeq
+		    ,shopName
+ 		from
+			reservation r
+			left join shop as s on r.shop_shopSeq = s.shopSeq
+			left join bicycle as b on r.bicycle_bikeSeq = b.bikeSeq
+			left join usercustomer as u on b.userCustomer_seq = u.seq
+		where 1=1
+			and r.rsrvSeq = #{rsrvSeq}
+	</select>
 	<select id="selectOne4View" resultMap="resultMapObj">
 		SELECT 
 		    r.rsrvSeq
@@ -89,9 +199,9 @@
 	</select>
 	<select id="selectList4ServiceView" resultMap="resultMapObj">
 		SELECT 
-		    availableServiceCd
+		    reservServicesCd
  		from
-			availableService
+			reservServices
 		where 1=1
 			and reservation_rsrvSeq = #{rsrvSeq}
 	</select>
@@ -174,6 +284,22 @@
 <!-- 			and a.bikeStatus &gt;= 120 -->
 <!-- 			and a.bikeStatus &lt;= 121 -->
 	</select>
+	
+	
+	<update id="bikeStatusUpdt">
+		update bicycle set
+			bikeStatus = 121
+		    ,updtDate = CURRENT_TIMESTAMP
+		where
+			bikeSeq = #{bikeSeq}
+	</update>
+	<update id="rsrvUpdt">
+		update reservation set
+			reservationDate = #{reservationDate}
+		    ,reservationTime = #{reservationTime}
+		where
+			rsrvSeq = #{rsrvSeq}
+	</update>
 	<update id="rsrvYesUpdt">
 		update bicycle set
 			bikeStatus = 122

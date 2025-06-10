@@ -3,6 +3,7 @@ package com.bicycledoctors.module.shop;
 public class ShopAvailableServiceDto {
 
 	private Integer availableServiceCd;
+	private Integer reservServicesCd;
 	private String shopSeq;
 	private String shop_shopSeq;
 	private String seq;
@@ -74,6 +75,12 @@ public class ShopAvailableServiceDto {
 	}
 	public void setRsrvSeq(String rsrvSeq) {
 		this.rsrvSeq = rsrvSeq;
+	}
+	public Integer getReservServicesCd() {
+		return reservServicesCd;
+	}
+	public void setReservServicesCd(Integer reservServicesCd) {
+		this.reservServicesCd = reservServicesCd;
 	}
 	
 	

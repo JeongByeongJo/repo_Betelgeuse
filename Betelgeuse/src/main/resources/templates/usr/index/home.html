@@ -15,34 +15,25 @@
               <h1 class="display-3 text-white text-center text-md-start pb-sm-2 pb-md-3 pb-lg-0 pb-xxl-3 mb-4 mb-lg-5">자전거 점검 & 정비</h1>
 
               <!-- Search form -->
-              <form class="bg-white border rounded p-2 needs-validation" data-bs-theme="light" novalidate>
+              <form class="bg-white border rounded p-2" id="formSearch" name="formSearch" data-bs-theme="light" novalidate>
+
                 <div class="d-flex flex-column flex-lg-row gap-2 p-1">
                   <div class="d-flex flex-column flex-sm-row w-100 gap-2 gap-sm-3">
                     <div class="position-relative w-100">
                       <i class="fi-search position-absolute top-50 start-0 translate-middle-y fs-xl text-secondary-emphasis ms-2"></i>
-                      <input type="search" class="form-control form-control-lg form-icon-start border-0 rounded-0 pe-0" placeholder="현재 위치에서 가까운 정비샵 찾기" required>
+                      <input type="search" name="shValue" class="form-control form-control-lg form-icon-start border-0 rounded-0 pe-0" placeholder="점검, 정비샵 찾기" required>
                     </div>
                     <hr class="d-sm-none m-0">
                     <hr class="vr d-none d-sm-block my-2">
                     <div class="position-relative w-100" style="max-width: 190px">
-                      <i class="fi-navigation position-absolute top-50 start-0 translate-middle-y z-1 fs-xl text-secondary-emphasis ms-2"></i>
-                      <select class="form-select form-select-lg form-icon-start border-0" data-select='{
-                        "classNames": {
-                          "containerInner": ["form-select", "form-select-lg", "form-icon-start", "border-0"]
-                        },
-                        "searchEnabled": false
-                      }' aria-label="Location select" required>
-                        <option value="">Any radius</option>
-                        <option value="5 mi" selected>5 mi</option>
-                        <option value="10 mi">10 mi</option>
-                        <option value="20 mi">20 mi</option>
-                        <option value="30 mi">30 mi</option>
-                        <option value="40 mi">40 mi</option>
-                        <option value="50 mi">50 mi</option>
+                      <i class="fi-map-pin position-absolute top-50 start-0 translate-middle-y z-1 fs-xl text-secondary-emphasis ms-2"></i>
+                      <select id="shOption" name="shOption" class="form-select form-select-lg form-icon-start border-0">
+                        <option value="3" th:selected="${shopVo?.shOption == 3}">위치(시,군,구)</option>
+                        <option value="2" th:selected="${shopVo?.shOption == 2}">샵 이름</option>
                       </select>
                     </div>
                   </div>
-                  <button type="submit" class="btn btn-lg btn-primary">찾기</button>
+                  <button type="button" id="btnSearch" class="btn btn-lg btn-primary">Search</button>
                 </div>
               </form>
             </div>
@@ -158,6 +149,14 @@
 
     
      <div th:replace="~{usr/include/LogoutedFooter :: LogoutedFooter}"></div>
-    
+    <script type="text/javascript">
+let formS = document.querySelector("form[name=formSearch]");
+
+document.getElementById("btnSearch").onclick = function () {
+	formS.action = "/shop/shopUsrList";
+	formS.submit();
+};
+
+</script>
   </body>
 </html>
