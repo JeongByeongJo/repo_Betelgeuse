@@ -14,6 +14,7 @@ public class ReviewDto extends BaseDto {
     private String shop_shopSeq;
     private String shopName;
     private String userName;
+    private String userId;
     private Integer star1Count;
     private Integer star2Count;
     private Integer star3Count;
@@ -172,6 +173,12 @@ public class ReviewDto extends BaseDto {
 	}
 	public void setShopName(String shopName) {
 		this.shopName = shopName;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 }

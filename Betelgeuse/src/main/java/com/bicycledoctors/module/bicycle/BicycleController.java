@@ -1,11 +1,16 @@
 package com.bicycledoctors.module.bicycle;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bicycledoctors.common.base.BaseController;
+import com.bicycledoctors.module.code.CodeService;
 import com.bicycledoctors.module.index.IndexService;
 import com.bicycledoctors.module.index.IndexVo;
 
@@ -68,6 +73,27 @@ public class BicycleController extends BaseController{
 	public String bicycleUsrUpdt(BicycleDto dto) throws Exception {
 		bicycleService.update(dto);
 		return "redirect:/member/userBicycleUsrList";
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/bicycle/bicycleUsrProc")
+	public Map<String, String> bicycleUsrProc(BicycleDto dto) throws Exception {
+
+	    Map<String, String> result = new HashMap<>();
+
+	    result.put("bicycleCateCdName", CodeService.selectOneCachedCodeEng(dto.getBicycleCateCd()));
+	    result.put("bicycleBrandCdName", CodeService.selectOneCachedCodeEng(dto.getBicycleBrandCd()));
+	    result.put("drivetrainBrandCdName", CodeService.selectOneCachedCodeEng(dto.getDrivetrainBrandCd()));
+	    result.put("brakeBrandCdName", CodeService.selectOneCachedCodeEng(dto.getBrakeBrandCd()));
+	    result.put("wheelBrandCdName", CodeService.selectOneCachedCodeEng(dto.getWheelBrandCd()));
+	    result.put("bicycleModel", dto.getBicycleModel());
+	    result.put("bicycleYears", dto.getBicycleYears().toString());
+	    result.put("bicycleMiles", dto.getBicycleMiles().toString());
+	    result.put("bicycleName", dto.getBicycleName());
+	    result.put("drivetrainModel", dto.getDrivetrainModel());
+	    result.put("wheelModel", dto.getWheelModel());
+
+	    return result;
 	}
 
 }

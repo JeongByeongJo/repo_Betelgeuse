@@ -74,7 +74,12 @@
 		,s.shopSeq
 		,s.shopName
 		,u.userName
-	<include refid = "selectCommon"></include>
+		,u.userId
+	FROM
+	    reviews as r
+		left join usercustomer as u on u.seq = r.userCustomer_seq
+		left join shop as s on s.shopSeq = r.shop_shopSeq
+	WHERE 1=1
 	AND revwSeq = #{revwSeq}
 	</select>
 	
@@ -146,9 +151,12 @@
 	</update>
 	
 	<update id="uelete">
-	UPDATE reviews SET
-		revwDelNy = 1
-	WHERE
-		revwSeq = #{revwSeq}
-	</update>
+  UPDATE reviews SET
+    revwDelNy = 
+    <choose>
+      <when test="revwDelNy == null or revwDelNy == ''">1</when>
+      <otherwise>#{revwDelNy}</otherwise>
+    </choose>
+  WHERE revwSeq = #{revwSeq}
+</update>
 </mapper>

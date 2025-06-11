@@ -38,10 +38,10 @@
 				</select>
             </div>
             <div class="col-md-2">
-                <input type="text" id="shDateStart" name="shDateStart" th:value="${#strings.substring(vo.shDateStart, 0, 10)}" placeholder="시작일" class="form-control form-control-sm" autocomplete="off">
+                <input type="text" id="shDateStart" name="shDateStart" th:value="${vo.shDateStart != null and #strings.length(vo.shDateStart) >= 10 ? #strings.substring(vo.shDateStart, 0, 10) : ''}" placeholder="시작일" class="form-control form-control-sm" autocomplete="off">
             </div>
             <div class="col-md-2">
-                <input type="text" id="shDateEnd" name="shDateEnd" th:value="${#strings.substring(vo.shDateEnd, 0, 10)}" placeholder="종료일" class="form-control form-control-sm" autocomplete="off">
+                <input type="text" id="shDateEnd" name="shDateEnd" th:value="${vo.shDateEnd != null and #strings.length(vo.shDateEnd) >= 10 ? #strings.substring(vo.shDateEnd, 0, 10) : ''}" placeholder="종료일" class="form-control form-control-sm" autocomplete="off">
             </div>
             <div class="col-md-2"></div>
             <div class="col-md-2">

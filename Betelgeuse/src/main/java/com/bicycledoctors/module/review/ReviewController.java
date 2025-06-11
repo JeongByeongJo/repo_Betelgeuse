@@ -59,5 +59,14 @@ public class ReviewController extends BaseController{
 		model.addAttribute("list", service.selectList(vo));
 		return "xdm/review/ReviewXdmList";
 	}
-	
+	@RequestMapping(value="/review/reviewXdmMfom")
+	public String reviewXdmMfom(@ModelAttribute("vo") ReviewVo vo, Model model) {
+		model.addAttribute("item", service.selectOne(vo));
+		return "xdm/review/ReviewXdmMfom";
+	}
+	@RequestMapping(value="/review/reviewXdmUele")
+	public String reviewXdmUele(ReviewDto dto) {
+		service.uelete(dto);
+		return "redirect:/review/reviewXdmList";
+	}
 }

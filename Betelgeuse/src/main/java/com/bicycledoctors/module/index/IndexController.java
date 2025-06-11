@@ -6,18 +6,37 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.bicycledoctors.common.base.BaseController;
+import com.bicycledoctors.module.bicycle.BicycleService;
+import com.bicycledoctors.module.bicycle.BicycleVo;
+import com.bicycledoctors.module.member.MemberService;
+import com.bicycledoctors.module.member.MemberVo;
+import com.bicycledoctors.module.reservation.ReservationService;
+import com.bicycledoctors.module.reservation.ReservationVo;
 import com.bicycledoctors.module.shop.ShopVo;
 
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-public class IndexController {
+public class IndexController extends BaseController {
 	
 	@Autowired
 	IndexService service;
 
+	@Autowired
+	MemberService memberService;
+	
+	@Autowired
+	BicycleService bicycleService;
+	
+	@Autowired
+	ReservationService reservationService;
+	
 	@RequestMapping(value = "/xdm/indexXdm")
-	public String xdmIndex() {
+	public String xdmIndex(Model model, MemberVo memberVo, BicycleVo bicycleVo, ReservationVo reservationVo) {
+		model.addAttribute("member", memberService.selectOneCount(memberVo));
+		model.addAttribute("bicycle", bicycleService.selectOneCount(bicycleVo));
+		model.addAttribute("reservation", reservationService.selectOneCount(reservationVo));
 		return "xdm/index/index";
 	}
 	@RequestMapping(value = "/index")
