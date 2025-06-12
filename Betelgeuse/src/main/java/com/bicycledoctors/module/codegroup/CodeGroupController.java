@@ -1,5 +1,6 @@
 package com.bicycledoctors.module.codegroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -58,7 +59,7 @@ public class CodeGroupController extends BaseController {
 	
 	@RequestMapping(value = "/codegroup/codegroupXdmUpExls")
 	public String codegroupXdmUpExls(Model model, CodeGroupDto codeGroupDto) {
-		model.addAttribute("item", service.selectOne(codeGroupDto));
+		//model.addAttribute("item", service.selectOne(codeGroupDto));
 		return "xdm/codegroup/CodegroupXdmUpExls";
 	}
 	
@@ -169,12 +170,13 @@ public class CodeGroupController extends BaseController {
 		}
     }
 	
-	@RequestMapping(value = "/readExcel")
-	public String readExcel(CodeGroupDto dto,@RequestParam("file") MultipartFile file) throws Exception { 
+	@RequestMapping(value = "/codegroup/readExcel")
+	public String readExcel(CodeGroupDto dto,@RequestParam("file") MultipartFile file, Model model) throws Exception { 
 
 		XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
 		XSSFSheet worksheet = workbook.getSheetAt(0);
 		
+		List<CodeGroupDto> confirmTable = new ArrayList<>();
 		for(int i=1;i<worksheet.getPhysicalNumberOfRows() ;i++) {
 			CodeGroupDto excel = new CodeGroupDto();
 		       
@@ -182,14 +184,15 @@ public class CodeGroupController extends BaseController {
 		    DataFormatter formatter = new DataFormatter();		        
 		    XSSFRow row = worksheet.getRow(i);
 		    	    	
-		    String pSeq = formatter.formatCellValue(row.getCell(0));
-		    String seq = formatter.formatCellValue(row.getCell(2));
-		    String name = formatter.formatCellValue(row.getCell(4));
-		    String useNy = formatter.formatCellValue(row.getCell(6));
+//		    String pSeq = formatter.formatCellValue(row.getCell(0));
+		    String seq = formatter.formatCellValue(row.getCell(0));
+		    String name = formatter.formatCellValue(row.getCell(1));
+		    String nameEng = formatter.formatCellValue(row.getCell(2));
+		    String useNy = formatter.formatCellValue(row.getCell(4));
 //		    String delNy = formatter.formatCellValue(row.getCell(2));
-		    String order = formatter.formatCellValue(row.getCell(7));
-	        String regDate = formatter.formatCellValue(row.getCell(8));
-	        String modDate = formatter.formatCellValue(row.getCell(9));
+//		    String order = formatter.formatCellValue(row.getCell(7));
+	        String regDate = formatter.formatCellValue(row.getCell(6));
+	        String modDate = formatter.formatCellValue(row.getCell(7));
 		
 //			if (delNy.equals("N")) {
 //				delNy = "0";
@@ -205,14 +208,62 @@ public class CodeGroupController extends BaseController {
 			
 			excel.setCdgSeq(seq);
 			excel.setCdgName(name);
+			excel.setCdgNameEng(nameEng);
 			excel.setCdgUseNy(Integer.parseInt(useNy));
-//			excel.setIfcdDelNy(Integer.parseInt(delNy));
-//	        excel.setRegDateTime(UtilDateTime.stringToDateTime(regDate));
-//	        excel.setModDateTime(UtilDateTime.stringToDateTime(modDate));
+	        excel.setCdgInstDate(regDate);
+	        excel.setCdgUpdtDate(modDate);
 	
+	        confirmTable.add(i-1, excel);
+//		    service.insert(excel);
+		} 
+		model.addAttribute("list", confirmTable);
+		return "xdm/codegroup/CodeGroupExcelFragment :: CodeGroupExcelFragment";
+	}
+	
+	@RequestMapping(value = "/codegroup/insertExcel")
+	public String insertExcel(CodeGroupDto dto,@RequestParam("file") MultipartFile file, Model model) throws Exception { 
+		
+		XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream());
+		XSSFSheet worksheet = workbook.getSheetAt(0);
+		
+		for(int i=1;i<worksheet.getPhysicalNumberOfRows() ;i++) {
+			CodeGroupDto excel = new CodeGroupDto();
+			
+			
+			DataFormatter formatter = new DataFormatter();		        
+			XSSFRow row = worksheet.getRow(i);
+			
+//		    String pSeq = formatter.formatCellValue(row.getCell(0));
+			String seq = formatter.formatCellValue(row.getCell(0));
+			String name = formatter.formatCellValue(row.getCell(1));
+			String nameEng = formatter.formatCellValue(row.getCell(2));
+			String useNy = formatter.formatCellValue(row.getCell(4));
+//		    String delNy = formatter.formatCellValue(row.getCell(2));
+//		    String order = formatter.formatCellValue(row.getCell(7));
+			String regDate = formatter.formatCellValue(row.getCell(6));
+			String modDate = formatter.formatCellValue(row.getCell(7));
+			
+//			if (delNy.equals("N")) {
+//				delNy = "0";
+//			} else {
+//				delNy = "1";
+//			}
+			
+			if (useNy.equals("N")) {
+				useNy = "0";
+			} else {
+				useNy = "1";
+			}
+			
+			excel.setCdgSeq(seq);
+			excel.setCdgName(name);
+			excel.setCdgNameEng(nameEng);
+			excel.setCdgUseNy(Integer.parseInt(useNy));
+			excel.setCdgInstDate(regDate);
+			excel.setCdgUpdtDate(modDate);
+			
 		    service.insert(excel);
 		} 
-		
-		return "xdm/codegroup/CodegroupXdmList";
+		return "redirect:/codegroup/codegroupXdmList";
 	}
 }

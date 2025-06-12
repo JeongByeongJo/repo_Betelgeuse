@@ -1,0 +1,41 @@
+<th:block th:fragment="CodeGroupExcelFragment">
+<table class="table datatable" id="codeGroupTable" style="text-align: center;">
+                <thead>
+                  <tr>
+                    <th data-sortable="false"  style="text-align: center; width: 100px;"></th>
+                    <th style="text-align: center;">
+                      사용
+                    </th>
+                    <th class="list-sort">코드그룹 코드</th>
+                    <th class="list-sort">코드그룹 이름</th>
+                    <th class="list-sort">코드그룹 이름(영문)</th>
+                    <th class="list-sort">갯수</th>
+                    <th class="list-sort">순서</th>
+                    <th data-type="date" data-format="YYYY/DD/MM" class="list-sort" style="text-align: center;">등록일</th>
+                    <th data-type="date" data-format="YYYY/DD/MM" class="list-sort" style="text-align: center;">수정일</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${#lists.isEmpty(list)}" class="hover-action-trigger btn-reveal-trigger position-static">
+	               		<td colspan="10">
+	               			<p class="fs-0" style="padding-top: 12px;">There are no data!</p>
+	               		</td>
+	               	</tr>
+	                   <tr th:if="${!#lists.isEmpty(list)}" th:each ="list : ${list}">
+	                   <th></th>
+	                   <td th:text = "${list.cdgUseNy}"></td>
+	                   <td th:text = "${list.cdgSeq}"></td>
+	                   <td><a href = "javascript:void(0);" th:text="${list.cdgName}" th:attr="onclick=|goForm('${list.cdgSeq}')|"></a></td>
+	                   <td th:text = "${list.cdgNameEng}"></td>
+	                   <td th:text = "${list.xcdSeqCount}"></td>
+	                   <td>1</td>
+	                   <td th:text = "${list.cdgInstDate}"></td>
+	                   <td th:text = "${list.cdgUpdtDate}"></td>                                                
+	                   </tr>
+                  </tbody>
+                  <tfoot>
+                   
+                  </tfoot>
+                  
+                  </table>
+</th:block>

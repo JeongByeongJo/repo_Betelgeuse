@@ -27,6 +27,8 @@ import com.bicycledoctors.common.base.BaseController;
 import com.bicycledoctors.common.util.UtilDateTime;
 import com.bicycledoctors.module.bicycle.BicycleDto;
 import com.bicycledoctors.module.bicycle.BicycleService;
+import com.bicycledoctors.module.index.IndexService;
+import com.bicycledoctors.module.index.IndexVo;
 import com.bicycledoctors.module.mail.MailService;
 import com.bicycledoctors.module.reservation.ReservationService;
 import com.bicycledoctors.module.reservation.ReservationVo;
@@ -41,6 +43,9 @@ public class MemberController extends BaseController {
 	
 	@Autowired
 	MemberService service;
+	
+	@Autowired
+	IndexService indexService;
 	
 	@Autowired
 	MailService mailService;
@@ -255,8 +260,10 @@ public class MemberController extends BaseController {
 	}
 	
 	@RequestMapping(value = "/member/userInfosettingUsrForm")
-	public String userInfosettingUsrForm(MemberDto memberDto, Model model, HttpSession httpSession) {
+	public String userInfosettingUsrForm(MemberDto memberDto, IndexVo indexVo, Model model, HttpSession httpSession) {
 		memberDto.setSeq((String)httpSession.getAttribute("sessSeqUsr"));
+		indexVo.setSeq((String)httpSession.getAttribute("sessSeqUsr"));
+		model.addAttribute("itemH", indexService.selectOneUserShopSeq(indexVo));
 		model.addAttribute("item", service.selectOne(memberDto));
 		return "usr/member/account-settings";
 	}
@@ -312,16 +319,20 @@ public class MemberController extends BaseController {
 
 
 	@RequestMapping(value = "/member/userBicycleUsrList")
-	public String userBicycleUsrList(Model model, HttpSession httpSession, BicycleDto bicycleDto) {
+	public String userBicycleUsrList(Model model, IndexVo indexVo, HttpSession httpSession, BicycleDto bicycleDto) {
 		bicycleDto.setUserCustomer_seq((String)httpSession.getAttribute("sessSeqUsr"));
+		indexVo.setSeq((String)httpSession.getAttribute("sessSeqUsr"));
+		model.addAttribute("itemH", indexService.selectOneUserShopSeq(indexVo));
 		model.addAttribute("list", bicycleService.selectOneList(bicycleDto));
 		model.addAttribute("listR", bicycleService.selectList4Reservation(bicycleDto));
 		return "usr/member/account-listings";
 	}
 	@RequestMapping(value = "/member/shopUsrServiceAdmin")
-	public String shopUsrServiceAdmin(Model model, MemberVo vo, HttpSession httpSession, BicycleDto bicycleDto, ReservationVo reservationVo) {
+	public String shopUsrServiceAdmin(Model model, MemberVo vo, IndexVo indexVo, HttpSession httpSession, BicycleDto bicycleDto, ReservationVo reservationVo) {
 		bicycleDto.setUserCustomer_seq((String)httpSession.getAttribute("sessSeqUsr"));
 		vo.setSeq((String)httpSession.getAttribute("sessSeqUsr"));
+		indexVo.setSeq((String)httpSession.getAttribute("sessSeqUsr"));
+		model.addAttribute("itemH", indexService.selectOneUserShopSeq(indexVo));
 		reservationVo.setUserShopSeq(service.select4ShopSeq(vo).getUserShopSeq());
 		model.addAttribute("list", reservationService.selectList4ReservationCheck(reservationVo));
 		model.addAttribute("listR", reservationService.selectList4iNr(reservationVo));

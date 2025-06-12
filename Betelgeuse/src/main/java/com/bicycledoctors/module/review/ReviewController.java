@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bicycledoctors.common.base.BaseController;
+import com.bicycledoctors.module.index.IndexService;
+import com.bicycledoctors.module.index.IndexVo;
 import com.bicycledoctors.module.shop.ShopVo;
 
 import jakarta.servlet.http.HttpSession;
@@ -20,6 +22,9 @@ public class ReviewController extends BaseController{
 
 	@Autowired
 	ReviewService service;
+	
+	@Autowired
+	IndexService indexService;
 	
 	@RequestMapping(value="/review/reviewUsrInst")
 	public String reviewUsrInst(ReviewDto dto, ShopVo vo) {
@@ -47,9 +52,11 @@ public class ReviewController extends BaseController{
 		return returnMap;
 	}
 	@RequestMapping(value="/review/reviewUsrList")
-	public String reviewUsrList(@ModelAttribute("vo") ReviewVo vo, Model model, HttpSession httpSession) {
+	public String reviewUsrList(@ModelAttribute("vo") ReviewVo vo, IndexVo indexVo, Model model, HttpSession httpSession) {
 		vo.setSeq((String)httpSession.getAttribute("sessSeqUsr"));
 		vo.setParamsPaging(service.selectOneCount4Shop(vo));
+		indexVo.setSeq((String)httpSession.getAttribute("sessSeqUsr"));
+		model.addAttribute("itemH", indexService.selectOneUserShopSeq(indexVo));
 		model.addAttribute("list", service.selectListByUser(vo));
 		return "usr/member/account-reviews";
 	}
