@@ -21,6 +21,7 @@ public interface BicycleDao extends BaseDao{
 	public BicycleDto selectOne(BicycleVo vo);
 	public int selectOneCount(BicycleVo vo);
 	public int insert(BicycleDto dto);
+	public int uelete(BicycleDto dto);
 	public int update(BicycleDto dto);
 	public int updatePic(BicycleDto dto);
 	public int insertUploaded(BaseDto dto);

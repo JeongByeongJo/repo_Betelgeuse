@@ -77,6 +77,9 @@ public class BicycleService extends BaseService{
     			, amazonS3Client);
 		return 1;
 	}
+	public int uelete(BicycleDto dto) {
+		return bicycleDao.uelete(dto);
+	}
 	
 	public Integer bicycleCount(String userCustomer_seq) {
 		BicycleVo vo = new BicycleVo();

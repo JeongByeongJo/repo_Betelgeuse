@@ -166,12 +166,14 @@
 		    a.userCustomer_seq,
 		    b.seq,
 			b.userID,
-			b.userName
+			b.userName,
+			(select path from filesUploaded where type=1000 and pSeq = a.bikeSeq) as path
  		from
 			bicycle as a
 			left join usercustomer b on a.userCustomer_seq = b.seq
 		where 1=1
 			and a.userCustomer_seq = #{userCustomer_seq}
+			and a.bikeDelNy = 0
 	</select>
 	<select id="selectList4Reservation" resultMap="resultMapObj">
 		SELECT 
@@ -203,7 +205,8 @@
 		    (select distinct s.shopSeq from reservation as r left join shop as s on r.shop_shopSeq = s.shopSeq where r.bicycle_bikeSeq = a.bikeSeq) as shopSeq,
 		    b.seq,
 			b.userID,
-			b.userName
+			b.userName,
+			(select path from filesUploaded where type=1000 and pSeq = a.bikeSeq) as path
  		from
 			bicycle as a
 			left join usercustomer b on a.userCustomer_seq = b.seq
@@ -295,10 +298,10 @@
 	</update>
 	
 	<update id="uelete">
-		update code set
-			cdDelNy = 1
+		update bicycle set
+			bikeDelNy = 1
 		where
-			cdSeq = #{cdSeq}
+			bikeSeq = #{bikeSeq}
 	</update>
 	
 	<select id="selectListCachedCodeArrayList" resultMap="resultMapObj">

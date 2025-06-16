@@ -116,7 +116,8 @@
 
                   <!-- Item -->
                  <input type="hidden" name="bikeSeq">
-                  <div class="d-sm-flex align-items-center" th:each="list : ${list}">
+                  <div class="d-sm-flex align-items-center" th:if="${#lists.isEmpty(list)}"><h4>등록된 자전거가 없습니다.</h4></div>
+                  <div class="d-sm-flex align-items-center" th:if="${!#lists.isEmpty(list)}" th:each="list : ${list}">
                     <div class="d-inline-flex position-relative z-2 pt-1 pb-2 ps-2 p-sm-0 ms-2 ms-sm-0 me-sm-2">
                       <div class="form-check position-relative z-1 fs-lg m-0">
                         <input type="checkbox" class="form-check-input" checked>
@@ -127,7 +128,7 @@
                       <div class="row g-0">
                         <div class="col-sm-4 col-md-3 rounded overflow-hidden pb-2 pb-sm-0 pe-sm-2">
                           <a class="position-relative d-flex h-100 bg-body-tertiary" href="#!" style="min-height: 174px">
-                            <img src="/usr/template/Finder/assets/img/add-item/bd/IMG_4871.JPG" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" alt="Image">
+                            <img th:src="${list.path}" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" alt="Image">
                             <div class="ratio d-none d-sm-block"  style="--fn-aspect-ratio: calc(180 / 240 * 100%)"></div>
                             <div class="ratio ratio-16x9 d-sm-none"></div>
                           </a>
@@ -167,7 +168,7 @@
                                       </a>
                                     </li> -->
                                     <li>
-                                      <a class="dropdown-item text-danger" href="#!">
+                                      <a class="dropdown-item text-danger" href = "javascript:void(0);" th:attr="data-bikeSeq=${list.bikeSeq}" onclick="openConfirmModal(this)">
                                         <i class="fi-trash opacity-75 me-2"></i>
                                         삭제하기
                                       </a>
@@ -237,7 +238,7 @@
                       <div class="row g-0">
                         <div class="col-sm-4 col-md-3 rounded overflow-hidden pb-2 pb-sm-0 pe-sm-2">
                           <a class="position-relative d-flex h-100 bg-body-tertiary" href="#!" style="min-height: 174px">
-                            <img src="/usr/template/Finder/assets/img/add-item/bd/IMG_4871.JPG" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" alt="Image">
+                            <img th:src="${listR.path}" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" alt="Image">
                             <div class="ratio d-none d-sm-block"  style="--fn-aspect-ratio: calc(180 / 240 * 100%)"></div>
                             <div class="ratio ratio-16x9 d-sm-none"></div>
                           </a>
@@ -317,6 +318,23 @@
       </div>
     </main>
 
+<div class="modal fade" id="modalConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="modalConfirmTitle">title</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body" id="modalConfirmBody">
+				body
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">닫힘</button>
+				<button type="button" class="btn btn-danger" id="btnModalUelete">삭제</button>
+			</div>
+		</div>
+	</div>
+</div>
 
     <div th:replace="~{usr/include/LoginedFooter :: LoginedFooter}"></div>
 <script type="text/javascript">
@@ -329,10 +347,34 @@ goForm = function (keyValue) {
     form.action = "/bicycle/bicycleUsrMfom";
     form.submit();
 }
+goUele = function (keyValue) {
+    seq.value = keyValue;
+    form.action = "/bicycle/bicycleUsrUele";
+    form.submit();
+}
 goShop = function (keyValue) {
     seqS.value = keyValue;
     form.action = "/shop/shopUsrView";
     form.submit();
 }
+
+function openConfirmModal(element) {
+    const bikeSeq = element.getAttribute("data-bikeSeq");
+
+    document.getElementById("modalConfirmTitle").textContent = "삭제안내";
+    document.getElementById("modalConfirmBody").textContent = "정말 삭제하시겠습니까?";
+
+    const btn = document.getElementById("btnModalUelete");
+    btn.setAttribute("data-bikeSeq", bikeSeq);
+
+    const modal = new bootstrap.Modal(document.getElementById('modalConfirm'));
+    modal.show();
+  }
+
+  document.getElementById("btnModalUelete").addEventListener("click", function () {
+    const bikeSeq = this.getAttribute("data-bikeSeq");
+    
+    goUele(bikeSeq);
+  });
 </script>
 </html>

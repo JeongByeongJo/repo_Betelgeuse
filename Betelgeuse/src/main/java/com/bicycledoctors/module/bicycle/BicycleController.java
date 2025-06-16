@@ -74,6 +74,11 @@ public class BicycleController extends BaseController{
 		bicycleService.update(dto);
 		return "redirect:/member/userBicycleUsrList";
 	}
+	@RequestMapping(value = "/bicycle/bicycleUsrUele")
+	public String bicycleUsrUele(BicycleDto dto) throws Exception {
+		bicycleService.uelete(dto);
+		return "redirect:/member/userBicycleUsrList";
+	}
 
 	@ResponseBody
 	@RequestMapping(value = "/bicycle/bicycleUsrProc")
