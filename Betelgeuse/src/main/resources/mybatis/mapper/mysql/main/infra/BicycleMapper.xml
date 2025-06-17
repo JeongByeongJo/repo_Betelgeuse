@@ -137,6 +137,7 @@
 		where 1=1
 			and a.userCustomer_seq = #{userCustomer_seq}
 			AND (a.bikeStatus IS NULL OR a.bikeStatus &lt; 121 OR a.bikeStatus &gt; 123)
+			and bikeDelNy = 0
 	</select>
 	<select id="selectOneList" resultMap="resultMapObj">
 		SELECT 

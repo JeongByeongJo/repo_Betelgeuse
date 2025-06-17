@@ -121,12 +121,8 @@
             </div>
             <div class="d-flex flex-column gap-2 mb-4">
               <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="save-pass">
-                <label for="save-pass" class="form-check-label">비밀번호 저장하기</label>
-              </div>
-              <div class="form-check">
                 <input type="checkbox" class="form-check-input" id="privacy" required>
-                <label for="privacy" class="form-check-label"><a class="text-dark-emphasis" href="#!">개인정보 정책</a>을 읽고 동의합니다.</label>
+                <label for="privacy" class="form-check-label"><a class="text-dark-emphasis" href="#" data-bs-toggle="modal" data-bs-target="#modalPrivacy">개인정보 정책</a>을 읽고 동의합니다.</label>
               </div>
             </div>
             <button type="button" id="btnSignUp" class="btn btn-lg btn-primary w-100">
@@ -148,20 +144,19 @@
               <i class="fi-google ms-1 me-1"></i>
               Google
             </a>
-            <button type="button" class="btn btn-lg btn-outline-secondary w-100 px-2">
-              <i class="fi-facebook ms-1 me-1"></i>
-              Facebook
-            </button>
-            <button type="button" class="btn btn-lg btn-outline-secondary w-100 px-2">
-              <i class="fi-apple ms-1 me-1"></i>
-              Apple
-            </button>
+            <a type="button" href="/naver/oauth2" class="btn btn-lg btn-outline-secondary w-100 px-2">
+              <span style="font-weight: bolder;">N &ensp;</span>
+              Naver
+            </a>
+            <a type="button" href="/kakao/oauth2" class="btn btn-lg btn-outline-secondary w-100 px-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-fill" viewBox="0 0 16 16">
+			  <path d="M8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6-.097 1.016-.417 2.13-.771 2.966-.079.186.074.394.273.362 2.256-.37 3.597-.938 4.18-1.234A9 9 0 0 0 8 15"/>
+			  </svg>&ensp;
+              Kakao
+            </a>
           </div>
           <!-- Footer -->
           <footer class="mt-auto">
-            <div class="nav mb-4">
-              <a class="nav-link text-decoration-underline p-0" href="help-topics-v1.html">Need help?</a>
-            </div>
             <p class="fs-xs mb-0">
               &copy; All rights reserved. Made by <a class="hover-effect-underline text-dark-emphasis text-decoration-none" href="https://createx.studio/" target="_blank" rel="noreferrer">JeongByeongJo</a>
             </p>
@@ -293,12 +288,35 @@
 			</div>
 		</div>
 	</div>
-	<script src="/xdm/template/NiceAdmin/assets/jquery/jquery-3.7.1.min.js"></script>
+    <div class="modal fade" id="modalPrivacy" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-scrollable" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">개인정보처리방침</h5>
+					<button type="button" name="xclose" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<th:block th:replace="~{usr/index/privacy :: privacyFragment}"></th:block>
+				</div>
+				<div class="modal-footer" style="padding: 2%;">
+					<button type="button" name="cclose" class="btn btn-outline-secondary" data-bs-dismiss="modal">닫기</button>
+					<button type="button" id="agree" class="btn btn-outline-success" >동의</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	
+	<script src="/xdm/template/NiceAdmin/assets/jquery/jquery-3.7.1.min.js"></script>
+	<script src="/usr/template/Finder/assets/vendor/cleave.js/dist/cleave.min.js"></script>
+    <script src="/usr/template/Finder/assets/vendor/choices.js/public/assets/scripts/choices.min.js"></script>
+    <script src="/usr/template/Finder/assets/vendor/flatpickr/dist/flatpickr.min.js"></script>
+    <!-- Bootstrap + Theme scripts -->
+    <script src="/usr/template/Finder/assets/js/theme.min.js"></script>
+    
 <script type="text/javascript">
 var form = document.getElementById("form")
 
-$("#userId").on("blur", function(){
+$("#userId").on("keyup", function(){
 	$("#userId").removeClass("is-valid");
 	if($("#userId").val() == null || $("#userId").val() =="") {
 		document.getElementById("userIdInvalid").innerText = "사용할 아이디를 입력해주세요.";
@@ -333,7 +351,7 @@ $("#userId").on("blur", function(){
 });
 
 
-$("#userEmail").on("blur", function(){
+$("#userEmail").on("keyup", function(){
 	$("#userEmail").removeClass("is-valid");
 	if($("#userEmail").val() == null || $("#userEmail").val() =="") {
 		document.getElementById("userEmailInvalid").innerText = "사용할 이메일 주소를 입력해주세요.";
@@ -377,7 +395,7 @@ $("#userEmail").on("blur", function(){
 
 $("#userPassword").on("keyup", function(){
 	$("#userPassword").removeClass("is-valid");
-	let regExp = /^[A-Za-zㄱ-ㅎ가-힣0-9@$!%*?&#.~_-]{4,}$/;
+	let regExp = /^[A-Za-zㄱ-ㅎ가-힣0-9@$!%*?&#.~_-]{8,}$/;
 	if(!regExp.test($("#userPassword").val())) {
 		$("#userPassword").addClass("is-invalid");
 		return false;
@@ -497,21 +515,26 @@ function validation() {
 		$("#userName").focus();
 		return false;
 	} 
+    if(!($("#privacy").prop("checked"))) {
+    	$("#privacy").addClass("is-invalid");
+    	$("#privacy").focus();
+    	return false;
+	} 
     
 	return true;
 };
+  
+$("#agree").on("click", function() {
+	$("#modalPrivacy").modal('hide');
+	$("#privacy").prop("checked", true);
+});
 
 $("#btnSignUp").on("click", function(){
 	if(validation() == false) return false;
-	
 	document.getElementById("form").action = "/member/memberUsrInst";
 	document.getElementById("form").submit();
 });
 </script>
-	<script src="/usr/template/Finder/assets/vendor/cleave.js/dist/cleave.min.js"></script>
-    <script src="/usr/template/Finder/assets/vendor/choices.js/public/assets/scripts/choices.min.js"></script>
-    <script src="/usr/template/Finder/assets/vendor/flatpickr/dist/flatpickr.min.js"></script>
-    <!-- Bootstrap + Theme scripts -->
-    <script src="/usr/template/Finder/assets/js/theme.min.js"></script>
+
   </body>
 </html>

@@ -67,7 +67,7 @@ public class BicycleController extends BaseController{
 	public String bicycleUsrInst(BicycleDto dto, HttpSession httpSession) throws Exception {
 		dto.setUserCustomer_seq((String)httpSession.getAttribute("sessSeqUsr"));
 		bicycleService.insert(dto);
-		return "redirect:/index/home-logined";
+		return "redirect:/index/homeUsr";
 	}
 	@RequestMapping(value = "/bicycle/bicycleUsrUpdt")
 	public String bicycleUsrUpdt(BicycleDto dto) throws Exception {
