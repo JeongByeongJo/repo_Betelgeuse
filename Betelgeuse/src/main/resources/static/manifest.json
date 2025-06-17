@@ -1,0 +1,33 @@
+{
+  "name": "BicycleDoctor",
+  "short_name": "BicycleDoctor",
+  "description": "bicycle, bike, roadbike, mtb, minivelo, cycle, doctors",
+  "lang" : "ko",
+  "dir": "ltr",
+  "start_url": "/index",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/usr/template/Finder/assets/app-icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/usr/template/Finder/assets/app-icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/usr/template/Finder/assets/app-icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "background_color": "#fff",
+  "theme_color": "#030712",
+  "display": "standalone",
+  "orientation": "portrait-primary"
+}

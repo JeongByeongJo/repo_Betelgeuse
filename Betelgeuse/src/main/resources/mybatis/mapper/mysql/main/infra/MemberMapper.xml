@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bicycledoctors.module.member.MemberDao">
+	
+	<resultMap type="com.bicycledoctors.module.member.MemberDto" id="resultMapObj"></resultMap>
+	
+	<sql id="selectCommon">	    
+	    from
+			usercustomer
+		where 1=1
+		<if test="shUseNy != null and !shUseNy.equals('')">AND isBlack = #{shBlackNy}</if>
+        <if test="shDelNy != null and !shDelNy.equals('')">AND delNy = #{shDelNy}</if>
+				<choose>
+					<when test="shOptionDate == 1">AND userInstDate BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+					<when test="shOptionDate == 2">AND userUpdtDate BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+				</choose>
+        <choose>
+            <when test="shOption == 1">AND seq = #{shValue}</when>
+            <when test="shOption == 2">AND userCate LIKE CONCAT('%',#{shValue},'%')</when>
+            <when test="shOption == 3">AND userId LIKE CONCAT('%',#{shValue},'%')</when>
+            <when test="shOption == 4">AND userName LIKE CONCAT('%',#{shValue},'%')</when>
+            <when test="shOption == 5">AND userGender LIKE CONCAT('%',#{shValue},'%')</when>
+        </choose>
+    </sql>
+	
+	<select id="selectOneCount" resultType="Integer">
+    	select count(*)
+    	 <include refid = "selectCommon"></include>
+    </select>
+	
+	<select id="selectList" resultMap="resultMapObj">
+	select aa.* from (
+		SELECT
+			seq
+			,userId
+		    ,userPassword
+		    ,userCate
+		    ,userName
+		    ,userTel
+		    ,userEmail
+		    ,userDob
+		    ,userGender
+		    ,userZip
+		    ,userAddress1
+		    ,userAddress2
+		    ,userAddress3
+		    ,userAddress4
+		    ,userLatitude
+		    ,userLongitude
+		    ,userNote
+		    ,userIp
+		    ,shopComment
+		    ,noshow
+		    ,isBlack
+		    ,delNy
+		    ,userInstDate
+		    ,userUpdtDate
+		<include refid = "selectCommon"></include>
+		order by seq desc
+	) aa
+	limit #{rowNumToShow} offset #{startRnumForMysql}
+	</select>
+	
+	<select id="selectOne" resultMap="resultMapObj">
+		SELECT
+			seq
+			,userId
+		    ,userPassword
+		    ,userCate
+		    ,userName
+		    ,userTel
+		    ,userEmail
+		    ,userDob
+		    ,userGender
+		    ,userZip
+		    ,userAddress1
+		    ,userAddress2
+		    ,userAddress3
+		    ,userAddress4
+		    ,userLatitude
+		    ,userLongitude
+		    ,userNote
+		    ,userIp
+		    ,shopComment
+		    ,noshow
+		    ,isBlack
+		    ,delNy
+		    ,userShopSeq
+	    from
+	    	usercustomer
+	    where 1=1
+	    	and seq = #{seq}
+	</select>
+	<insert id="insert">
+		insert into usercustomer (
+			userId
+		    ,userPassword
+		    ,userCate
+		    ,userName
+		    ,userTel
+		    ,userEmail
+		    ,userDob
+		    ,userGender
+		    ,isBlack
+		    ,delNy
+		    ,userInstDate
+		) values (
+			#{userId}
+			,#{userPassword}
+			,3
+			,#{userName}
+			,#{userTel}
+			,#{userEmail}
+			,#{userDob}
+			,#{userGender}
+			,0
+			,0
+			,CURRENT_TIMESTAMP
+		)
+		<selectKey resultType="String" keyProperty="seq" order="AFTER">
+			SELECT last_insert_id()
+		</selectKey>
+	</insert>
+	<update id="update">
+		update usercustomer set
+		    userCate = #{userCate}
+		    ,userName = #{userName}
+		    ,userTel = #{userTel}
+		    ,userEmail = #{userEmail}
+		    ,userDob = #{userDob}
+		    ,userGender = #{userGender}
+		    ,userZip = #{userZip}
+		    ,userAddress1 = #{userAddress1}
+		    ,userAddress2 = #{userAddress2}
+		    ,userAddress3 = #{userAddress3}
+		    ,userAddress4 = #{userAddress4}
+		    ,userLatitude = #{userLatitude}
+		    ,userLongitude = #{userLongitude}
+		    ,userNote = #{userNote}
+		    ,userIp = #{userIp}
+		    ,shopComment = #{shopComment}
+		    ,noshow = #{noshow}
+		    ,isBlack = #{isBlack}
+		    ,delNy = #{delNy}
+		    ,userUpdtDate = CURRENT_TIMESTAMP
+		where 1=1
+			and seq = #{seq}
+	</update>
+	<update id="updateInfo">
+		update usercustomer set
+		    userName = #{userName}
+		    ,userTel = #{userTel}
+		    ,userDob = #{userDob}
+		    ,userZip = #{userZip}
+		    ,userAddress1 = #{userAddress1}
+		    ,userAddress2 = #{userAddress2}
+		    ,userAddress3 = #{userAddress3}
+		    ,userAddress4 = #{userAddress4}
+		    ,userLatitude = #{userLatitude}
+		    ,userLongitude = #{userLongitude}
+		    ,userNote = #{userNote}
+		    ,userUpdtDate = CURRENT_TIMESTAMP
+		where 1=1
+			and seq = #{seq}
+	</update>
+	<update id="updateShopSeq">
+		update usercustomer set
+		    userShopSeq = #{shopSeq}
+		where 1=1
+			and seq = #{seq}
+	</update>
+	
+	<select id="select4ShopSeq" resultMap="resultMapObj">
+		SELECT
+			userShopSeq
+	    from
+	    	usercustomer
+	    where 1=1
+	    	and seq = #{seq}
+	</select>
+	<select id="selectOneIdChk" resultMap="resultMapObj">
+		SELECT
+				seq
+				,userId
+			    ,userPassword
+			    ,userName
+			    ,delNy
+		    from
+		    	usercustomer
+		    where 1=1
+		    	and userId = #{userId}
+				<if test="userPassword != null and !userPassword.equals('')">AND userPassword = #{userPassword}</if>
+	</select>
+	<select id="selectOneId" resultMap="resultMapObj">
+		SELECT
+				seq
+				,userId
+			    ,userPassword
+			    ,userCate
+			    ,userName
+			    ,userEmail
+			    ,delNy
+		    from
+		    	usercustomer
+		    where 1=1
+		    	and userId = #{userId}
+	</select>
+	
+	<select id="selectOneEmailChk" resultMap="resultMapObj">
+		SELECT
+				seq
+				,userId
+			    ,userEmail
+			    ,userName
+			    ,userCate
+			    ,delNy
+		    from
+		    	usercustomer
+		    where 1=1
+		    	and userEmail = #{userEmail}
+	</select>
+	
+	<select id="pswdrecoveryChk" resultMap="resultMapObj">
+		SELECT
+				seq
+				,userId
+			    ,userPassword
+			    ,userName
+			    ,userEmail
+			    ,delNy
+		    from
+		    	usercustomer
+		    where 1=1
+		    	and userEmail = #{userEmail}
+	</select>
+	
+	<update id="pwUpdate">
+		update usercustomer set
+			userPassword = #{userPassword}
+		    ,userUpdtDate = CURRENT_TIMESTAMP
+		where 1=1
+			and seq = #{seq}
+	</update>
+	<update id="uelete">
+		update usercustomer set
+			delNy = 1
+		    ,userUpdtDate = CURRENT_TIMESTAMP
+		where 1=1
+			and seq = #{seq}
+	</update>
+</mapper>

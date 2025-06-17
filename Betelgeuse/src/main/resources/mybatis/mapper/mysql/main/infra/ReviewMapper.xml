@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bicycledoctors.module.review.ReviewDao">
+	
+	<resultMap type="com.bicycledoctors.module.review.ReviewDto" id="resultMapObj"></resultMap>
+	
+	<sql id="selectCommon">	    
+	    FROM
+		    reviews as r
+			left join usercustomer as u on u.seq = r.userCustomer_seq
+			left join shop as s on s.shopSeq = r.shop_shopSeq
+		WHERE 1=1
+		<if test="shDelNy != null and !shDelNy.equals('')">AND revwDelNy = #{shDelNy}</if>
+				<choose>
+					<when test="shOptionDate == 1">AND revwDate BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+				</choose>
+        <choose>
+            <when test="shOption == 1">AND revwSeq = #{shValue}</when>
+            <when test="shOption == 2">AND revwRate = #{shValue}</when>
+            <when test="shOption == 3">AND u.userName LIKE CONCAT('%',#{shValue},'%')</when>
+            <when test="shOption == 4">AND s.shopName LIKE CONCAT('%',#{shValue},'%')</when>
+            <when test="shOption == 5">AND revwReviews LIKE CONCAT('%',#{shValue},'%')</when>
+        </choose>
+    </sql>
+	
+	<select id="selectOneCount" resultType="Integer">
+    	select count(*)
+    	<include refid = "selectCommon"></include>
+    </select>
+	
+	<select id="selectList" resultMap="resultMapObj">
+	select aa.* from (
+	SELECT
+		revwSeq
+		,revwRate
+		,revwReviews
+		,revwDate
+		,r.userCustomer_seq
+		,shop_shopSeq
+		,s.shopSeq
+		,s.shopName
+		,u.userName
+	<include refid = "selectCommon"></include>
+	order by revwSeq desc
+		) aa
+	limit #{rowNumToShow} offset #{startRnumForMysql}
+	</select>
+	
+	<select id="selectListByUser" resultMap="resultMapObj">
+	SELECT
+		revwSeq
+		,revwRate
+		,revwReviews
+		,revwDate
+		,r.userCustomer_seq
+		,shop_shopSeq
+		,s.shopSeq
+		,s.shopName
+		,u.userName
+	<include refid = "selectCommon"></include>
+	AND r.userCustomer_seq = #{seq}
+	AND revwDelNy = 0
+	</select>
+	
+	<select id="selectOne" resultMap="resultMapObj">
+	SELECT
+		revwSeq
+		,revwRate
+		,revwReviews
+		,revwDate
+		,r.userCustomer_seq
+		,shop_shopSeq
+		,s.shopSeq
+		,s.shopName
+		,u.userName
+		,u.userId
+	FROM
+	    reviews as r
+		left join usercustomer as u on u.seq = r.userCustomer_seq
+		left join shop as s on s.shopSeq = r.shop_shopSeq
+	WHERE 1=1
+	AND revwSeq = #{revwSeq}
+	</select>
+	
+	<select id="selectList4Shop" resultMap="resultMapObj">
+	SELECT
+		revwSeq
+		,revwRate
+		,revwReviews
+		,revwDate
+		,r.userCustomer_seq
+		,shop_shopSeq
+		,s.shopSeq
+		,u.userName
+		,(select count(revwRate) from reviews where revwRate = 1) as star1Count
+        ,(select count(revwRate) from reviews where revwRate = 2) as star2Count
+        ,(select count(revwRate) from reviews where revwRate = 3) as star3Count
+        ,(select count(revwRate) from reviews where revwRate = 4) as star4Count
+        ,(select count(revwRate) from reviews where revwRate = 5) as star5Count
+	<include refid = "selectCommon"></include>
+	AND shop_shopSeq = #{shopSeq}
+	AND revwDelNy = 0
+	</select>
+	
+	<select id="selectCount4Reviews" resultMap="resultMapObj">
+	SELECT distinct
+		(select count(revwRate) from reviews where revwRate = 1 and shop_shopSeq = #{shopSeq}) as star1Count
+        ,(select count(revwRate) from reviews where revwRate = 2 and shop_shopSeq = #{shopSeq}) as star2Count
+        ,(select count(revwRate) from reviews where revwRate = 3 and shop_shopSeq = #{shopSeq}) as star3Count
+        ,(select count(revwRate) from reviews where revwRate = 4 and shop_shopSeq = #{shopSeq}) as star4Count
+        ,(select count(revwRate) from reviews where revwRate = 5 and shop_shopSeq = #{shopSeq}) as star5Count
+        ,(select sum(revwRate) from reviews where shop_shopSeq = #{shopSeq}) as starsSum
+	<include refid = "selectCommon"></include>
+	AND shop_shopSeq = #{shopSeq}
+	AND revwDelNy = 0
+	</select>
+	
+
+	<select id="selectOneCount4Shop" resultType="Integer">
+    	select count(*)
+    	<include refid = "selectCommon"></include>
+		<if test="shopSeq != null and !shopSeq.equals('')">AND shop_shopSeq = #{shopSeq}</if>
+		<if test="seq != null and !seq.equals('')">AND shop_shopSeq = #{shopSeq}</if>
+		AND revwDelNy = 0
+    </select>
+	
+	<insert id="insert">
+	INSERT INTO reviews (
+		revwRate
+		,revwReviews
+		,revwDate
+		,userCustomer_seq
+		,shop_shopSeq
+	) VALUES (
+		#{revwRate}
+		,#{revwReviews}
+		,DATE_FORMAT(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul'), '%Y-%m-%d %H:%i:%S')
+		,#{userCustomer_seq}
+		,#{shop_shopSeq}
+	)
+	</insert>
+
+	<update id="update">
+	UPDATE reviews SET
+		revwRate = #{revwRate}
+		,revwReviews = #{revwReviews}
+		,revwDate = DATE_FORMAT(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul'), '%Y-%m-%d %H:%i:%S')
+	WHERE
+		revwSeq = #{revwSeq}
+	</update>
+	
+	<update id="uelete">
+  UPDATE reviews SET
+    revwDelNy = 
+    <choose>
+      <when test="revwDelNy == null or revwDelNy == ''">1</when>
+      <otherwise>#{revwDelNy}</otherwise>
+    </choose>
+  WHERE revwSeq = #{revwSeq}
+</update>
+</mapper>

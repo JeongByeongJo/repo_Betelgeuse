@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{xdm/include/headNice :: headNice}"></div>
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">page 1</a></li>
+          <li class="breadcrumb-item">page 2</li>
+          <li class="breadcrumb-item active">Default</li>
+        </ol>
+      </nav>
+      <h1>CodeGroup</h1>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+      <div class="row">
+        
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <h1 class="card-title" style="height: 100px;" >엑셀파일 업로드</h1>
+
+              <!-- Custom Styled Validation -->
+              <form class="row g-3" method="post" id="form" name="form" enctype="multipart/form-data">
+                <div class="col-md-3">
+               		<input type="hidden" name="cdgSeq" th:value="${item?.cdgSeq}">
+               		<input type="hidden" name="cdUpdtDate" >	               		
+                </div>
+                <div class="col-md-6 d-flex align-items-end">
+	                <div class="input-group">
+	                <label class="input-group-text" for="file">Excel</label>
+	                <input type="file" class="form-control" id="file" name="file" onchange="return filechk(this);">
+	                </div>
+                </div>
+                <div class="col-md-3 d-flex align-items-end">
+                  <button type="button" class="btn btn-primary" id="btnExlsChck"><i class="bi bi-journal-check"></i></button>
+                </div>
+                <div class="col-md-6">
+                  <a href="/codegroup/codegroupXdmList" class="btn btn-outline-dark"><i class="bi bi-blockquote-right"></i></a>
+                </div>
+                <div class="col-md-6">
+                  <div style="display: flex;justify-content: end;"><button type="button" class="btn btn-primary" id="btnSubmit"><i class="bi bi-server"></i></button></div>
+                </div>
+              </form>
+              
+              <!-- End Custom Styled Validation -->
+
+            </div>
+            <div class="card-footer" id="excelContainer">
+            엑셀파일 내용검토
+            
+            <th:block th:replace="~{xdm/codegroup/CodeGroupExcelFragment :: CodeGroupExcelFragment}"></th:block>
+            
+            </div>
+          </div>
+          
+		<div class="modal fade" id="modalAlert" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="modalAlertTitle">title</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body" id="modalAlertBody">
+						body
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-outline-secondary btn-sm btn_custom" data-bs-dismiss="modal" id="closeModal">닫힘</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="modal" id="modalConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="modalConfirmTitle">title</h5>
+						<button type="button" class="btn-close" id="btnX" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body" id="modalConfirmBody">
+						body
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-outline-secondary" id="btnClose" data-bs-dismiss="modal">닫힘</button>
+						<button type="button" class="btn btn-danger" name="" id="btnModalInsert">저장</button>
+					</div>
+				</div>
+			</div>
+		</div>
+        </div>
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+<div th:replace="~{xdm/include/footerNice :: footerNice}"></div>
+
+<script type="text/javascript">
+
+	document.getElementById("btnExlsChck").onclick = function () {
+var formData = new FormData();
+formData.append("file", $("#file")[0].files[0]);
+		$.ajax({
+		    url: "/codegroup/readExcel",
+		    type: "POST",
+		    data: formData,
+		    enctype: 'multipart/form-data',
+		    processData: false,
+		    contentType: false,  // content-type 자동 설정 (multipart/form-data)
+		    success: function(htmlFragment) {
+		        $("#excelContainer").html(htmlFragment);
+		    },
+		    error: function(jqXHR, textStatus, errorThrown) {
+		        alert("ajaxUpdate " + textStatus + " : " + errorThrown);
+		    }
+		});
+	}
+	
+	function alertModal(title, body) {
+		document.querySelector("#modalAlertTitle").textContent = title;
+		document.querySelector("#modalAlertBody").textContent = body;
+		$("#modalAlert").modal("show");
+	}
+	function confirmModal(title, body) {
+		document.querySelector("#modalConfirmTitle").textContent = title;
+		document.querySelector("#modalConfirmBody").textContent = body;
+		$("#modalConfirm").modal("show");
+	}
+	
+	document.getElementById("btnSubmit").onclick = function () {
+		if($("#file").val()){
+			confirmModal("확인", "해당 엑셀 데이터를 저장하시겠습니까?");
+		} else {
+			alertModal("오류", "엑셀 파일을 선택해주세요.");
+		}
+	}
+	
+	document.getElementById("btnModalInsert").onclick = function () {
+		form.action = "/codegroup/insertExcel";
+		form.submit();
+	}
+	
+	function filechk(obj){
+		var fileSize = obj.files[0].size;
+		var maxSize = 100 * 1024 * 1024; //100mb
+		var ext = $(obj).val().split(".").pop().toLowerCase();       
+		
+		//파일명에 특수문자 검사 (정규 표현식 사용)
+		var fileName = $(obj).val().split("\\").pop();
+		var specialChars = /[*|\":<>[\]{}`\\';@&$]/;
+
+		//파일용량 체크
+		if(fileSize > maxSize){ 
+			alert("파일 크기가 너무 큽니다. 최대 크기는 100MB입니다.");
+			$(obj).val('');
+			return false;
+		}
+		//파일 확장자 체크
+		if($.inArray(ext, ["xls", "xlsx"]) == -1) {
+			alertModal("오류","엑셀 파일을 선택해주세요.");
+			$(obj).val('');
+			return false;
+		}
+
+		//파일명에 특수문자 체크
+		if (specialChars.test(fileName)) {
+			alertModal("오류","파일명에 특수문자가 포함되어 있습니다. 특수문자를 제거해주세요.");
+			$(obj).val(''); // 파일 선택 필드 초기화
+			return false;
+		}
+	}
+	</script>
+
+</body>
+</html>

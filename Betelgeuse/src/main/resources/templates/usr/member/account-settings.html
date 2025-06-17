@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="ko" data-bs-theme="light" data-pwa="true" xmlns:th="http://www.thymeleaf.org">
+  <div th:replace="~{usr/include/LoginedHead :: LoginedHead}"></div>
+
+    <!-- Page content -->
+    <main class="content-wrapper">
+      <div class="container pt-4 pt-sm-5 pb-5 mb-xxl-3">
+        <div class="row pt-2 pt-sm-0 pt-lg-2 pb-2 pb-sm-3 pb-md-4 pb-lg-5">
+
+
+          <!-- Sidebar navigation that turns into offcanvas on screens < 992px wide (lg breakpoint) -->
+          <aside class="col-lg-3" style="margin-top: -105px">
+            <div class="offcanvas-lg offcanvas-start sticky-lg-top pe-lg-3 pe-xl-4" id="accountSidebar">
+              <div class="d-none d-lg-block" style="height: 105px"></div>
+
+              <!-- Header -->
+              <div class="offcanvas-header d-lg-block py-3 p-lg-0">
+                <div class="d-flex flex-row flex-lg-column align-items-center align-items-lg-start">
+                  <div class="flex-shrink-0 bg-body-secondary border rounded-circle overflow-hidden" style="width: 64px; height: 64px">
+                    <img src="/usr/template/Finder/assets/img/account/avatar.jpg" alt="Avatar">
+                  </div>
+                  <div class="pt-lg-3 ps-3 ps-lg-0">
+                    <h6 class="mb-1">[[${session.sessNameUsr}]]</h6>
+                    <p class="fs-sm mb-0">[[${session.sessEmailUsr}]]</p>
+                  </div>
+                </div>
+                <button type="button" class="btn-close d-lg-none" data-bs-dismiss="offcanvas" data-bs-target="#accountSidebar" aria-label="Close"></button>
+              </div>
+
+              <!-- Body (Navigation) -->
+              <div class="offcanvas-body d-block pt-2 pt-lg-4 pb-lg-0">
+                <nav class="list-group list-group-borderless">
+                  <a class="list-group-item list-group-item-action d-flex align-items-center" href="/member/userBicycleUsrList">
+                    <i class="fi-bicycle fs-lg me-2"></i>
+                    내 자전거
+                  </a>
+                  <a class="list-group-item list-group-item-action d-flex align-items-center" href="/review/reviewUsrList">
+                    <i class="fi-star fs-base opacity-75 me-2"></i>
+                    내가 작성한 리뷰
+                  </a>
+                  <a class="list-group-item list-group-item-action d-flex align-items-center active" aria-current="page" href="/member/userProfileUsrForm">
+                    <i class="fi-settings fs-base opacity-75 me-2"></i>
+                    계정 설정
+                  </a>
+                  <a class="list-group-item list-group-item-action d-flex align-items-center" th:if="${session.sessCateUsr} == 4" href="/member/shopUsrServiceAdmin">
+                    <i class="fi-tool fs-base opacity-75 me-2"></i>
+                    예약, 점검정비 관리
+                  </a>
+                </nav>
+                <nav class="list-group list-group-borderless pt-3">
+                  <a class="list-group-item list-group-item-action d-flex align-items-center" id="signout" name="signout" href="javascript:void(0);">
+                    <i class="fi-log-out fs-base opacity-75 me-2"></i>
+                    로그아웃
+                  </a>
+                </nav>
+              </div>
+            </div>
+          </aside>
+
+
+          <!-- Account settings content -->
+          <div class="col-lg-9">
+            <h1 class="h2 pb-2 pb-lg-3">계정 수정하기</h1>
+
+            <!-- Nav pills -->
+            <div class="nav overflow-x-auto mb-3">
+              <ul class="nav nav-pills flex-nowrap gap-2 pb-2 mb-1" role="tablist">
+                <li class="nav-item me-1" role="presentation">
+                  <button type="button" class="nav-link text-nowrap active" id="personal-info-tab" data-bs-toggle="pill" data-bs-target="#personal-info" role="tab" aria-controls="personal-info" aria-selected="true">
+                    개인정보
+                  </button>
+                </li>
+                <li class="nav-item me-1" role="presentation">
+                  <button class="nav-link text-nowrap" id="security-tab" data-bs-toggle="pill" data-bs-target="#security" type="button" role="tab" aria-controls="security" aria-selected="false">
+                    비밀번호 및 보안
+                  </button>
+                </li>
+<!--                 <li class="nav-item" role="presentation"> -->
+<!--                   <button class="nav-link text-nowrap" id="notifications-tab" data-bs-toggle="pill" data-bs-target="#notifications" type="button" role="tab" aria-controls="notifications" aria-selected="false"> -->
+<!--                     자전거 정보 -->
+<!--                   </button> -->
+<!--                 </li> -->
+              </ul>
+            </div>
+
+            <div class="tab-content">
+
+              <!-- Personal info tab -->
+              <div class="tab-pane fade show active" id="personal-info" role="tabpanel" aria-labelledby="personal-info-tab">
+                <div class="vstack gap-4">
+
+                  <!-- Settings form -->
+                  <form class="needs-validation" id="formInfo" novalidate>
+                  <input type="hidden" name="seq" th:value="${session.sessSeqUsr}">
+                    <div class="row row-cols-1 row-cols-sm-2 g-4 mb-4">
+                      <div class="col position-relative">
+                        <label for="fn" class="form-label fs-base">성 함 *</label>
+                        <input type="text" class="form-control form-control-lg" id="userName" name="userName" th:value="${item?.userName}" value=" " required>
+                        <div class="invalid-tooltip bg-transparent p-0">이름을 입력해주세요!</div>
+                      </div>
+                      <div class="col position-relative">
+                        <label for="email" class="form-label d-flex align-items-center fs-base">이메일 | Email *</label>
+                        <input type="email" class="form-control form-control-lg" id="userEmail" th:value="${item?.userEmail}" required>
+                        <div class="invalid-tooltip bg-transparent p-0">유효한 이메일주소를 입력해주세요!</div>
+                      </div>
+                      <div class="col position-relative">
+                        <label for="phone" class="form-label d-flex align-items-center fs-base">전화번호 *</label>
+                        <input type="tel" class="form-control form-control-lg" id="userTel" name="userTel" th:value="${item?.userTel}" data-input-format='{"numericOnly": true, "delimiters": [" ", "- ", " ", "- ", " "], "blocks": [3, 0, 4, 0, 4]}' value=" " placeholder="___- ____-____" required>
+                        <div class="invalid-tooltip bg-transparent p-0">유효한 전화번호를 입력해주세요!</div>
+                      </div>
+                      <div class="col position-relative">
+                        <label for="birth-date" class="form-label fs-base">생년월일</label>
+                        <div class="position-relative">
+                          <input type="text" class="form-control form-control-lg form-icon-end" id="userDob" name="userDob" th:value="${item?.userDob}" data-datepicker placeholder="날짜를 선택해주세요.">
+                          <i class="fi-calendar fs-lg position-absolute top-50 end-0 translate-middle-y me-3"></i>
+                        </div>
+                      </div>
+                    <div class="col position-relative">
+                      <label for="userZip" class="form-label fs-base">주 소 *</label>
+                      <input type="text" class="form-control form-control-lg" onclick="sample4_execDaumPostcode()" id="userZip" name="userZip" th:value="${item?.userZip}" placeholder="우편번호" readonly>
+                    </div>
+                    <div class="col position-relative" style="padding-top: 3.5ex">
+					  <input type="button" class="btn btn-lg btn-dark" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
+                    
+                    </div>
+                    <div class="col position-relative">
+                      <label for="userAddress1" class="form-label fs-base">도로명 주소 </label>
+					<input type="text" class="form-control form-control-lg" id="userAddress1" name="userAddress1" th:value="${item?.userAddress1}" placeholder="도로명주소" readonly>
+                    
+                    </div>
+                    <div class="col position-relative">
+                      <label for="userAddress2" class="form-label fs-base">지번 주소 </label>
+					<input type="text" class="form-control form-control-lg" id="userAddress2" name="userAddress2" th:value="${item?.userAddress2}" placeholder="지번주소" readonly>
+                    
+                    </div>
+                    <div class="col position-relative">
+                      <label for="userAddress3" class="form-label fs-base">상세 주소 </label>
+					<input type="text" class="form-control form-control-lg" id="userAddress3" name="userAddress3" th:value="${item?.userAddress3}" placeholder="상세주소">
+                    
+                    </div>
+                    <div class="col position-relative">
+                      <label for="userAddress4" class="form-label fs-base">참고항목</label>
+					<input type="text" class="form-control form-control-lg" id="userAddress4" name="userAddress4" th:value="${item?.userAddress4}" placeholder="참고항목" readonly>
+                    
+                    </div>
+                    </div>
+                    <div class="position-relative mb-4">
+<span id="guide" style="color:#999;display:none"></span>
+<input type="hidden" id="userLatitude" name="userLatitude" th:value="${item?.userLatitude}" placeholder="위도">
+<input type="hidden" id="userLongitude" name="userLongitude" th:value="${item?.userLongitude}" placeholder="경도">
+<div id="map" style="width:970px;height:300px;margin-top:10px;display:none"></div>
+                    </div>
+                    <div class="pb-2 mb-4">
+                      <label for="user-info" class="form-label fs-base">메모</label>
+                      <textarea class="form-control form-control-lg bg-transparent" id="userNote" name="userNote" rows="6"> </textarea>
+                    </div>
+                    <div class="d-flex gap-3">
+                      <a class="btn btn-lg btn-secondary" href="/member/userInfosettingUsrForm">취소</a>
+                      <button type="button" id="btnUpdt" class="btn btn-lg btn-dark">저장하기</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+
+              <!-- Password and security tab -->
+              <div class="tab-pane fade" id="security" role="tabpanel" aria-labelledby="security-tab">
+                <p class="mb-sm-4">가입에 이용하신 이메일주소는 <span class="fw-medium text-primary">[[${session.sessEmailUsr}]]</span> 입니다.</p>
+
+                <!-- Change password form -->
+                <form class="needs-validation" id="pwForm" name="pwForm" novalidate>
+                  <div class="row row-cols-1 row-cols-sm-2 g-4 mb-4">
+                    <div class="col">
+                      <label for="current-password" class="form-label fs-base">현재 비밀번호 | Current password</label>
+                      <div class="password-toggle">
+                        <input type="password" class="form-control form-control-lg" id="currentPassword" required>
+                        <div class="invalid-tooltip bg-transparent p-0">잘못입력하셨습니다. 다시 입력해주세요.</div>
+                        <label class="password-toggle-button" aria-label="Show/hide password">
+                          <input type="checkbox" class="btn-check">
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row row-cols-1 row-cols-sm-2 g-4 mb-4">
+                    <div class="col">
+                      <label for="userPassword" class="form-label fs-base">새 비밀번호 | New password <span class="fs-sm fw-normal text-body-secondary">(최소 8자리 이상)</span></label>
+                      <div class="password-toggle">
+                        <input type="password" class="form-control form-control-lg" minlength="8" id="userPassword" name="userPassword" required>
+                        <div class="invalid-tooltip bg-transparent p-0">최소 8자리 이상의 비밀번호를 입력해주세요.</div>
+                        <label class="password-toggle-button" aria-label="Show/hide password">
+                          <input type="checkbox" class="btn-check">
+                        </label>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <label for="confirm-new-password" class="form-label fs-base">새 비밀번호 확인 | Confirm new password</label>
+                      <div class="password-toggle">
+                        <input type="password" class="form-control form-control-lg" minlength="8" id="confirmNewPw" required>
+                        <div class="invalid-tooltip bg-transparent p-0">비밀번호가 일치하지 않습니다.</div>
+                        <label class="password-toggle-button" aria-label="Show/hide password">
+                          <input type="checkbox" class="btn-check">
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="d-flex gap-3">
+                    <button type="reset" class="btn btn-lg btn-secondary">취소</button>
+                    <button type="button" id="btnpwChange" name="btnpwChange" class="btn btn-lg btn-dark">비밀번호 변경</button>
+                  </div>
+                </form>
+
+
+                <!-- Delete account -->
+                <h3 class="h4 pt-5 mt-n2 mt-md-0 mt-lg-2 mt-xl-3 mb-sm-4">계정삭제하기</h3>
+                <p class="fs-sm mb-sm-4">계정을 삭제하시면 해당 계정은 즉시 비활성화되며, 14일 이내 로그인을 원하시면 계정 재활성안내 이메일을 보내드립니다.</p>
+                <div class="form-check mb-4">
+                  <input type="checkbox" class="form-check-input" id="confirm-deletion">
+                  <label for="confirm-deletion" class="form-check-label">계정 삭제 동의</label>
+                </div>
+                <button type="button" id="btnUelete" name="btnUelete" class="btn btn-lg btn-outline-danger">계정 삭제하기</button>
+              </div>
+
+
+              <!-- Notification settings tab -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+	<div class="modal fade" id="modalAlert" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="modalAlertTitle">title</h5>
+					<button type="button" id="xclose" name="xclose" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body" id="modalAlertBody">
+					body
+				</div>
+				<div class="modal-footer">
+					<button type="button" id="cclose" name="cclose" class="btn btn-outline-secondary btn-sm btn_custom" data-bs-dismiss="modal">닫힘</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal" id="modalConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="modalConfirmTitle">title</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body" id="modalConfirmBody">
+						body
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">닫힘</button>
+						<button type="button" class="btn btn-danger" name="" id="btnModalDelete"></button>
+						<button type="button" class="btn btn-danger" name="" id="btnModalUelete">삭제</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+<div th:replace="~{usr/include/LoginedFooter :: LoginedFooter}"></div>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f7d210607aa49a67c830e2baeb80358f&libraries=services"></script>
+
+<script>
+    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+        mapOption = {
+            center: new daum.maps.LatLng(37.537187, 127.005476), // 지도의 중심좌표
+            level: 5 // 지도의 확대 레벨
+        };
+
+    //지도를 미리 생성
+    var map = new daum.maps.Map(mapContainer, mapOption);
+    //주소-좌표 변환 객체를 생성
+    var geocoder = new daum.maps.services.Geocoder();
+    //마커를 미리 생성
+    var marker = new daum.maps.Marker({
+        position: new daum.maps.LatLng(37.537187, 127.005476),
+        map: map
+    });
+    
+</script>
+
+<script>
+    //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
+    function sample4_execDaumPostcode() {
+    	
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var roadAddr = data.roadAddress; // 도로명 주소 변수
+                var extraRoadAddr = ''; // 참고 항목 변수
+
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraRoadAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if(extraRoadAddr !== ''){
+                    extraRoadAddr = ' (' + extraRoadAddr + ')';
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('userZip').value = data.zonecode;
+                document.getElementById("userAddress1").value = roadAddr;
+                document.getElementById("userAddress2").value = data.jibunAddress;
+                
+                // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+                if(roadAddr !== ''){
+                    document.getElementById("userAddress4").value = extraRoadAddr;
+                } else {
+                    document.getElementById("userAddress4").value = '';
+                }
+                
+                geocoder.addressSearch(data.roadAddress, function(results, status) {
+                    // 정상적으로 검색이 완료됐으면
+                    if (status === daum.maps.services.Status.OK) {
+
+                        var result = results[0]; //첫번째 결과의 값을 활용
+
+                        // 해당 주소에 대한 좌표를 받아서
+                        var coords = new daum.maps.LatLng(result.y, result.x);
+                        // 지도를 보여준다.
+                        mapContainer.style.display = "block";
+                        map.relayout();
+                        // 지도 중심을 변경한다.
+                        map.setCenter(coords);
+                        // 마커를 결과값으로 받은 위치로 옮긴다.
+                        marker.setPosition(coords)
+	                    document.getElementById("userLatitude").value = coords.getLat();;
+	                    document.getElementById("userLongitude").value = coords.getLng();;
+                        
+                    }
+                });
+
+            }
+        }).open();
+        
+        document.getElementById("shopAddress3").focus();
+    }
+</script>
+
+
+<script type="text/javascript">
+var formInfo = document.getElementById("formInfo")
+var form = document.getElementById("pwForm")
+
+$("#btnpwChange").on("click", function(){
+	if(document.getElementById("userPassword").value != document.getElementById("confirmNewPw").value) {
+		document.getElementById("modalAlertTitle").innerText = "비밀번호가 일치하지 않습니다.";
+		document.getElementById("modalAlertBody").innerText = "새로운 비밀번호를 확인해주세요!";
+		$("#modalAlert").modal("show");
+		return false;
+	} else {
+		//by pass
+	}
+	$.ajax({
+		async: true 
+		,cache: false
+		,type: "post"
+		,url: "/member/pwChkUsrProc"
+		,data: {"userPassword" : $("#currentPassword").val()}
+		,success: function(response) {
+			if(response.rt == "success") {
+				alert("변경완료");
+				form.action = "/member/memberUsrPwUpdt";
+				form.submit();
+			} else {
+				alert("?");
+				// by pass
+			}
+		}
+		,error : function(jqXHR, textStatus, errorThrown){
+			alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+		}
+	});
+});
+
+$("#btnUelete").on("click", function(){
+		document.querySelector("#modalConfirmTitle").textContent = "확 인";
+		document.querySelector("#modalConfirmBody").textContent = "계정을 삭제하시겠습니까 ?";
+		document.querySelector("#btnModalUelete").style.display = '';
+		document.querySelector("#btnModalDelete").style.display = 'none';
+		$("#modalConfirm").modal("show");
+
+});
+
+$("#btnUpdt").on("click", function(){
+	formInfo.action = "/member/memberUsrUpdt";
+	formInfo.submit();
+});
+
+$("#btnModalUelete").on("click", function(){
+	form.action = "/member/memberUsrUele";
+	form.submit();
+});
+</script>
+    
+    
+  </body>
+</html>

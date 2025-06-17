@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ko" data-bs-theme="light" data-pwa="true" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+
+    <!-- Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover">
+
+    <!-- SEO Meta Tags -->
+    <title>Bicycle Doctors | 로그인</title>
+    <meta name="description" content="Bicycle Doctors">
+    <meta name="keywords" content="bicycle, bike, roadbike, mtb, minivelo, cycle, doctors">
+    <meta name="author" content="JeongByeongJo">
+
+    <!-- Webmanifest + Favicon / App icons -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" type="image/png" href="/usr/template/Finder/assets/app-icons/icon-32x32.png" sizes="32x32">
+    <link rel="apple-touch-icon" href="/usr/template/Finder/assets/app-icons/icon-180x180.png">
+
+    <!-- Theme switcher (color modes) -->
+    <script src="/usr/template/Finder/assets/js/theme-switcher.js"></script>
+
+    <!-- Preloaded local web font (Inter) -->
+    <link rel="preload" href="/usr/template/Finder/assets/fonts/inter-variable-latin.woff2" as="font" type="font/woff2" crossorigin>
+
+    <!-- Font icons -->
+    <link rel="preload" href="/usr/template/Finder/assets/icons/finder-icons.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="/usr/template/Finder/assets/icons/finder-icons.min.css">
+
+    <!-- Bootstrap + Theme styles -->
+    <link rel="preload" href="/usr/template/Finder/assets/css/theme.min.css" as="style">
+    <link rel="preload" href="/usr/template/Finder/assets/css/theme.rtl.min.css" as="style">
+    <link rel="stylesheet" href="/usr/template/Finder/assets/css/theme.min.css" id="theme-styles">
+  </head>
+
+
+  <!-- Body -->
+  <body>
+
+    <!-- Page content -->
+    <main class="content-wrapper w-100 px-3 ps-lg-5 pe-lg-4 mx-auto" style="max-width: 1920px">
+      <div class="d-lg-flex">
+
+        <!-- Login form + Footer -->
+        <div class="d-flex flex-column min-vh-100 w-100 py-4 mx-auto me-lg-5" style="max-width: 416px">
+
+          <!-- Logo -->
+          <header class="navbar px-0 pb-4 mt-n2 mt-sm-0 mb-2 mb-md-3 mb-lg-4">
+            <a class="navbar-brand pt-0" href="/index">
+              <span class="d-flex flex-shrink-0 text-primary rtl-flip me-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="34">
+                <path d="M34.5 16.894v10.731c0 3.506-2.869 6.375-6.375 6.375H17.5h-.85C7.725 33.575.5 26.138.5 17c0-9.35 7.65-17 17-17s17 7.544 17 16.894z" fill="currentColor"/>
+                <g fill-rule="evenodd">
+                <path d="M17.5 13.258c-3.101 0-5.655 2.554-5.655 5.655s2.554 5.655 5.655 5.655 5.655-2.554 5.655-5.655-2.554-5.655-5.655-5.655zm-9.433 5.655c0-5.187 4.246-9.433 9.433-9.433s9.433 4.246 9.433 9.433a9.36 9.36 0 0 1-1.569 5.192l2.397 2.397a1.89 1.89 0 0 1 0 2.671 1.89 1.89 0 0 1-2.671 0l-2.397-2.397a9.36 9.36 0 0 1-5.192 1.569c-5.187 0-9.433-4.246-9.433-9.433z" fill="#000" fill-opacity=".05"/>
+                <g fill="#fff">
+                <path d="M17.394 10.153c-3.723 0-6.741 3.018-6.741 6.741s3.018 6.741 6.741 6.741 6.741-3.018 6.741-6.741-3.018-6.741-6.741-6.741zM7.347 16.894A10.05 10.05 0 0 1 17.394 6.847 10.05 10.05 0 0 1 27.44 16.894 10.05 10.05 0 0 1 17.394 26.94 10.05 10.05 0 0 1 7.347 16.894z"/>
+                <path d="M23.025 22.525c.645-.645 1.692-.645 2.337 0l3.188 3.188c.645.645.645 1.692 0 2.337s-1.692.645-2.337 0l-3.187-3.187c-.645-.646-.645-1.692 0-2.337z"/></g></g>
+                <path d="M23.662 14.663c2.112 0 3.825-1.713 3.825-3.825s-1.713-3.825-3.825-3.825-3.825 1.713-3.825 3.825 1.713 3.825 3.825 3.825z" fill="#fff"/>
+                <path fill-rule="evenodd" d="M23.663 8.429a2.41 2.41 0 0 0-2.408 2.408 2.41 2.41 0 0 0 2.408 2.408 2.41 2.41 0 0 0 2.408-2.408 2.41 2.41 0 0 0-2.408-2.408zm-5.242 2.408c0-2.895 2.347-5.242 5.242-5.242s5.242 2.347 5.242 5.242-2.347 5.242-5.242 5.242-5.242-2.347-5.242-5.242z" fill="currentColor"/></svg>
+              </span>
+              Bicycle Doctors
+            </a>
+          </header>
+
+          <h1 class="h2 mt-auto">로 그 인</h1>
+          <div class="nav fs-sm mb-4">
+            계정이 없으십니까?
+            <a class="nav-link text-decoration-underline p-0 ms-2" href="/member/signupUsrForm">계정만들기</a>
+          </div>
+
+          <!-- Form -->
+          <form class="needs-validation" novalidate>
+            <div class="position-relative mb-4">
+              <label for="userId" class="form-label">아이디 | ID</label>
+              <input type="text" class="form-control form-control-lg" id="userId" name="userId" th:value="admin" placeholder="아이디 | ID" required>
+              <div class="invalid-tooltip bg-transparent py-0">계정 ID를 입력해주세요.</div>
+            </div>
+            <div class="position-relative mb-4">
+              <label for="userPassword" class="form-label">비밀번호 | Password</label>
+              <div class="password-toggle">
+                <input type="password" class="form-control form-control-lg" id="userPassword" name="userPassword" th:value="qwer" placeholder="비밀번호 | Password" onkeyup="enterkey(event)" required>
+                <div class="invalid-tooltip bg-transparent py-0">비밀번호를 입력해주세요.</div>
+                <label class="password-toggle-button fs-lg" aria-label="Show/hide password">
+                  <input type="checkbox" class="btn-check">
+                </label>
+              </div>
+            </div>
+            <div class="d-flex align-items-center justify-content-between mb-4">
+              <div class="form-check me-2">
+                <input type="checkbox" class="form-check-input" id="rememberId">
+                <label for="rememberId" class="form-check-label">ID 기억하기</label>
+              </div>
+              <div class="nav">
+                <a class="nav-link animate-underline p-0" href="/member/passwordrecoveryUsrForm">
+                  <span class="animate-target">비밀번호 찾기</span>
+                </a>
+              </div>
+            </div>
+            <button type="button" id="buttonSignIn" class="btn btn-lg btn-primary w-100">로 그 인</button>
+          </form>
+
+          <!-- Divider -->
+          <div class="d-flex align-items-center my-4">
+            <hr class="w-100 m-0">
+            <span class="text-body-emphasis fw-medium text-nowrap mx-4">소셜 계정 이용하기</span>
+            <hr class="w-100 m-0">
+          </div>
+
+          <!-- Social login -->
+          <div class="d-flex flex-column flex-sm-row gap-3 pb-4 mb-3 mb-lg-4">
+            <a type="button" href="/google/oauth2" id="googleLogin" class="btn btn-lg btn-outline-secondary w-100 px-2">
+              <i class="fi-google ms-1 me-1"></i>
+              Google
+            </a>
+            <a type="button" href="/naver/oauth2" class="btn btn-lg btn-outline-secondary w-100 px-2">
+              <span style="font-weight: bolder;">N &ensp;</span>
+              Naver
+            </a>
+            <a type="button" href="/kakao/oauth2" class="btn btn-lg btn-outline-secondary w-100 px-2">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-fill" viewBox="0 0 16 16">
+  <path d="M8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6-.097 1.016-.417 2.13-.771 2.966-.079.186.074.394.273.362 2.256-.37 3.597-.938 4.18-1.234A9 9 0 0 0 8 15"/>
+</svg>&ensp;
+              Kakao
+            </a>
+          </div>
+          <!-- Footer -->
+          <footer class="mt-auto">
+            <p class="fs-xs mb-0">
+              &copy; All rights reserved. Made by <a class="hover-effect-underline text-dark-emphasis text-decoration-none" href="https://createx.studio/" target="_blank" rel="noreferrer">JeongByeongJo</a>
+            </p>
+          </footer>
+        </div>
+	<div class="modal fade" id="modalAlert" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header" style="background-color: indianred; height: fit-content;">
+					<h5 class="modal-title" id="modalAlertTitle">title</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body" id="modalAlertBody">
+					body
+				</div>
+				<div class="modal-footer" style="height: 9ex;">
+					<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">닫힘</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+        <!-- Cover image visible on screens > 992px wide (lg breakpoint) -->
+        <div class="d-none d-lg-block w-100 py-4 ms-auto" style="max-width: 1034px">
+          <div class="d-flex flex-column justify-content-end h-100 bg-info-subtle rounded-5">
+            <div class="ratio" style="--fn-aspect-ratio: calc(1030 / 1032 * 100%)">
+              <img src="/usr/template/Finder/assets/img/account/account-cover.png" alt="Girl">
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+<script src="/xdm/template/NiceAdmin/assets/jquery/jquery-3.7.1.min.js"></script>
+<script type="text/javascript">
+function loginLogic (){
+	
+// 	if(validation() == false) return false;
+	$.ajax({
+		async: true 
+		,cache: false
+		,type: "post"
+		/* ,dataType:"json" */
+		,url: "/member/signinUsrProc"
+		/* ,data : $("#formLogin").serialize() */
+		,data : { "userId" : $("#userId").val(), "userPassword" : $("#userPassword").val()}
+		,success: function(response) {
+			if(response.rt == "success") {
+				location.href = "/index/homeUsr";
+// 				if(response.changePwd == "true") {
+// 					location.href = "/member/expiredPwdUsrForm";
+// 				} else {
+// 					location.href = "/index/indexXdmView";
+// 				}
+			} else {
+		 		document.getElementById("modalAlertTitle").innerText = "확 인";
+		 		document.getElementById("modalAlertBody").innerText = "일치하는 회원이 존재 하지 않습니다!";
+		 		$("#modalAlert").modal("show");
+			}
+		}
+		,error : function(jqXHR, textStatus, errorThrown){
+			alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+		}
+	});
+}
+document.getElementById("buttonSignIn").onclick = function () {
+	if(document.getElementById("userId").value.trim() == null || document.getElementById("userId").value.trim() == "") {
+		document.getElementById("userId").classList.add("is-invalid");
+		return false;
+	} else {
+		document.getElementById("userId").classList.remove("is-invalid");
+	}
+	if(document.getElementById("userPassword").value.trim() == null || document.getElementById("userPassword").value.trim() == "") {
+		document.getElementById("userPassword").classList.add("is-invalid");
+		return false;
+	} else {
+		document.getElementById("userPassword").classList.remove("is-invalid");
+	}
+	loginLogic ();
+}
+$("#userId").on("keyup", function(){
+	$("#userId").removeClass("is-invalid");
+	if($("#userId").val() == null || $("#userId").val() =="") {
+		$("#userId").addClass("is-invalid");
+	} else {
+		$("#userId").removeClass("is-invalid");		
+	}
+});
+$("#userPassword").on("keyup", function(){
+	$("#userPassword").removeClass("is-invalid");
+	if($("#userPassword").val() == null || $("#userPassword").val() =="") {
+		$("#userPassword").addClass("is-invalid");
+	} else {
+		$("#userPassword").removeClass("is-invalid");		
+	}
+});
+
+function enterkey(e) {
+	  if (e.key === "Enter") {
+		  loginLogic ();
+	  }
+	}
+</script>
+    <!-- Bootstrap + Theme scripts -->
+    <script src="/usr/template/Finder/assets/js/theme.min.js"></script>
+  </body>
+</html>

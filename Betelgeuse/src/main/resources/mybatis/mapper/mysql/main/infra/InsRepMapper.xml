@@ -1,0 +1,289 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bicycledoctors.module.insRep.InsRepDao">
+	
+	<resultMap type="com.bicycledoctors.module.insRep.InsRepDto" id="resultMapObj"></resultMap>
+	
+	<select id="selectList" resultMap="resultMapObj">
+			SELECT
+				irSeq
+			    ,inspectRepairDate
+			    ,drivetrainDate
+			    ,drivetrainInsCost
+			    ,drivetrainRepCost
+			    ,drivetrainInsDesc
+			    ,drivetrainRepDesc
+			    ,brakeDate
+			    ,brakeInsCost
+			    ,brakeRepCost
+			    ,brakeInsDesc
+			    ,brakeRepDesc
+			    ,wheelDate
+			    ,wheelInsCost
+			    ,wheelRepCost
+			    ,wheelInsDesc
+			    ,wheelRepDesc
+			    ,cockpits
+			    ,cockpitDate
+			    ,cockpitInsCost
+			    ,cockpitRepCost
+			    ,cockpitInsDesc
+			    ,cockpirRepDesc
+			    ,etcs
+			    ,etcDate
+			    ,etcInsCost
+			    ,etcRepCost
+			    ,etcInsDesc
+			    ,etcRepDesc
+			    ,expendables
+			    ,expendableDate
+			    ,expendableCost1
+			    ,expendableCost2
+			    ,expendableCost3
+			    ,expendableCost4
+			    ,expendableCost5
+			    ,expendableCosts
+			    ,expendableDesc
+			    ,totalPrice
+			    ,instDate
+			    ,updtDate
+			    ,reservation_rsrvSeq
+			    ,shop_shopSeq
+			    ,bicycle_bikeSeq
+			FROM inspectRepair
+	</select>
+	<select id="selectOne" resultMap="resultMapObj">
+			SELECT
+				irSeq
+			    ,inspectRepairDate
+			    ,drivetrainDate
+			    ,drivetrainInsCost
+			    ,drivetrainRepCost
+			    ,drivetrainInsDesc
+			    ,drivetrainRepDesc
+			    ,brakeDate
+			    ,brakeInsCost
+			    ,brakeRepCost
+			    ,brakeInsDesc
+			    ,brakeRepDesc
+			    ,wheelDate
+			    ,wheelInsCost
+			    ,wheelRepCost
+			    ,wheelInsDesc
+			    ,wheelRepDesc
+			    ,cockpits
+			    ,cockpitDate
+			    ,cockpitInsCost
+			    ,cockpitRepCost
+			    ,cockpitInsDesc
+			    ,cockpitRepDesc
+			    ,etcs
+			    ,etcDate
+			    ,etcInsCost
+			    ,etcRepCost
+			    ,etcInsDesc
+			    ,etcRepDesc
+			    ,expendables
+			    ,expendableDate
+			    ,expendableCost1
+			    ,expendableCost2
+			    ,expendableCost3
+			    ,expendableCost4
+			    ,expendableCost5
+			    ,expendableCosts
+			    ,expendableDesc
+			    ,totalPrice
+			    ,i.instDate
+			    ,i.updtDate
+			    ,reservation_rsrvSeq
+			    ,shop_shopSeq
+			    ,bicycle_bikeSeq
+			FROM inspectRepair as i
+			LEFT JOIN bicycle as b on i.bicycle_bikeSeq = b.bikeSeq
+			WHERE 1=1
+			AND	reservation_rsrvSeq = #{rsrvSeq}
+	</select>
+	<select id="selectOne4IrSeq" resultMap="resultMapObj">
+			SELECT
+				irSeq
+			FROM inspectRepair
+			WHERE 1=1
+				reservation_rsrvSeq = #{rsrvSeq}
+	</select>
+	<insert id="insert">
+	INSERT INTO inspectRepair (
+	 	inspectRepairDate
+	    ,drivetrainDate
+	    ,drivetrainInsCost
+	    ,drivetrainRepCost
+	    ,drivetrainInsDesc
+	    ,drivetrainRepDesc
+	    ,brakeDate
+	    ,brakeInsCost
+	    ,brakeRepCost
+	    ,brakeInsDesc
+	    ,brakeRepDesc
+	    ,wheelDate
+	    ,wheelInsCost
+	    ,wheelRepCost
+	    ,wheelInsDesc
+	    ,wheelRepDesc
+	    ,cockpits
+	    ,cockpitDate
+	    ,cockpitInsCost
+	    ,cockpitRepCost
+	    ,cockpitInsDesc
+	    ,cockpirRepDesc
+	    ,etcs
+	    ,etcDate
+	    ,etcInsCost
+	    ,etcRepCost
+	    ,etcInsDesc
+	    ,etcRepDesc
+	    ,expendables
+	    ,expendableDate
+	    ,expendableCost1
+	    ,expendableCost2
+	    ,expendableCost3
+	    ,expendableCost4
+	    ,expendableCost5
+	    ,expendableCosts
+	    ,expendableDesc
+	    ,totalPrice
+	    ,instDate
+	    ,reservation_rsrvSeq
+	    ,shop_shopSeq
+	    ,bicycle_bikeSeq
+	) VALUES (
+		DATE_FORMAT(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul'), '%Y-%m-%d %H:%i:%S')
+		<choose>
+				<when test="drivetrainDate.equals('')">,NULL</when>  
+				<otherwise>,#{drivetrainDate}</otherwise>
+		</choose>
+		,#{drivetrainInsCost}
+		,#{drivetrainRepCost}
+		,#{drivetrainInsDesc}
+		,#{drivetrainRepDesc}
+		<choose>
+				<when test="brakeDate.equals('')">,NULL</when>  
+				<otherwise>,#{brakeDate}</otherwise>
+		</choose>
+		,#{brakeInsCost}
+		,#{brakeRepCost}
+		,#{brakeInsDesc}
+		,#{brakeRepDesc}
+		<choose>
+				<when test="wheelDate.equals('')">,NULL</when>  
+				<otherwise>,#{wheelDate}</otherwise>
+		</choose>
+		,#{wheelInsCost}
+		,#{wheelRepCost}
+		,#{wheelInsDesc}
+		,#{wheelRepDesc}
+		,#{cockpits}
+		<choose>
+				<when test="cockpitDate.equals('')">,NULL</when>  
+				<otherwise>,#{cockpitDate}</otherwise>
+		</choose>
+		,#{cockpitInsCost}
+		,#{cockpitRepCost}
+		,#{cockpitInsDesc}
+		,#{cockpirRepDesc}
+		,#{etcs}
+		<choose>
+				<when test="etcDate.equals('')">,NULL</when>  
+				<otherwise>,#{etcDate}</otherwise>
+		</choose>
+		,#{etcInsCost}
+		,#{etcRepCost}
+		,#{etcInsDesc}
+		,#{etcRepDesc}
+		,#{expendables}
+		<choose>
+				<when test="expendableDate.equals('')">,NULL</when>  
+				<otherwise>,#{expendableDate}</otherwise>
+		</choose>
+		,#{expendableCost1}
+		,#{expendableCost2}
+		,#{expendableCost3}
+		,#{expendableCost4}
+		,#{expendableCost5}
+		,#{expendableCosts}
+		,#{expendableDesc}
+		,#{totalPrice}
+		,DATE_FORMAT(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul'), '%Y-%m-%d %H:%i:%S')
+		,#{reservation_rsrvSeq}
+		,#{shop_shopSeq}
+		,#{bicycle_bikeSeq}
+	)
+	</insert>
+	<update id="update">
+		UPDATE inspectRepair SET
+			inspectRepairDate = DATE_FORMAT(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul'), '%Y-%m-%d %H:%i:%S')
+		    ,drivetrainDate = 
+		    <choose>
+				<when test="drivetrainDate.equals('')">NULL</when>  
+				<otherwise>#{drivetrainDate}</otherwise>
+			</choose>
+		    ,drivetrainInsCost = #{drivetrainInsCost}
+		    ,drivetrainRepCost = #{drivetrainRepCost}
+		    ,drivetrainInsDesc = #{drivetrainInsDesc}
+		    ,drivetrainRepDesc = #{drivetrainRepDesc}
+		    ,brakeDate =
+		    <choose>
+				<when test="brakeDate.equals('')">,NULL</when>  
+				<otherwise>,#{brakeDate}</otherwise>
+			</choose>
+		    ,brakeInsCost = #{brakeInsCost}
+		    ,brakeRepCost = #{brakeRepCost}
+		    ,brakeInsDesc = #{brakeInsDesc}
+		    ,brakeRepDesc = #{brakeRepDesc}
+		    ,wheelDate =
+    		<choose>
+				<when test="wheelDate.equals('')">,NULL</when>  
+				<otherwise>,#{wheelDate}</otherwise>
+			</choose>
+		    ,wheelInsCost = #{wheelInsCost}
+		    ,wheelRepCost = #{wheelRepCost}
+		    ,wheelInsDesc = #{wheelInsDesc}
+		    ,wheelRepDesc = #{wheelRepDesc}
+		    ,cockpits = #{cockpits}
+		    ,cockpitDate =
+		    <choose>
+				<when test="cockpitDate.equals('')">,NULL</when>  
+				<otherwise>,#{cockpitDate}</otherwise>
+			</choose>
+		    ,cockpitInsCost = #{cockpitInsCost}
+		    ,cockpitRepCost = #{cockpitRepCost}
+		    ,cockpitInsDesc = #{cockpitInsDesc}
+		    ,cockpirRepDesc = #{cockpirRepDesc}
+		    ,etcs = #{etcs}
+		    ,etcDate =
+		    <choose>
+				<when test="etcDate.equals('')">,NULL</when>  
+				<otherwise>,#{etcDate}</otherwise>
+			</choose>
+		    ,etcInsCost = #{etcInsCost}
+		    ,etcRepCost = #{etcRepCost}
+		    ,etcInsDesc = #{etcInsDesc}
+		    ,etcRepDesc = #{etcRepDesc}
+		    ,expendables = #{expendables}
+		    ,expendableDate =
+		    <choose>
+				<when test="expendableDate.equals('')">,NULL</when>  
+				<otherwise>,#{expendableDate}</otherwise>
+			</choose>
+		    ,expendableCost1 = #{expendableCost1}
+		    ,expendableCost2 = #{expendableCost2}
+		    ,expendableCost3 = #{expendableCost3}
+		    ,expendableCost4 = #{expendableCost4}
+		    ,expendableCost5 = #{expendableCost5}
+		    ,expendableCosts = #{expendableCosts}
+		    ,expendableDesc = #{expendableDesc}
+		    ,totalPrice = #{totalPrice}
+		    ,UpdtDate = DATE_FORMAT(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul'), '%Y-%m-%d %H:%i:%S')
+	    WHERE 1=1
+<!-- 	    AND irSeq = #{irSeq} -->
+	    AND irSeq = (select irSeq from inspectRepair where reservation_rsrvSeq = #{rsrvSeq})
+	</update>
+</mapper>

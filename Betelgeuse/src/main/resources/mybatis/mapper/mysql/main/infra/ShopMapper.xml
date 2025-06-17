@@ -1,0 +1,680 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bicycledoctors.module.shop.ShopDao">
+	
+	<resultMap type="com.bicycledoctors.module.shop.ShopDto" id="resultMapObj"></resultMap>
+	<resultMap type="com.bicycledoctors.module.shop.ShopAvailableServicesDto" id="resultMapObjs"></resultMap>
+	<resultMap type="com.bicycledoctors.module.shop.ShopAvailableServiceDto" id="resultMapObjas"></resultMap>
+	<resultMap type="com.bicycledoctors.module.shop.ShopBikeBrandDto" id="resultMapObjBb"></resultMap>
+	<resultMap type="com.bicycledoctors.module.shop.ShopWheelBrandDto" id="resultMapObjWb"></resultMap>
+	
+	<sql id="selectCommon">	    
+	    from shop as a
+	    left join usercustomer b on a.userCustomer_seq = b.seq
+	    where 1=1
+<!-- 	    <if test="shUseNy != null and !shUseNy.equals('')">AND a.cdgUseNy = #{shUseNy}</if> -->
+        <if test="shDelNy != null and !shDelNy.equals('')">AND a.delNy = #{shDelNy}</if>
+				
+				<choose>
+					<when test="shOptionDate == 1">AND a.shopInstDate BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+					<when test="shOptionDate == 2">AND a.shopUpdtDate BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+				</choose>
+				
+        <choose>
+            <when test="shOption == 1">AND b.userId LIKE CONCAT('%',#{shValue},'%')</when>
+            <when test="shOption == 2">AND a.shopName LIKE CONCAT('%',#{shValue},'%')</when>
+            <when test="shOption == 3">AND a.shopAddress1 LIKE CONCAT('%',#{shValue},'%')</when>
+            <when test="shOption == 4">AND a.shopTel LIKE CONCAT('%',#{shValue},'%')</when>
+        </choose>
+        
+        <if test="shopSeqList != null and shopSeqList.size() > 0">
+        AND a.shopSeq IN 
+        <foreach collection="shopSeqList" item="seq" open="(" separator="," close=")">
+            #{seq}
+        </foreach>
+    </if>
+    </sql>
+	
+	
+	<select id="selectList" resultMap="resultMapObj">
+		SELECT 
+			a.shopSeq
+		    ,a.shopName
+		    ,a.shopTel
+		    ,a.shopEmail
+		    ,a.shopZip
+		    ,a.shopAddress1
+		    ,a.shopAddress2
+		    ,a.shopAddress3
+		    ,a.shopAddress4
+		    ,a.shopLatitude
+		    ,a.shopLongitude
+		    ,a.shopDescribe
+		    ,a.parkingNy
+		    ,a.wifiNy
+		    ,a.cctvNy
+		    ,a.cafeNy
+		    ,a.petNy
+		    ,a.customerFavoriteNy
+		    ,a.mondayNy
+		    ,a.tuesdayNy
+		    ,a.wednesdayNy
+		    ,a.thursdayNy
+		    ,a.fridayNy
+		    ,a.saturdayNy
+		    ,a.sundayNy
+		    ,a.mondayOpentime
+		    ,a.mondayClosetime
+		    ,a.tuesdayOpentime
+		    ,a.tuesdayClosetime
+		    ,a.wednesdayOpentime
+		    ,a.wednesdayClosetime
+		    ,a.thursdayOpentime
+		    ,a.thurdayClosetime
+		    ,a.fridayOpentime
+		    ,a.fridayClosetime
+		    ,a.saturdayOpentime
+		    ,a.saturdayClosetime
+		    ,a.sundayOpentime
+		    ,a.sundayClosetime
+		    ,a.verifiedNy
+		    ,a.featuredNy
+		    ,a.delNy
+		    ,a.homepage
+		    ,a.youtube
+		    ,a.shopInstDate
+		    ,a.shopUpdtDate
+		    ,a.userCustomer_seq
+		    ,b.seq
+		    ,b.userId
+		    ,b.userName
+		<include refid = "selectCommon"></include>
+	</select>
+	
+	<select id="selectOneCount" resultType="Integer">
+    	select count(*) <include refid = "selectCommon"></include>
+    </select>
+	
+	<select id="selectOne" resultMap="resultMapObj">
+		SELECT 
+			a.shopSeq
+		    ,a.shopName
+		    ,a.shopTel
+		    ,a.shopEmail
+		    ,a.shopZip
+		    ,a.shopAddress1
+		    ,a.shopAddress2
+		    ,a.shopAddress3
+		    ,a.shopAddress4
+		    ,a.shopLatitude
+		    ,a.shopLongitude
+		    ,a.shopDescribe
+		    ,a.parkingNy
+		    ,a.wifiNy
+		    ,a.cctvNy
+		    ,a.cafeNy
+		    ,a.petNy
+		    ,a.customerFavoriteNy
+		    ,a.verifiedNy
+		    ,a.featuredNy
+		    ,a.delNy
+		    ,a.homepage
+		    ,a.youtube
+		    ,a.shopInstDate
+		    ,a.shopUpdtDate
+		    ,a.userCustomer_seq
+		    ,b.seq
+		    ,b.userId
+		    ,b.userName
+		    ,(select path from filesUploaded where pSeq = shopSeq and sort = 3001) as path1
+		    ,(select path from filesUploaded where pSeq = shopSeq and sort = 3002) as path2
+		    ,(select path from filesUploaded where pSeq = shopSeq and sort = 3003) as path3
+		<include refid = "selectCommon"></include>
+		AND shopSeq = #{shopSeq}
+	</select>
+	
+	<select id="select4ASFilter" resultMap="resultMapObj">
+		select distinct
+			s.shop_shopSeq
+			,a.shopSeq
+		    ,a.userCustomer_seq
+		from shop as a
+		left join availableService as s on s.shop_shopSeq = a.shopSeq
+		left join handlingBicycleBrand as hb on a.shopSeq = hb.shop_shopSeq
+		left join handlingWheelBrand as hw on a.shopSeq = hw.shop_shopSeq
+		where 1=1
+			<if test="bikeBrandCd != null and !bikeBrandCd.equals('')">and bikeBrandCd = #{bikeBrandCd}</if>
+			<if test="wheelBrandCd != null and !wheelBrandCd.equals('')">and wheelBrandCd = #{wheelBrandCd}</if>
+			<if test="parkingNy == 1">and parkingNy is not null</if>
+			<if test="wifiNy == 1">and wifiNy is not null</if>
+			<if test="cctvNy == 1">and cctvNy is not null</if>
+			<if test="cafeNy == 1">and cafeNy is not null</if>
+			<if test="petNy == 1">and petNy is not null</if>
+	        <if test="availableServiceCd != null and !availableServiceCd.equals('')">and availableServiceCd in 
+			<foreach item="availableServiceCd" collection="availableServiceCd" open="(" separator="," close=")">
+		    	#{availableServiceCd}
+		    </foreach>
+		    GROUP BY
+		    s.shop_shopSeq
+			,a.shopSeq
+		    ,a.userCustomer_seq
+			HAVING COUNT(DISTINCT s.availableServiceCd) = ${availableServiceCd.size}</if>
+	</select>
+	
+	<select id="selectList4Marker" resultMap="resultMapObj">
+		SELECT 
+			a.shopSeq
+		    ,a.shopName
+		    ,a.shopTel
+		    ,a.shopZip
+		    ,a.shopAddress1
+		    ,a.shopAddress2
+		    ,a.shopAddress3
+		    ,a.shopAddress4
+		    ,a.shopLatitude
+		    ,a.shopLongitude
+		    ,a.delNy
+		    ,a.userCustomer_seq
+		    ,b.seq
+		    ,(select path from filesUploaded where pSeq = shopSeq and sort = 3001) as path
+		<include refid = "selectCommon"></include>
+	</select>
+	
+	<select id="selectOneList4Pic" resultMap="resultMapObj">
+		SELECT
+			path
+			,pSeq
+		FROM filesUploaded
+		WHERE 1=1
+		AND type = 3000
+		order by sort asc
+	</select>	
+	
+	<select id="selectOne4Pic" resultMap="resultMapObj">
+		SELECT 
+			a.shopSeq
+		    ,a.youtube
+		    ,a.userCustomer_seq
+		    ,b.seq
+		    ,b.userId
+		    ,b.userName
+		FROM shop as a
+		left join usercustomer b on a.userCustomer_seq = b.seq
+		WHERE 1=1
+		AND a.userCustomer_seq = #{userCustomer_seq}
+	</select>
+	<select id="selectOne4Hour" resultMap="resultMapObj">
+		SELECT 
+			a.shopSeq
+		    ,a.mondayNy
+		    ,a.tuesdayNy
+		    ,a.wednesdayNy
+		    ,a.thursdayNy
+		    ,a.fridayNy
+		    ,a.saturdayNy
+		    ,a.sundayNy
+		    ,a.mondayOpentime
+		    ,a.mondayClosetime
+		    ,a.tuesdayOpentime
+		    ,a.tuesdayClosetime
+		    ,a.wednesdayOpentime
+		    ,a.wednesdayClosetime
+		    ,a.thursdayOpentime
+		    ,a.thurdayClosetime
+		    ,a.fridayOpentime
+		    ,a.fridayClosetime
+		    ,a.saturdayOpentime
+		    ,a.saturdayClosetime
+		    ,a.sundayOpentime
+		    ,a.sundayClosetime
+		    ,a.userCustomer_seq
+		    ,b.seq
+		    ,b.userId
+		    ,b.userName
+		FROM shop as a
+		left join usercustomer b on a.userCustomer_seq = b.seq
+		WHERE 1=1
+		AND a.userCustomer_seq = #{userCustomer_seq}
+	</select>
+	<select id="selectOne4ShopProfile" resultMap="resultMapObj">
+		SELECT 
+			a.shopSeq
+		    ,a.shopDescribe
+		    ,a.homepage
+		    ,a.userCustomer_seq
+		    ,b.seq
+		    ,b.userId
+		    ,b.userName
+		    ,(select path from filesUploaded where pSeq = shopSeq and type = 2000) as path
+		FROM shop as a
+		left join usercustomer b on a.userCustomer_seq = b.seq
+		WHERE 1=1
+		AND a.userCustomer_seq = #{userCustomer_seq}
+	</select>
+	<select id="selectOne4ShopLocation" resultMap="resultMapObj">
+	SELECT 
+			a.shopSeq
+		    ,a.shopName
+		    ,a.shopTel
+		    ,a.shopEmail
+		    ,a.shopZip
+		    ,a.shopAddress1
+		    ,a.shopAddress2
+		    ,a.shopAddress3
+		    ,a.shopAddress4
+		    ,a.shopLatitude
+		    ,a.shopLongitude
+		    ,a.shopInstDate
+		    ,a.shopUpdtDate
+		    ,a.userCustomer_seq
+		    ,b.seq
+		    ,b.userId
+		    ,b.userName
+		FROM shop as a
+		left join usercustomer b on a.userCustomer_seq = b.seq
+		WHERE 1=1
+		AND a.userCustomer_seq = #{userCustomer_seq}
+	</select>
+	<select id="selectOne4ShopService" resultMap="resultMapObj">
+	SELECT 
+			a.shopSeq
+		    ,a.shopName
+		    ,a.shopTel
+		    ,a.shopEmail
+		    ,a.shopZip
+		    ,a.shopAddress1
+		    ,a.shopAddress2
+		    ,a.shopAddress3
+		    ,a.shopAddress4
+		    ,a.shopLatitude
+		    ,a.shopLongitude
+		    ,a.shopDescribe
+		    ,a.parkingNy
+		    ,a.wifiNy
+		    ,a.cctvNy
+		    ,a.cafeNy
+		    ,a.petNy
+		    ,a.shopInstDate
+		    ,a.shopUpdtDate
+		    ,a.userCustomer_seq
+		    ,b.seq
+		    ,b.userId
+		    ,b.userName
+		    ,b.userShopSeq
+		FROM shop as a
+		left join usercustomer b on a.userCustomer_seq = b.seq
+		WHERE 1=1
+		AND a.userCustomer_seq = (SELECT 
+		    a.userCustomer_seq
+		FROM usercustomer as b
+		left join shop a on a.userCustomer_seq = b.seq
+		WHERE 1=1
+		AND b.seq = #{seq})
+	</select>
+	
+	<select id="selectShopService" resultMap="resultMapObjas">
+		SELECT
+			availableServiceCd
+			,shop_shopSeq
+		FROM availableService
+		WHERE 1=1
+		AND shop_shopSeq = #{shopSeq}
+	</select>
+	
+	<select id="selectShopServiceCd" resultMap="resultMapObjas">
+		select distinct
+			cdSeq
+		    ,cdName
+		    ,cdNameEng
+		from code as cd
+		left join availableService as se on cd.cdSeq = se.availableServiceCd
+		where 1=1
+		and reservation_rsrvSeq is NULL
+		and codegroup_cdgSeq = 8
+		and cdSeq in (select
+			cdSeq
+		from availableService as se
+		left join code as cd on cd.cdSeq = se.availableServiceCd
+		left join shop as s on s.shopSeq = se.shop_shopSeq
+		where 1=1
+		and s.userCustomer_seq = #{seq})
+	</select>
+	
+	<select id="selectShopBrand" resultMap="resultMapObjBb">
+		SELECT
+			bikeBrandCd
+			,shop_shopSeq
+		FROM handlingBicycleBrand
+		WHERE 1=1
+		AND shop_shopSeq = (SELECT 
+		    a.shopSeq
+		FROM usercustomer as b
+		left join shop a on a.userCustomer_seq = b.seq
+		WHERE 1=1
+		AND b.seq = #{seq})
+	</select>
+	
+	<select id="selectShopBrandCd" resultMap="resultMapObjBb">
+		select distinct
+			cdSeq
+		    ,cdName
+		    ,cdNameEng
+		from code as cd
+		left join handlingBicycleBrand as se on cd.cdSeq = se.bikeBrandCd
+		where 1=1
+		and codegroup_cdgSeq = 4
+		and cdSeq in (select
+			cdSeq
+		from handlingBicycleBrand as se
+		left join code as cd on cd.cdSeq = se.bikeBrandCd
+		left join shop as s on s.shopSeq = se.shop_shopSeq
+		where 1=1
+		and s.userCustomer_seq = #{seq})
+	</select>
+	
+	<select id="selectShopWBrand" resultMap="resultMapObjWb">
+		SELECT
+			wheelBrandCd
+			,shop_shopSeq
+		FROM handlingWheelBrand
+		WHERE 1=1
+		AND shop_shopSeq = (SELECT 
+		    a.shopSeq
+		FROM usercustomer as b
+		left join shop a on a.userCustomer_seq = b.seq
+		WHERE 1=1
+		AND b.seq = #{seq})
+	</select>
+	
+	<select id="selectShopWBrandCd" resultMap="resultMapObjWb">
+		select distinct
+			cdSeq
+		    ,cdName
+		    ,cdNameEng
+		from code as cd
+		left join handlingWheelBrand as se on cd.cdSeq = se.wheelBrandCd
+		where 1=1
+		and codegroup_cdgSeq = 6
+		and cdSeq in (select
+			cdSeq
+		from handlingWheelBrand as se
+		left join code as cd on cd.cdSeq = se.wheelBrandCd
+		left join shop as s on s.shopSeq = se.shop_shopSeq
+		where 1=1
+		and s.userCustomer_seq = #{seq})
+	</select>
+	
+	
+	<insert id="insert">
+		INSERT INTO shop (
+			shopName
+			,shopTel
+			,shopEmail
+			,shopZip
+			,shopAddress1
+			,shopAddress2
+			,shopAddress3
+			,shopAddress4
+			,shopLatitude
+			,shopLongitude
+			,shopDescribe
+			,parkingNy
+			,wifiNy
+			,cctvNy
+			,cafeNy
+			,petNy
+			,customerFavoriteNy
+			,mondayNy
+			,tuesdayNy
+			,wednesdayNy
+			,thursdayNy
+			,fridayNy
+			,saturdayNy
+			,sundayNy
+			,mondayOpentime
+			,mondayClosetime
+			,tuesdayOpentime
+			,tuesdayClosetime
+			,wednesdayOpentime
+			,wednesdayClosetime
+			,thursdayOpentime
+			,thurdayClosetime
+			,fridayOpentime
+			,fridayClosetime
+			,saturdayOpentime
+			,saturdayClosetime
+			,sundayOpentime
+			,sundayClosetime
+			,verifiedNy
+			,featuredNy
+			,delNy
+			,homepage
+			,youtube
+			,shopInstDate
+			,shopUpdtDate
+			,userCustomer_seq
+		) VALUES (
+			#{shopName}
+			,#{shopTel}
+			,#{shopEmail}
+			,#{shopZip}
+			,#{shopAddress1}
+			,#{shopAddress2}
+			,#{shopAddress3}
+			,#{shopAddress4}
+			,#{shopLatitude}
+			,#{shopLongitude}
+			,#{shopDescribe}
+			,#{parkingNy}
+			,#{wifiNy}
+			,#{cctvNy}
+			,#{cafeNy}
+			,#{petNy}
+			,#{customerFavoriteNy}
+			,#{mondayNy}
+			,#{tuesdayNy}
+			,#{wednesdayNy}
+			,#{thursdayNy}
+			,#{fridayNy}
+			,#{saturdayNy}
+			,#{sundayNy}
+			,#{mondayOpentime}
+			,#{mondayClosetime}
+			,#{tuesdayOpentime}
+			,#{tuesdayClosetime}
+			,#{wednesdayOpentime}
+			,#{wednesdayClosetime}
+			,#{thursdayOpentime}
+			,#{thurdayClosetime}
+			,#{fridayOpentime}
+			,#{fridayClosetime}
+			,#{saturdayOpentime}
+			,#{saturdayClosetime}
+			,#{sundayOpentime}
+			,#{sundayClosetime}
+			,#{verifiedNy}
+			,#{featuredNy}
+			,#{delNy}
+			,#{homepage}
+			,#{youtube}
+			,#{shopInstDate}
+			,#{shopUpdtDate}
+			,#{seq}
+		)
+		<selectKey resultType="String" keyProperty="shopSeq" order="AFTER">
+			SELECT last_insert_id()
+		</selectKey>
+	</insert>
+	<delete id="deleteByShopSeq">
+	    DELETE FROM availableService
+	    WHERE shop_shopSeq = (select userShopSeq from usercustomer where seq = #{seq})
+	</delete>
+	<insert id="insertAvailableServices">
+		INSERT INTO availableService (
+			availableServiceCd
+			,shop_shopSeq
+		) VALUES 
+		<foreach collection="listAS" item="dto" separator=",">
+	        (#{dto.availableServiceCd}
+			,#{dto.shopSeq})
+	    </foreach>
+	</insert>
+	<delete id="deleteSBByShopSeq">
+	    DELETE FROM handlingBicycleBrand
+	    WHERE shop_shopSeq = (select userShopSeq from usercustomer where seq = #{seq})
+	</delete>
+	<insert id="insertHandlingBicycleBrands">
+		INSERT INTO handlingBicycleBrand (
+			bikeBrandCd
+			,shop_shopSeq
+		) VALUES 
+		<foreach collection="listBB" item="dto" separator=",">
+	        (#{dto.bikeBrandCd}
+			,#{dto.shopSeq})
+	    </foreach>
+	</insert>
+	
+	<delete id="deleteWBByShopSeq">
+	    DELETE FROM handlingWheelBrand
+	    WHERE shop_shopSeq = (select userShopSeq from usercustomer where seq = #{seq})
+	</delete>
+	<insert id="insertHandlingWheelBrands">
+		INSERT INTO handlingWheelBrand (
+			wheelBrandCd
+			,shop_shopSeq
+		) VALUES 
+		<foreach collection="listWB" item="dto" separator=",">
+	        (#{dto.wheelBrandCd}
+			,#{dto.shopSeq})
+	    </foreach>
+	</insert>
+	
+	<update id="0update">
+		UPDATE shop SET
+			shopName = #{shopName}
+			,shopTel = #{shopTel}
+			,shopEmail = #{shopEmail}
+			,shopZip = #{shopZip}
+			,shopAddress1 = #{shopAddress1}
+			,shopAddress2 = #{shopAddress2}
+			,shopAddress3 = #{shopAddress3}
+			,shopAddress4 = #{shopAddress4}
+			,shopLatitude = #{shopLatitude}
+			,shopLongitude = #{shopLongitude}
+			,shopDescribe = #{shopDescribe}
+			,parkingNy = #{parkingNy}
+			,wifiNy = #{wifiNy}
+			,cctvNy = #{cctvNy}
+			,cafeNy = #{cafeNy}
+			,petNy = #{petNy}
+			,customerFavoriteNy = #{customerFavoriteNy}
+			,mondayNy = #{mondayNy}
+			,tuesdayNy = #{tuesdayNy}
+			,wednesdayNy = #{wednesdayNy}
+			,thursdayNy = #{thursdayNy}
+			,fridayNy = #{fridayNy}
+			,saturdayNy = #{saturdayNy}
+			,sundayNy = #{sundayNy}
+			,mondayOpentime = #{mondayOpentime}
+			,mondayClosetime = #{mondayClosetime}
+			,tuesdayOpentime = #{tuesdayOpentime}
+			,tuesdayClosetime = #{tuesdayClosetime}
+			,wednesdayOpentime = #{wednesdayOpentime}
+			,wednesdayClosetime = #{wednesdayClosetime}
+			,thursdayOpentime = #{thursdayOpentime}
+			,thurdayClosetime = #{thurdayClosetime}
+			,fridayOpentime = #{fridayOpentime}
+			,fridayClosetime = #{fridayClosetime}
+			,saturdayOpentime = #{saturdayOpentime}
+			,saturdayClosetime = #{saturdayClosetime}
+			,sundayOpentime = #{sundayOpentime}
+			,sundayClosetime = #{sundayClosetime}
+			,verifiedNy = #{verifiedNy}
+			,featuredNy = #{featuredNy}
+			,delNy = #{delNy}
+			,homepage = #{homepage}
+			,youtube = #{youtube}
+			,shopInstDate = #{shopInstDate}
+			,shopUpdtDate = #{shopUpdtDate}
+			,userCustomer_seq = #{seq}
+		WHERE 1=1
+		AND shopSeq = #{shopSeq}
+	</update>
+	
+	<update id="update">
+		UPDATE shop SET
+			shopName = #{shopName}
+			,shopTel = #{shopTel}
+			,shopZip = #{shopZip}
+			,shopAddress1 = #{shopAddress1}
+			,shopAddress2 = #{shopAddress2}
+			,shopAddress3 = #{shopAddress3}
+			,shopAddress4 = #{shopAddress4}
+			,shopLatitude = #{shopLatitude}
+			,shopLongitude = #{shopLongitude}
+			,userCustomer_seq = #{seq}
+		WHERE 1=1
+		AND shopSeq = #{shopSeq}
+	</update>
+	
+	<update id="update1">
+		UPDATE shop SET
+			parkingNy = #{parkingNy}
+			,wifiNy = #{wifiNy}
+			,cctvNy = #{cctvNy}
+			,cafeNy = #{cafeNy}
+			,petNy = #{petNy}
+		WHERE 1=1
+		AND shopSeq = #{shopSeq}
+	</update>
+	
+	<update id="update2">
+		UPDATE shop SET
+			shopDescribe = #{shopDescribe}
+			,homepage = #{homepage}
+		WHERE 1=1
+		AND shopSeq = #{shopSeq}
+	</update>
+	
+	<update id="update3">
+		UPDATE shop SET
+			mondayNy = #{mondayNy}
+			,tuesdayNy = #{tuesdayNy}
+			,wednesdayNy = #{wednesdayNy}
+			,thursdayNy = #{thursdayNy}
+			,fridayNy = #{fridayNy}
+			,saturdayNy = #{saturdayNy}
+			,sundayNy = #{sundayNy}
+			,mondayOpentime = #{mondayOpentime}
+			,mondayClosetime = #{mondayClosetime}
+			,tuesdayOpentime = #{tuesdayOpentime}
+			,tuesdayClosetime = #{tuesdayClosetime}
+			,wednesdayOpentime = #{wednesdayOpentime}
+			,wednesdayClosetime = #{wednesdayClosetime}
+			,thursdayOpentime = #{thursdayOpentime}
+			,thurdayClosetime = #{thurdayClosetime}
+			,fridayOpentime = #{fridayOpentime}
+			,fridayClosetime = #{fridayClosetime}
+			,saturdayOpentime = #{saturdayOpentime}
+			,saturdayClosetime = #{saturdayClosetime}
+			,sundayOpentime = #{sundayOpentime}
+			,sundayClosetime = #{sundayClosetime}
+		WHERE 1=1
+		AND shopSeq = #{shopSeq}
+	</update>
+	
+	<update id="update4">
+		UPDATE shop SET
+			youtube = #{youtube}
+		WHERE 1=1
+		AND shopSeq = #{shopSeq}
+	</update>
+	
+	<insert id="insertUploaded" parameterType="list">
+		<include refid = "base.insertUploaded"></include>
+	</insert>
+	<insert id="insertUploadedes">
+		<include refid = "base.insertUploadedes"></include>
+	</insert>
+</mapper>

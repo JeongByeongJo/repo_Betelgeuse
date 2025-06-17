@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="LoginedFooter">
+
+
+    <!-- Page footer -->
+    <footer class="footer bg-body pt-5" data-bs-theme="dark">
+      <div class="container pt-sm-2 pt-md-3 pt-lg-4 pb-md-2">
+
+        <!-- Column with links that are turned into accordion on screens < 500px wide (sm breakpoint) + Subscription form -->
+        <div class="accordion row pb-4 pb-sm-5 mt-n3 mt-sm-0" id="footerLinks">
+          <div class="col-sm-4 col-md-2 col-xl-3">
+            <div class="accordion-item border-0">
+              <h6 class="accordion-header" id="forPatientsHeading">
+                <span class="d-none d-sm-block pb-1 mb-2">For Riders</span>
+                <button type="button" class="accordion-button collapsed py-3 d-sm-none" data-bs-toggle="collapse" data-bs-target="#forPatients" aria-expanded="false" aria-controls="forPatients">For patients</button>
+              </h6>
+              <div class="accordion-collapse collapse d-sm-block" id="forPatients" aria-labelledby="forPatientsHeading" data-bs-parent="#footerLinks">
+                <ul class="nav flex-column gap-2 pt-sm-1 pt-lg-2 pb-3 pb-sm-0 mt-n1 mb-1 mb-sm-0">
+                  <li class="pt-1">
+                    <a class="nav-link hover-effect-underline d-inline text-body fw-normal p-0" href="/bicycle/bicycleUsrForm">자전거 등록</a>
+                  </li>
+                  <li class="pt-1">
+                    <a class="nav-link hover-effect-underline d-inline text-body fw-normal p-0" href="/shop/shopUsrList">점검&정비 예약</a>
+                  </li>
+                  <li class="pt-1">
+                    <a class="nav-link hover-effect-underline d-inline text-body fw-normal p-0" href="/member/userBicycleUsrList">점검&정비 이력</a>
+                  </li>
+                  <li class="pt-1">
+                    <a class="nav-link hover-effect-underline d-inline text-body fw-normal p-0" href="/member/userInfosettingUsrForm">계정정보</a>
+                  </li>
+                </ul>
+              </div>
+              <hr class="d-sm-none my-0">
+            </div>
+          </div>
+          <div class="col-sm-4 col-md-3">
+            <div class="accordion-item border-0">
+              <h6 class="accordion-header" id="forProvidersHeading">
+                <span class="d-none d-sm-block pb-1 mb-2">For Shop Owner</span>
+                <button type="button" class="accordion-button collapsed py-3 d-sm-none" data-bs-toggle="collapse" data-bs-target="#forProviders" aria-expanded="false" aria-controls="forProviders">For providers</button>
+              </h6>
+              <div class="accordion-collapse collapse d-sm-block" id="forProviders" aria-labelledby="forProvidersHeading" data-bs-parent="#footerLinks">
+                <ul class="nav flex-column gap-2 pt-sm-1 pt-lg-2 pb-3 pb-sm-0 mt-n1 mb-1 mb-sm-0">
+                  <li class="pt-1" th:if="${session.sessCateUsr} == 4">
+                    <a class="nav-link hover-effect-underline d-inline text-body fw-normal p-0" href="/member/shopUsrServiceAdmin">Reservation</a>
+                  </li>
+                  <li class="pt-1">
+                    <a class="nav-link hover-effect-underline d-inline text-body fw-normal p-0" href = "javascript:void(0);" th:attr="onclick=|goFormH ('${itemH?.userCustomer_seq != null ? itemH.userCustomer_seq : 0}')|">Shop Settings</a>
+                  </li>
+                  <li class="pt-1">
+                    <a class="nav-link hover-effect-underline d-inline text-body fw-normal p-0" href="/member/shopUsrServiceAdmin">Customer Management</a>
+                  </li>
+                </ul>
+              </div>
+              <hr class="d-sm-none my-0">
+            </div>
+          </div>
+          <div class="col-sm-4 col-md-3">
+            <div class="accordion-item border-0">
+              <h6 class="accordion-header" id="ourCompanyHeading">
+                <span class="d-none d-sm-block pb-1 mb-2">Our company</span>
+                <button type="button" class="accordion-button collapsed py-3 d-sm-none" data-bs-toggle="collapse" data-bs-target="#ourCompany" aria-expanded="false" aria-controls="ourCompany">Our company</button>
+              </h6>
+              <div class="accordion-collapse collapse d-sm-block" id="ourCompany" aria-labelledby="ourCompanyHeading" data-bs-parent="#footerLinks">
+                <ul class="nav flex-column gap-2 pt-sm-1 pt-lg-2 pb-3 pb-sm-0 mt-n1 mb-1 mb-sm-0">
+                  <li class="pt-1">
+                    <a class="nav-link hover-effect-underline d-inline text-body fw-normal p-0" href="#!">Contact us</a>
+                  </li>
+                  <li class="pt-1">
+                    <a class="nav-link hover-effect-underline d-inline text-body fw-normal p-0" href="#!">About us</a>
+                  </li>
+                  <li class="pt-1">
+                    <a class="nav-link hover-effect-underline d-inline text-body fw-normal p-0" href="#!">Privacy preferences</a>
+                  </li>
+                </ul>
+              </div>
+              <hr class="d-sm-none my-0">
+            </div>
+          </div>
+
+          <!-- Subscription form -->
+          <div class="col-md-4 col-xl-3 pt-4 pt-sm-5 pt-md-0 mt-3 mt-sm-0">
+            <h6 class="pb-1 pb-lg-0 mb-lg-4">Subscribe to our newsletter</h6>
+            <form class="d-flex flex-column flex-sm-row flex-md-column gap-3 needs-validation" novalidate>
+              <div class="position-relative w-100">
+                <i class="fi-mail position-absolute top-50 start-0 translate-middle-y text-body ms-3"></i>
+                <input type="email" class="form-control form-icon-start text-start" placeholder="Your email" aria-label="Email input" required>
+              </div>
+              <button type="submit" class="btn btn-outline-dark px-4">Subscribe</button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Copyright + Social links -->
+        <div class="d-flex flex-column flex-sm-row align-items-center justify-content-between pb-4 pt-3 pt-sm-2 pt-md-3 pt-lg-4">
+          <div class="d-flex justify-content-center mb-3 mb-md-0 order-sm-2">
+            <a class="btn btn-icon fs-base btn-outline-secondary border-0" href="#!" data-bs-toggle="tooltip" data-bs-template='<div class="tooltip fs-xs mb-n2" role="tooltip"><div class="tooltip-inner bg-transparent text-white opacity-75 p-0"></div></div>' title="Instagram" aria-label="Follow us on Instagram">
+              <i class="fi-instagram"></i>
+            </a>
+            <a class="btn btn-icon fs-base btn-outline-secondary border-0" href="#!" data-bs-toggle="tooltip" data-bs-template='<div class="tooltip fs-xs mb-n2" role="tooltip"><div class="tooltip-inner bg-transparent text-white opacity-75 p-0"></div></div>' title="Facebook" aria-label="Follow us on Facebook">
+              <i class="fi-facebook"></i>
+            </a>
+            <a class="btn btn-icon fs-base btn-outline-secondary border-0" href="#!" data-bs-toggle="tooltip" data-bs-template='<div class="tooltip fs-xs mb-n2" role="tooltip"><div class="tooltip-inner bg-transparent text-white opacity-75 p-0"></div></div>' title="X (Twitter)" aria-label="Follow us on X (Twitter)">
+              <i class="fi-x"></i>
+            </a>
+          </div>
+          <p class="text-body-secondary fs-sm text-center mb-0 order-sm-1">&copy; All rights reserved. Made by <a class="text-body fw-medium text-decoration-none hover-effect-underline" href="https://createx.studio/" target="_blank" rel="noreferrer">JeongByeongJo</a></p>
+        </div>
+      </div>
+    </footer>
+
+
+    <!-- Back to top button -->
+    <div class="floating-buttons position-fixed top-50 end-0 z-sticky me-3 me-xl-4 pb-4">
+      <a class="btn-scroll-top btn btn-sm bg-body border-0 rounded-pill shadow animate-slide-end" href="#top">
+        Top
+        <i class="fi-arrow-right fs-base ms-1 me-n1 animate-target"></i>
+        <span class="position-absolute top-0 start-0 w-100 h-100 border rounded-pill z-0"></span>
+        <svg class="position-absolute top-0 start-0 w-100 h-100 z-1" viewBox="0 0 62 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x=".75" y=".75" width="60.5" height="30.5" rx="15.25" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"/>
+        </svg>
+      </a>
+    </div>
+
+	<script src="/xdm/template/NiceAdmin/assets/jquery/jquery-3.7.1.min.js"></script>
+	
+    <!-- Vendor scripts -->
+    <script src="/usr/template/Finder/assets/vendor/glightbox/dist/js/glightbox.min.js"></script>
+    <script src="/usr/template/Finder/assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="/usr/template/Finder/assets/vendor/cleave.js/dist/cleave.min.js"></script>
+    <script src="/usr/template/Finder/assets/vendor/choices.js/public/assets/scripts/choices.min.js"></script>
+    <script src="/usr/template/Finder/assets/vendor/flatpickr/dist/flatpickr.min.js"></script>
+
+    <!-- Bootstrap + Theme scripts -->
+    <script src="/usr/template/Finder/assets/js/theme.min.js"></script>
+    
+    <script type="text/javascript">
+    let formH = document.querySelector("form[name=formH]");
+	let seqH = document.querySelector("input[name=userCustomer_seq]");
+	
+	goFormH = function (keyValue) {
+	    seqH.value = keyValue;
+	    formH.action = "/shop/shopaddlocationUsrForm";
+	    formH.submit();
+	}
+    
+	$("#btnSignout").on("click", function(){
+		$.ajax({
+			async: true 
+			,cache: false
+			,type: "post"
+			,url: "/member/signoutUsrProc"
+			,data: {}
+			,success: function(response) {
+				if(response.rt == "success") {
+					location.href = "/index";
+// 					location.href = "/member/signinUsrForm";
+				} else {
+					// by pass
+				}
+			}
+			,error : function(jqXHR, textStatus, errorThrown){
+				alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+			}
+		});
+	});
+	$("#signout").on("click", function(){
+		$.ajax({
+			async: true 
+			,cache: false
+			,type: "post"
+			,url: "/member/signoutUsrProc"
+			,data: {}
+			,success: function(response) {
+				if(response.rt == "success") {
+					location.href = "/index";
+// 					location.href = "/member/signinUsrForm";
+				} else {
+					// by pass
+				}
+			}
+			,error : function(jqXHR, textStatus, errorThrown){
+				alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+			}
+		});
+	});
+	</script>
+</th:block>

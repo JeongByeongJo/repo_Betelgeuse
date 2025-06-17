@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{xdm/include/headNice :: headNice}"></div>
+
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">page 1</a></li>
+          <li class="breadcrumb-item">page 2</li>
+          <li class="breadcrumb-item active">Default</li>
+        </ol>
+      </nav>
+      <h1>리뷰관리</h1>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+      <div class="row">
+        
+        <div class="col-lg-12">
+          <div class="card" >
+            <div class="card-body">
+              <h1 class="card-title" style="height: 100px;" >기본정보</h1>
+
+              <!-- Custom Styled Validation -->
+              <form class="row g-3 needs-validation" action="/review/reviewXdmUele" method="post" id="form" novalidate>
+                <div class="col-md-3" style="height: 100px;">
+                <input type="hidden" name="revwSeq" th:value="${item?.revwSeq}">
+                  <label for="userId" class="form-label">작성자ID<sup>*</sup></label>
+                  <input type="text" class="form-control" id="userId" name="userId" th:value="${item?.userId}" required disabled>
+                </div>
+                <div class="col-md-3">
+                  <label for="userName" class="form-label">작성자이름</label>
+                  <input type="text" class="form-control" id="userName" name="userName" th:value="${item?.userName}" readonly>
+                </div>
+                <div class="col-md-3">
+                  <label for="revwDate" class="form-label">작성일</label>
+                  <input type="text" class="form-control" id="revwDate" name="revwDate" th:value="${item?.revwDate}" readonly disabled required>
+                </div>
+                <div class="col-md-3" style="height: 100px;">
+                  <label for="revwRate" class="form-label">별점<sup>*</sup></label>
+                  <input type="text" class="form-control" id="revwRate" name="revwRate" th:value="${item?.revwRate}" readonly required>
+                </div>
+                <div class="col-md-3">
+                  <label for="shopName" class="form-label">예약샵이름<sup>*</sup></label>
+                  <input type="text" class="form-control" id="shopName" name="shopName" th:value="${item?.shopName}" readonly>
+                </div>
+                <div class="col-md-3">
+                	<label for="revwDelNy" class="form-label">삭제</label>
+	                <select class="form-select" id="revwDelNy" name="revwDelNy" th:value="${item?.revwDelNy}">
+					<option value="0" th:selected="${item?.revwDelNy == 0}" th:text="N"></option>
+                    <option value="1" th:selected="${item?.revwDelNy == 1}" th:text="Y"></option>
+                  </select>
+                </div>
+                <div class="col-md-6" style="height: 150px;">
+                  <label for="revwReviews" class="form-label">리뷰글</label>
+                  <textarea class="form-control" id="revwReviews" name="revwReviews" th:text="${item?.revwReviews}"></textarea>
+                </div>
+                <div class="col-md-6">
+                  <a href="/review/reviewXdmList" class="btn btn-outline-dark"><i class="bi bi-blockquote-right"></i></a></div>
+                <div class="col-md-6">
+                  <div style="display: flex;justify-content: end;"><button type="button" class="btn btn-primary" id="btnsave"><i class="bi bi-server"></i></button></div>
+                </div>
+              </form><!-- End Custom Styled Validation -->
+
+            </div>
+          </div>
+
+          
+
+        </div>
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+  <div th:replace="~{xdm/include/footerNice :: footerNice}"></div>
+
+    <script type="text/javascript">
+    $.datetimepicker.setLocale('ko');
+	$(window).on("load", function () {
+		$(function(){
+			 $('#revwDate').datetimepicker({
+			  format:'Y-m-d'
+			  ,timepicker:false
+			 });
+		});
+    });
+    
+    document.getElementById("btnsave").onclick = function() {
+		document.getElementById("form").submit();
+	}
+    
+	</script>
+
+</body>
+
+</html>

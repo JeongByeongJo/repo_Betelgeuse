@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light" data-pwa="true" xmlns:th="http://www.thymeleaf.org">
+   <div th:replace="~{usr/include/LoginedHead :: LoginedHead}"></div>
+
+
+    <!-- Page content -->
+    <main class="content-wrapper"><form id="formList" name="formList" method="post">
+    <input type="hidden" name="bikeSeq"/>
+    <input type="hidden" name="rsrvSeq"/>
+      <div class="container pt-4 pt-sm-5 pb-5 mb-xxl-3">
+        <div class="row pt-2 pt-sm-0 pt-lg-2 pb-2 pb-sm-3 pb-md-4 pb-lg-5">
+
+
+          <!-- Sidebar navigation that turns into offcanvas on screens < 992px wide (lg breakpoint) -->
+          <aside class="col-lg-3" style="margin-top: -105px">
+            <div class="offcanvas-lg offcanvas-start sticky-lg-top pe-lg-3 pe-xl-4" id="accountSidebar">
+              <div class="d-none d-lg-block" style="height: 105px"></div>
+
+              <!-- Header -->
+              <div class="offcanvas-header d-lg-block py-3 p-lg-0">
+                <div class="d-flex flex-row flex-lg-column align-items-center align-items-lg-start">
+                  <div class="flex-shrink-0 bg-body-secondary border rounded-circle overflow-hidden" style="width: 64px; height: 64px">
+                    <img src="/usr/template/Finder/assets/img/account/avatar.jpg" alt="Avatar">
+                  </div>
+                  <div class="pt-lg-3 ps-3 ps-lg-0">
+                    <h6 class="mb-1">[[${session.sessNameUsr}]]</h6>
+                    <p class="fs-sm mb-0">[[${session.sessEmailUsr}]]</p>
+                  </div>
+                </div>
+                <button type="button" class="btn-close d-lg-none" data-bs-dismiss="offcanvas" data-bs-target="#accountSidebar" aria-label="Close"></button>
+              </div>
+
+              <!-- Body (Navigation) -->
+              <div class="offcanvas-body d-block pt-2 pt-lg-4 pb-lg-0">
+                <nav class="list-group list-group-borderless">
+                  <a class="list-group-item list-group-item-action d-flex align-items-center" href="/member/userBicycleUsrList">
+                    <i class="fi-bicycle fs-lg me-2"></i>
+                    내 자전거
+                  </a>
+                  <a class="list-group-item list-group-item-action d-flex align-items-center" href="/review/reviewUsrList">
+                    <i class="fi-star fs-base opacity-75 me-2"></i>
+                    내가 작성한 리뷰
+                  </a>
+                  <a class="list-group-item list-group-item-action d-flex align-items-center" href="/member/userInfosettingUsrForm">
+                    <i class="fi-settings fs-base opacity-75 me-2"></i>
+                    계정 설정
+                  </a>
+                  <a class="list-group-item list-group-item-action d-flex align-items-center active" th:if="${session.sessCateUsr} == 4" aria-current="page" href="/member/shopUsrServiceAdmin">
+                    <i class="fi-tool fs-base opacity-75 me-2"></i>
+                    예약, 점검정비 관리
+                  </a>
+                </nav>
+                <nav class="list-group list-group-borderless pt-3">
+                  <a class="list-group-item list-group-item-action d-flex align-items-center" id="signout" name="signout" href="javascript:void(0);">
+                    <i class="fi-log-out fs-base opacity-75 me-2"></i>
+                    로그아웃
+                  </a>
+                </nav>
+              </div>
+            </div>
+          </aside>
+
+
+          <!-- Account listings content -->
+          <div class="col-lg-9">
+            <h1 class="h2 pb-2 pb-lg-3">예약, 점검정비 관리</h1>
+
+            <!-- Nav pills -->
+            <div class="nav overflow-x-auto mb-2">
+              <ul class="nav nav-pills flex-nowrap gap-2 pb-2 mb-1" role="tablist">
+                <li class="nav-item me-1" role="presentation">
+                  <button type="button" class="nav-link text-nowrap active" id="published-tab" data-bs-toggle="pill" data-bs-target="#published" role="tab" aria-controls="published" aria-selected="true">
+                    예약신청 자전거 (<span th:text="${@reservationService.selectOneCountRsrvList(session.sessSeqUsr)}"></span>)
+                  </button>
+                </li>
+                <li class="nav-item me-1" role="presentation">
+                  <button type="button" class="nav-link text-nowrap" id="drafts-tab" data-bs-toggle="pill" data-bs-target="#drafts" role="tab" aria-controls="drafts" aria-selected="false">
+                    점검&정비 자전거 (<span th:text="${@reservationService.selectOneCountInRList(session.sessSeqUsr != null ? session.sessSeqUsr : 0)}"></span>)
+                  </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                  <button type="button" class="nav-link text-nowrap" id="archived-tab" data-bs-toggle="pill" data-bs-target="#archived" role="tab" aria-controls="archived" aria-selected="false">
+                    점검&정비 보관소 (0)
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            <div class="tab-content">
+
+              <!-- Published tab -->
+              <div class="tab-pane fade show active" id="published" role="tabpanel" aria-labelledby="published-tab">
+
+                <!-- Master checkbox + Action buttons -->
+                <div class="nav align-items-center mb-4">
+                  <div class="nav-link fs-lg ps-0 pe-2 py-2 mt-n1 me-4" data-master-checkbox='{"container": "#publishedSelection", "label": "모두 선택하기", "labelChecked": "모두 해제하기", "showOnCheck": "#published-action-buttons"}'>
+                    <input type="checkbox" class="form-check-input" id="published-master" checked>
+                    <label for="published-master" class="form-check-label fw-normal mt-1 ms-2">모두 선택하기</label>
+                  </div>
+                  <div class="d-flex flex-wrap" id="published-action-buttons">
+                    <a class="nav-link position-relative text-danger px-0 py-2" href="#!">
+                      <i class="fi-trash fs-base me-1"></i>
+                      <span class="hover-effect-underline stretched-link d-none d-md-inline">삭제하기</span>
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Published listings -->
+                <div class="vstack gap-4" id="publishedSelection">
+
+                  <!-- Item -->
+                  <div class="d-sm-flex align-items-center" th:if="${#lists.isEmpty(list)}"><h4>예약신청중인 자전거가 없습니다.</h4></div>
+                  <div class="d-sm-flex align-items-center" th:if="${!#lists.isEmpty(list)}" th:each="list : ${list}">
+                  <input type="hidden" id="rsrvSeq" name="rsrvSeq" th:value="${list.rsrvSeq}"/>
+                    <div class="d-inline-flex position-relative z-2 pt-1 pb-2 ps-2 p-sm-0 ms-2 ms-sm-0 me-sm-2">
+                      <div class="form-check position-relative z-1 fs-lg m-0">
+                        <input type="checkbox" class="form-check-input" checked>
+                      </div>
+                      <span class="position-absolute top-0 start-0 w-100 h-100 bg-body border rounded d-sm-none"></span>
+                    </div>
+                    <article class="card w-100">
+                      <div class="row g-0">
+                        <div class="col-sm-4 col-md-3 rounded overflow-hidden pb-2 pb-sm-0 pe-sm-2">
+                          <a class="position-relative d-flex h-100 bg-body-tertiary" href="#!" style="min-height: 174px">
+                            <img src="/usr/template/Finder/assets/img/add-item/bd/IMG_4871.JPG" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" alt="Image">
+                            <div class="ratio d-none d-sm-block"  style="--fn-aspect-ratio: calc(180 / 240 * 100%)"></div>
+                            <div class="ratio ratio-16x9 d-sm-none"></div>
+                          </a>
+                        </div>
+                        <div class="col-sm-8 col-md-9 align-self-center">
+                          <div class="card-body d-flex justify-content-between p-3 py-sm-4 ps-sm-2 ps-md-3 pe-md-4 mt-n1 mt-sm-0">
+                            <div class="position-relative pe-3">
+                              <div class="h2 mb-2"><span th:text="${list.bicycleName}"></span></div>
+                              <div class="h5 mb-2"><span th:text="${@codeService.selectOneCachedCodeEng(list?.bicycleBrandCd)}"></span> <span th:text="${list?.bicycleModel}"></span></div>
+                              <div class="h6 fs-sm mb-0 opacity-75"><span th:text="${@codeService.selectOneCachedCodeEng(list.drivetrainBrandCd)}"></span> <span th:text="${list.drivetrainModel}"></span></div>
+                              <div class="h6 fs-sm mb-0 opacity-75"><span th:text="${@codeService.selectOneCachedCodeEng(list.wheelBrandCd)}"></span> <span th:text="${list.wheelModel}"></span></div>
+                            </div>
+                            <div class="text-end">
+                              <div class="fs-xs text-body-secondary mb-3">최근 점검&정비: <span th:text="${list.updtDate}"></span></div>
+                              <div class="d-flex justify-content-end gap-2 mb-3">                            
+                                <div class="dropdown">
+                                  <button type="button" class="btn btn-icon btn-outline-secondary" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Settings">
+                                    <i class="fi-settings fs-base"></i>
+                                  </button>
+                                  <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                      <a class="dropdown-item" th:id="viewReservation" href="javascript:void(0);" th:attr="onclick=|goAjax ('${list?.rsrvSeq}')|">
+                                        <i class="fi-edit opacity-75 me-2"></i>
+                                        예약내용보기
+                                      </a>
+                                    </li>
+<!--                                     <li> -->
+<!--                                       <a class="dropdown-item" th:id="viewHistory" href="#!"> -->
+<!--                                         <i class="fi-zap fs-base opacity-75 me-2"></i> -->
+<!--                                         점검이력보기 -->
+<!--                                       </a> -->
+<!--                                     </li> -->
+                                    <li>
+                                      <a class="dropdown-item" th:id="approveReservation" href="javascript:void(0);" th:attr="onclick=|goYeservation ('${list?.bikeSeq}')|">
+                                        <i class="fi-archive opacity-75 me-2"></i>
+                                        예약승인
+                                      </a>
+                                    </li>
+                                    <li>
+                                      <a class="dropdown-item text-danger" th:id="rejectReservation" href="javascript:void(0);" th:attr="onclick=|goNeservation ('${list?.bikeSeq}')|">
+                                        <i class="fi-trash opacity-75 me-2"></i>
+                                        예약반려
+                                      </a>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                              <ul class="list-unstyled flex-row flex-wrap fs-sm mb-0">
+                                <li class="d-flex align-items-center me-2 me-md-3">
+                                  <i class="fi-eye fs-base me-1"></i>
+                                  고객명 :&ensp; <span th:text="${list?.userName}"></span>
+                                </li>
+                                <!-- <li class="d-flex align-items-center me-2 me-md-3">
+                                  <i class="fi-heart fs-base me-1"></i>
+                                  최근 점검일
+                                </li> -->
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </article>
+                  </div>
+
+                  <!-- Item -->
+                </div>
+              </div>
+
+
+              <!-- Drafts tab -->
+              <div class="tab-pane fade" id="drafts" role="tabpanel" aria-labelledby="drafts-tab">
+
+                <!-- Master checkbox + Action buttons -->
+                <div class="nav align-items-center mb-4">
+                  <div class="nav-link fs-lg ps-0 pe-2 py-2 mt-n1 me-4" data-master-checkbox='{"container": "#draftsSelection", "label": "Select all the ads to apply the same action to them", "labelChecked": "Unselect all", "showOnCheck": "#drafts-action-buttons"}'>
+                    <input type="checkbox" class="form-check-input" id="drafts-master">
+                    <label for="drafts-master" class="form-check-label fw-normal mt-1 ms-2">Select all the ads to apply the same action to them</label>
+                  </div>
+                  <div class="d-flex flex-wrap d-none" id="drafts-action-buttons">
+                    <a class="nav-link position-relative px-0 pe-sm-2 py-2 me-4" href="#!">
+                      <i class="fi-zap fs-base me-2"></i>
+                      <span class="hover-effect-underline stretched-link d-none d-md-inline">Promote</span>
+                    </a>
+                    <a class="nav-link position-relative px-0 pe-sm-2 py-2 me-4" href="#!">
+                      <i class="fi-archive fs-base me-2"></i>
+                      <span class="hover-effect-underline stretched-link d-none d-md-inline">Move to archive</span>
+                    </a>
+                    <a class="nav-link position-relative text-danger px-0 py-2" href="#!">
+                      <i class="fi-trash fs-base me-1"></i>
+                      <span class="hover-effect-underline stretched-link d-none d-md-inline">Delete</span>
+                    </a>
+                  </div>
+                </div>
+
+                <!-- Drafts listings -->
+                <div class="vstack gap-4" id="draftsSelection">
+				<div class="d-sm-flex align-items-center" th:if="${#lists.isEmpty(listR)}"><h4> 예약 또는 점검,정비 중인 자전거가 없습니다.</h4></div>
+				<div class="d-sm-flex align-items-center" th:if="${!#lists.isEmpty(listR)}" th:each="listR : ${listR}">
+					<input type="hidden" id="shopSeq" name="shopSeq" />
+	                    <div class="d-inline-flex position-relative z-2 pt-1 pb-2 ps-2 p-sm-0 ms-2 ms-sm-0 me-sm-2">
+	                      <div class="form-check position-relative z-1 fs-lg m-0">
+	                        <input type="checkbox" class="form-check-input" checked>
+	                      </div>
+	                      <span class="position-absolute top-0 start-0 w-100 h-100 bg-body border rounded d-sm-none"></span>
+	                    </div>
+	                    <article class="card w-100">
+	                      <div class="row g-0">
+	                        <div class="col-sm-4 col-md-3 rounded overflow-hidden pb-2 pb-sm-0 pe-sm-2">
+	                          <a class="position-relative d-flex h-100 bg-body-tertiary" href="#!" style="min-height: 174px">
+	                            <img src="/usr/template/Finder/assets/img/add-item/bd/IMG_4871.JPG" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" alt="Image">
+	                            <div class="ratio d-none d-sm-block"  style="--fn-aspect-ratio: calc(180 / 240 * 100%)"></div>
+	                            <div class="ratio ratio-16x9 d-sm-none"></div>
+	                          </a>
+	                        </div>
+	                        <div class="col-sm-8 col-md-9 align-self-center">
+	                          <div class="card-body d-flex justify-content-between p-3 py-sm-4 ps-sm-2 ps-md-3 pe-md-4 mt-n1 mt-sm-0">
+	                            <div class="position-relative pe-3">
+	                              <div class="h2 mb-2"><span th:text="${listR.bicycleName}"></span></div>
+	                              <div class="h5 mb-2"><span th:text="${@codeService.selectOneCachedCodeEng(listR?.bicycleBrandCd)}"></span> <span th:text="${listR?.bicycleModel}"></span></div>
+	                              <div class="h6 fs-sm mb-0 opacity-75"><span th:text="${@codeService.selectOneCachedCodeEng(listR.drivetrainBrandCd)}"></span> <span th:text="${listR.drivetrainModel}"></span></div>
+	                              <div class="h6 fs-sm mb-0 opacity-75"><span th:text="${@codeService.selectOneCachedCodeEng(listR.wheelBrandCd)}"></span> <span th:text="${listR.wheelModel}"></span></div>
+	                            </div>
+	                            <div class="text-end">
+	                              <div class="fs-xs text-body-secondary mb-3">최근 점검&정비: <span th:text="${listR.updtDate}"></span></div>
+	                              <div class="d-flex justify-content-end gap-2 mb-3">                            
+	                                <div class="dropdown">
+	                                  <button type="button" class="btn btn-icon btn-outline-secondary" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Settings">
+	                                    <i class="fi-settings fs-base"></i>
+	                                  </button>
+	                                  <ul class="dropdown-menu dropdown-menu-end">
+	                                    <li>
+	                                      <a class="dropdown-item" th:attr="onclick=|goInR('${listR.rsrvSeq}')|">
+	                                        <i class="fi-edit opacity-75 me-2"></i>
+	                                        점검,정비 입력
+	                                      </a>
+	                                    </li>
+	                                    <li>
+	                                      <a class="dropdown-item" th:attr="onclick=|goInRMfom('${listR.rsrvSeq}')|">
+	                                        <i class="fi-zap fs-base opacity-75 me-2"></i>
+	                                        점검,정비내역 수정
+	                                      </a>
+	                                    </li>
+	                                    <li>
+	                                      <a class="dropdown-item text-danger" href="#!">
+	                                        <i class="fi-archive opacity-75 me-2"></i>
+	                                        점검정비완료
+	                                      </a>
+	                                    </li>
+	                                  </ul>
+	                                </div>
+	                              </div>
+	                              <ul class="list-unstyled flex-row flex-wrap fs-sm mb-0">
+	                                <li class="d-flex align-items-center me-2 me-md-3">
+	                                  <i class="fi-eye fs-base me-1"></i>
+	                                  고객명 :&ensp;  <span th:text="${listR?.userName}"></span>
+	                                </li>
+	                                <!-- <li class="d-flex align-items-center me-2 me-md-3">
+	                                  <i class="fi-heart fs-base me-1"></i>
+	                                  최근 점검일
+	                                </li> -->
+	                              </ul>
+	                            </div>
+	                          </div>
+	                        </div>
+	                      </div>
+	                    </article>
+	                  </div>
+                  <!-- Item -->
+                </div>
+              </div>
+
+
+              <!-- Archived tab -->
+              <div class="tab-pane fade" id="archived" role="tabpanel" aria-labelledby="archived-tab">
+                <h2 class="h6 pt-2 mb-2">점검&정비중인 자전거가 없습니다.</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div></form>
+    </main>
+
+<!-- Basic modal markup -->
+<div class="modal fade" th:id="reservationDetails" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-sm" role="document">
+    <div class="modal-content" id="modalContent">
+    <div th:fragment="modalContent">
+      <div class="modal-header">
+        <h5 class="modal-title">예약상세내역</h5>
+        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>예약 상세내역입니다. 예약반려시 사유를 연락처로 남겨주세요.</p>
+        <div class="row">
+        	<div class="col-3">예약자명</div>
+        	<div class="col-9" th:text="${view?.userName}"></div>
+        </div>
+        <div class="row">
+        	<div class="col-3">연락처</div>
+        	<div class="col-9" th:text="${view?.userTel}"></div>
+        </div>
+        <div class="row">
+        	<div class="col-3">자전거브랜드</div>
+        	<div class="col-9" th:text="${@codeService.selectOneCachedCode(view?.bicycleBrandCd != null ? view.bicycleBrandCd : 0)}"></div>
+        </div>
+        <div class="row">
+        	<div class="col-3">자전거모델명</div>
+        	<div class="col-9" th:text="${view?.bicycleModel}"></div>
+        </div>
+        <div class="row">
+        	<div class="col-3">구동계</div>
+        	<div class="col-9"><span th:text="${@codeService.selectOneCachedCode(view?.drivetrainBrandCd!=null?view.drivetrainBrandCd:0)}"></span> , <span th:text="${view?.drivetrainModel}"></span></div>
+        </div>
+        <div class="row">
+        	<div class="col-3">휠셋</div>
+        	<div class="col-9"><span th:text="${@codeService.selectOneCachedCode(view?.wheelBrandCd!=null?view.wheelBrandCd:0)}"></span> , <span th:text="${view?.wheelModel}"></span></div>
+        </div>
+        <div class="row">
+        	<div class="col-3">요청서비스</div>
+        	<div class="col-9"> 
+				<span th:each="service, iterStat : ${serviceList}">
+				<span th:text="${@codeService.selectOneCachedCode(service?.reservServicesCd != null ? service?.reservServicesCd : 0)}"></span>
+				<span th:if="${!iterStat.last}">
+			      <span th:if="${iterStat.index + 1 == serviceList.size() - 1}"> 및 </span>
+			      <span th:if="${iterStat.index + 1 < serviceList.size() - 1}">, </span>
+			    </span>
+				</span>        	
+			</div>
+        </div>
+        <div class="row">
+        	<div class="col-3">요청세부사항</div>
+        	<div class="col-9" th:text="${view?.rsrvDesc}"></div>
+        </div>
+      </div>
+      <div class="modal-footer flex-column flex-sm-row align-items-stretch">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+    <div th:replace="~{usr/include/LoginedFooter :: LoginedFooter}"></div>
+<script type="text/javascript">
+goAjax = function (keyValue) {
+	$.ajax({
+		async: true 
+		,cache: false
+		,type: "post"
+		,url: "/shop/resrvUsrViewProc"
+		,data: {"rsrvSeq" : keyValue}
+		,success: function(fragmentHtml) {
+            $("#modalContent").html(fragmentHtml);  // 모달 내용 삽입
+            $("#reservationDetails").modal("show");            // 모달 표시
+        }
+		,error : function(jqXHR, textStatus, errorThrown){
+			alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+		}
+	});
+}
+
+goYeservation = function (keyValue) {
+	$.ajax({
+		async: true 
+		,cache: false
+		,type: "post"
+		,url: "/shop/resrvUsrProc"
+		,data: {"bikeSeq" : keyValue, "bikeStatus" : 122}
+		,success: function() {
+			location.href="/member/shopUsrServiceAdmin";
+        }
+		,error : function(jqXHR, textStatus, errorThrown){
+			alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+		}
+	});
+}
+goNeservation = function (keyValue) {
+	$.ajax({
+		async: true 
+		,cache: false
+		,type: "post"
+		,url: "/shop/resrvUsrProc"
+		,data: {"bikeSeq" : keyValue, "bikeStatus" : 120}
+		,success: function() {
+			location.href="/member/shopUsrServiceAdmin";
+        }
+		,error : function(jqXHR, textStatus, errorThrown){
+			alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+		}
+	});
+}
+let form = document.querySelector("form[name=formList]");
+let seq = document.querySelector("input[name=rsrvSeq]");
+
+goInR = function (keyValue) {
+    seq.value = keyValue;
+    form.action = "/shop/InRUsrForm";
+    form.submit();
+}
+goInRMfom = function (keyValue) {
+    seq.value = keyValue;
+    form.action = "/shop/InRUsrMfom";
+    form.submit();
+}
+
+</script>
+</html>

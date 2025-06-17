@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="ko" data-bs-theme="light" data-pwa="true" xmlns:th="http://www.thymeleaf.org">
+  <div th:replace="~{usr/include/LoginedHead :: LoginedHead}"></div>
+
+    <!-- Page content -->
+    <main class="content-wrapper">
+      <div class="container pt-4 pb-5 mb-xxl-3">
+
+        <!-- Breadcrumb -->
+        <nav class="pb-2 pb-md-3" aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/index/home-logined">홈</a></li>
+            <li class="breadcrumb-item"><a href="/shop/shopUsrList">자전거 점검&정비 샵 리스트</a></li>
+            <li class="breadcrumb-item active" aria-current="page">섭바이크</li>
+          </ol>
+        </nav>
+
+        <!-- Image gallery -->
+        <div class="row g-3 g-lg-4">
+          <div class="col-md-8">
+            <a class="hover-effect-scale hover-effect-opacity position-relative d-flex rounded overflow-hidden" href="/usr/template/Finder/assets/img/listings/bd/1731905825460932.jpg" data-glightbox data-gallery="image-gallery">
+              <i class="fi-zoom-in hover-effect-target fs-3 text-white position-absolute top-50 start-50 translate-middle opacity-0 z-2"></i>
+              <span class="hover-effect-target position-absolute top-0 start-0 w-100 h-100 bg-black bg-opacity-25 opacity-0 z-1"></span>
+              <div class="ratio hover-effect-target bg-body-tertiary rounded" style="--fn-aspect-ratio: calc(450 / 856 * 100%)">
+                <img src="/usr/template/Finder/assets/img/listings/bd/1731905825460932.jpg" alt="Image">
+              </div>
+            </a>
+          </div>
+          <div class="col-md-4 vstack gap-3 gap-lg-4">
+            <a class="hover-effect-scale hover-effect-opacity position-relative d-flex rounded overflow-hidden" href="/usr/template/Finder/assets/img/listings/bd/1731905799997173.jpg" data-glightbox data-gallery="image-gallery">
+              <i class="fi-zoom-in hover-effect-target fs-3 text-white position-absolute top-50 start-50 translate-middle opacity-0 z-2"></i>
+              <span class="hover-effect-target position-absolute top-0 start-0 w-100 h-100 bg-black bg-opacity-25 opacity-0 z-1"></span>
+              <div class="ratio hover-effect-target bg-body-tertiary rounded" style="--fn-aspect-ratio: calc(213 / 416 * 100%)">
+                <img src="/usr/template/Finder/assets/img/listings/bd/1731905799997173.jpg" alt="Image">
+              </div>
+            </a>
+            <a class="hover-effect-scale hover-effect-opacity position-relative d-flex rounded overflow-hidden" href="/usr/template/Finder/assets/img/listings/bd/1731905809524829.jpg" data-glightbox data-gallery="image-gallery">
+              <i class="fi-zoom-in hover-effect-target fs-3 text-white position-absolute top-50 start-50 translate-middle opacity-0 z-2"></i>
+              <span class="hover-effect-target position-absolute top-0 start-0 w-100 h-100 bg-black bg-opacity-25 opacity-0 z-1"></span>
+              <div class="ratio hover-effect-target bg-body-tertiary rounded" style="--fn-aspect-ratio: calc(213 / 416 * 100%)">
+                <img src="/usr/template/Finder/assets/img/listings/bd/1731905809524829.jpg" alt="Image">
+              </div>              
+            </a>
+          </div>
+        </div>
+
+
+        <!-- Listing details -->
+        <div class="row pt-4 pb-2 pb-sm-3 pb-md-4 py-lg-5 mt-sm-2 mt-lg-0">
+
+          <!-- Content sections -->
+          <div class="col-lg-8 col-xl-7 pb-3 pb-sm-0 mb-4 mb-sm-5 mb-lg-0">
+
+            <!-- Badges + Sharing and wishlist buttons -->
+            <div class="d-flex align-items-center justify-content-between gap-4 mb-3">
+              <div class="d-flex gap-2">
+                <span class="badge text-bg-info d-inline-flex align-items-center">
+                  Verified
+                  <i class="fi-shield ms-1"></i>
+                </span>
+                <span class="badge text-bg-primary">New</span>
+              </div>
+              <div class="d-flex gap-2">
+                <div class="dropdown" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-sm" title="Share">
+                  <button type="button" class="btn btn-icon btn-secondary bg-transparent border-0 animate-scale" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="Share">
+                    <i class="fi-share-2 animate-target fs-base"></i>
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-end" style="--fn-dropdown-min-width: 9.5rem">
+                    <li>
+                      <a class="dropdown-item" href="#!">
+                        <i class="fi-facebook fs-base me-2"></i>
+                        Facebook
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#!">
+                        <i class="fi-instagram fs-base me-2"></i>
+                        Instagram
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        <i class="fi-linkedin fs-base me-2"></i>
+                        LinkedIn
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <button type="button" class="btn btn-icon btn-secondary bg-transparent border-0 animate-pulse" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-sm" title="Wishlist" aria-label="Wishlist">
+                  <i class="fi-heart animate-target fs-base"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Price + Address + Facilities -->
+            <div class="h3 pb-1 mb-2">섭바이크</div>
+            <p class="fs-sm pb-1 mb-2">서울 중랑구 용마산로136가길 2 1층</p>
+            <div class="d-flex gap-2 mb-4">
+              <div class="d-flex align-items-center fs-sm gap-1 me-2">
+                02-978-0719
+              </div>
+            </div>
+
+            <!-- Amenities -->
+            <h2 class="h5 pt-4 pt-sm-5 mt-3 mt-sm-0">편의시설</h2>
+            <div class="row row-cols-2 row-cols-sm-3 fs-sm gy-3">
+              <div class="col d-flex align-items-center">
+                <i class="fi-wifi fs-lg me-2"></i>
+                WiFi
+              </div>
+              <!-- <div class="col d-flex align-items-center">
+                <i class="fi-dishwasher fs-lg me-2"></i>
+                Dishwasher
+              </div> -->
+              <div class="col d-flex align-items-center">
+                <i class="fi-snowflake fs-lg me-2"></i>
+                Air conditioning
+              </div>
+              <div class="col d-flex align-items-center">
+                <i class="fi-parking fs-lg me-2"></i>
+                Parking place
+              </div>
+              <!-- <div class="col d-flex align-items-center">
+                <i class="fi-washing-machine fs-lg me-2"></i>
+                Laundry
+              </div> -->
+              <!-- <div class="col d-flex align-items-center">
+                <i class="fi-iron fs-lg me-2"></i>
+                Icon
+              </div> -->
+              <div class="col d-flex align-items-center">
+                <i class="fi-video fs-lg me-2"></i>
+                Security cameras
+              </div>
+              <div class="col d-flex align-items-center">
+                <i class="fi-no-smoking fs-lg me-2"></i>
+                No smocking
+              </div>
+              <div class="col d-flex align-items-center">
+                <i class="fi-paw fs-lg me-2"></i>
+                Pets allowed
+              </div>
+            </div>
+            
+            <!-- Location -->
+            <h2 class="h5 pt-4 pt-sm-5 mt-3 mt-sm-0">위치</h2>            
+
+            <!-- Google map -->
+            <iframe class="border rounded" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2311.3724100313693!2d-73.82417211551919!3d42.62335692577899!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89dde016efd1fe73%3A0x6861561b35064fe9!2sGlendale%20Ave!5e0!3m2!1sen!2suk!4v1726842151281!5m2!1sen!2suk" width="600" height="350" style="border: 0" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Map"></iframe>
+
+            <div class="position-relative p-4 mt-4" id="reviews" style="scroll-margin-top: 98px">
+              <div class="position-relative z-1 p-xl-2">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                  <h2 class="h4 mb-0">리 뷰</h2>
+                  <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#reviewForm">
+                    <i class="fi-edit-3 fs-base ms-n1 me-2"></i>
+                    리뷰 작성하기
+                  </button>
+                </div>
+
+                <!-- Rating breakdown -->
+                <div class="row g-4 pb-3 mb-3">
+                  <div class="col-sm-5 col-md-3 col-lg-4">
+                    <div class="vstack h-100 position-relative">
+                      <div class="d-flex flex-column align-items-center justify-content-center h-100 position-relative z-1 p-4">
+                        <div class="h1 pb-2 mb-1">4.5</div>
+                        <div class="hstack justify-content-center gap-1 fs-sm mb-2">
+                          <i class="fi-star-filled text-warning"></i>
+                          <i class="fi-star-filled text-warning"></i>
+                          <i class="fi-star-filled text-warning"></i>
+                          <i class="fi-star-filled text-warning"></i>
+                          <i class="fi-star-half text-warning"></i>
+                        </div>
+                        <div class="fs-sm">176 리뷰들</div>
+                      </div>
+                      <span class="position-absolute top-0 start-0 w-100 h-100 bg-body-tertiary rounded d-none-dark"></span>
+                      <span class="position-absolute top-0 start-0 w-100 h-100 bg-body-secondary rounded opacity-50 d-none d-block-dark"></span>
+                    </div>
+                  </div>
+                  <div class="col-sm-7 col-md-9 col-lg-8">
+                    <div class="vstack gap-3">
+                      <div class="hstack gap-2">
+                        <div class="hstack fs-sm gap-1">
+                          5<i class="fi-star-filled text-warning"></i>
+                        </div>
+                        <div class="progress w-100" role="progressbar" aria-label="Five stars" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100" style="height: 4px">
+                          <div class="progress-bar bg-warning rounded-pill" style="width: 65%"></div>
+                        </div>
+                        <div class="fs-sm text-nowrap text-end" style="width: 40px;">128</div>
+                      </div>
+                      <div class="hstack gap-2">
+                        <div class="hstack fs-sm gap-1">
+                          4<i class="fi-star-filled text-warning"></i>
+                        </div>
+                        <div class="progress w-100" role="progressbar" aria-label="Four stars" aria-valuenow="21" aria-valuemin="0" aria-valuemax="100" style="height: 4px">
+                          <div class="progress-bar bg-warning rounded-pill" style="width: 21%"></div>
+                        </div>
+                        <div class="fs-sm text-nowrap text-end" style="width: 40px;">27</div>
+                      </div>
+                      <div class="hstack gap-2">
+                        <div class="hstack fs-sm gap-1">
+                          3<i class="fi-star-filled text-warning"></i>
+                        </div>
+                        <div class="progress w-100" role="progressbar" aria-label="Three stars" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100" style="height: 4px">
+                          <div class="progress-bar bg-warning rounded-pill" style="width: 10%"></div>
+                        </div>
+                        <div class="fs-sm text-nowrap text-end" style="width: 40px;">13</div>
+                      </div>
+                      <div class="hstack gap-2">
+                        <div class="hstack fs-sm gap-1">
+                          2<i class="fi-star-filled text-warning"></i>
+                        </div>
+                        <div class="progress w-100" role="progressbar" aria-label="Two stars" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100" style="height: 4px">
+                          <div class="progress-bar bg-warning rounded-pill" style="width: 5%"></div>
+                        </div>
+                        <div class="fs-sm text-nowrap text-end" style="width: 40px;">6</div>
+                      </div>
+                      <div class="hstack gap-2">
+                        <div class="hstack fs-sm gap-1">
+                          1<i class="fi-star-filled text-warning"></i>
+                        </div>
+                        <div class="progress w-100" role="progressbar" aria-label="One star" aria-valuenow="2.6" aria-valuemin="0" aria-valuemax="100" style="height: 4px">
+                          <div class="progress-bar bg-warning rounded-pill" style="width: 2.6%"></div>
+                        </div>
+                        <div class="fs-sm text-nowrap text-end" style="width: 40px;">2</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Reviews -->
+                <div class="vstack gap-4">
+
+                  <!-- Rreview -->
+                  <div class="vstack gap-2 mb-sm-2">
+                    <div class="d-flex align-items-center gap-3 mb-1">
+                      <h6 class="mb-0">Randy W.</h6>
+                      <span class="fs-xs text-body-secondary">November 19, 2024</span>
+                    </div>
+                    <div class="d-flex gap-1 fs-sm mb-1">
+                      <i class="fi-star-filled text-warning"></i>
+                      <i class="fi-star-filled text-warning"></i>
+                      <i class="fi-star-filled text-warning"></i>
+                      <i class="fi-star-filled text-warning"></i>
+                      <i class="fi-star-filled text-warning"></i>
+                    </div>
+                    <p class="fs-sm mb-1">Dr. Michael Johnston is truly a life-saver. His expertise and attention to detail are unmatched. He took the time to explain everything clearly and made sure I felt comfortable every step of the way. Thanks to him, my heart health is now better than ever. I highly recommend him!</p>
+                    <div class="nav align-items-center">
+                      <button type="button" class="nav-link text-body-secondary animate-scale px-0 me-n1">
+                        <i class="fi-thumbs-up fs-base animate-target me-1"></i>
+                        6
+                      </button>
+                      <hr class="vr my-2 mx-3">
+                      <button type="button" class="nav-link text-body-secondary animate-scale px-0 ms-n1">
+                        <i class="fi-thumbs-down fs-base animate-target me-1"></i>
+                        0
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Rreview -->
+                  <div class="vstack gap-2 mb-sm-2">
+                    <div class="d-flex align-items-center gap-3 mb-1">
+                      <h6 class="mb-0">Lora Palmer</h6>
+                      <span class="fs-xs text-body-secondary">November 10, 2024</span>
+                    </div>
+                    <div class="d-flex gap-1 fs-sm mb-1">
+                      <i class="fi-star-filled text-warning"></i>
+                      <i class="fi-star-filled text-warning"></i>
+                      <i class="fi-star-filled text-warning"></i>
+                      <i class="fi-star-filled text-warning"></i>
+                      <i class="fi-star-filled text-warning"></i>
+                    </div>
+                    <p class="fs-sm mb-1">From the first consultation, Dr. Johnston showed exceptional care and professionalism. His thorough approach to diagnosing my heart condition was impressive, and his treatment plan has worked wonders. I feel fortunate to have found such a knowledgeable and compassionate cardiologist.</p>
+                    <div class="nav align-items-center">
+                      <button type="button" class="nav-link text-body-secondary animate-scale px-0 me-n1">
+                        <i class="fi-thumbs-up fs-base animate-target me-1"></i>
+                        13
+                      </button>
+                      <hr class="vr my-2 mx-3">
+                      <button type="button" class="nav-link text-body-secondary animate-scale px-0 ms-n1">
+                        <i class="fi-thumbs-down fs-base animate-target me-1"></i>
+                        2
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Rreview -->
+                  <div class="vstack gap-2 mb-sm-2">
+                    <div class="d-flex align-items-center gap-3 mb-1">
+                      <h6 class="mb-0">Melissa Smith</h6>
+                      <span class="fs-xs text-body-secondary">November 5, 2024</span>
+                    </div>
+                    <div class="d-flex gap-1 fs-sm mb-1">
+                      <i class="fi-star-filled text-warning"></i>
+                      <i class="fi-star-filled text-warning"></i>
+                      <i class="fi-star-filled text-warning"></i>
+                      <i class="fi-star-filled text-warning"></i>
+                      <i class="fi-star-filled text-warning"></i>
+                    </div>
+                    <p class="fs-sm mb-1">Dr. Johnston was incredibly attentive and reassuring during a very stressful time for me. He made complex medical concepts easy to understand and guided me through the entire process. His expertise gave me confidence, and my heart is now in great shape. Five stars for sure!</p>
+                    <div class="nav align-items-center">
+                      <button type="button" class="nav-link text-body-secondary animate-scale px-0 me-n1">
+                        <i class="fi-thumbs-up fs-base animate-target me-1"></i>
+                        8
+                      </button>
+                      <hr class="vr my-2 mx-3">
+                      <button type="button" class="nav-link text-body-secondary animate-scale px-0 ms-n1">
+                        <i class="fi-thumbs-down fs-base animate-target me-1"></i>
+                        0
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Rreview -->
+                  <div class="vstack gap-2 mb-sm-2">
+                    <div class="d-flex align-items-center gap-3 mb-1">
+                      <h6 class="mb-0">Alice Cooper</h6>
+                      <span class="fs-xs text-body-secondary">October 23, 2024</span>
+                    </div>
+                    <div class="d-flex gap-1 fs-sm mb-1">
+                      <i class="fi-star-filled text-warning"></i>
+                      <i class="fi-star-filled text-warning"></i>
+                      <i class="fi-star-filled text-warning"></i>
+                      <i class="fi-star-filled text-warning"></i>
+                      <i class="fi-star-filled text-warning"></i>
+                    </div>
+                    <p class="fs-sm mb-1">I can't say enough good things about Dr. Johnston. His calm demeanor, vast knowledge, and caring nature set him apart. He listens carefully to all concerns and tailors treatments to each patient's needs. I'm grateful for the care I've received and highly recommend him to anyone seeking a top-notch cardiologist.</p>
+                    <div class="nav align-items-center">
+                      <button type="button" class="nav-link text-body-secondary animate-scale px-0 me-n1">
+                        <i class="fi-thumbs-up fs-base animate-target me-1"></i>
+                        27
+                      </button>
+                      <hr class="vr my-2 mx-3">
+                      <button type="button" class="nav-link text-body-secondary animate-scale px-0 ms-n1">
+                        <i class="fi-thumbs-down fs-base animate-target me-1"></i>
+                        3
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Rreview -->
+                  <div class="vstack gap-2 mb-sm-2">
+                    <div class="d-flex align-items-center gap-3 mb-1">
+                      <h6 class="mb-0">Natalia D.</h6>
+                      <span class="fs-xs text-body-secondary">October 7, 2024</span>
+                    </div>
+                    <div class="d-flex gap-1 fs-sm mb-1">
+                      <i class="fi-star-filled text-warning"></i>
+                      <i class="fi-star-filled text-warning"></i>
+                      <i class="fi-star-filled text-warning"></i>
+                      <i class="fi-star-filled text-warning"></i>
+                      <i class="fi-star text-warning"></i>
+                    </div>
+                    <p class="fs-sm mb-1">Dr. Johnston is an excellent cardiologist and clearly knows his field well. My treatment has been effective, and I feel much healthier. The only reason for 4 stars is that the wait time for my appointment was longer than expected, but once I saw him, the care was outstanding.</p>
+                    <div class="nav align-items-center">
+                      <button type="button" class="nav-link text-body-secondary animate-scale px-0 me-n1">
+                        <i class="fi-thumbs-up fs-base animate-target me-1"></i>
+                        15
+                      </button>
+                      <hr class="vr my-2 mx-3">
+                      <button type="button" class="nav-link text-body-secondary animate-scale px-0 ms-n1">
+                        <i class="fi-thumbs-down fs-base animate-target me-1"></i>
+                        0
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Pagination -->
+                  <nav class="pt-1 pt-sm-2 pb-2" aria-label="Reviews pagination">
+                    <ul class="pagination">
+                      <li class="page-item active" aria-current="page">
+                        <span class="page-link">
+                          1
+                          <span class="visually-hidden">(current)</span>
+                        </span>
+                      </li>
+                      <li class="page-item">
+                        <a class="page-link" href="#!">2</a>
+                      </li>
+                      <li class="page-item">
+                        <a class="page-link" href="#!">3</a>
+                      </li>
+                      <li class="page-item">
+                        <a class="page-link" href="#!">4</a>
+                      </li>
+                      <li class="page-item">
+                        <span class="page-link pe-none">...</span>
+                      </li>
+                      <li class="page-item">
+                        <a class="page-link" href="#!">36</a>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+              <span class="position-absolute top-0 start-0 w-100 h-100 bg-white rounded shadow d-none-dark"></span>
+              <span class="position-absolute top-0 start-0 w-100 h-100 bg-body-tertiary rounded d-none d-block-dark"></span>
+            </div>
+
+            <!-- Meta + Sharing and wishlist buttons -->
+            <div class="d-flex align-items-center justify-content-between gap-3 pt-4">
+              <div class="d-flex gap-3 fs-sm">
+                <div>Published: <span class="fw-medium text-dark-emphasis">Sep 9, 2024</span></div>
+                <div>Views: <span class="fw-medium text-dark-emphasis">158</span></div>
+              </div>
+              <div class="d-flex gap-2">
+                <div class="dropdown" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-sm" title="Share">
+                  <button type="button" class="btn btn-icon btn-secondary bg-transparent border-0 animate-scale" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="Share">
+                    <i class="fi-share-2 animate-target fs-base"></i>
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-end" style="--fn-dropdown-min-width: 9.5rem">
+                    <li>
+                      <a class="dropdown-item" href="#!">
+                        <i class="fi-facebook fs-base me-2"></i>
+                        Facebook
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#!">
+                        <i class="fi-instagram fs-base me-2"></i>
+                        Instagram
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        <i class="fi-linkedin fs-base me-2"></i>
+                        LinkedIn
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <button type="button" class="btn btn-icon btn-secondary bg-transparent border-0 animate-pulse" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-sm" title="Wishlist" aria-label="Wishlist">
+                  <i class="fi-heart animate-target fs-base"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- Sidebar with contact form that turns into offcanvas on screens < 992px wide (lg breakpoint) -->
+          <aside class="col-lg-4 offset-xl-1">
+            <div class="d-none d-lg-block" style="margin-top: -105px"></div>
+            <div class="sticky-lg-top">
+              <div class="d-none d-lg-block" style="height: 105px"></div>
+              <div class="bg-body-tertiary rounded p-4">
+                <div class="position-relative z-1 p-xl-2">
+                  <h2 class="h5 mb-4 d-none d-lg-block">점검&정비 예약하기</h2>
+                  <label class="form-label fs-base">점검 & 정비 선택</label>
+                  <select class="form-select form-select-lg" data-select multiple aria-label="gear select">
+                    <option value=""></option>
+                    <option value="Drivetrain">구동계</option>
+                    <option value="Brakes">브레이크</option>
+                    <option value="Shocks">샥</option>
+                    <option value="Wheelset">휠셋</option>
+                    <option value="Pedals">페달</option>
+                    <option value="Cockpit">콕핏(핸들바,헤드셋 등)</option>
+                    <option value="Components">기타 컴포넌트</option>
+                    <option value="Expendables">소모품 관리</option>
+                  </select>
+                  <div class="d-flex gap-4 pb-2 mb-1">
+                    
+                  </div>
+                  <div class="btn-group w-100" role="group" aria-label="Date/time selection">
+                    <input type="radio" class="btn-check" name="visit-day" id="visit-day-1" checked>
+                    <label class="btn btn-outline-info w-100 px-2" for="visit-day-1">Mon, 11</label>
+                    <input type="radio" class="btn-check" name="visit-day" id="visit-day-2" checked>
+                    <label class="btn btn-outline-info w-100 px-2" for="visit-day-2">Tue, 12</label>
+                    <input type="radio" class="btn-check" name="visit-day" id="visit-day-3">
+                    <label class="btn btn-outline-info w-100 px-2" for="visit-day-3">Wed, 13</label>
+                    <button type="button" class="btn btn-icon btn-outline-info flex-grow-0 px-2" aria-label="Next">
+                      <i class="fi-chevron-right fs-lg"></i>
+                    </button>
+                  </div>
+                  <div class="row row-cols-4 g-2 pt-4 pb-2">
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="visit-time" id="visit-time-1">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-1">10:00</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="visit-time" id="visit-time-2">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-2">10:30</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="visit-time" id="visit-time-3">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-3">11:00</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="visit-time" id="visit-time-4">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-4">11:30</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="visit-time" id="visit-time-5">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-5">12:00</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="visit-time" id="visit-time-6" checked>
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-6">12:30</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="visit-time" id="visit-time-7">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-7">13:00</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="visit-time" id="visit-time-8">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-8">13:30</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="visit-time" id="visit-time-9">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-9">14:00</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="visit-time" id="visit-time-10">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-10">14:30</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="visit-time" id="visit-time-11">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-11">15:00</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="visit-time" id="visit-time-12">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-12">15:30</label>
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-lg btn-primary w-100 mt-4" data-bs-toggle="modal" data-bs-target="#modalId">
+                    <i class="fi-clock fs-lg me-2 ms-n1 d-lg-none d-xl-inline-flex"></i>
+                    Next appointment 12:30, Tue, 12
+                  </button>
+                  
+                </div>
+                <!-- <div class="position-absolute top-0 start-0 w-100 h-100 d-none d-lg-block">
+                  <span class="position-absolute top-0 start-0 w-100 h-100 bg-white rounded shadow d-none-dark"></span>
+                  <span class="position-absolute top-0 start-0 w-100 h-100 bg-body-tertiary rounded d-none d-block-dark"></span>
+                </div> -->
+              </div>
+            </div>
+          </aside>
+        </div>
+        <div class="modal fade" id="modalId" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">예약하기</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <p>Modal body content goes here.</p>
+                <label class="form-label fs-base">점검 & 정비 자전거 선택</label>
+                  <select class="form-select form-select-lg" data-select multiple aria-label="bicycle select">
+                    <option value=""></option>
+                    <option value="bicycle1">자전거 1</option>
+                    <option value="bicycle2">자전거 2</option>                    
+                  </select>
+              </div>
+              <div class="modal-footer flex-column flex-sm-row align-items-stretch">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                <button type="button" class="btn btn-primary">예약하기</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+ <div th:replace="~{usr/include/LoginedFooter :: LoginedFooter}"></div>
+
+    
+  </body>
+</html>

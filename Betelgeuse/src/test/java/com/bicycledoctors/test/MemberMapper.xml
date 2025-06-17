@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cass.demo.module.member.MemberDao">
+	
+	<resultMap type="com.cass.demo.module.member.MemberDto" id="resultMapObj"></resultMap>
+	
+	<sql id="selectCommon">	    
+	    from
+			member
+		where 1=1
+		<if test="shUseNy != null and !shUseNy.equals('')">AND membUseNy = #{membUseNy}</if>
+        <if test="shDelNy != null and !shDelNy.equals('')">AND membDelNy = #{membDelNy}</if>
+				<choose>
+					<when test="shOptionDate == 1">AND userInstDate BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+					<when test="shOptionDate == 2">AND userUpdtDate BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+				</choose>
+        <choose>
+            <when test="shOption == 1">AND membSeq = #{shValue}</when>
+            <when test="shOption == 2">AND membId LIKE CONCAT('%',#{shValue},'%')</when>
+            <when test="shOption == 3">AND membName LIKE CONCAT('%',#{shValue},'%')</when>
+        </choose>
+    </sql>
+	
+	<select id="selectOneCount" resultType="Integer">
+    	select count(*)
+    	 <include refid = "selectCommon"></include>
+    </select>
+	
+	<select id="selectList" resultMap="resultMapObj">
+	select aa.* from (
+		SELECT
+			membSeq
+			,membId
+		    ,membPassword
+		    ,membCateCd
+		    ,membName
+		    ,membRegDate
+		    ,membModDate
+		    ,membUseNy
+		    ,membDelNy
+		<include refid = "selectCommon"></include>
+		order by seq desc
+	) aa
+	limit #{rowNumToShow} offset #{startRnumForMysql}
+	</select>
+	
+	<select id="selectOne" resultMap="resultMapObj">
+		SELECT
+			membSeq
+			,membId
+		    ,membPassword
+		    ,membCateCd
+		    ,membName
+		    ,membRegDate
+		    ,membModDate
+		    ,membUseNy
+		    ,membDelNy
+	    from
+	    	member
+	    where 1=1
+	    	and seq = #{seq}
+	</select>
+	<insert id="insert">
+		insert into member (
+			membId
+		    ,membPassword
+		    ,membCateCd
+		    ,membName
+		    ,membRegDate
+		    ,membUseNy
+		    ,membDelNy
+		) values (
+			#{membId}
+			,#{membPassword}
+			,23
+			,#{membName}
+			,CURRENT_TIMESTAMP
+			,1
+			,0
+		)
+		<selectKey resultType="String" keyProperty="seq" order="AFTER">
+			SELECT last_insert_id()
+		</selectKey>
+	</insert>
+	<update id="update">
+		update member set
+			membPassword = #{membPassword}
+		    ,membCateCd = #{membCateCd}
+		    ,membName = #{membName}
+		    ,membModDate = CURRENT_TIMESTAMP
+		    ,membUseNy = #{membUseNy}
+		    ,membDelNy = #{membDelNy}
+		where 1=1
+			and seq = #{seq}
+	</update>
+	
+	<select id="selectOneIdChk" resultMap="resultMapObj">
+		SELECT
+				membSeq
+				,membId
+			    ,membPassword
+			    ,membName
+			    ,membDelNy
+		    from
+		    	member
+		    where 1=1
+		    	and membId = #{membId}
+				<if test="membPassword != null and !membPassword.equals('')">AND membPassword = #{membPassword}</if>
+	</select>
+	
+	<update id="uelete">
+		update member set
+			delNy = 1
+		    ,membModDate = CURRENT_TIMESTAMP
+		where 1=1
+			and seq = #{seq}
+	</update>
+</mapper>

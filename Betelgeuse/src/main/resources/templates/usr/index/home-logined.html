@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko" data-bs-theme="light" data-pwa="true" xmlns:th="http://www.thymeleaf.org">
+  <div th:replace="~{usr/include/LoginedHead :: LoginedHead}"></div>
+
+
+    <!-- Page content -->
+    <main class="content-wrapper">
+
+      <!-- Hero with search form and slider -->
+      <section class="py-5" style="background-color: #30536b">
+        <div class="container py-sm-2 py-md-3 py-lg-4 py-xl-5">
+          <div class="row align-items-center justify-content-center">
+            <div class="col-md-7 mb-5 mb-md-0">
+              <p class="display-6 text-white text-center text-md-start pb-sm-2 pb-md-3 pb-lg-0 pb-xxl-3 mb-4 mb-lg-5">쉽게 예약하고 믿을수 있는</p>
+              <h1 class="display-3 text-white text-center text-md-start pb-sm-2 pb-md-3 pb-lg-0 pb-xxl-3 mb-4 mb-lg-5">자전거 점검 & 정비</h1>
+
+              <!-- Search form -->
+              <form class="bg-white border rounded p-2" id="formSearch" name="formSearch" data-bs-theme="light" novalidate>
+
+                <div class="d-flex flex-column flex-lg-row gap-2 p-1">
+                  <div class="d-flex flex-column flex-sm-row w-100 gap-2 gap-sm-3">
+                    <div class="position-relative w-100">
+                      <i class="fi-search position-absolute top-50 start-0 translate-middle-y fs-xl text-secondary-emphasis ms-2"></i>
+                      <input type="search" name="shValue" class="form-control form-control-lg form-icon-start border-0 rounded-0 pe-0" placeholder="점검, 정비샵 찾기" required>
+                    </div>
+                    <hr class="d-sm-none m-0">
+                    <hr class="vr d-none d-sm-block my-2">
+                    <div class="position-relative w-100" style="max-width: 190px">
+                      <i class="fi-map-pin position-absolute top-50 start-0 translate-middle-y z-1 fs-xl text-secondary-emphasis ms-2"></i>
+                      <select id="shOption" name="shOption" class="form-select form-select-lg form-icon-start border-0">
+                        <option value="3" th:selected="${shopVo?.shOption == 3}">위치(시,군,구)</option>
+                        <option value="2" th:selected="${shopVo?.shOption == 2}">샵 이름</option>
+                      </select>
+                    </div>
+                  </div>
+                  <button type="button" id="btnSearch" class="btn btn-lg btn-primary">Search</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- How it works -->
+      <section class="container py-5 my-xxl-3">
+        <h2 class="h1">어떻게 사용하나요?</h2>
+        <p class="pb-2 pb-sm-3">자전거 점검&정비에 겪던 불편함을 확 줄여드려요 :D</p>
+
+        <!-- Row of items that turns into carousel on screens < 768px wide (md breakpoint) -->
+        <div class="swiper pb-5" data-swiper='{
+          "slidesPerView": 1,
+          "spaceBetween": 24,
+          "pagination": {
+            "el": ".swiper-pagination",
+            "clickable": true
+          },
+          "breakpoints": {
+            "500": {
+              "slidesPerView": 2
+            },
+            "768": {
+              "slidesPerView": 3
+            }
+          }
+        }'>
+          <div class="swiper-wrapper">
+
+            <!-- Step 1 -->
+            <div class="swiper-slide">
+              <div class="ratio bg-body-tertiary rounded overflow-hidden mx-auto mx-sm-0" style="max-width: 162px; --fn-aspect-ratio: calc(106 / 162 * 100%)">
+                <img src="/usr/template/Finder/assets/img/home/bd/pro repair.jpg" alt="Image">
+              </div>
+              <h3 class="h4 pt-3 mt-xl-1 mb-2">Choose</h3>
+              <p class="mb-0">자전거 전문샵을 선택하세요.<br>가까이 위치한 자전거 점검&정비 전문샵을 보여드려요.</p>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="swiper-slide">
+              <div class="ratio bg-body-tertiary rounded overflow-hidden mx-auto mx-sm-0" style="max-width: 162px; --fn-aspect-ratio: calc(106 / 162 * 100%)">
+                <img src="/usr/template/Finder/assets/img/home/doctors/steps/02.jpg" alt="Image">
+              </div>
+              <h3 class="h4 pt-3 mt-xl-1 mb-2">Reservation</h3>
+              <p class="mb-0">예약 가능시간을 확인하고 예약해보세요.<br>점검&정비에 소비해야했던 시간을 확 줄여드립니다.</p>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="swiper-slide">
+              <div class="ratio bg-body-tertiary rounded overflow-hidden mx-auto mx-sm-0" style="max-width: 162px; --fn-aspect-ratio: calc(106 / 162 * 100%)">
+                <img src="/usr/template/Finder/assets/img/home/bd/fallinglovewithbike.jpg" alt="Image">
+              </div>
+              <h3 class="h4 pt-3 mt-xl-1 mb-2">Maintain</h3>
+              <p class="mb-0">자전거를 등록하시면 정비이력을 관리할 수 있어요.<br>소모품 교체주기 및 주요부품 정기점검 관리로 자전거에 대한 사랑을 표현해보세요.</p>
+            </div>
+          </div>
+
+          <!-- Pagination (Bullets) -->
+          <div class="swiper-pagination position-static mt-3"></div>
+        </div>
+      </section>
+
+
+      <!-- Offers -->
+      <section class="bg-info overflow-hidden">
+        <div class="container py-2 py-sm-3 py-md-4 py-lg-5 my-xxl-3">
+          <h2 class="h1 text-white mb-2 mb-md-3">Benefits for Riders</h2>
+          <p class="text-white opacity-75 pb-2 pb-md-3 pb-lg-4">자전거 유지보수의 새로운 패러다임</p>
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 gy-4 gx-5 pb-2 pb-lg-3">
+            <div class="col">
+              <h3 class="h4 text-white mb-2 mb-md-3">Save Time</h3>
+              <p class="text-white opacity-75 mb-0" style="max-width: 370px">점검&정비 예약으로 앞선 정비가 끝나길 하염없이 기다리던 시간을 줄이고,</p>
+            </div>
+            <div class="col">
+              <h3 class="h4 text-white mb-2 mb-md-3">Save Cost</h3>
+              <p class="text-white opacity-75 mb-0" style="max-width: 370px">정비이력 관리로 이중지출 및 정비시기를 놓쳐 비용이 커질 우려를 줄이고,</p>
+            </div>
+            <div class="col">
+              <h3 class="h4 text-white mb-2 mb-md-3">Systematic Management</h3>
+              <p class="text-white opacity-75 mb-0" style="max-width: 370px">체계적인 자전거 관리가 가능해집니다.</p>
+            </div>
+          </div>
+          <hr data-bs-theme="light" style="opacity: .2">
+        </div>
+      </section>
+    </main>
+
+ <div th:replace="~{usr/include/LoginedFooter :: LoginedFooter}"></div>
+    
+<script type="text/javascript">
+let formS = document.querySelector("form[name=formSearch]");
+
+document.getElementById("btnSearch").onclick = function () {
+	formS.action = "/shop/shopUsrList";
+	formS.submit();
+};
+
+</script>
+
+  </body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="base">
+	
+	<resultMap type="com.bicycledoctors.common.base.BaseDto" id="resultMapObj"></resultMap>
+	
+	<sql id="insertUploaded">
+		INSERT INTO filesUploaded (
+			type
+			,defaultNy
+			,sort
+			,path
+			,originalName
+			,uuidName
+			,ext
+			,size
+			,delNy
+			
+			,pseq
+		) values (
+			#{type}
+			,#{defaultNy}
+			,#{sort}
+			,#{path}
+			,#{originalName}
+			,#{uuidName}
+			,#{ext}
+			,#{size}
+			,0
+			
+			,#{pseq}
+		)
+	</sql>
+	
+	<sql id="insertUploadedes">
+		INSERT INTO filesUploaded (
+			type
+			,defaultNy
+			,sort
+			,path
+			,originalName
+			,uuidName
+			,ext
+			,size
+			,delNy
+			,pseq
+		) values 
+		<foreach item="file" collection="list" separator=",">
+		(
+			#{type}
+			,#{defaultNy}
+			,#{sort}
+			,#{path}
+			,#{originalName}
+			,#{uuidName}
+			,#{ext}
+			,#{size}
+			,0
+			,#{pseq}
+		)
+		</foreach>
+	</sql>
+	
+
+</mapper>

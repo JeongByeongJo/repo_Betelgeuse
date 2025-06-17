@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bicycledoctors.module.bicycle.BicycleDao">
+	
+	<resultMap type="com.bicycledoctors.module.bicycle.BicycleDto" id="resultMapObj"></resultMap>
+	
+	<sql id="selectCommon">	    
+	    from
+			bicycle as a
+			left join usercustomer b on a.userCustomer_seq = b.seq
+		where 1=1
+        <if test="shDelNy != null and !shDelNy.equals('')">AND a.bikeDelNy = #{shDelNy}</if>
+<!-- 		<if test="shUseNy != null and !shUseNy.equals('')">AND a.useNy = #{shUseNy}</if> -->
+				<choose>
+					<when test="shOptionDate == 1">AND a.cdInstDate BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+					<when test="shOptionDate == 2">AND a.cdUpdtDate BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+				</choose>
+        <choose>
+            <when test="shOption == 1">AND b.userId = #{shValue}</when>
+            <when test="shOption == 2">AND b.userName LIKE CONCAT('%',#{shValue},'%')</when>
+            <when test="shOption == 3">AND a.bicycleName LIKE CONCAT('%',#{shValue},'%')</when>
+        </choose>
+    </sql>
+    
+    <select id="selectOneCount" resultType="Integer">
+    	select count(*)
+    	 <include refid = "selectCommon"></include>
+    	 <if test="userCustomer_seq != null and !userCustomer_seq.equals('')">AND a.userCustomer_seq = #{userCustomer_seq}</if>
+    	 <if test="bikeStatus != null and !bikeStatus.equals('')">AND a.bikeStatus = #{bikeStatus}</if>
+    </select>
+
+	<select id="selectList" resultMap="resultMapObj">
+	select aa.* from (
+		SELECT 
+			a.bikeSeq,
+		    a.bicycleName,
+		    a.bicycleCateCd,
+		    a.bicycleBrandCd,
+		    a.bicycleModel,
+		    a.bicycleYears,
+		    a.bicycleMiles,
+		    a.bicycleSN,
+		    a.drivetrainBrandCd,
+		    a.drivetrainModel,
+		    a.brakeBrandCd,
+		    a.isElectDrivetrain,
+		    a.isDiskBrakes,
+		    a.isHydrauric,
+		    a.isInternal,
+		    a.wheelBrandCd,
+		    a.wheelModel,
+		    a.bicycleDescribe,
+		    a.bikeStatus,
+		    a.latestiNrDate,
+		    a.bikeDelNy,
+		    a.instDate,
+		    a.updtDate,
+		    a.userCustomer_seq,
+		    b.seq,
+			b.userId,
+			b.userName
+		<include refid = "selectCommon"></include>
+		order by seq desc
+	) aa
+	limit #{rowNumToShow} offset #{startRnumForMysql}
+	</select>
+	
+	<select id="selectGroupList" resultMap="resultMapObj">
+		select
+			cdgSeq
+			,cdgName
+		from
+			codegroup
+		where 1=1			
+		order by cdgSeq desc
+	</select>
+	
+	<select id="selectOne" resultMap="resultMapObj">
+		SELECT 
+			a.bikeSeq,
+		    a.bicycleName,
+		    a.bicycleCateCd,
+		    a.bicycleBrandCd,
+		    a.bicycleModel,
+		    a.bicycleYears,
+		    a.bicycleMiles,
+		    a.bicycleSN,
+		    a.drivetrainBrandCd,
+		    a.drivetrainModel,
+		    a.brakeBrandCd,
+		    a.isElectDrivetrain,
+		    a.isDiskBrakes,
+		    a.isHydrauric,
+		    a.isInternal,
+		    a.wheelBrandCd,
+		    a.wheelModel,
+		    a.bicycleDescribe,
+		    a.bikeStatus,
+		    a.latestiNrDate,
+		    a.bikeDelNy,
+		    a.instDate,
+		    a.updtDate,
+		    a.userCustomer_seq,
+		    b.seq,
+			b.userID,
+			b.userName
+ 		from
+			bicycle as a
+			left join usercustomer b on a.userCustomer_seq = b.seq
+		where 1=1
+			and a.bikeSeq = #{bikeSeq}
+	</select>
+	
+	<select id="selectOnePicList" resultMap="resultMapObj">
+	select
+		path
+		,delNy
+	from filesUploaded
+	where 1=1
+	and sort = 1000
+	and delNy = 0
+	and pSeq = #{bikeSeq}
+	order by sort asc
+	</select>
+	
+	<select id="selectList4Appoint" resultMap="resultMapObj">
+		SELECT 
+			a.bikeSeq,
+		    a.bicycleName,
+		    a.bikeStatus,
+		    a.userCustomer_seq,
+			b.userName
+ 		from
+			bicycle as a
+			left join usercustomer b on a.userCustomer_seq = b.seq
+		where 1=1
+			and a.userCustomer_seq = #{userCustomer_seq}
+			AND (a.bikeStatus IS NULL OR a.bikeStatus &lt; 121 OR a.bikeStatus &gt; 123)
+	</select>
+	<select id="selectOneList" resultMap="resultMapObj">
+		SELECT 
+			a.bikeSeq,
+		    a.bicycleName,
+		    a.bicycleCateCd,
+		    a.bicycleBrandCd,
+		    a.bicycleModel,
+		    a.bicycleYears,
+		    a.bicycleMiles,
+		    a.bicycleSN,
+		    a.drivetrainBrandCd,
+		    a.drivetrainModel,
+		    a.brakeBrandCd,
+		    a.isElectDrivetrain,
+		    a.isDiskBrakes,
+		    a.isHydrauric,
+		    a.isInternal,
+		    a.wheelBrandCd,
+		    a.wheelModel,
+		    a.bicycleDescribe,
+		    a.bikeStatus,
+		    a.latestiNrDate,
+		    a.bikeDelNy,
+		    a.instDate,
+		    a.updtDate,
+		    a.userCustomer_seq,
+		    b.seq,
+			b.userID,
+			b.userName,
+			(select path from filesUploaded where type=1000 and pSeq = a.bikeSeq) as path
+ 		from
+			bicycle as a
+			left join usercustomer b on a.userCustomer_seq = b.seq
+		where 1=1
+			and a.userCustomer_seq = #{userCustomer_seq}
+			and a.bikeDelNy = 0
+	</select>
+	<select id="selectList4Reservation" resultMap="resultMapObj">
+		SELECT 
+			a.bikeSeq,
+		    a.bicycleName,
+		    a.bicycleCateCd,
+		    a.bicycleBrandCd,
+		    a.bicycleModel,
+		    a.bicycleYears,
+		    a.bicycleMiles,
+		    a.bicycleSN,
+		    a.drivetrainBrandCd,
+		    a.drivetrainModel,
+		    a.brakeBrandCd,
+		    a.isElectDrivetrain,
+		    a.isDiskBrakes,
+		    a.isHydrauric,
+		    a.isInternal,
+		    a.wheelBrandCd,
+		    a.wheelModel,
+		    a.bicycleDescribe,
+		    a.bikeStatus,
+		    a.latestiNrDate,
+		    a.bikeDelNy,
+		    a.instDate,
+		    a.updtDate,
+		    a.userCustomer_seq,
+		    (select distinct s.shopName from reservation as r left join shop as s on r.shop_shopSeq = s.shopSeq where r.bicycle_bikeSeq = a.bikeSeq) as shopName,
+		    (select distinct s.shopSeq from reservation as r left join shop as s on r.shop_shopSeq = s.shopSeq where r.bicycle_bikeSeq = a.bikeSeq) as shopSeq,
+		    b.seq,
+			b.userID,
+			b.userName,
+			(select path from filesUploaded where type=1000 and pSeq = a.bikeSeq) as path
+ 		from
+			bicycle as a
+			left join usercustomer b on a.userCustomer_seq = b.seq
+		where 1=1
+			and a.userCustomer_seq = #{userCustomer_seq}
+			and a.bikeStatus between 121 and 122
+<!-- 			and a.bikeStatus &gt;= 120 -->
+<!-- 			and a.bikeStatus &lt;= 121 -->
+	</select>
+	
+	<insert id="insert">
+		insert into bicycle (
+			bicycleName,
+		    bicycleCateCd,
+		    bicycleBrandCd,
+		    bicycleModel,
+		    bicycleYears,
+		    bicycleMiles,
+		    bicycleSN,
+		    drivetrainBrandCd,
+		    drivetrainModel,
+		    brakeBrandCd,
+		    isElectDrivetrain,
+		    isDiskBrakes,
+		    isHydrauric,
+		    isInternal,
+		    wheelBrandCd,
+		    wheelModel,
+		    bicycleDescribe,
+		    bikeDelNy,
+		    instDate,
+		    userCustomer_seq
+		) values (
+			#{bicycleName}
+			,#{bicycleCateCd}
+			,#{bicycleBrandCd}
+			,#{bicycleModel}
+			,#{bicycleYears}
+			,#{bicycleMiles}
+			,#{bicycleSN}
+			,#{drivetrainBrandCd}
+			,#{drivetrainModel}
+			,#{brakeBrandCd}
+			,#{isElectDrivetrain}
+			,#{isDiskBrakes}
+			,#{isHydrauric}
+			,#{isInternal}
+			,#{wheelBrandCd}
+			,#{wheelModel}
+			,#{bicycleDescribe}
+			,0
+			,CURRENT_TIMESTAMP
+			,#{userCustomer_seq}
+		)
+		<selectKey resultType="String" keyProperty="bikeSeq" order="AFTER">
+			SELECT last_insert_id()
+		</selectKey>
+	</insert>
+	
+	<update id="update">
+		update bicycle set
+			bicycleName = #{bicycleName},
+		    bicycleCateCd = #{bicycleCateCd},
+		    bicycleBrandCd = #{bicycleBrandCd},
+		    bicycleModel = #{bicycleModel},
+		    bicycleYears = #{bicycleYears},
+		    bicycleMiles = #{bicycleMiles},
+		    bicycleSN = #{bicycleSN},
+		    drivetrainBrandCd = #{drivetrainBrandCd},
+		    drivetrainModel = #{drivetrainModel},
+		    brakeBrandCd = #{brakeBrandCd},
+		    isElectDrivetrain = #{isElectDrivetrain},
+		    isDiskBrakes = #{isDiskBrakes},
+		    isHydrauric = #{isHydrauric},
+		    isInternal = #{isInternal},
+		    wheelBrandCd = #{wheelBrandCd},
+		    wheelModel = #{wheelModel},
+		    bicycleDescribe = #{bicycleDescribe}
+		where
+			bikeSeq = #{bikeSeq}
+	</update>
+	
+	<update id="updatePic">
+		update filesUploaded set
+			delNy = #{delNy}
+		where 1=1
+		and delNy = 0
+		and pSeq = #{bikeSeq}
+	</update>
+	
+	<update id="uelete">
+		update bicycle set
+			bikeDelNy = 1
+		where
+			bikeSeq = #{bikeSeq}
+	</update>
+	
+	<select id="selectListCachedCodeArrayList" resultMap="resultMapObj">
+		SELECT 
+			cdSeq
+			,cdName
+			,codegroup_cdgSeq
+		FROM
+			code
+		WHERE 1=1
+			AND cdDelNy = 0
+		    AND cdUseNy = 1
+   	</select>
+   	
+   	<select id="selectListMyBicycle" resultMap="resultMapObj">
+   	SELECT 
+			a.bikeSeq,
+		    a.bicycleName,
+		    a.bicycleBrandCd,
+		    a.bicycleModel,
+		    a.bicycleMiles,
+		    a.bicycleSN,
+		    a.drivetrainBrandCd,
+		    a.drivetrainModel,
+		    a.bikeStatus,
+		    a.latestiNrDate,
+		    a.bikeDelNy,
+		    a.instDate,
+		    a.updtDate,
+		    a.userCustomer_seq,
+			b.userID,
+			b.userName
+		<include refid = "selectCommon"></include>
+		AND a.userCustomer_seq = #{userCustomer_seq}
+		order by seq desc
+		
+   	</select>
+   	
+   	<insert id="insertUploaded">
+		<include refid = "base.insertUploaded"></include>
+	</insert>
+	
+</mapper>

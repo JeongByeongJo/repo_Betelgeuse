@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bicycledoctors.module.codegroup.CodeGroupDao">
+	
+	<resultMap type="com.bicycledoctors.module.codegroup.CodeGroupDto" id="resultMapObj"></resultMap>
+	
+	<sql id="selectCommon">	    
+	    from codegroup as a
+	    where 1=1
+	    <if test="shUseNy != null and !shUseNy.equals('')">AND a.cdgUseNy = #{shUseNy}</if>
+        <if test="shDelNy != null and !shDelNy.equals('')">AND a.cdgDelNy = #{shDelNy}</if>
+				
+				<choose>
+					<when test="shOptionDate == 1">AND a.cdgInstDate BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+					<when test="shOptionDate == 2">AND a.cdgUpdtDate BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+				</choose>
+				
+        <choose>
+            <when test="shOption == 1">AND a.cdgSeq = #{shValue}</when>
+            <when test="shOption == 2">AND a.cdgName LIKE CONCAT('%',#{shValue},'%')</when>
+            <when test="shOption == 3">AND a.cdgNameEng LIKE CONCAT('%',#{shValue},'%')</when>
+        </choose>
+    </sql>
+    
+    <select id="selectOneCount" resultType="Integer">
+    	select count(*)
+    	 <include refid = "selectCommon"></include>
+    </select>
+
+	<select id="selectList" resultMap="resultMapObj">
+	select aa.* from (
+		select
+			a.cdgSeq
+			,a.cdgName
+			,a.cdgNameEng
+			,(select count(aa.codegroup_cdgSeq) from code aa where 1 = 1 and aa.cdDelNy = 0 and aa.codegroup_cdgSeq = a.cdgSeq) as xcdSeqCount
+			,a.cdgUseNy
+			,a.cdgDelNy
+			,a.cdgInstDate
+			,a.cdgUpdtDate
+			,a.cdgDesc
+		<include refid = "selectCommon"></include>
+		order by a.cdgSeq desc
+	) aa
+	limit #{rowNumToShow} offset #{startRnumForMysql}
+	</select>
+	
+	<select id="selectListWithoutPaging" resultMap="resultMapObj">
+	
+		select
+			a.cdgSeq
+			,a.cdgName
+		<include refid = "selectCommon"></include>	
+		order by a.cdgSeq desc
+	
+	</select>
+	
+	
+	
+	<select id="selectOne" resultMap="resultMapObj">
+		select
+			cdgSeq
+			,cdgName
+			,cdgNameEng
+			,cdgUseNy
+			,cdgDelNy
+			,cdgInstDate
+			,cdgUpdtDate
+			,cdgDesc
+		from
+			codegroup
+		where 1=1
+			and cdgSeq = #{cdgSeq}
+	</select>
+	
+	<insert id="insert">
+		insert into codegroup (
+			cdgName
+			,cdgNameEng
+			,cdgUseNy
+			,cdgInstDate
+			,cdgDesc
+		) values (
+			#{cdgName}
+			,#{cdgNameEng}
+			,#{cdgUseNy}
+			,CURRENT_TIMESTAMP
+			,#{cdgDesc}
+		)
+		<selectKey resultType="String" keyProperty="cdgSeq" order="AFTER">
+			SELECT last_insert_id()
+		</selectKey>
+	</insert>
+	
+	<update id="update">
+		update codegroup set
+			cdgName = #{cdgName}
+			,cdgNameEng = #{cdgNameEng}
+			,cdgUseNy = #{cdgUseNy}
+			,cdgUpdtDate = CURRENT_TIMESTAMP
+			,cdgDesc = #{cdgDesc}
+		where
+			cdgSeq = #{cdgSeq}
+	</update>
+	
+	<update id="uelete">
+		update codegroup set
+			cdgDelNy = 1
+		where
+			cdgSeq = #{cdgSeq}
+	</update>
+</mapper>

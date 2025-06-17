@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="ko" data-bs-theme="light" data-pwa="true" xmlns:th="http://www.thymeleaf.org">
+  
+<div th:replace="~{usr/include/LoginedHead :: LoginedHead}"></div>
+
+  <!-- Body -->
+  <body class="bg-body-tertiary">
+
+
+
+    <!-- Page content -->
+    <main class="content-wrapper">
+      <div class="container pt-3 pt-sm-4 pt-md-5 pb-5">
+        <div class="row pt-lg-2 pt-xl-3 pb-1 pb-sm-2 pb-md-3 pb-lg-4 pb-xl-5">
+
+          <!-- Sell car form -->
+         <div class="col-lg-8 col-xl-9">
+           <h1 class="h2">자전거 등록하기</h1>
+		<form id="form" name="form" method="post" autocomplete="off" enctype="multipart/form-data" >
+		<input type="hidden" id="userCustomer_seq" name="userCustomer_seq" th:value="${session.sessSeqUsr}">
+		<input type="hidden" id="bikeSeq" name="bikeSeq">
+            <!-- Photos / videos -->
+            <section class="position-relative bg-body rounded p-4 mt-4">
+  <div class="position-relative z-1 pb-md-2 px-md-2">
+    <div class="d-sm-flex align-items-center justify-content-between mb-3 mb-sm-4">
+      <h2 class="h4 mb-2 mb-sm-0 me-3">사진등록</h2>
+      <div class="position-relative d-flex">
+        <i class="fi-info text-info mt-1 me-2"></i>
+        <a class="fs-sm fw-medium stretched-link" href="#">사진 등록하는 법</a>
+      </div>
+    </div>
+    <p class="fs-sm">사진파일 용량은 최대 8Mb 입니다. 파일형식: jpeg, jpg, png.</p>
+    <div style="max-width: 852px">
+      <div class="row row-cols-2 row-cols-sm-3 g-2 g-md-4 g-lg-3 g-xl-4" id="previewContainer">
+
+        <!-- Upload button -->
+        <div class="col" id="uploadSlot">
+          <div class="hover-effect-opacity position-relative overflow-hidden rounded h-100">
+            <div class="ratio" style="--fn-aspect-ratio: calc(180 / 268 * 100%)">
+              <div class="d-flex align-items-center justify-content-center w-100 h-100 bg-body-tertiary border border-2 border-dotted rounded">
+                <label for="uploadImg1" class="text-center w-100 h-100 d-flex flex-column justify-content-center align-items-center mb-0 cursor-pointer">
+                  <i class="fi-plus-circle fs-4 text-secondary-emphasis mb-2"></i>
+                  <span class="hover-effect-underline fs-sm fw-medium">사진 추가하기</span>
+                  <input type="file" id="uploadImg1" name="uploadImg1" style="display: none;" multiple>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark rounded d-none d-block-dark"></div>
+</section>
+
+
+            <!-- Basic information -->
+            <section class="position-relative bg-body rounded p-4 mt-4">
+              <div class="position-relative z-2 pb-md-2 px-md-2">
+                <h2 class="h4 mb-3 mb-sm-4">기본정보</h2>
+                <div class="mb-3 mb-md-4">
+                  <label class="form-label pb-1 mb-2">자전거 종류 *</label>
+           		  <input type="hidden" id="bicycleCateCd" name="bicycleCateCd" th:value="${item?.bicycleCateCd}">
+                  <div class="nav nav-pills row row-cols-2 row-cols-sm-3 row-cols-md-5 gap-0 g-3">
+                    <div class="col">
+                      <input type="radio" class="btn-check" id="road" name="body" th:value="5" th:checked = "${item?.bicycleCateCd} == 5">
+                      <label class="nav-link flex-column w-100 align-items-center gap-2 rounded p-3" for="road">
+                        <span class="ratio d-block" style="--fn-aspect-ratio: calc(62 / 100 * 100%); max-width: 124px">
+                          <img src="/usr/template/Finder/assets/img/add-item/bd/road.JPG" alt="Road">
+                        </span>
+                        Road
+                      </label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" id="hardtail" name="body" th:value="6" th:checked = "${item?.bicycleCateCd} == 6">
+                      <label class="nav-link flex-column w-100 align-items-center gap-2 rounded p-3" for="hardtail">
+                        <span class="ratio d-block" style="--fn-aspect-ratio: calc(62 / 100 * 100%); max-width: 124px">
+                          <img src="/usr/template/Finder/assets/img/add-item/bd/hardtail.JPG" alt="Hardtail">
+                        </span>
+                        Hardtail
+                      </label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" id="fullsuspension" name="body" th:value="7" th:checked = "${item?.bicycleCateCd} == 7">
+                      <label class="nav-link flex-column w-100 align-items-center gap-2 rounded p-3" for="fullsuspension">
+                        <span class="ratio d-block" style="--fn-aspect-ratio: calc(62 / 100 * 100%); max-width: 124px">
+                          <img src="/usr/template/Finder/assets/img/add-item/bd/fullsuspension.JPG" alt="Fullsuspension">
+                        </span>
+                        Fullsuspension
+                      </label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" id="track" name="body" th:value="8" th:checked = "${item?.bicycleCateCd} == 8">
+                      <label class="nav-link flex-column w-100 align-items-center gap-2 rounded p-3" for="track">
+                        <span class="ratio d-block" style="--fn-aspect-ratio: calc(62 / 100 * 100%); max-width: 124px">
+                          <img src="/usr/template/Finder/assets/img/add-item/bd/track.JPG" alt="Track">
+                        </span>
+                        Track
+                      </label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" id="triathlon" name="body" th:value="9" th:checked = "${item?.bicycleCateCd} == 9">
+                      <label class="nav-link flex-column w-100 align-items-center gap-2 rounded p-3" for="triathlon">
+                        <span class="ratio d-block" style="--fn-aspect-ratio: calc(62 / 100 * 100%); max-width: 124px">
+                          <img src="/usr/template/Finder/assets/img/add-item/bd/triathlon.JPG" alt="Triathlon,TT">
+                        </span>
+                        Triathlon,TT
+                      </label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" id="folding" name="body" th:value="10" th:checked = "${item?.bicycleCateCd} == 10">
+                      <label class="nav-link flex-column w-100 align-items-center gap-2 rounded p-3" for="folding">
+                        <span class="ratio d-block" style="--fn-aspect-ratio: calc(62 / 100 * 100%); max-width: 124px">
+                          <img src="/usr/template/Finder/assets/img/add-item/bd/folding.JPG" alt="folding">
+                        </span>
+                        Folding,MiniVelo
+                      </label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" id="etcBicycle" name="body" th:value="11" th:checked = "${item?.bicycleCateCd} == 11">
+                      <label class="nav-link flex-column w-100 align-items-center gap-2 rounded p-3" for="bicycle">
+                        <span class="ratio d-block" style="--fn-aspect-ratio: calc(62 / 100 * 100%); max-width: 124px">
+                          <img src="/usr/template/Finder/assets/img/add-item/bd/bicycle.JPG" alt="bicycle">
+                        </span>
+                        그 외 자전거
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row row-cols-1 row-cols-sm-2 g-3 g-md-4 mb-3 mb-md-4">
+                  <div class="col">
+                    <label class="form-label">자전거 브랜드 *</label>
+                    <select class="form-select form-select-lg" id="bicycleBrandCd" name="bicycleBrandCd" th:value="${item?.bicycleBrandCd}" data-select='{
+                      "classNames": {
+                        "containerInner": ["form-select", "form-select-lg"]
+                      },
+                      "searchEnabled": true
+                    }' aria-label="Car brand select" required>
+                      <option value="">Select Brand</option>
+                      <option th:each="list : ${@codeService.selectListCachedCode(4)}" th:value="${list.cdSeq}" th:text="${list.cdName}" th:selected="${list.cdSeq} == ${item?.bicycleBrandCd}"></option>
+                    </select>
+                  </div>
+                  <div class="col">
+                    <label for="bicycleModel" class="form-label">자전거 모델명 *</label>
+                    <input type="text" class="form-control form-control-lg" id="bicycleModel" name="bicycleModel" placeholder="자전거 모델명" th:value="${item?.bicycleModel}" required>
+                  </div>
+                </div>
+                <div class="row row-cols-1 row-cols-sm-2 g-3 g-md-4 mb-3 mb-md-4">
+                  <div class="col">
+                    <label class="form-label">모델연식 *</label>
+                    <select class="form-select form-select-lg" id="bicycleYears" name="bicycleYears" th:value="${item?.bicycleYears}" data-select='{
+                      "classNames": {
+                        "containerInner": ["form-select", "form-select-lg"]
+                      }
+                    }' aria-label="Manufacturing year select" required>
+                      <option value="">Select year</option>
+                      <option th:value="2025" th:selected="${item?.bicycleYears} == 2025">2025</option>
+                      <option th:value="2024" th:selected="${item?.bicycleYears} == 2024">2024</option>
+                      <option th:value="2023" th:selected="${item?.bicycleYears} == 2023">2023</option>
+                      <option th:value="2022" th:selected="${item?.bicycleYears} == 2022">2022</option>
+                      <option th:value="2021" th:selected="${item?.bicycleYears} == 2021">2021</option>
+                      <option th:value="2020" th:selected="${item?.bicycleYears} == 2020">2020</option>
+                      <option th:value="2019" th:selected="${item?.bicycleYears} == 2019">2019</option>
+                      <option th:value="2018" th:selected="${item?.bicycleYears} == 2018">2018</option>
+                      <option th:value="2017" th:selected="${item?.bicycleYears} == 2017">2017</option>
+                      <option th:value="2016" th:selected="${item?.bicycleYears} == 2016">2016</option>
+                      <option th:value="2015" th:selected="${item?.bicycleYears} == 2015">~2015</option>
+                    </select>
+                  </div>
+                  <div class="col">
+                    <label for="mileage" class="form-label">마일리지 *</label>
+                    <input type="text" class="form-control form-control-lg" id="bicycleMiles" name="bicycleMiles" th:value="${item?.bicycleMiles}" placeholder="K meter" required>
+                  </div>
+                </div>                
+                <div class="bg-body-tertiary rounded p-4">
+                  <div class="row">
+                    <div class="col">
+                      <h6 class="mb-2">자전거의 이름(별명)을 저장해주세요.</h6>
+                      <div class="d-flex gap-2" style="max-width: 354px">
+                        <input type="text" class="form-control" id="bicycleName" name="bicycleName" th:value="${item?.bicycleName}" placeholder="이름(별명) 입력">
+                      </div>
+                    </div>
+                    <div class="col">
+                      <h6 class="mb-2">자전거의 시리얼넘버를 저장하세요.</h6>
+                      <div class="d-flex gap-2" style="max-width: 354px">
+                        <input type="text" class="form-control" id="bicycleSN" name="bicycleSN" th:value="${item?.bicycleSN}" placeholder="S/N code">
+                        <button type="button" class="btn btn-icon btn-dark" aria-label="Camera">
+                          <i class="fi-camera fs-base"></i>
+                        </button>
+                      </div>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark rounded d-none d-block-dark"></div>
+            </section>
+
+
+            <!-- Specifications -->
+            <section class="position-relative bg-body rounded p-4 mt-4">
+              <div class="position-relative z-1 pb-md-2 px-md-2">
+                <h2 class="h4 mb-3 mb-sm-4">세부 정보</h2>
+                <div class="row row-cols-1 row-cols-sm-2 g-3 g-md-4 mb-3 mb-md-4">
+                  <div class="col">
+                    <label class="form-label">구동계 브랜드 *</label>
+                    <select class="form-select form-select-lg" id="drivetrainBrandCd" name="drivetrainBrandCd" th:value="${item?.drivetrainBrandCd}" data-select='{
+                      "classNames": {
+                        "containerInner": ["form-select", "form-select-lg"]
+                      }
+                    }' aria-label="Drive type select" required>
+                      <option value="">Select Brand</option>
+                      <option th:each="list : ${@codeService.selectListCachedCode(5)}" th:value="${list.cdSeq}" th:text="${list.cdName}" th:selected="${list.cdSeq} == ${item?.drivetrainBrandCd}"></option>
+                    </select>
+                  </div>
+                  <div class="col">
+                    <label class="form-label">구동계 모델명 *</label>
+                    <input type="text" class="form-control form-control-lg" id="drivetrainModel" name="drivetrainModel" th:value="${item?.drivetrainModel}" placeholder="구동계 모델명" required>
+                  </div>
+                  <div class="col">
+                    <label class="form-label">브레이크 브랜드 *</label>
+                    <select class="form-select form-select-lg" id="brakeBrandCd" name="brakeBrandCd" th:value="${item?.brakeBrandCd}" data-select='{
+                      "classNames": {
+                        "containerInner": ["form-select", "form-select-lg"]
+                      }
+                    }' aria-label="Transmission select" required>
+                      <option value="">Select Brand</option>
+                      <option th:each="list : ${@codeService.selectListCachedCode(7)}" th:value="${list.cdSeq}" th:text="${list.cdName}" th:selected="${list.cdSeq} == ${item?.brakeBrandCd}"></option>
+                    </select>
+                  </div>
+                  <div class="col pt-3">
+                    <div class="row">
+                      <div class="col">
+                        <div class="form-check form-switch">
+                          <input type="checkbox" class="form-check-input" role="switch" id="isElectDrivetrain" name="isElectDrivetrain">
+                          <label for="isElectDrivetrain" class="form-check-label">전동 구동계</label>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-check form-switch">
+                          <input type="checkbox" class="form-check-input" role="switch" id="isDiskBrakes" name="isDiskBrakes">
+                          <label for="isDiskBrakes" class="form-check-label">디스크 브레이크</label>
+                        </div>
+                      </div>                      
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <div class="form-check form-switch">
+                          <input type="checkbox" class="form-check-input" role="switch" id="isHydrauric" name="isHydrauric">
+                          <label for="isHydrauric" class="form-check-label">유압식 브레이크</label>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="form-check form-switch">
+                          <input type="checkbox" class="form-check-input" role="switch" id="isInternal" name="isInternal">
+                          <label for="isInternal" class="form-check-label">풀인터널 케이블</label>
+                        </div>
+                      </div>                      
+                    </div>
+                  </div>
+                  <div class="col">
+                    <label class="form-label">휠셋 브랜드 *</label>
+                    <select class="form-select form-select-lg" id="wheelBrandCd" name="wheelBrandCd" th:value="${item?.wheelBrandCd}" data-select='{
+                      "classNames": {
+                        "containerInner": ["form-select", "form-select-lg"]
+                      },
+                      "searchEnabled": true
+                    }' aria-label="wheelBrandCd select" required>
+                      <option value="">Select Brand</option>
+                      <option th:each="list : ${@codeService.selectListCachedCode(6)}" th:value="${list.cdSeq}" th:text="${list.cdName}" th:selected="${list.cdSeq} == ${item?.wheelBrandCd}"></option>
+                    </select>
+                  </div>
+                  <div class="col">
+                    <label for="exterior-color" class="form-label">휠셋 모델명</label>
+                    <input type="text" class="form-control form-control-lg" id="wheelModel" th:value="${item?.wheelModel}" name="wheelModel">
+                  </div>
+                </div>
+                <label for="description" class="form-label fs-6 fw-semibold">추가 기술 *</label>
+                <p class="fs-sm mb-2">자전거 세부 사항 중 추가로 기술할 부분을 적어주세요!</p>
+                <textarea class="form-control form-control-lg" rows="5" id="bicycleDescribe" name="bicycleDescribe" th:text="${item?.bicycleDescribe}" placeholder="최대 2000자" required></textarea>
+              </div>
+              <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark rounded d-none d-block-dark"></div>
+            </section>
+
+         </form>
+
+
+            <!-- Action buttons -->
+            <section class="d-flex flex-column flex-sm-row justify-content-between gap-3 mt-4">
+              <button type="button" id="btnSave" name="btnSave" class="btn btn-lg btn-outline-secondary bg-body">
+                <i class="fi-eye fs-lg ms-n1 me-2"></i>
+                미리보기
+              </button>
+              <button type="button" id="btnSubmit" name="btnSubmit" class="btn btn-lg btn-primary">
+                <i class="fi-upload fs-lg ms-n1 me-2"></i>
+                저장하기
+              </button>
+            </section>
+          </div>
+
+
+          <!-- Quick preview (Sidebar) -->
+          <aside class="col-lg-4 col-xl-3 mt-lg-n4">
+            <div class="offcanvas-lg offcanvas-end sticky-lg-top pt-lg-5" id="quickPreview">
+              <div class="offcanvas-header d-lg-block py-3 p-lg-0">
+                <h3 class="h6 pt-lg-5 mb-0">Quick preview</h3>
+                <button type="button" class="btn-close d-lg-none" data-bs-dismiss="offcanvas" data-bs-target="#quickPreview" aria-label="Close"></button>
+              </div>
+              <div class="offcanvas-body d-block pt-2 pb-lg-0">
+
+                <!-- Preview card -->
+                <article class="card hover-effect-scale border-0 mb-3">
+                  <div class="card-img-top position-relative z-1 overflow-hidden">
+                    <div class="d-flex flex-column gap-2 align-items-start position-absolute top-0 start-0 z-1 pt-1 pt-sm-0 ps-1 ps-sm-0 mt-2 mt-sm-3 ms-2 ms-sm-3">
+                      <span class="badge text-bg-warning"></span>
+                    </div>
+                    <div class="ratio hover-effect-target" style="--fn-aspect-ratio: calc(204 / 306 * 100%)">
+                      <img src="/usr/template/Finder/assets/img/add-item/bd/IMG_4871.JPG" alt="Image">
+                    </div>
+                  </div>
+                  <div class="card-body position-relative z-1 px-0 px-lg-4 pb-3">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                      <div class="fs-xs text-body-secondary me-3" id="bikeCate">28/06/2024</div>
+                      <div class="d-flex gap-2 position-relative z-2">
+                      </div>
+                    </div>
+                    <h3 class="h6 mb-2">
+                      <a class="hover-effect-underline stretched-link me-1" href="#!"><span id="bikeBrand">Look</span> <span id="bikeModel">795 Light RS</span></a>
+                      <span class="fs-xs fw-normal text-body-secondary">(<span id="bicycleMY">2021</span>)</span>
+                    </h3>
+                    <div class="h6 mb-0 opacity-75"><span id="dtBrand">Campanolo</span> <span id="dtModel">SuperRecord</span></div>
+                    <div class="h6 mb-0 opacity-75"><span id="whBrand">Campanolo</span> <span id="whModel">Bora Ultra 50</span></div>
+                  </div>
+                  <div class="card-footer position-relative z-1 bg-transparent border-0 pt-0 px-0 px-lg-4 pb-0 pb-lg-4">
+                    <div class="border-top pt-3">
+                      <div class="row row-cols-2 g-2 fs-sm">
+                        <div class="col d-flex align-items-center gap-2">
+                          <i class="fi-map-pin"></i>
+                          서울
+                        </div>
+                        <div class="col d-flex align-items-center gap-2">
+                          <i class="fi-tachometer"></i>
+                          <span id="bikeMiles">2870</span>Km
+                        </div>
+                        <!-- <div class="col d-flex align-items-center gap-2">
+                          <i class="fi-gas-pump"></i>
+                          Gasoline
+                        </div>
+                        <div class="col d-flex align-items-center gap-2">
+                          <i class="fi-gearbox"></i>
+                          Automatic
+                        </div> -->
+                      </div>
+                    </div>
+                  </div>
+                  <div class="d-none d-lg-block">
+                    <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark rounded d-none d-block-dark"></div>
+                  </div>
+                </article>
+
+                <hr class="d-lg-none">
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </main>
+<div class="modal fade" id="warningModal" tabindex="-1" aria-labelledby="warningModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-warning-subtle">
+        <h5 class="modal-title" id="warningModalLabel">알림</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
+      </div>
+      <div class="modal-body" id="warningModalBody">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
+      </div>
+    </div>
+  </div>
+</div>
+ <div th:replace="~{usr/include/LoginedFooter :: LoginedFooter}"></div>
+<script type="text/javascript">
+let seq = document.querySelector("input[name=bikeSeq]");
+let form = document.querySelector("form[name=form]");
+
+$('.btn-check').on('click', function() {
+	$('#bicycleCateCd').val($(this).val());
+});
+
+function validationInst() {
+    if(document.getElementById("bicycleName").value == null || document.getElementById("bicycleName").value == "") {
+		document.getElementById("bicycleName").classList.add("is-invalid");
+		document.getElementById("bicycleName").focus();
+		return false;
+	} else {
+		document.getElementById("bicycleName").classList.remove("is-invalid");			
+	}
+}
+
+document.getElementById("btnSubmit").onclick = function () {
+		if(validationInst() == false) return false;
+		form.action = "/bicycle/bicycleUsrInst";
+		form.submit();
+}
+
+</script>
+
+<script>
+  const uploadInput = document.getElementById('uploadImg1');
+  const previewContainer = document.getElementById('previewContainer');
+  const uploadSlot = document.getElementById('uploadSlot');
+
+  function updateCoverBadge() {
+    const previews = previewContainer.querySelectorAll('.col:not(#uploadSlot)');
+    previews.forEach((col, index) => {
+      const badge = col.querySelector('.badge');
+      if (index === 0) {
+        if (!badge) {
+          const badgeEl = document.createElement('span');
+          badgeEl.className = 'badge text-bg-light position-absolute top-0 start-0 z-3 mt-2 ms-2';
+          badgeEl.textContent = 'Cover';
+          col.querySelector('.hover-effect-opacity').prepend(badgeEl);
+        }
+      } else {
+        if (badge) badge.remove();
+      }
+    });
+  }
+
+  uploadInput.addEventListener('change', function () {
+    const files = Array.from(uploadInput.files);
+
+    files.forEach((file) => {
+      if (!file.type.startsWith('image/')) return;
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const col = document.createElement('div');
+        col.className = 'col';
+        col.innerHTML = `
+          <div class="hover-effect-opacity position-relative overflow-hidden rounded">
+            <div class="ratio" style="--fn-aspect-ratio: calc(180 / 268 * 100%)">
+              <img src="${e.target.result}" alt="Preview" class="w-100 h-100">
+            </div>
+            <div class="hover-effect-target position-absolute top-0 start-0 d-flex align-items-center justify-content-center w-100 h-100 opacity-0">
+              <button type="button" class="btn btn-icon btn-sm btn-light position-relative z-2 remove-preview" aria-label="Remove">
+                <i class="fi-trash fs-base"></i>
+              </button>
+              <span class="position-absolute top-0 start-0 w-100 h-100 bg-black bg-opacity-25 z-1"></span>
+            </div>
+          </div>`;
+        previewContainer.insertBefore(col, uploadSlot);
+        updateCoverBadge();
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // Note: input의 value는 리셋하지 않아야 서버 제출 가능
+  });
+
+  previewContainer.addEventListener('click', function (e) {
+    if (e.target.closest('.remove-preview')) {
+      const col = e.target.closest('.col');
+      col.remove();
+      updateCoverBadge();
+    }
+  });
+</script>
+<script type="text/javascript">
+function showWarningModal(message) {
+	  const modalBody = document.getElementById("warningModalBody");
+	  modalBody.textContent = message;
+
+	  const modal = new bootstrap.Modal(document.getElementById('warningModal'));
+	  modal.show();
+	}
+
+document.getElementById("btnSave").onclick = function (keyValue) {
+	const coverImg = previewContainer.querySelector('.col .badge')?.closest('.hover-effect-opacity')?.querySelector('img');
+
+	  if (!coverImg) {
+		  showWarningModal("대표 이미지가 없습니다.");
+	    return;
+	  }
+
+	  const coverSrc = coverImg.getAttribute('src');
+
+	  // 미리보기 영역의 이미지 변경
+	  const previewImg = document.querySelector('.ratio.hover-effect-target img');
+	  if (previewImg) {
+	    previewImg.setAttribute('src', coverSrc);
+	  }
+	  
+	$.ajax({
+		async: true 
+		,cache: false
+		,type: "post"
+		,url: "/bicycle/bicycleUsrProc"
+		,data: {"bicycleCateCd" : $("#bicycleCateCd").val()
+			, "bicycleBrandCd" : $("#bicycleBrandCd").val()
+			, "bicycleModel" : $("#bicycleModel").val()
+			, "bicycleYears" : $("#bicycleYears").val()
+			, "bicycleMiles" : $("#bicycleMiles").val()
+			, "bicycleName" : $("#bicycleName").val()
+			, "drivetrainBrandCd" : $("#drivetrainBrandCd").val()
+			, "drivetrainModel" : $("#drivetrainModel").val()
+			, "brakeBrandCd" : $("#brakeBrandCd").val()
+			, "wheelBrandCd" : $("#wheelBrandCd").val()
+			, "wheelModel" : $("#wheelModel").val()
+			}
+		,success: function(data) {
+			$("#bikeCate").text(data.bicycleCateCdName);
+			$("#bikeBrand").text(data.bicycleBrandCdName);
+			$("#bikeModel").text(data.bicycleModel);
+			$("#dtBrand").text(data.drivetrainBrandCdName);
+			$("#dtModel").text(data.drivetrainModel);
+			$("#whBrand").text(data.wheelBrandCdName);
+			$("#whModel").text(data.wheelModel);
+			$("#bicycleMY").text(data.bicycleYears);
+			$("#bikeMiles").text(data.bicycleMiles);
+
+		}
+		,error : function(jqXHR, textStatus, errorThrown){
+			showWarningModal("자전거정보를 입력하고 미리보기를 실행해주세요.");
+// 			alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+		}
+	});
+}
+
+
+</script>
+  </body>
+</html>

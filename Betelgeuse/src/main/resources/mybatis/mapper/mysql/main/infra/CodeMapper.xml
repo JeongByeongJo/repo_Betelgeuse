@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bicycledoctors.module.code.CodeDao">
+	
+	<resultMap type="com.bicycledoctors.module.code.CodeDto" id="resultMapObj"></resultMap>
+	
+	<sql id="selectCommon">	    
+	    from
+			code a
+			left join codegroup b on a.codegroup_cdgSeq = b.cdgSeq
+		where 1=1
+		<if test="shUseNy != null and !shUseNy.equals('')">AND a.cdUseNy = #{shUseNy}</if>
+        <if test="shDelNy != null and !shDelNy.equals('')">AND a.cdDelNy = #{shDelNy}</if>
+				<choose>
+					<when test="shOptionDate == 1">AND a.cdInstDate BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+					<when test="shOptionDate == 2">AND a.cdUpdtDate BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+				</choose>
+        <choose>
+            <when test="shOption == 1">AND b.cdgSeq = #{shValue}</when>
+            <when test="shOption == 2">AND b.cdgName LIKE CONCAT('%',#{shValue},'%')</when>
+            <when test="shOption == 3">AND b.cdgNameEng LIKE CONCAT('%',#{shValue},'%')</when>
+            <when test="shOption == 4">AND a.cdSeq LIKE CONCAT('%',#{shValue},'%')</when>
+            <when test="shOption == 5">AND a.cdName LIKE CONCAT('%',#{shValue},'%')</when>
+            <when test="shOption == 6">AND a.cdNameEng LIKE CONCAT('%',#{shValue},'%')</when>
+        </choose>
+    </sql>
+    
+    <select id="selectOneCount" resultType="Integer">
+    	select count(*)
+    	<include refid = "selectCommon"></include>
+    </select>
+
+	<select id="selectList" resultMap="resultMapObj">
+	select aa.* from (
+		select
+			a.cdSeq
+			,a.cdName
+			,a.cdNameEng
+			,a.cdUseNy
+			,a.cdDelNy
+			,a.cdInstDate
+			,a.cdUpdtDate
+			,a.cdDesc
+			,b.cdgSeq
+			,b.cdgName
+			,b.cdgNameEng
+		<include refid = "selectCommon"></include>
+		order by cdSeq desc
+	) aa
+	limit #{rowNumToShow} offset #{startRnumForMysql}
+	</select>
+	
+	<select id="selectGroupList" resultMap="resultMapObj">
+		select
+			cdgSeq
+			,cdgName
+		from
+			codegroup
+		where 1=1			
+		order by cdgSeq desc
+	</select>
+	
+	<select id="selectOne" resultMap="resultMapObj">
+		select
+			cdSeq
+			,cdName
+			,cdNameEng
+			,cdUseNy
+			,cdDelNy
+			,cdDesc
+			,codegroup_cdgSeq
+		from
+			code
+		where 1=1
+			and cdSeq = #{cdSeq}
+	</select>
+	
+	<insert id="insert">
+		insert into code (
+			cdName
+			,cdNameEng
+			,cdUseNy
+			,cdInstDate
+			,cdDesc
+			,codegroup_cdgSeq
+		) values (
+			#{cdName}
+			,#{cdNameEng}
+			,#{cdUseNy}
+			,CURRENT_TIMESTAMP
+			,#{cdDesc}
+			,#{codegroup_cdgSeq}
+		)
+		<selectKey resultType="String" keyProperty="cdSeq" order="AFTER">
+			SELECT last_insert_id()
+		</selectKey>
+	</insert>
+	
+	<update id="update">
+		update code set
+			cdName = #{cdName}
+			,cdNameEng = #{cdNameEng}
+			,cdUseNy = #{cdUseNy}
+			,cdUpdtDate = CURRENT_TIMESTAMP
+			,cdDesc = #{cdDesc}
+			,codegroup_cdgSeq = #{codegroup_cdgSeq}
+		where
+			cdSeq = #{cdSeq}
+	</update>
+	
+	<update id="uelete">
+		update code set
+			cdDelNy = 1
+		where
+			cdSeq = #{cdSeq}
+	</update>
+	
+	<select id="selectListCachedCodeArrayList" resultMap="resultMapObj">
+		SELECT 
+			cdSeq
+			, cdName
+			,cdNameEng
+			, codegroup_cdgSeq
+		FROM
+			code
+		WHERE 1=1
+			AND cdDelNy = 0
+		    AND cdUseNy = 1
+   	</select>
+</mapper>

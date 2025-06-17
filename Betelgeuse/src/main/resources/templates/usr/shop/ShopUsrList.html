@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ko" data-bs-theme="light" data-pwa="true" xmlns:th="http://www.thymeleaf.org">
+  <div th:replace="~{usr/include/LoginedHead :: LoginedHead}"></div>
+<!-- Filters offcanvas -->
+    <div class="offcanvas offcanvas-end" id="filters" tabindex="-1" style="width: 400px">
+    <form id="formFilter" name="formFilter">
+<input type="hidden" id="shOption" name="shOption" th:value="${shopVo?.shOption}">
+<input type="hidden" id="shValue" name="shValue" th:value="${shopVo?.shValue}">
+      <!-- Header -->
+      <div class="offcanvas-header px-sm-5">
+        <h4 class="h5 offcanvas-title">검색 필터</h4>
+        <button class="btn-close" type="button" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+
+      <!-- Body (Filter inputs) -->
+      <div class="offcanvas-body pt-2 pb-3 px-sm-5">
+        <div class="row g-4 pb-3 mb-3">
+          <div class="col">
+          <h6>점검,정비분야</h6>
+            <select class="form-select form-select-lg" id="availableServiceCd" name="availableServiceCd" data-select='{
+              "classNames": {
+                "containerInner": ["form-select", "form-select-lg"]
+              }
+            }' multiple aria-label="Select categories">
+	            <option value="">원하시는 서비스를 선택해주세요.&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</option>
+	            <option th:each="list : ${@codeService.selectListCachedCode(8)}" th:value="${list.cdSeq}" th:text="${list.cdName}"></option>
+            </select>
+          </div>
+        </div>
+        <div class="row g-4 pb-3 mb-3">
+          <div class="col">
+          <h6>취급 자전거 브랜드</h6>
+            <select class="form-select form-select-lg" id="bikeBrandCd" name="bikeBrandCd" data-select='{
+              "searchEnabled": true
+            }'>
+	            <option value="">원하시는 브랜드를 선택해주세요.&emsp;&emsp;</option>
+	            <option th:each="list : ${@codeService.selectListCachedCode(4)}" th:value="${list.cdSeq}" th:text="${list.cdName}"></option>
+            </select>
+          </div>
+        </div>
+        <div class="row g-4 pb-3 mb-3">
+          <div class="col">
+          <h6>취급 휠셋 브랜드</h6>
+            <select class="form-select form-select-lg" id="wheelBrandCd" name="wheelBrandCd" data-select='{
+              "searchEnabled": true
+            }'>
+	            <option value="">원하시는 브랜드를 선택해주세요.&emsp;&emsp;</option>
+	            <option th:each="list : ${@codeService.selectListCachedCode(6)}" th:value="${list.cdSeq}" th:text="${list.cdName}"></option>
+            </select>
+          </div>
+        </div>
+        <h6>편의시설</h6>
+        <div class="row gy-2 gx-4 pb-3 mb-3">
+          <div class="col vstack gap-2">
+            <div class="form-check m-0">
+              <input type="checkbox" class="form-check-input amenity" id="parkingNy" name="parkingNy" value="1">
+              <label for="parkingNy" class="form-check-label">주차장</label>
+            </div>
+            <div class="form-check m-0">
+              <input type="checkbox" class="form-check-input amenity" id="wifiNy" name="wifiNy" value="1">
+              <label for="wifiNy" class="form-check-label">Wifi</label>
+            </div>
+            <div class="form-check m-0">
+              <input type="checkbox" class="form-check-input amenity" id="cctvNy" name="cctvNy" value="1">
+              <label for="cctvNy" class="form-check-label">CCTV</label>
+            </div>
+            <div class="form-check m-0">
+              <input type="checkbox" class="form-check-input amenity" id="cafeNy" name="cafeNy" value="1">
+              <label for="cafeNy" class="form-check-label">Cafe</label>
+            </div>
+            <div class="form-check m-0">
+              <input type="checkbox" class="form-check-input amenity" id="petNy" name="petNy" value="1">
+              <label for="petNy" class="form-check-label">반려동물 동반</label>
+            </div>
+          </div>
+        </div>
+      </div>
+<!-- Appointment booking offcanvas -->
+    
+      <!-- Footer: Action buttons -->
+      <div class="row pt-2 pb-3 px-sm-5">
+          <div class="col pt-3">
+          	<a class="nav-link fs-xs text-decoration-underline text-nowrap p-0" id="resetFilter" style="cursor: pointer;">Clear all</a>
+          </div>
+          <div class="col">
+        	<button type="button" class="btn btn-primary" data-bs-dismiss="offcanvas">   <span>검색결과 보기</span><span id="filteredNum"></span> </button>
+          </div>
+      </div>
+      </form>
+    </div>
+    <!-- Page content -->
+    <main id="shopListMain" class="content-wrapper d-lg-flex">
+      <div class="d-lg-flex flex-grow-1">
+
+        <!-- Interactive map that turns into offcanvas on screens < 992px wide (lg breakpoint) -->
+        <div class="map-section" th:if="${#lists.isEmpty(list)}"><img src="https://cdn.mos.cms.futurecdn.net/acbrccq5yGLhQUX2fNj7kU-1920-80.jpg.webp" style="width: 100%; height: 55em; object-fit: cover;"></div>
+        <div class="map-section" th:if="${!#lists.isEmpty(list)}">
+          <div class="offcanvas-lg offcanvas-start d-flex flex-column w-100 h-100" id="map">
+            <div class="offcanvas-body position-relative h-100 p-0">
+              <button type="button" class="btn btn-icon btn-outline-secondary bg-body shadow position-absolute top-0 z-5 mt-2 d-lg-none" style="right: 0; margin-right: 8px; z-index: 500" data-bs-dismiss="offcanvas" data-bs-target="#map" aria-label="Close">
+                <i class="fi-close fs-lg"></i>
+              </button>
+
+              <!-- In order to make the map look like in the demo site add following property "tileLayer": "https://api.maptiler.com/maps/pastel/{z}/{x}/{y}.png?key=YOUR_MAPTILER_API_KEY", "tileSize": 512 and "zoomOffset": -1 to [data-map] attribute -->
+              <div th:each = "list : ${list}" id="map" class="position-absolute top-0 start-0 w-100 h-100 bg-body-tertiary" data-map='{
+                "zoom": 13,
+                "templates": {
+                  "marker": "<div class=\"map-marker\"><i class=\"fi-map-pin-filled text-primary fs-4\"></i><span class=\"map-marker-price\">{{shopName}}</span></div>",
+                  "popup": "<div class=\"card bg-transparent border-0\" data-bs-theme=\"light\"><div class=\"card-img-top position-relative bg-body-tertiary overflow-hidden\"><div class=\"ratio d-block\" style=\"--fn-aspect-ratio: calc(248 / 362 * 100%)\"><img src=\"{{image}}\" alt=\"Image\"></div></div><div class=\"card-body p-3\"><div class=\"h5 mb-2\">{{shopName}}</div><h3 class=\"fs-sm fw-normal text-body mb-2\"><a class=\"stretched-link text-body\" href=\"/shop/shopUsrView?shopSeq={{shopSeq}}\">{{shopAddress}}</a></h3><div class=\"h6 fs-sm mb-0\">{{shopTel}}</div></div><div class=\"card-footer d-flex gap-2 border-0 bg-transparent pt-0 pb-3 px-3 mt-n1\"></div></div></div>"
+                }
+              }' data-map-markers="/map-real-estate.json">
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Listings with filters -->
+        <div class="listings-section px-3 px-lg-4 pe-xxl-5">
+
+          <!-- Sticky filters -->
+          <div class="sticky-top bg-body mb-2 mb-sm-1">
+            <div class="d-md-none" style="height: 64px;  margin-top: -64px"></div>
+            <div class="d-none d-md-block d-lg-none" style="height: 72px;  margin-top: -72px"></div>
+            <div class="d-none d-lg-block" style="height: 76px; margin-top: -76px"></div>
+            <form id="searchForm" name="searchForm" class="d-flex gap-2 gap-sm-3 py-2 py-sm-3">
+              <div class="position-relative" style="width: 600px">
+                <i class="fi-map-pin position-absolute top-50 start-0 translate-middle-y z-1 ms-3"></i>
+                <input type="search" id="shValue" name="shValue" class="form-control form-icon-start" placeholder="점검, 정비샵 찾기">
+              </div>
+              <div class="flex-shrink-0 d-none d-md-block" style="width: 200px">
+                <div class="position-relative">
+                  <select id="shOption" name="shOption" class="form-select bg-transparent">
+                    <option value="3" th:selected="${shopVo?.shOption == 3}">위치(시,군,구)</option>
+                    <option value="2" th:selected="${shopVo?.shOption == 2}">샵 이름</option>
+                  </select>
+                </div>
+              </div>
+              <div class="position-relative" style="width: 180px">
+                <button type="button" id="btnSearch" class="btn btn-md btn-primary">검색</button>
+              </div>
+
+              <!-- Map offcanvas toggle button visible on screens < 992px wide (lg breakpoint) -->
+              <button type="button" class="btn btn-outline-dark pe-3 d-lg-none" data-bs-toggle="offcanvas" data-bs-target="#map" aria-controls="map">
+                <i class="fi-map fs-base me-2 ms-n1"></i>
+                <span class="d-none d-sm-inline">Show on map</span>
+                <span class="d-sm-none">Map</span>
+              </button>
+
+              <!-- Filters offcanvas toggle button -->
+              <div class="position-relative">
+                <button type="button" class="btn btn-icon btn-dark" data-bs-toggle="offcanvas" data-bs-target="#filters" aria-controls="filters" aria-label="Toogle filters">
+                  <i class="fi-sliders fs-base"></i>
+                </button>
+              </div>
+            </form>
+          </div>
+<div id="shopListContainer">
+<th:block th:replace="usr/shop/ShopListFragment :: shopListFragment"></th:block>
+</div>
+          <!-- Footer -->
+          <footer class="text-center pt-4 pt-md-5">
+            <hr class="pb-4">
+            <a class="d-inline-flex align-items-center text-dark-emphasis text-decoration-none mb-4" href="/index/homeUsr">
+              <span class="flex-shrink-0 text-primary rtl-flip me-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="34"><path d="M34.5 16.894v10.731c0 3.506-2.869 6.375-6.375 6.375H17.5h-.85C7.725 33.575.5 26.138.5 17c0-9.35 7.65-17 17-17s17 7.544 17 16.894z" fill="currentColor"></path><g fill-rule="evenodd"><path d="M17.5 13.258c-3.101 0-5.655 2.554-5.655 5.655s2.554 5.655 5.655 5.655 5.655-2.554 5.655-5.655-2.554-5.655-5.655-5.655zm-9.433 5.655c0-5.187 4.246-9.433 9.433-9.433s9.433 4.246 9.433 9.433a9.36 9.36 0 0 1-1.569 5.192l2.397 2.397a1.89 1.89 0 0 1 0 2.671 1.89 1.89 0 0 1-2.671 0l-2.397-2.397a9.36 9.36 0 0 1-5.192 1.569c-5.187 0-9.433-4.246-9.433-9.433z" fill="#000" fill-opacity=".05"></path><g fill="#fff"><path d="M17.394 10.153c-3.723 0-6.741 3.018-6.741 6.741s3.018 6.741 6.741 6.741 6.741-3.018 6.741-6.741-3.018-6.741-6.741-6.741zM7.347 16.894A10.05 10.05 0 0 1 17.394 6.847 10.05 10.05 0 0 1 27.44 16.894 10.05 10.05 0 0 1 17.394 26.94 10.05 10.05 0 0 1 7.347 16.894z"></path><path d="M23.025 22.525c.645-.645 1.692-.645 2.337 0l3.188 3.188c.645.645.645 1.692 0 2.337s-1.692.645-2.337 0l-3.187-3.187c-.645-.646-.645-1.692 0-2.337z"></path></g></g><path d="M23.662 14.663c2.112 0 3.825-1.713 3.825-3.825s-1.713-3.825-3.825-3.825-3.825 1.713-3.825 3.825 1.713 3.825 3.825 3.825z" fill="#fff"></path><path fill-rule="evenodd" d="M23.663 8.429a2.41 2.41 0 0 0-2.408 2.408 2.41 2.41 0 0 0 2.408 2.408 2.41 2.41 0 0 0 2.408-2.408 2.41 2.41 0 0 0-2.408-2.408zm-5.242 2.408c0-2.895 2.347-5.242 5.242-5.242s5.242 2.347 5.242 5.242-2.347 5.242-5.242 5.242-5.242-2.347-5.242-5.242z" fill="currentColor"></path></svg>
+              </span>
+              <span class="fs-4 fw-semibold">Bicycle Doctors</span>
+            </a>
+            <div class="py-4">
+              <p class="text-body-secondary fs-sm mb-0 mb-sm-2">&copy; All rights reserved. Made by <a class="text-body fw-medium text-decoration-none hover-effect-underline" href="#" target="_blank" rel="noreferrer">JeongByeongJo</a></p>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </main>
+
+
+    <!-- Back to top button -->
+    <div class="floating-buttons position-fixed top-50 end-0 z-sticky me-3 me-xl-4 pb-4">
+      <a class="btn-scroll-top btn btn-sm bg-body border-0 rounded-pill shadow animate-slide-end" href="#top">
+        Top
+        <i class="fi-arrow-right fs-base ms-1 me-n1 animate-target"></i>
+        <span class="position-absolute top-0 start-0 w-100 h-100 border rounded-pill z-0"></span>
+        <svg class="position-absolute top-0 start-0 w-100 h-100 z-1" viewBox="0 0 62 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x=".75" y=".75" width="60.5" height="30.5" rx="15.25" stroke="currentColor" stroke-width="1.5" stroke-miterlimit="10"/>
+        </svg>
+      </a>
+    </div>
+
+	<script src="/xdm/template/NiceAdmin/assets/jquery/jquery-3.7.1.min.js"></script>
+
+
+    <!-- Vendor scripts -->
+    <script src="/usr/template/Finder/assets/vendor/leaflet/dist/leaflet.js"></script>
+    <script src="/usr/template/Finder/assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="/usr/template/Finder/assets/vendor/choices.js/public/assets/scripts/choices.min.js"></script>
+    <script src="/usr/template/Finder/assets/vendor/flatpickr/dist/flatpickr.min.js"></script>
+
+    <!-- Bootstrap + Theme scripts -->
+    <script src="/usr/template/Finder/assets/js/theme.min.js"></script>
+
+    <!-- Page specific scripts -->
+    
+    <script type="text/javascript">
+    let formH = document.querySelector("form[name=formH]");
+    let formS = document.querySelector("form[name=searchForm]");
+	let seqH = document.querySelector("input[name=userCustomer_seq]");
+	
+	goFormH = function (keyValue) {
+	    seqH.value = keyValue;
+	    formH.action = "/shop/shopaddlocationUsrForm";
+	    formH.submit();
+	}
+	
+	document.getElementById("btnSearch").onclick = function () {
+		formS.action = "/shop/shopUsrList";
+		formS.submit();
+	};
+	
+	document.getElementById("shValue").addEventListener("keydown", function (e) {
+		  if (e.key === "Enter") {
+		    e.preventDefault();
+		    document.getElementById("btnSearch").click();
+		  }
+		});
+	
+	goList = function (thisPage) {
+	    document.querySelector("input[name=thisPage]").value = thisPage;
+	    form.action = "/shop/shopUsrList";
+	    form.submit();
+	}
+    
+	$("#btnSignout").on("click", function(){
+		$.ajax({
+			async: true 
+			,cache: false
+			,type: "post"
+			,url: "/member/signoutUsrProc"
+			,data: {}
+			,success: function(response) {
+				if(response.rt == "success") {
+					location.href = "/index";
+// 					location.href = "/member/signinUsrForm";
+				} else {
+					// by pass
+				}
+			}
+			,error : function(jqXHR, textStatus, errorThrown){
+				alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+			}
+		});
+	});
+	$("#signout").on("click", function(){
+		$.ajax({
+			async: true 
+			,cache: false
+			,type: "post"
+			,url: "/member/signoutUsrProc"
+			,data: {}
+			,success: function(response) {
+				if(response.rt == "success") {
+					location.href = "/index";
+// 					location.href = "/member/signinUsrForm";
+				} else {
+					// by pass
+				}
+			}
+			,error : function(jqXHR, textStatus, errorThrown){
+				alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+			}
+		});
+	});
+	</script>
+	<script th:inline="javascript">
+    
+    $(".amenity").on("change", function() {
+    	filter();
+    })
+    $(".form-select-lg").on("change", function() {
+    	filter();
+    })
+    
+    $('#resetFilter').on("click", function() {
+    	$("#formFilter")[0].reset();
+    	filter();
+    })
+    
+    
+    function filter () {
+    	const amenities = {};
+    	$(".amenity").each(function () {
+    	  const name = $(this).attr("name");
+    	  amenities[name] = $(this).is(":checked") ? 1 : 0;
+    	});
+    	$.ajax({
+    		async: true 
+    		,cache: false
+    		,type: "post"
+    		,url: "/shop/shopFilterUsrProc"
+    		,data : { "availableServiceCd" : $("#availableServiceCd").val()
+    			,"bikeBrandCd" : $("#bikeBrandCd").val() 
+    			,"wheelBrandCd" : $("#wheelBrandCd").val()
+    			,"parkingNy" : amenities.parkingNy
+    			,"wifiNy" : amenities.wifiNy
+    			,"cctvNy" : amenities.cctvNy
+    			,"cafeNy" : amenities.cafeNy
+    			,"petNy" : amenities.petNy
+    			}
+    		,traditional: true
+    		,success: function(response) {
+    			const shopSeqList = response.map(shop => shop.shopSeq);
+    			$("#filteredNum").text("("+shopSeqList.length+")");
+    			
+    			$.ajax({
+    	    		async: true 
+    	    		,cache: false
+    	    		,type: "post"
+    	    		,url: "/shop/shopUsrListFiltered"
+    	    		,data : { "shopSeqList" : shopSeqList}
+    	    		,traditional: true
+    	    		,success: function(htmlFragment) {
+    	    	        $("#shopListContainer").html(htmlFragment);  // 화면 갱신
+    	    	    }
+    	    		,error : function(jqXHR, textStatus, errorThrown){
+    	    			alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+    	    		}
+    	    	});
+    		}
+    		,error : function(jqXHR, textStatus, errorThrown){
+    			alert("ajaxUpdate33 " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+    		}
+    	});
+    }
+	</script>
+  </body>
+</html>

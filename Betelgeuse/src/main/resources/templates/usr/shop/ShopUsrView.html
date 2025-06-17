@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="ko" data-bs-theme="light" data-pwa="true" xmlns:th="http://www.thymeleaf.org">
+  <div th:replace="~{usr/include/LoginedHead :: LoginedHead}"></div>
+
+    <!-- Page content -->
+    <main class="content-wrapper">
+      <div class="container pt-4 pb-5 mb-xxl-3">
+
+        <!-- Breadcrumb -->
+        <nav class="pb-2 pb-md-3" aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/index/home-logined">홈</a></li>
+            <li class="breadcrumb-item"><a href="/shop/shopUsrList">자전거 점검&정비 샵 리스트</a></li>
+            <li class="breadcrumb-item active" aria-current="page" th:text="${item?.shopName}">섭바이크</li>
+          </ol>
+        </nav>
+
+        <!-- Image gallery -->
+        <div class="row g-3 g-lg-4">
+          <div class="col-md-8">
+            <a class="hover-effect-scale hover-effect-opacity position-relative d-flex rounded overflow-hidden" th:href="${item?.path2}" data-glightbox data-gallery="image-gallery">
+              <i class="fi-zoom-in hover-effect-target fs-3 text-white position-absolute top-50 start-50 translate-middle opacity-0 z-2"></i>
+              <span class="hover-effect-target position-absolute top-0 start-0 w-100 h-100 bg-black bg-opacity-25 opacity-0 z-1"></span>
+              <div class="ratio hover-effect-target bg-body-tertiary rounded" style="--fn-aspect-ratio: calc(450 / 856 * 100%)">
+                <img th:src="${item?.path2}" alt="Image">
+              </div>
+            </a>
+          </div>
+          <div class="col-md-4 vstack gap-3 gap-lg-4">
+            <a class="hover-effect-scale hover-effect-opacity position-relative d-flex rounded overflow-hidden" th:href="${item?.path1}" data-glightbox data-gallery="image-gallery">
+              <i class="fi-zoom-in hover-effect-target fs-3 text-white position-absolute top-50 start-50 translate-middle opacity-0 z-2"></i>
+              <span class="hover-effect-target position-absolute top-0 start-0 w-100 h-100 bg-black bg-opacity-25 opacity-0 z-1"></span>
+              <div class="ratio hover-effect-target bg-body-tertiary rounded" style="--fn-aspect-ratio: calc(213 / 416 * 100%)">
+                <img th:src="${item?.path1}" alt="Image">
+              </div>
+            </a>
+            <a class="hover-effect-scale hover-effect-opacity position-relative d-flex rounded overflow-hidden" th:href="${item?.path3}" data-glightbox data-gallery="image-gallery">
+              <i class="fi-zoom-in hover-effect-target fs-3 text-white position-absolute top-50 start-50 translate-middle opacity-0 z-2"></i>
+              <span class="hover-effect-target position-absolute top-0 start-0 w-100 h-100 bg-black bg-opacity-25 opacity-0 z-1"></span>
+              <div class="ratio hover-effect-target bg-body-tertiary rounded" style="--fn-aspect-ratio: calc(213 / 416 * 100%)">
+                <img th:src="${item?.path3}" alt="Image">
+              </div>              
+            </a>
+          </div>
+        </div>
+
+
+        <!-- Listing details -->
+        <div class="row pt-4 pb-2 pb-sm-3 pb-md-4 py-lg-5 mt-sm-2 mt-lg-0">
+
+          <!-- Content sections -->
+          <div class="col-lg-8 col-xl-7 pb-3 pb-sm-0 mb-4 mb-sm-5 mb-lg-0">
+
+            <!-- Badges + Sharing and wishlist buttons -->
+            <div class="d-flex align-items-center justify-content-between gap-4 mb-3">
+              <div class="d-flex gap-2">
+                <span class="badge text-bg-info d-inline-flex align-items-center">
+                  Verified
+                  <i class="fi-shield ms-1"></i>
+                </span>
+                <span class="badge text-bg-primary">New</span>
+              </div>
+              <div class="d-flex gap-2">
+                <div class="dropdown" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-sm" title="Share">
+                  <button type="button" class="btn btn-icon btn-secondary bg-transparent border-0 animate-scale" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="Share">
+                    <i class="fi-share-2 animate-target fs-base"></i>
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-end" style="--fn-dropdown-min-width: 9.5rem">
+                    <li>
+                      <a class="dropdown-item" href="#!">
+                        <i class="fi-facebook fs-base me-2"></i>
+                        Facebook
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#!">
+                        <i class="fi-instagram fs-base me-2"></i>
+                        Instagram
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        <i class="fi-linkedin fs-base me-2"></i>
+                        LinkedIn
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <button type="button" class="btn btn-icon btn-secondary bg-transparent border-0 animate-pulse" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-sm" title="Wishlist" aria-label="Wishlist">
+                  <i class="fi-heart animate-target fs-base"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Price + Address + Facilities -->
+            <div class="h3 pb-1 mb-2" th:text="${item?.shopName}">섭바이크</div>
+            <p class="fs-sm pb-1 mb-2"th:text="${item?.shopAddress1}">서울 중랑구 용마산로136가길 2 <span th:text="${item?.shopAddress3}">1층</span></p>
+            <div class="d-flex gap-2 mb-4">
+              <div class="d-flex align-items-center fs-sm gap-1 me-2" th:text="${item?.shopTel}">
+                02-978-0719
+              </div>
+            </div>
+
+            <!-- Amenities -->
+            <h2 class="h5 pt-4 pt-sm-5 mt-3 mt-sm-0">편의시설</h2>
+            <div class="row row-cols-2 row-cols-sm-3 fs-sm gy-3">
+              <div class="col d-flex align-items-center" th:if="${item?.wifiNy} != null">
+                <i class="fi-wifi fs-lg me-2"></i>
+                WiFi
+              </div>
+              <div class="col d-flex align-items-center" th:if="${item?.cafeNy} != null">
+                <i class="fi-snowflake fs-lg me-2"></i>
+                Air conditioning
+              </div>
+              <div class="col d-flex align-items-center" th:if="${item?.parkingNy} != null">
+                <i class="fi-parking fs-lg me-2"></i>
+                Parking place
+              </div>
+              <div class="col d-flex align-items-center" th:if="${item?.cctvNy} != null">
+                <i class="fi-video fs-lg me-2"></i>
+                Security cameras
+              </div>
+              <div class="col d-flex align-items-center">
+                <i class="fi-no-smoking fs-lg me-2"></i>
+                No smocking
+              </div>
+              <div class="col d-flex align-items-center" th:if="${item?.petNy} != null">
+                <i class="fi-paw fs-lg me-2"></i>
+                Pets allowed
+              </div>
+            </div>
+            
+            <!-- Location -->
+            <h2 class="h5 pt-4 pt-sm-5 mt-3 mt-sm-0">위치</h2>            
+
+            <!-- Google map -->
+<iframe class="border rounded" width="600" height="350" style=" 메뉴:0"loading="latency" allowfullscreen th:src="'https://www.google.com/maps/embed/v1/place?q=' + ${item.shopAddress1} + '&key=AIzaSyARuUf1r02-IOkpvbaEnxeIgEnfhtnlad0'"></iframe>  
+            <div class="position-relative p-4 mt-4" id="reviews" style="scroll-margin-top: 98px">
+              <div class="position-relative z-1 p-xl-2">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                  <h2 class="h4 mb-0">리 뷰</h2>
+                  <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#reviewForm">
+                    <i class="fi-edit-3 fs-base ms-n1 me-2"></i>
+                    리뷰 작성하기
+                  </button>
+                </div>
+
+                <!-- Rating breakdown -->
+                <div class="row g-4 pb-3 mb-3">
+                  <div class="col-sm-5 col-md-3 col-lg-4">
+                    <div class="vstack h-100 position-relative">
+                      <div class="d-flex flex-column align-items-center justify-content-center h-100 position-relative z-1 p-4">
+                        <div class="h1 pb-2 mb-1" th:text="${#numbers.formatDecimal(itemRV?.starsAvg, 1, 1)}">4.5</div>
+                        <div class="hstack justify-content-center gap-1 fs-sm mb-2">
+                          <i class="fi-star-filled text-warning" th:if="${itemRV?.starsAvg}==null ? false : ${itemRV?.starsAvg} >= 1"></i>
+                          <i class="fi-star-filled text-warning" th:if="${itemRV?.starsAvg}==null ? false : ${itemRV?.starsAvg}  >= 2"></i>
+                          <i class="fi-star-filled text-warning" th:if="${itemRV?.starsAvg}==null ? false : ${itemRV?.starsAvg}  >= 3"></i>
+                          <i class="fi-star-filled text-warning" th:if="${itemRV?.starsAvg}==null ? false : ${itemRV?.starsAvg}  >= 4"></i>
+                          <i class="fi-star-filled text-warning" th:if="${itemRV?.starsAvg}==null ? false : ${itemRV?.starsAvg}  >= 5"></i>
+                          <i class="fi-star-half text-warning" th:if="${itemRV?.starsAvg}==null ? false : ${itemRV?.starsAvg} % 1 > 0"></i>
+                        </div>
+                        <div class="fs-sm"><span th:text="${itemRV?.starsCount}"></span> 리뷰</div>
+                      </div>
+                      <span class="position-absolute top-0 start-0 w-100 h-100 bg-body-tertiary rounded d-none-dark"></span>
+                      <span class="position-absolute top-0 start-0 w-100 h-100 bg-body-secondary rounded opacity-50 d-none d-block-dark"></span>
+                    </div>
+                  </div>
+                  <div class="col-sm-7 col-md-9 col-lg-8">
+                    <div class="vstack gap-3">
+                      <div class="hstack gap-2">
+                        <div class="hstack fs-sm gap-1">
+                          5<i class="fi-star-filled text-warning"></i>
+                        </div>
+                        <div class="progress w-100" role="progressbar" aria-label="Five stars" th:aria-valuenow="${itemRV?.star5Rate}" aria-valuemin="0" aria-valuemax="100" style="height: 4px">
+                          <div class="progress-bar bg-warning rounded-pill" th:style="|width: ${itemRV?.star5Rate}%|"></div>
+                        </div>
+                        <div class="fs-sm text-nowrap text-end" style="width: 40px;" th:text="${itemRV?.star5Count}">128</div>
+                      </div>
+                      <div class="hstack gap-2">
+                        <div class="hstack fs-sm gap-1">
+                          4<i class="fi-star-filled text-warning"></i>
+                        </div>
+                        <div class="progress w-100" role="progressbar" aria-label="Four stars" th:aria-valuenow="${itemRV?.star4Rate}" aria-valuemin="0" aria-valuemax="100" style="height: 4px">
+                          <div class="progress-bar bg-warning rounded-pill" th:style="|width: ${itemRV?.star4Rate}%|"></div>
+                        </div>
+                        <div class="fs-sm text-nowrap text-end" style="width: 40px;" th:text="${itemRV?.star4Count}">27</div>
+                      </div>
+                      <div class="hstack gap-2">
+                        <div class="hstack fs-sm gap-1">
+                          3<i class="fi-star-filled text-warning"></i>
+                        </div>
+                        <div class="progress w-100" role="progressbar" aria-label="Three stars" th:aria-valuenow="${itemRV?.star3Rate}" aria-valuemin="0" aria-valuemax="100" style="height: 4px">
+                          <div class="progress-bar bg-warning rounded-pill" th:style="|width: ${itemRV?.star3Rate}%|"></div>
+                        </div>
+                        <div class="fs-sm text-nowrap text-end" style="width: 40px;" th:text="${itemRV?.star3Count}">13</div>
+                      </div>
+                      <div class="hstack gap-2">
+                        <div class="hstack fs-sm gap-1">
+                          2<i class="fi-star-filled text-warning"></i>
+                        </div>
+                        <div class="progress w-100" role="progressbar" aria-label="Two stars" th:aria-valuenow="${itemRV?.star2Rate}" aria-valuemin="0" aria-valuemax="100" style="height: 4px">
+                          <div class="progress-bar bg-warning rounded-pill" th:style="|width: ${itemRV?.star2Rate}%|"></div>
+                        </div>
+                        <div class="fs-sm text-nowrap text-end" style="width: 40px;" th:text="${itemRV?.star2Count}">6</div>
+                      </div>
+                      <div class="hstack gap-2">
+                        <div class="hstack fs-sm gap-1">
+                          1<i class="fi-star-filled text-warning"></i>
+                        </div>
+                        <div class="progress w-100" role="progressbar" aria-label="One star" th:aria-valuenow="${itemRV?.star1Rate}" aria-valuemin="0" aria-valuemax="100" style="height: 4px">
+                          <div class="progress-bar bg-warning rounded-pill" th:style="|width: ${itemRV?.star1Rate}%|"></div>
+                        </div>
+                        <div class="fs-sm text-nowrap text-end" style="width: 40px;" th:text="${itemRV?.star1Count}">2</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Reviews -->
+                <div class="vstack gap-4">
+
+                  <!-- Rreview -->
+                  <div class="vstack gap-2 mb-sm-2" th:if="${#lists.isEmpty(listRV)}"><h6 class="mb-0">작성된 리뷰가 없습니다.</h6></div>
+                  <div class="vstack gap-2 mb-sm-2" th:if="${!#lists.isEmpty(listRV)}" th:each=" listRV : ${listRV}">
+                    <div class="d-flex align-items-center gap-3 mb-1">
+                      <h6 class="mb-0" th:text="${listRV.userName}"></h6>
+                      <span class="fs-xs text-body-secondary" th:text="${#strings.substring(listRV.revwDate, 0, 10)}">November 19, 2024</span>
+                    </div>
+                    <div class="d-flex gap-1 fs-sm mb-1">
+                      <i class="fi-star-filled text-warning" th:if="${listRV.revwRate} >= 1"></i>
+                      <i class="fi-star-filled text-warning" th:if="${listRV.revwRate} >= 2"></i>
+                      <i class="fi-star-filled text-warning" th:if="${listRV.revwRate} >= 3"></i>
+                      <i class="fi-star-filled text-warning" th:if="${listRV.revwRate} >= 4"></i>
+                      <i class="fi-star-filled text-warning" th:if="${listRV.revwRate} >= 5"></i>
+                    </div>
+                    <p class="fs-sm mb-1" th:text="${listRV.revwReviews}">Dr. Michael Johnston is truly a life-saver. His expertise and attention to detail are unmatched. He took the time to explain everything clearly and made sure I felt comfortable every step of the way. Thanks to him, my heart health is now better than ever. I highly recommend him!</p>
+                    <div class="nav align-items-center">
+<!--                       <button type="button" class="nav-link text-body-secondary animate-scale px-0 me-n1"> -->
+<!--                         <i class="fi-thumbs-up fs-base animate-target me-1"></i> -->
+<!--                         6 -->
+<!--                       </button> -->
+<!--                       <hr class="vr my-2 mx-3"> -->
+<!--                       <button type="button" class="nav-link text-body-secondary animate-scale px-0 ms-n1"> -->
+<!--                         <i class="fi-thumbs-down fs-base animate-target me-1"></i> -->
+<!--                         0 -->
+<!--                       </button> -->
+                    </div>
+                  </div>
+
+
+                  <!-- Pagination -->
+                  <nav class="pt-3 mt-3" aria-label="Listings pagination">
+            <ul class="pagination pagination-lg justify-content-center">
+				<li th:if="${reviewVo.startPage gt reviewVo.pageNumToShow}" class="page-item" style="cursor: pointer;">
+					<a class="page-link" href="javascript:goList(${reviewVo.startPage - 1})" th:attr="onclick=|goList('${reviewVo.startPage - 1}')|">
+						&laquo;
+					</a>
+				</li>
+				<li th:each="num: ${#numbers.sequence(reviewVo.startPage, reviewVo.endPage)}" th:classappend="${num eq reviewVo.thisPage} ? active : ''" class="page-item" style="cursor: pointer;">
+					<a class="page-link" th:attr="onclick=|goList('${num}')|" th:text="${num}"><!-- ${i.index} --></a>
+				</li>
+				<li th:if="${reviewVo.endPage ne reviewVo.totalPages}" class="page-item" style="cursor: pointer;">
+					<a class="page-link" th:attr="onclick=|goList('${reviewVo.endPage + 1}')|">
+						&raquo;
+					</a>
+				</li>
+            </ul>
+          </nav>
+                </div>
+              </div>
+              <span class="position-absolute top-0 start-0 w-100 h-100 bg-white rounded shadow d-none-dark"></span>
+              <span class="position-absolute top-0 start-0 w-100 h-100 bg-body-tertiary rounded d-none d-block-dark"></span>
+            </div>
+
+            <!-- Meta + Sharing and wishlist buttons -->
+<!--             <div class="d-flex align-items-center justify-content-between gap-3 pt-4"> -->
+<!--               <div class="d-flex gap-3 fs-sm"> -->
+<!--                 <div>Published: <span class="fw-medium text-dark-emphasis">Sep 9, 2024</span></div> -->
+<!--                 <div>Views: <span class="fw-medium text-dark-emphasis">158</span></div> -->
+<!--               </div> -->
+<!--               <div class="d-flex gap-2"> -->
+<!--                 <div class="dropdown" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-sm" title="Share"> -->
+<!--                   <button type="button" class="btn btn-icon btn-secondary bg-transparent border-0 animate-scale" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="Share"> -->
+<!--                     <i class="fi-share-2 animate-target fs-base"></i> -->
+<!--                   </button> -->
+<!--                   <ul class="dropdown-menu dropdown-menu-end" style="--fn-dropdown-min-width: 9.5rem"> -->
+<!--                     <li> -->
+<!--                       <a class="dropdown-item" href="#!"> -->
+<!--                         <i class="fi-facebook fs-base me-2"></i> -->
+<!--                         Facebook -->
+<!--                       </a> -->
+<!--                     </li> -->
+<!--                     <li> -->
+<!--                       <a class="dropdown-item" href="#!"> -->
+<!--                         <i class="fi-instagram fs-base me-2"></i> -->
+<!--                         Instagram -->
+<!--                       </a> -->
+<!--                     </li> -->
+<!--                     <li> -->
+<!--                       <a class="dropdown-item" href="#"> -->
+<!--                         <i class="fi-linkedin fs-base me-2"></i> -->
+<!--                         LinkedIn -->
+<!--                       </a> -->
+<!--                     </li> -->
+<!--                   </ul> -->
+<!--                 </div> -->
+<!--                 <button type="button" class="btn btn-icon btn-secondary bg-transparent border-0 animate-pulse" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-sm" title="Wishlist" aria-label="Wishlist"> -->
+<!--                   <i class="fi-heart animate-target fs-base"></i> -->
+<!--                 </button> -->
+<!--               </div> -->
+<!--             </div> -->
+          </div>
+
+          <!-- Sidebar with contact form that turns into offcanvas on screens < 992px wide (lg breakpoint) -->
+          <aside class="col-lg-4 offset-xl-1">
+<form name="rsrvForm"><input type="hidden" id="shopSeq" name="shopSeq" th:value="${item?.shopSeq}"/>
+            <div class="d-none d-lg-block" style="margin-top: -105px"></div>
+            <div class="sticky-lg-top">
+              <div class="d-none d-lg-block" style="height: 105px"></div>
+              <div class="bg-body-tertiary rounded p-4">
+                <div class="position-relative z-1 p-xl-2">
+                  <h2 class="h5 mb-4 d-none d-lg-block">점검&정비 예약하기</h2>
+                  <label class="form-label fs-base" for="bikeSeq">자전거 선택</label>
+                  <select class="form-select form-select-lg" id="bikeSeq" name="bikeSeq" data-select aria-label="bicycle select">
+                    <option value="">예약할 자전거를 선택해주세요.&emsp;&emsp;&emsp;&emsp;</option>
+                    <option th:each="listBike : ${listBike}" th:value="${listBike?.bikeSeq}" th:text="${listBike?.bicycleName}"> </option>
+                  </select>
+                  <label class="form-label fs-base pt-3" for="reservServicesCd">점검 & 정비</label>
+                  <select class="form-select form-select-lg" id="reservServicesCd" name="reservServicesCd" data-select multiple aria-label="gear select">
+                    <option value="">선택해주세요.&emsp;&emsp;&emsp;&emsp;</option>
+                    <option th:each="list : ${list}" th:value="${list?.availableServiceCd}" th:text="${@codeService.selectOneCachedCode(list.availableServiceCd)}">구동계</option>
+                  </select>
+                  <div class="d-flex gap-4 pb-2 mb-1">
+                    
+                  </div>
+<div class="btn-group w-100" role="group" aria-label="Date/time selection">
+  <button type="button" id="prevBtn" class="btn btn-icon btn-outline-info flex-grow-0 px-2" aria-label="previous">
+    <i class="fi-chevron-left fs-lg"></i>
+  </button>
+
+  <div id="date-buttons" class="d-flex flex-grow-1 justify-content-between overflow-hidden">
+    <th:block th:each="day, iterStat : ${visitDays}">
+      <input type="radio"
+             class="btn-check"
+             name="reservationDateCd"
+             th:id="${day.id}"
+             th:checked="${day.checked}"
+             th:data-index="${iterStat.index}"
+             th:value="${iterStat.index}" />
+
+      <label class="btn btn-outline-info text-center px-2 rounded-0"
+             th:for="${day.id}"
+             th:text="${day.label}"
+             th:data-index="${iterStat.index}"
+             style="flex: 1; min-width: 0; border-left: none; border-right: none;">날짜</label>
+    </th:block>
+  </div>
+
+  <button type="button" id="nextBtn" class="btn btn-icon btn-outline-info flex-grow-0 px-2" aria-label="next">
+    <i class="fi-chevron-right fs-lg"></i>
+  </button>
+</div>
+                  <div class="row row-cols-4 g-2 pt-4 pb-2">
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-1" th:value="100">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-1">10:00</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-2" th:value="101">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-2">10:30</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-3" th:value="102">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-3">11:00</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-4" th:value="103">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-4">11:30</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-5" th:value="104">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-5">12:00</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-6" th:value="105" checked>
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-6">12:30</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-7" th:value="106">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-7">13:00</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-8" th:value="107">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-8">13:30</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-9" th:value="108">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-9">14:00</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-10" th:value="109">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-10">14:30</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-11" th:value="110">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-11">15:00</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-12" th:value="111">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-12">15:30</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-13" th:value="112">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-13">16:00</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-14" th:value="113">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-14">16:30</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-15" th:value="114">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-15">17:00</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-16" th:value="115">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-16">17:30</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-17" th:value="116">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-17">18:00</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-18" th:value="117">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-18">18:30</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-19" th:value="118">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-19">19:00</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-20" th:value="119" disabled>
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-20">19:30</label>
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-lg btn-primary w-100 mt-4" id="appoint" >
+                    <i class="fi-clock fs-lg me-2 ms-n1 d-lg-none d-xl-inline-flex"></i>
+                    예약하기
+                  </button>
+                  
+                </div>
+                <!-- <div class="position-absolute top-0 start-0 w-100 h-100 d-none d-lg-block">data-bs-toggle="modal" data-bs-target="#modalId"
+                  <span class="position-absolute top-0 start-0 w-100 h-100 bg-white rounded shadow d-none-dark"></span>
+                  <span class="position-absolute top-0 start-0 w-100 h-100 bg-body-tertiary rounded d-none d-block-dark"></span>
+                </div> -->
+              </div>
+            </div>
+	        <div class="modal fade" id="modalId" tabindex="-1" role="dialog">
+	          <div class="modal-dialog" role="document">
+	            <div class="modal-content">
+	              <div class="modal-header">
+	                <h5 class="modal-title">예약하기</h5>
+	                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+	              </div>
+	              <div class="modal-body">
+	  				<textarea class="form-control" id="rsrvDesc" name="rsrvDesc" placeholder="점검,정비 요청사항을 자세히 기입해주세요." rows="3"></textarea>
+	              </div>
+	              <div class="modal-footer flex-column flex-sm-row align-items-stretch">
+	                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+	                <button type="button" id="btnReservation" class="btn btn-primary">예약하기</button>
+	              </div>
+	            </div>
+	          </div>
+	        </div>
+          </form>
+          </aside>
+        </div>
+      </div>
+
+		<div class="modal fade" id="modalAlert" tabindex="-1" role="dialog">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-body" id="alertText">
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <div class="modal fade" id="reviewForm" data-bs-backdrop="static" tabindex="-1" aria-labelledby="reviewFormLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <form class="modal-content needs-validation" id="reviewForm" name="reviewForm" novalidate>
+        <input type="hidden" name="shop_shopSeq" th:value="${item?.shopSeq}"/>
+        <input type="hidden" name="userCustomer_seq" th:value="${session.sessSeqUsr}"/>
+          <div class="modal-header border-0">
+            <h5 class="modal-title" id="reviewFormLabel">리뷰를 남겨주세요.</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body pb-3 pt-0">
+            <div class="mb-3">
+              <label for="userName" class="form-label">성함 <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" id="userName" name="userName" th:value="${session.sessNameUsr}" required>
+              <div class="invalid-feedback">성함을 입력해주세요!</div>
+              <small class="form-text">리뷰에 사용될 이름입니다.</small>
+            </div>
+            <div class="mb-3">
+              <label for="userEmail" class="form-label">이메일 <span class="text-danger">*</span></label>
+              <input type="email" class="form-control" id="userEmail" name="userEmail" th:value="${session.sessEmailUsr}" required>
+              <div class="invalid-feedback">유효한 이메일 주소를 입력해주세요!</div>
+              <small class="form-text">리뷰작성 외에 이메일주소를 사용하지 않습니다.</small>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">별점 <span class="text-danger">*</span></label>
+              <select class="form-select" id="revwRate" name="revwRate" data-select='{
+                "placeholderValue": "Select rating",
+                "choices": [
+                  {
+                    "value": "",
+                    "label": "Select rating",
+                    "placeholder": true
+                  },
+                  {
+                    "value": "1",
+                    "label": "<span class=\"visually-hidden\">1 star</span>",
+                    "customProperties": {
+                      "icon": "<span class=\"d-flex gap-1 py-1\"><i class=\"fi-star-filled text-warning\"></i></span>",
+                      "selected": "1 star"
+                    }
+                  },
+                  {
+                    "value": "2",
+                    "label": "<span class=\"visually-hidden\">2 stars</span>",
+                    "customProperties": {
+                      "icon": "<span class=\"d-flex gap-1 py-1\"><i class=\"fi-star-filled text-warning\"></i><i class=\"fi-star-filled text-warning\"></i></span>",
+                      "selected": "2 stars"
+                    }
+                  },
+                  {
+                    "value": "3",
+                    "label": "<span class=\"visually-hidden\">3 stars</span>",
+                    "customProperties": {
+                      "icon": "<span class=\"d-flex gap-1 py-1\"><i class=\"fi-star-filled text-warning\"></i><i class=\"fi-star-filled text-warning\"></i><i class=\"fi-star-filled text-warning\"></i></span>",
+                      "selected": "3 stars"
+                    }
+                  },
+                  {
+                    "value": "4",
+                    "label": "<span class=\"visually-hidden\">4 stars</span>",
+                    "customProperties": {
+                      "icon": "<span class=\"d-flex gap-1 py-1\"><i class=\"fi-star-filled text-warning\"></i><i class=\"fi-star-filled text-warning\"></i><i class=\"fi-star-filled text-warning\"></i><i class=\"fi-star-filled text-warning\"></i></span>",
+                      "selected": "4 stars"
+                    }
+                  },
+                  {
+                    "value": "5",
+                    "label": "<span class=\"visually-hidden\">5 stars</span>",
+                    "customProperties": {
+                      "icon": "<span class=\"d-flex gap-1 py-1\"><i class=\"fi-star-filled text-warning\"></i><i class=\"fi-star-filled text-warning\"></i><i class=\"fi-star-filled text-warning\"></i><i class=\"fi-star-filled text-warning\"></i><i class=\"fi-star-filled text-warning\"></i></span>",
+                      "selected": "5 stars"
+                    }
+                  }
+                ]
+              }' data-select-template="true" aria-label="Rating select" required></select>
+              <div class="invalid-feedback">별점을 메겨주세요!</div>
+            </div>
+            <div>
+              <label class="form-label" for="revwReviews">리뷰 <span class="text-danger">*</span></label>
+              <textarea class="form-control" rows="4" id="revwReviews" name="revwReviews" required></textarea>
+              <div class="invalid-feedback">리뷰를 적어주세요!</div>
+              <!-- <small class="form-text">Your review must be at least 50 characters.</small> -->
+            </div>
+          </div>
+          <div class="modal-footer flex-nowrap gap-3 border-0 px-4">
+            <button type="reset" class="btn btn-secondary w-100 m-0" data-bs-dismiss="modal">취소</button>
+            <button type="button" id="btnReview" class="btn btn-primary w-100 m-0">리뷰 작성</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    </main>
+
+ <div th:replace="~{usr/include/LoginedFooter :: LoginedFooter}"></div>
+<script type="text/javascript">
+document.getElementById("appoint").onclick = function () {
+	if(document.getElementById('bikeSeq').value == "") {
+		document.getElementById('bikeSeq').focus();
+		document.getElementById('alertText').innerText = "예약하실 자전거를 선택해주세요.";
+		$("#modalAlert").modal("show");
+		return false;
+	}
+	if(document.getElementById('reservServicesCd').value == "") {
+		document.getElementById('reservServicesCd').focus();
+		document.getElementById('alertText').innerText = "서비스를 선택해주세요.";
+		$("#modalAlert").modal("show");
+		return false;
+	}
+	$("#modalId").modal("show");
+}
+</script>
+
+<script>
+goList = function (thisPage) {
+    document.querySelector("input[name=thisPage]").value = thisPage;
+    form.action = "/shop/shopUsrView";
+    form.submit();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+	  const maxVisible = 3;
+	  let startIndex = 0;
+
+	  const inputs = Array.from(document.querySelectorAll('input[name="reservationDateCd"]'));
+	  const labels = Array.from(document.querySelectorAll('#date-buttons label.btn'));
+
+	  function updateVisible() {
+	    inputs.forEach((input, i) => {
+	      input.style.display = (i >= startIndex && i < startIndex + maxVisible) ? '' : 'none';
+	    });
+
+	    labels.forEach((label, i) => {
+	      label.style.display = (i >= startIndex && i < startIndex + maxVisible) ? '' : 'none';
+	    });
+
+	  }
+
+	  prevBtn.addEventListener('click', () => {
+	    if (startIndex > 0) {
+	      startIndex--;
+	      updateVisible();
+	    }
+	  });
+
+	  nextBtn.addEventListener('click', () => {
+	    if (startIndex + maxVisible < inputs.length) {
+	      startIndex++;
+	      updateVisible();
+	    }
+	  });
+
+	  updateVisible();
+	});
+var form = document.querySelector("form[name=rsrvForm]");
+var formRV = document.querySelector("form[name=reviewForm]");
+
+document.getElementById("btnReservation").onclick = function () {
+	form.action = "/shop/shopResrvInst";
+	form.submit();
+}
+
+document.getElementById("btnReview").onclick = function () {
+    formRV.action = "/review/reviewUsrInst";
+    formRV.submit();
+}
+</script>
+    
+  </body>
+</html>
