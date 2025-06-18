@@ -342,7 +342,7 @@ $("button[name='heart']").on("click", function () {
 		,cache: false
 		,type: "post"
 		,url: "/shop/shopAddFavorUsrProc"
-		,data: {"shopSeq" : val}
+		,data: {"shopSeq" : val, "seq" : $("#seq").val()}
 		,success: function(data) {
 			$("#revwSeqUpdt").val(data.revwSeq);
 			$("#revwRate").val(data.revwRate);

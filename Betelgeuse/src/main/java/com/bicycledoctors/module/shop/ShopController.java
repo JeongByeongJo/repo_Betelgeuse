@@ -17,6 +17,8 @@ import com.bicycledoctors.common.base.BaseController;
 import com.bicycledoctors.common.base.BaseDto;
 import com.bicycledoctors.module.bicycle.BicycleService;
 import com.bicycledoctors.module.bicycle.BicycleVo;
+import com.bicycledoctors.module.favorite.FavoriteDto;
+import com.bicycledoctors.module.favorite.FavoriteService;
 import com.bicycledoctors.module.index.IndexService;
 import com.bicycledoctors.module.index.IndexVo;
 import com.bicycledoctors.module.review.ReviewService;
@@ -40,6 +42,9 @@ public class ShopController extends BaseController {
 	
 	@Autowired
 	ReviewService reviewService;
+	
+	@Autowired
+	FavoriteService favoriteService;
 	
 	@RequestMapping(value = "/shop/shopXdmList")
 	public String shopXdmList(@ModelAttribute("vo") ShopVo vo, ShopDto dto, Model model) {
@@ -212,9 +217,6 @@ public class ShopController extends BaseController {
 		return "redirect:/index/home-logined";
 	}
 	
-	
-	
-	
 	@ResponseBody
 	@RequestMapping(value = "/shop/shopFilterUsrProc")
 	public List<ShopDto> shopFilterUsrProc(ShopAvailableServicesDto dtos) {
@@ -260,4 +262,12 @@ public class ShopController extends BaseController {
 
 	    return "usr/shop/ShopListFragment :: shopListFragment";
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/shop/shopAddFavorUsrProc")
+	public void shopAddFavorUsrProc(FavoriteDto dtos) {
+		
+		
+	}
+
 }
