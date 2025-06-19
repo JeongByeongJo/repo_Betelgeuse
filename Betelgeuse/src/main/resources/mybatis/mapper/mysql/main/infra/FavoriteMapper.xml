@@ -15,23 +15,24 @@
 	
 	<select id="selectList" resultMap="resultMapObj">
 		SELECT 
-			favrSeq
-			,userCustomer_seq
-			,favrDelNy
-			,favrUseNy
-			,shop_shopSeq
+			f.favrSeq
+			,f.userCustomer_seq
+			,f.favrDelNy
+			,f.favrUseNy
+			,f.shop_shopSeq
 		<include refid = "selectCommon"></include>
 	</select>
 	
 	<select id="selectOne" resultMap="resultMapObj">
 		SELECT 
-			favrSeq
-			,userCustomer_seq
-			,favrDelNy
-			,favrUseNy
-			,shop_shopSeq
+			f.favrSeq
+			,f.userCustomer_seq
+			,f.favrDelNy
+			,f.favrUseNy
+			,f.shop_shopSeq
 		<include refid = "selectCommon"></include>
 		AND f.userCustomer_seq = #{seq}
+		AND f.shop_shopSeq = #{shopSeq}
 	</select>
 	
 	<select id="selectOneCount" resultType="Integer">
@@ -61,15 +62,17 @@
 		UPDATE favorite SET
 			favrDelNy = 1
 			,favrUseNy = 0
-		WHERE
-			userCustomer_seq = #{seq}
+		WHERE 1=1
+			AND userCustomer_seq = #{userCustomer_seq}
+			ANd shop_shopSeq = #{shop_shopSeq}
 	</update>
 
 	<update id="update">
 		UPDATE favorite SET
 			favrDelNy = 0
 			,favrUseNy = 1
-		WHERE
-			userCustomer_seq = #{seq}
+		WHERE 1=1
+			AND userCustomer_seq = #{userCustomer_seq}
+			ANd shop_shopSeq = #{shop_shopSeq}
 	</update>
 </mapper>

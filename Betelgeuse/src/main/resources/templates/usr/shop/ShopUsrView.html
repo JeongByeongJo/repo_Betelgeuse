@@ -61,33 +61,9 @@
                 <span class="badge text-bg-primary">New</span>
               </div>
               <div class="d-flex gap-2">
-                <div class="dropdown" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-sm" title="Share">
-                  <button type="button" class="btn btn-icon btn-secondary bg-transparent border-0 animate-scale" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="Share">
-                    <i class="fi-share-2 animate-target fs-base"></i>
-                  </button>
-                  <ul class="dropdown-menu dropdown-menu-end" style="--fn-dropdown-min-width: 9.5rem">
-                    <li>
-                      <a class="dropdown-item" href="#!">
-                        <i class="fi-facebook fs-base me-2"></i>
-                        Facebook
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#!">
-                        <i class="fi-instagram fs-base me-2"></i>
-                        Instagram
-                      </a>
-                    </li>
-                    <li>
-                      <a class="dropdown-item" href="#">
-                        <i class="fi-linkedin fs-base me-2"></i>
-                        LinkedIn
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-                <button type="button" class="btn btn-icon btn-secondary bg-transparent border-0 animate-pulse" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-sm" title="Wishlist" aria-label="Wishlist">
-                  <i class="fi-heart animate-target fs-base"></i>
+                <button type="button" class="btn btn-icon btn-secondary bg-transparent border-0 animate-pulse" name="heart" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-sm" title="Wishlist" aria-label="Wishlist">
+                  <i th:if="${item?.favrDelNy} == null or ${item?.favrDelNy} == 1" class="fi-heart text-danger animate-target fs-sm"></i>
+                  <i th:if="${item?.favrDelNy} == 0" class="fi-heart-filled text-danger animate-target fs-sm"></i>
                 </button>
               </div>
             </div>
@@ -594,6 +570,24 @@ document.getElementById("appoint").onclick = function () {
 	}
 	$("#modalId").modal("show");
 }
+
+$(document).on("click", "button[name='heart']", function () {
+	$(this).find("i").toggleClass("fi-heart fi-heart-filled");
+	$.ajax({
+		async: true 
+		,cache: false
+		,type: "post"
+		,url: "/shop/shopAddFavorUsrProc"
+		,data: {"seq" : $("#seq").val(), "shopSeq" : $("#shopSeq").val()}
+		,success: function() {
+        }
+		,error : function(jqXHR, textStatus, errorThrown){
+			alert(val);
+			alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+		}
+		
+	});
+});
 </script>
 
 <script>

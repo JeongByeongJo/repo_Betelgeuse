@@ -11,7 +11,7 @@
 	
 	<sql id="selectCommon">	    
 	    from shop as a
-	    left join usercustomer b on a.userCustomer_seq = b.seq
+<!-- 	    left join usercustomer b on a.userCustomer_seq = b.seq -->
 	    where 1=1
 <!-- 	    <if test="shUseNy != null and !shUseNy.equals('')">AND a.cdgUseNy = #{shUseNy}</if> -->
         <if test="shDelNy != null and !shDelNy.equals('')">AND a.delNy = #{shDelNy}</if>
@@ -86,10 +86,68 @@
 		    ,a.shopInstDate
 		    ,a.shopUpdtDate
 		    ,a.userCustomer_seq
-		    ,b.seq
-		    ,b.userId
-		    ,b.userName
+<!-- 		    ,b.seq -->
+<!-- 		    ,b.userId -->
+<!-- 		    ,b.userName -->
+		    ,(select favrDelNy from favorite where userCustomer_seq = #{seq} and shop_shopSeq = a.shopSeq) as favrDelNy
 		<include refid = "selectCommon"></include>
+	</select>
+	<select id="selectList4Favorite" resultMap="resultMapObj">
+		SELECT 
+			a.shopSeq
+		    ,a.shopName
+		    ,a.shopTel
+		    ,a.shopEmail
+		    ,a.shopZip
+		    ,a.shopAddress1
+		    ,a.shopAddress2
+		    ,a.shopAddress3
+		    ,a.shopAddress4
+		    ,a.shopLatitude
+		    ,a.shopLongitude
+		    ,a.shopDescribe
+		    ,a.parkingNy
+		    ,a.wifiNy
+		    ,a.cctvNy
+		    ,a.cafeNy
+		    ,a.petNy
+		    ,a.customerFavoriteNy
+		    ,a.mondayNy
+		    ,a.tuesdayNy
+		    ,a.wednesdayNy
+		    ,a.thursdayNy
+		    ,a.fridayNy
+		    ,a.saturdayNy
+		    ,a.sundayNy
+		    ,a.mondayOpentime
+		    ,a.mondayClosetime
+		    ,a.tuesdayOpentime
+		    ,a.tuesdayClosetime
+		    ,a.wednesdayOpentime
+		    ,a.wednesdayClosetime
+		    ,a.thursdayOpentime
+		    ,a.thurdayClosetime
+		    ,a.fridayOpentime
+		    ,a.fridayClosetime
+		    ,a.saturdayOpentime
+		    ,a.saturdayClosetime
+		    ,a.sundayOpentime
+		    ,a.sundayClosetime
+		    ,a.verifiedNy
+		    ,a.featuredNy
+		    ,a.delNy
+		    ,a.homepage
+		    ,a.youtube
+		    ,a.shopInstDate
+		    ,a.shopUpdtDate
+		    ,a.userCustomer_seq
+		    ,f.favrDelNy
+		FROM shop as a
+		LEFT JOIN favorite as f on f.shop_shopSeq = a.shopSeq
+		LEFT JOIN usercustomer as u on u.seq = f.userCustomer_seq
+		WHERE 1=1
+		AND favrDelNy = 0
+		AND f.userCustomer_seq = #{seq}
 	</select>
 	
 	<select id="selectOneCount" resultType="Integer">
@@ -124,12 +182,13 @@
 		    ,a.shopInstDate
 		    ,a.shopUpdtDate
 		    ,a.userCustomer_seq
-		    ,b.seq
-		    ,b.userId
-		    ,b.userName
+<!-- 		    ,b.seq -->
+<!-- 		    ,b.userId -->
+<!-- 		    ,b.userName -->
 		    ,(select path from filesUploaded where pSeq = shopSeq and sort = 3001) as path1
 		    ,(select path from filesUploaded where pSeq = shopSeq and sort = 3002) as path2
 		    ,(select path from filesUploaded where pSeq = shopSeq and sort = 3003) as path3
+		    ,(select favrDelNy from favorite where userCustomer_seq = #{seq} and shop_shopSeq = a.shopSeq) as favrDelNy
 		<include refid = "selectCommon"></include>
 		AND shopSeq = #{shopSeq}
 	</select>
@@ -176,7 +235,7 @@
 		    ,a.shopLongitude
 		    ,a.delNy
 		    ,a.userCustomer_seq
-		    ,b.seq
+<!-- 		    ,b.seq -->
 		    ,(select path from filesUploaded where pSeq = shopSeq and sort = 3001) as path
 		<include refid = "selectCommon"></include>
 	</select>
@@ -196,9 +255,9 @@
 			a.shopSeq
 		    ,a.youtube
 		    ,a.userCustomer_seq
-		    ,b.seq
-		    ,b.userId
-		    ,b.userName
+<!-- 		    ,b.seq -->
+<!-- 		    ,b.userId -->
+<!-- 		    ,b.userName -->
 		FROM shop as a
 		left join usercustomer b on a.userCustomer_seq = b.seq
 		WHERE 1=1

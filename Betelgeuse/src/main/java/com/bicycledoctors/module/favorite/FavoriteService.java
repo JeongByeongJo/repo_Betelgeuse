@@ -26,11 +26,14 @@ public class FavoriteService {
 	public int insert(FavoriteDto dto) {
 		return dao.insert(dto);
 	}
+	public int insert(FavoriteVo vo) {
+		return dao.insert(vo);
+	}
 	public int uelete(FavoriteDto dto) {
 		return dao.uelete(dto);
 	}
 	public int update(FavoriteDto dto) {
 		return dao.update(dto);
 	}
-
+	
 }

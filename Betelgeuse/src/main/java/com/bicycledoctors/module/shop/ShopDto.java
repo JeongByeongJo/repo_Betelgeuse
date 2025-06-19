@@ -55,6 +55,7 @@ public class ShopDto extends BaseDto{
     private String shopUpdtDate;
     private String userCustomer_seq;
     private String userShopSeq;
+    private Integer favrDelNy;
 //    -----
     private Integer uploadImg1Type;
 	private Integer uploadImg1MaxNumber;
@@ -381,6 +382,12 @@ public class ShopDto extends BaseDto{
 	}
 	public void setUserShopSeq(String userShopSeq) {
 		this.userShopSeq = userShopSeq;
+	}
+	public Integer getFavrDelNy() {
+		return favrDelNy;
+	}
+	public void setFavrDelNy(Integer favrDelNy) {
+		this.favrDelNy = favrDelNy;
 	}
     
 	

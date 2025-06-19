@@ -156,7 +156,7 @@
             </form>
           </div>
 <div id="shopListContainer">
-<th:block th:replace="usr/shop/ShopListFragment :: shopListFragment"></th:block>
+<th:block th:replace="~{usr/shop/ShopListFragment :: shopListFragment}"></th:block>
 </div>
           <!-- Footer -->
           <footer class="text-center pt-4 pt-md-5">
@@ -334,29 +334,38 @@
     }
 	</script>
 <script type="text/javascript">
-$("button[name='heart']").on("click", function () {
-	$(this).find("i").toggleClass("fi-heart fi-heart-filled");
+$(document).on("click", "button[name='heart']", function () {
 	let val = $(this).val();
 	$.ajax({
 		async: true 
 		,cache: false
 		,type: "post"
 		,url: "/shop/shopAddFavorUsrProc"
-		,data: {"shopSeq" : val, "seq" : $("#seq").val()}
-		,success: function(data) {
-			$("#revwSeqUpdt").val(data.revwSeq);
-			$("#revwRate").val(data.revwRate);
-			$("#revwReviews").val(data.revwReviews);
-			$("#reviewModal").modal("show");
+		,data: {"seq" : $("#seq").val(), "shopSeq" : val}
+		,success: function() {
+			$.ajax({
+	    		async: true 
+	    		,cache: false
+	    		,type: "post"
+	    		,url: "/shop/shopListProc"
+	    		,data : {}
+	    		,traditional: true
+	    		,success: function(htmlFragment) {
+	    	        $("#shopListContainer").html(htmlFragment);  // 화면 갱신
+	    	    }
+	    		,error : function(jqXHR, textStatus, errorThrown){
+	    			alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+	    		}
+	    	});
         }
 		,error : function(jqXHR, textStatus, errorThrown){
+			alert(val);
 			alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
 		}
+		
 	});
+	
 });
-goFavor = function (keyValue) {
-	$(this).find("i").toggleClass("fi-heart fi-heart-filled");
-}
 </script>
   </body>
 </html>

@@ -29,7 +29,8 @@ public class FakeJsonFileController {
 		
 		return shops.stream()
 		        .map(shop -> new ShopMarkerResponseDto(
-		                shop.getUserCustomer_seq(),
+		                //shop.getUserCustomer_seq(),
+		        		shop.getShopSeq(),
 		                shop.getShopSeq(),
 		                shop.getPath(),
 		                shop.getShopName(),

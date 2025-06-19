@@ -19,6 +19,7 @@ import com.bicycledoctors.module.bicycle.BicycleService;
 import com.bicycledoctors.module.bicycle.BicycleVo;
 import com.bicycledoctors.module.favorite.FavoriteDto;
 import com.bicycledoctors.module.favorite.FavoriteService;
+import com.bicycledoctors.module.favorite.FavoriteVo;
 import com.bicycledoctors.module.index.IndexService;
 import com.bicycledoctors.module.index.IndexVo;
 import com.bicycledoctors.module.review.ReviewService;
@@ -61,6 +62,7 @@ public class ShopController extends BaseController {
 	@RequestMapping(value = "/shop/shopUsrList")
 	public String shopUsrList(Model model, IndexVo vo, ShopDto dto,@ModelAttribute ShopVo shopVo, HttpSession httpSession) throws JsonProcessingException {
 		vo.setSeq(httpSession.getAttribute("sessSeqUsr").toString());
+		shopVo.setSeq(httpSession.getAttribute("sessSeqUsr").toString());
 		model.addAttribute("itemH", indexService.selectOneUserShopSeq(vo));
 		shopVo.setParamsPaging(service.selectOneCount(shopVo));
 		List<ShopDto> shopList = service.selectList(shopVo);  // 가게 정보 리스트
@@ -82,6 +84,7 @@ public class ShopController extends BaseController {
 	@RequestMapping(value = "/shop/shopUsrView")
 	public String shopUsrView(Model model, IndexVo vo, ShopDto dto, ShopVo shopVo, BicycleVo bicycleVo,@ModelAttribute ReviewVo reviewVo, HttpSession httpSession) {
 		vo.setSeq(httpSession.getAttribute("sessSeqUsr").toString());
+		shopVo.setSeq(httpSession.getAttribute("sessSeqUsr").toString());
 		bicycleVo.setUserCustomer_seq(httpSession.getAttribute("sessSeqUsr").toString());
 		model.addAttribute("itemH", indexService.selectOneUserShopSeq(vo));
 		
@@ -237,6 +240,7 @@ public class ShopController extends BaseController {
 	) throws JsonProcessingException {
 
 	    vo.setSeq(session.getAttribute("sessSeqUsr").toString());
+	    shopVo.setSeq(session.getAttribute("sessSeqUsr").toString());
 	    model.addAttribute("itemH", indexService.selectOneUserShopSeq(vo));
 
 	    shopVo.setShopSeqList(shopSeqList);  // 핵심: 필터된 shopSeq만 세팅
@@ -265,9 +269,49 @@ public class ShopController extends BaseController {
 	
 	@ResponseBody
 	@RequestMapping(value = "/shop/shopAddFavorUsrProc")
-	public void shopAddFavorUsrProc(FavoriteDto dtos) {
-		
-		
+	public void shopAddFavorUsrProc(FavoriteVo vo,@RequestParam(value = "seq") String seq,@RequestParam(value = "shopSeq") String shopSeq) {
+		FavoriteDto favoriteDto = new FavoriteDto();
+		FavoriteVo favoriteVo = new FavoriteVo();
+		favoriteVo.setSeq(seq);
+		favoriteVo.setShopSeq(shopSeq);
+		System.out.println(">>>>>>>>>>>");
+		System.out.println(favoriteVo.getSeq());
+		System.out.println(favoriteVo.getShopSeq());
+		favoriteDto = favoriteService.selectOne(favoriteVo);
+		if (favoriteDto == null) {
+			favoriteService.insert(favoriteVo);
+		} else {
+			System.out.println(">>>>>>>>>>>");
+			System.out.println(favoriteDto.getSeq());
+			System.out.println(favoriteDto.getShop_shopSeq());
+			if (favoriteDto.getFavrDelNy() == 0) {
+				favoriteService.uelete(favoriteDto);
+			} else {
+				favoriteService.update(favoriteDto);
+			}
+		}
 	}
-
+	@PostMapping(value = "/shop/shopListProc")
+	public String shopListProc(Model model, IndexVo vo, ShopDto dto,@ModelAttribute ShopVo shopVo, HttpSession httpSession) throws JsonProcessingException {
+		vo.setSeq(httpSession.getAttribute("sessSeqUsr").toString());
+		shopVo.setSeq(httpSession.getAttribute("sessSeqUsr").toString());
+		model.addAttribute("itemH", indexService.selectOneUserShopSeq(vo));
+		shopVo.setParamsPaging(service.selectOneCount(shopVo));
+		List<ShopDto> shopList = service.selectList(shopVo);  // 가게 정보 리스트
+		List<BaseDto> picList = service.selectOneList4Pic(dto);  // 이미지 정보 리스트
+		
+		// 각 가게에 해당하는 이미지들만 매칭하여 picList에 할당합니다.
+		for (ShopDto shop : shopList) {
+		    List<BaseDto> matchedPics = picList.stream()
+		        .filter(pic -> pic.getPseq().equals(shop.getShopSeq())) // shopSeq와 pSeq가 일치하는 것만 찾기
+		        .collect(Collectors.toList());
+		    
+		    shop.setPicList(matchedPics); // ShopDto에 picList 필드를 추가하여 연결
+		}
+		model.addAttribute("list", shopList);  // 가게 정보 리스트
+		model.addAttribute("listPic", picList);  // 이미지 정보 리스트 (혹시 필요하다면)
+		
+		return "usr/shop/ShopListFragment :: shopListFragment";
+	}
+	
 }

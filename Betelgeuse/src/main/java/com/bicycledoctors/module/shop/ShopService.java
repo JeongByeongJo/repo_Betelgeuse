@@ -31,6 +31,9 @@ public class ShopService extends BaseService {
 	public List<ShopDto> selectList(ShopVo vo) {
 		return dao.selectList(vo);
 	}
+	public List<ShopDto> selectList4Favorite(ShopVo vo) {
+		return dao.selectList4Favorite(vo);
+	}
 	public List<ShopDto> selectList(ShopDto dto) {
 		return dao.selectList(dto);
 	}

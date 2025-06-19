@@ -91,187 +91,91 @@
 
 
             <!-- Listings (Grid) -->
+              <div class="col" th:if="${#lists.isEmpty(list)}"><h4>즐겨찾기에 추가된 샵이 존재하지 않습니다.</h4></div>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4 g-md-3 g-lg-4">
 
               <!-- Item -->
-              <div class="col">
-                <article class="card hover-effect-opacity h-100">
-                  <div class="card-img-top position-relative bg-body-tertiary overflow-hidden">
-                    <div class="swiper z-2" data-swiper='{
-                      "pagination": {
-                        "el": ".swiper-pagination"
-                      },
-                      "navigation": {
-                        "prevEl": ".btn-prev",
-                        "nextEl": ".btn-next"
-                      },
-                      "breakpoints": {
-                        "991": {
-                          "allowTouchMove": false
-                        }
+            <div class="col" th:if="${!#lists.isEmpty(list)}" th:each="list : ${list}">
+            <input type="hidden" name="shopSeq" th:value="${list?.shopSeq}"/>
+              <article class="card hover-effect-opacity h-100" th:data-map-bind-to-marker="${list?.shopSeq}">
+                <div class="card-img-top position-relative bg-body-tertiary overflow-hidden">
+                  <div class="swiper z-2" data-swiper='{
+                    "pagination": {
+                      "el": ".swiper-pagination"
+                    },
+                    "navigation": {
+                      "prevEl": ".btn-prev",
+                      "nextEl": ".btn-next"
+                    },
+                    "breakpoints": {
+                      "991": {
+                        "allowTouchMove": false
                       }
-                    }'>
-                      <a class="swiper-wrapper" href="single-entry-real-estate.html">
-                        <div class="swiper-slide">
-                          <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
-                            <img src="assets/img/listings/bd/1731905799997173.jpg" alt="Image">
-                            <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
-                          </div>
+                    }
+                  }'>
+                    <a class="swiper-wrapper" th:href="@{/shop/shopUsrView(shopSeq=${list.shopSeq})}">
+                      <div class="swiper-slide" th:each = "listPic : ${list.picList}">
+                        <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
+                          <img th:src="@{${listPic.path}}" alt="Image">
+                          <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
                         </div>
-                        <div class="swiper-slide">
-                          <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
-                            <img src="assets/img/listings/bd/1731905809524829.jpg" alt="Image">
-                            <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
-                          </div>
-                        </div>
-                        <div class="swiper-slide">
-                          <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
-                            <img src="assets/img/listings/bd/1731905825460932.jpg" alt="Image">
-                            <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
-                          </div>
-                        </div>
+                      </div>
+                    </a>
+                    <div class="d-flex flex-column gap-2 align-items-start position-absolute top-0 start-0 z-1 pt-1 pt-sm-0 ps-1 ps-sm-0 mt-2 mt-sm-3 ms-2 ms-sm-3">
+                      <span class="badge text-bg-primary">New</span>
+                    </div>
+                    <div class="position-absolute top-0 end-0 z-1 hover-effect-target opacity-0 pt-1 pt-sm-0 pe-1 pe-sm-0 mt-2 mt-sm-3 me-2 me-sm-3">
+                      <button type="button" class="btn btn-sm btn-icon btn-light bg-light border-0 rounded-circle animate-pulse" name="heart" th:value="${list?.shopSeq}" aria-label="Add to wishlist">
+                        <i th:if="${list?.favrDelNy} == null or ${list?.favrDelNy} == 1" class="fi-heart text-danger animate-target fs-sm"></i>
+                        <i th:if="${list?.favrDelNy} == 0" class="fi-heart-filled text-danger animate-target fs-sm"></i>
+                      </button>
+                    </div>
+                    <div class="position-absolute top-50 start-0 z-1 translate-middle-y d-none d-lg-block hover-effect-target opacity-0 ms-3">
+                      <button type="button" class="btn btn-sm btn-prev btn-icon btn-light bg-light rounded-circle animate-slide-start" aria-label="Prev">
+                        <i class="fi-chevron-left fs-lg animate-target"></i>
+                      </button>
+                    </div>
+                    <div class="position-absolute top-50 end-0 z-1 translate-middle-y d-none d-lg-block hover-effect-target opacity-0 me-3">
+                      <button type="button" class="btn btn-sm btn-next btn-icon btn-light bg-light rounded-circle animate-slide-end" aria-label="Next">
+                        <i class="fi-chevron-right fs-lg animate-target"></i>
+                      </button>
+                    </div>
+                    <div class="swiper-pagination bottom-0 mb-2" data-bs-theme="light"></div>
+                  </div>
+                </div>
+                <div class="card-body p-4 pb-3">
+                  <div class="h5 mb-2" th:text="${list?.shopName}"></div>
+                  <h3 class="fs-sm fw-normal text-body mb-2" th:text="${list?.shopAddress1} + '  ' + ${list?.shopAddress3}"> </h3>                   
+                  <h4 class="fs-sm fw-normal text-body mb-2" th:text="${list?.shopTel}"></h4>
+                </div>
+                <div class="card-footer gap-2 border-0 bg-transparent pt-0 pb-0 px-3 mt-n1">
+                  <div class="row px-2">
+                    <div class="col-sm-5">
+                      <a class="btn btn-outline-secondary mb-3" th:href="'#collapse' + ${list?.shopSeq}" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapsebklnd">
+                        영업시간
                       </a>
-                      <div class="d-flex flex-column gap-2 align-items-start position-absolute top-0 start-0 z-1 pt-1 pt-sm-0 ps-1 ps-sm-0 mt-2 mt-sm-3 ms-2 ms-sm-3">
-                        <span class="badge text-bg-info d-inline-flex align-items-center">
-                          Verified
-                          <i class="fi-shield ms-1"></i>
-                        </span>
-                        <span class="badge text-bg-primary">New</span>
-                      </div>
-                      <div class="position-absolute top-0 end-0 z-1 hover-effect-target opacity-0 pt-1 pt-sm-0 pe-1 pe-sm-0 mt-2 mt-sm-3 me-2 me-sm-3">
-                        <button type="button" class="btn btn-sm btn-icon btn-light bg-light border-0 rounded-circle animate-pulse" aria-label="Remove from wishlist">
-                          <i class="fi-heart-filled text-danger animate-target fs-sm"></i>
-                        </button>
-                      </div>
-                      <div class="position-absolute top-50 start-0 z-1 translate-middle-y d-none d-lg-block hover-effect-target opacity-0 ms-3">
-                        <button type="button" class="btn btn-sm btn-prev btn-icon btn-light bg-light rounded-circle animate-slide-start" aria-label="Prev">
-                          <i class="fi-chevron-left fs-lg animate-target"></i>
-                        </button>
-                      </div>
-                      <div class="position-absolute top-50 end-0 z-1 translate-middle-y d-none d-lg-block hover-effect-target opacity-0 me-3">
-                        <button type="button" class="btn btn-sm btn-next btn-icon btn-light bg-light rounded-circle animate-slide-end" aria-label="Next">
-                          <i class="fi-chevron-right fs-lg animate-target"></i>
-                        </button>
-                      </div>
-                      <div class="swiper-pagination bottom-0 mb-2" data-bs-theme="light"></div>
                     </div>
                   </div>
-                  <div class="card-body p-4 pb-3">
-                    <div class="h5 mb-2">섭바이크</div>
-                    <h3 class="fs-sm fw-normal text-body mb-2">                    
-                        서울 중랑구 용마산로136가길 2 1층<br>02-978-0719                    
-                    </h3>                  
-                  </div>
-                  <div class="card-footer gap-2 border-0 bg-transparent pt-0 pb-0 px-3 mt-n1">
-                    <div class="row px-2">
-                      <div class="col-4">
-                        <a class="btn btn-outline-secondary mb-3" href="#collapseExample" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample">
-                          영업시간
-                        </a>
+                  <div class="row px-2">
+                    <div class="col">
+                      <div class="collapse" th:id="'collapse' + ${list?.shopSeq}">
+                        <ul class="list-unstyled align-items-start small">
+                          <li>월요일 <span th:if="${list?.mondayNy} == null">휴무</span> <span th:if="${list?.mondayNy} != null" th:text="${#strings.substring(list.mondayOpentime, 0, 5)} + ' ~ '"></span><span th:if="${list?.mondayNy} != null" th:text="${#strings.substring(list.mondayClosetime, 0, 5)}"></span></li>
+                          <li>화요일 <span th:if="${list?.tuesdayNy} == null">휴무</span> <span th:if="${list?.tuesdayNy} != null" th:text="${#strings.substring(list.tuesdayOpentime, 0, 5)} + ' ~ '"></span><span th:if="${list?.tuesdayNy} != null" th:text="${#strings.substring(list.tuesdayClosetime, 0, 5)}"></span></li>
+                          <li>수요일 <span th:if="${list?.wednesdayNy} == null">휴무</span> <span th:if="${list?.wednesdayNy} != null" th:text="${#strings.substring(list.wednesdayOpentime, 0, 5)} + ' ~ '"></span><span th:if="${list?.wednesdayNy} != null" th:text="${#strings.substring(list.wednesdayClosetime, 0, 5)}"></span></li>
+                          <li>목요일 <span th:if="${list?.thursdayNy} == null">휴무</span> <span th:if="${list?.thursdayNy} != null" th:text="${#strings.substring(list.thursdayOpentime, 0, 5)} + ' ~ '"></span><span th:if="${list?.thursdayNy} != null" th:text="${#strings.substring(list.thurdayClosetime, 0, 5)}"></span></li>
+                          <li>금요일 <span th:if="${list?.fridayNy} == null">휴무</span> <span th:if="${list?.fridayNy} != null" th:text="${#strings.substring(list.fridayOpentime, 0, 5)} + ' ~ '"></span><span th:if="${list?.fridayNy} != null" th:text="${#strings.substring(list.fridayClosetime, 0, 5)}"></span></li>
+                          <li>토요일 <span th:if="${list?.saturdayNy} == null">휴무</span> <span th:if="${list?.saturdayNy} != null" th:text="${#strings.substring(list.saturdayOpentime, 0, 5)} + ' ~ '"></span><span th:if="${list?.saturdayNy} != null" th:text="${#strings.substring(list.saturdayClosetime, 0, 5)}"></span></li>
+                          <li>일요일 <span th:if="${list?.sundayNy} == null">휴무</span> <span th:if="${list?.sundayNy} != null" th:text="${#strings.substring(list.sundayOpentime, 0, 5)} + ' ~ '"></span><span th:if="${list?.sundayNy} != null" th:text="${#strings.substring(list.sundayClosetime, 0, 5)}"></span></li>
+                        </ul>
                       </div>
                     </div>
-                    <div class="row px-2">
-                      <div class="col">
-                        <div class="collapse" id="collapseExample">
-                          <ul class="list-unstyled align-items-start small">
-                            <li>월요일 13:00 ~ 20:00</li>
-                            <li>화,수,목,금,토 10:30 ~ 20:00</li>
-                            <li>일요일 휴무</li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </article>
-              </div>
+                  </div>                   
+                </div>
+              </article>
+            </div>
 
               <!-- Item -->
-              <div class="col">
-                <article class="card hover-effect-opacity h-100">
-                  <div class="card-img-top position-relative bg-body-tertiary overflow-hidden">
-                    <div class="swiper z-2" data-swiper='{
-                      "pagination": {
-                        "el": ".swiper-pagination"
-                      },
-                      "navigation": {
-                        "prevEl": ".btn-prev",
-                        "nextEl": ".btn-next"
-                      },
-                      "breakpoints": {
-                        "991": {
-                          "allowTouchMove": false
-                        }
-                      }
-                    }'>
-                      <a class="swiper-wrapper" href="single-entry-real-estate.html">
-                        <div class="swiper-slide">
-                          <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
-                            <img src="assets/img/listings/bd/bkeland.jpg" alt="Image">
-                            <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
-                          </div>
-                        </div>
-                        <div class="swiper-slide">
-                          <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
-                            <img src="assets/img/listings/bd/bkeland1.jpg" alt="Image">
-                            <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
-                          </div>
-                        </div>
-                        <div class="swiper-slide">
-                          <div class="ratio d-block" style="--fn-aspect-ratio: calc(248 / 362 * 100%)">
-                            <img src="assets/img/listings/bd/bkelande.jpeg" alt="Image">
-                            <span class="position-absolute top-0 start-0 w-100 h-100 z-1" style="background: linear-gradient(180deg, rgba(0,0,0, 0) 0%, rgba(0,0,0, .11) 100%)"></span>
-                          </div>
-                        </div>
-                      </a>
-                      <div class="d-flex flex-column gap-2 align-items-start position-absolute top-0 start-0 z-1 pt-1 pt-sm-0 ps-1 ps-sm-0 mt-2 mt-sm-3 ms-2 ms-sm-3">
-                        <span class="badge text-bg-primary">New</span>
-                      </div>
-                      <div class="position-absolute top-0 end-0 z-1 hover-effect-target opacity-0 pt-1 pt-sm-0 pe-1 pe-sm-0 mt-2 mt-sm-3 me-2 me-sm-3">
-                        <button type="button" class="btn btn-sm btn-icon btn-light bg-light border-0 rounded-circle animate-pulse" aria-label="Remove from wishlist">
-                          <i class="fi-heart-filled text-danger animate-target fs-sm"></i>
-                        </button>
-                      </div>
-                      <div class="position-absolute top-50 start-0 z-1 translate-middle-y d-none d-lg-block hover-effect-target opacity-0 ms-3">
-                        <button type="button" class="btn btn-sm btn-prev btn-icon btn-light bg-light rounded-circle animate-slide-start" aria-label="Prev">
-                          <i class="fi-chevron-left fs-lg animate-target"></i>
-                        </button>
-                      </div>
-                      <div class="position-absolute top-50 end-0 z-1 translate-middle-y d-none d-lg-block hover-effect-target opacity-0 me-3">
-                        <button type="button" class="btn btn-sm btn-next btn-icon btn-light bg-light rounded-circle animate-slide-end" aria-label="Next">
-                          <i class="fi-chevron-right fs-lg animate-target"></i>
-                        </button>
-                      </div>
-                      <div class="swiper-pagination bottom-0 mb-2" data-bs-theme="light"></div>
-                    </div>
-                  </div>
-                  <div class="card-body p-4 pb-3">
-                    <div class="h5 mb-2">바이크랜드</div>
-                    <h3 class="fs-sm fw-normal text-body mb-2">                    
-                        서울시 중랑구 동일로 717<br>02-492-5501                    
-                    </h3>                  
-                  </div>
-                  <div class="card-footer gap-2 border-0 bg-transparent pt-0 pb-0 px-3 mt-n1">
-                    <div class="row px-2">
-                      <div class="col-4">
-                        <a class="btn btn-outline-secondary mb-3" href="#collapsebklnd" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapsebklnd">
-                          영업시간
-                        </a>
-                      </div>
-                    </div>
-                    <div class="row px-2">
-                      <div class="col">
-                        <div class="collapse" id="collapsebklnd">
-                          <ul class="list-unstyled align-items-start small">
-                            <li>월,수,목,금,토,일 09:30 ~ 18:00</li>
-                            <li>화요일 휴무</li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>                   
-                  </div>
-                </article>
-              </div>
-
               
             </div>
           </div>

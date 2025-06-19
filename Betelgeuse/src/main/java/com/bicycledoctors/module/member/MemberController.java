@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,6 +32,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
 import com.bicycledoctors.common.base.BaseController;
+import com.bicycledoctors.common.base.BaseDto;
 import com.bicycledoctors.common.util.UtilDateTime;
 import com.bicycledoctors.module.bicycle.BicycleDto;
 import com.bicycledoctors.module.bicycle.BicycleService;
@@ -38,6 +41,10 @@ import com.bicycledoctors.module.index.IndexVo;
 import com.bicycledoctors.module.mail.MailService;
 import com.bicycledoctors.module.reservation.ReservationService;
 import com.bicycledoctors.module.reservation.ReservationVo;
+import com.bicycledoctors.module.shop.ShopDto;
+import com.bicycledoctors.module.shop.ShopService;
+import com.bicycledoctors.module.shop.ShopVo;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -61,6 +68,9 @@ public class MemberController extends BaseController {
 	
 	@Autowired
 	ReservationService reservationService;
+	
+	@Autowired
+	ShopService shopService;
 	
 	@RequestMapping(value = "/member/memberXdmList")
 	public String memberXdmList(MemberVo vo, Model model) {
@@ -323,7 +333,6 @@ public class MemberController extends BaseController {
 		return "redirect:/member/signinUsrForm";
 	}
 
-
 	@RequestMapping(value = "/member/userBicycleUsrList")
 	public String userBicycleUsrList(Model model, IndexVo indexVo, HttpSession httpSession, BicycleDto bicycleDto) {
 		bicycleDto.setUserCustomer_seq((String)httpSession.getAttribute("sessSeqUsr"));
@@ -333,6 +342,29 @@ public class MemberController extends BaseController {
 		model.addAttribute("listR", bicycleService.selectList4Reservation(bicycleDto));
 		return "usr/member/account-listings";
 	}
+
+	@RequestMapping(value = "/member/userFavorite")
+	public String userFavorite(Model model, IndexVo vo, ShopDto dto,@ModelAttribute ShopVo shopVo, HttpSession httpSession) throws JsonProcessingException {
+		vo.setSeq(httpSession.getAttribute("sessSeqUsr").toString());
+		shopVo.setSeq(httpSession.getAttribute("sessSeqUsr").toString());
+		model.addAttribute("itemH", indexService.selectOneUserShopSeq(vo));
+		shopVo.setParamsPaging(shopService.selectOneCount(shopVo));
+		List<ShopDto> shopList = shopService.selectList4Favorite(shopVo);  // 가게 정보 리스트
+		List<BaseDto> picList = shopService.selectOneList4Pic(dto);  // 이미지 정보 리스트
+		
+		// 각 가게에 해당하는 이미지들만 매칭하여 picList에 할당합니다.
+		for (ShopDto shop : shopList) {
+		    List<BaseDto> matchedPics = picList.stream()
+		        .filter(pic -> pic.getPseq().equals(shop.getShopSeq())) // shopSeq와 pSeq가 일치하는 것만 찾기
+		        .collect(Collectors.toList());
+		    
+		    shop.setPicList(matchedPics); // ShopDto에 picList 필드를 추가하여 연결
+		}
+		model.addAttribute("list", shopList);  // 가게 정보 리스트
+		model.addAttribute("listPic", picList);  // 이미지 정보 리스트 (혹시 필요하다면)
+		return "usr/member/account-favorites";
+	}
+
 	@RequestMapping(value = "/member/shopUsrServiceAdmin")
 	public String shopUsrServiceAdmin(Model model, MemberVo vo, IndexVo indexVo, HttpSession httpSession, BicycleDto bicycleDto, ReservationVo reservationVo) {
 		bicycleDto.setUserCustomer_seq((String)httpSession.getAttribute("sessSeqUsr"));

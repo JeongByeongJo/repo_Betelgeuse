@@ -12,6 +12,7 @@ import com.bicycledoctors.common.base.BaseDto;
 public interface ShopDao extends BaseDao {
 	
 	public List<ShopDto> selectList(ShopVo vo);
+	public List<ShopDto> selectList4Favorite(ShopVo vo);
 	public List<ShopDto> select4Filter(List<ShopAvailableServiceDto> dtoList);
 	public List<ShopDto> select4ASFilter(ShopAvailableServicesDto dtos);
 	public List<ShopDto> selectList(ShopDto dto);

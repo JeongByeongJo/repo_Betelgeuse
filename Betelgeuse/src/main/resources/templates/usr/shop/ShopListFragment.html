@@ -11,7 +11,7 @@
             <div class="col" th:if="${#lists.isEmpty(list)}"><h4>해당 샵이 존재하지 않습니다.</h4></div>
             <div class="col" th:if="${!#lists.isEmpty(list)}" th:each="list : ${list}">
             <input type="hidden" name="shopSeq" th:value="${list?.shopSeq}"/>
-              <article class="card hover-effect-opacity h-100" th:data-map-bind-to-marker="${list?.userCustomer_seq}">
+              <article class="card hover-effect-opacity h-100" th:data-map-bind-to-marker="${list?.shopSeq}">
                 <div class="card-img-top position-relative bg-body-tertiary overflow-hidden">
                   <div class="swiper z-2" data-swiper='{
                     "pagination": {
@@ -40,7 +40,8 @@
                     </div>
                     <div class="position-absolute top-0 end-0 z-1 hover-effect-target opacity-0 pt-1 pt-sm-0 pe-1 pe-sm-0 mt-2 mt-sm-3 me-2 me-sm-3">
                       <button type="button" class="btn btn-sm btn-icon btn-light bg-light border-0 rounded-circle animate-pulse" name="heart" th:value="${list?.shopSeq}" aria-label="Add to wishlist">
-                        <i class="fi-heart animate-target fs-sm"></i>
+                        <i th:if="${list?.favrDelNy} == null or ${list?.favrDelNy} == 1" class="fi-heart text-danger animate-target fs-sm"></i>
+                        <i th:if="${list?.favrDelNy} == 0" class="fi-heart-filled text-danger animate-target fs-sm"></i>
                       </button>
                     </div>
                     <div class="position-absolute top-50 start-0 z-1 translate-middle-y d-none d-lg-block hover-effect-target opacity-0 ms-3">
