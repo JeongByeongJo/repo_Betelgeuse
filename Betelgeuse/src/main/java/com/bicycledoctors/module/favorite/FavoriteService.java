@@ -32,6 +32,9 @@ public class FavoriteService {
 	public int uelete(FavoriteDto dto) {
 		return dao.uelete(dto);
 	}
+	public int ueleteAll(FavoriteDto dto) {
+		return dao.ueleteAll(dto);
+	}
 	public int update(FavoriteDto dto) {
 		return dao.update(dto);
 	}

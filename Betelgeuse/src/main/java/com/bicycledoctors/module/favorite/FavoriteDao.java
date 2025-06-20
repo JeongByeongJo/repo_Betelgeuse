@@ -14,6 +14,7 @@ public interface FavoriteDao {
 	public int insert(FavoriteDto dto);
 	public int insert(FavoriteVo vo);
 	public int uelete(FavoriteDto dto);
+	public int ueleteAll(FavoriteDto dto);
 	public int update(FavoriteDto dto);
 
 }

@@ -66,6 +66,13 @@
 			AND userCustomer_seq = #{userCustomer_seq}
 			ANd shop_shopSeq = #{shop_shopSeq}
 	</update>
+	<update id="ueleteAll">
+		UPDATE favorite SET
+			favrDelNy = 1
+			,favrUseNy = 0
+		WHERE 1=1
+			AND userCustomer_seq = #{userCustomer_seq}
+	</update>
 
 	<update id="update">
 		UPDATE favorite SET

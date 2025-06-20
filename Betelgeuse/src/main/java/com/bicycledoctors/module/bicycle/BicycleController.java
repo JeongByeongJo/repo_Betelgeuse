@@ -51,7 +51,6 @@ public class BicycleController extends BaseController{
 		vo.setSeq(httpSession.getAttribute("sessSeqUsr").toString());
 		model.addAttribute("itemH", indexService.selectOneUserShopSeq(vo));
 		indexService.selectOneUserShopSeq(vo);
-		System.out.println("자전거 등록 들어올때 dto.getUserCustomer_seq(): " + vo.getUserCustomer_seq());
 
 		return "usr/bicycle/BicycleUsrForm";
 	}

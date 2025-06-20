@@ -335,6 +335,7 @@
 	</script>
 <script type="text/javascript">
 $(document).on("click", "button[name='heart']", function () {
+	$(this).find("i").toggleClass("fi-heart fi-heart-filled");
 	let val = $(this).val();
 	$.ajax({
 		async: true 

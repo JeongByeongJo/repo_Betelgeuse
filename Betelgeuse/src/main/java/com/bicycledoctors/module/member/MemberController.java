@@ -329,7 +329,6 @@ public class MemberController extends BaseController {
 			service.pwUpdate(memberDto);
 
 		}
-		
 		return "redirect:/member/signinUsrForm";
 	}
 
