@@ -166,7 +166,10 @@
                   </div>
                   <div class="col">
                     <label for="mileage" class="form-label">마일리지 *</label>
-                    <input type="text" class="form-control form-control-lg" id="bicycleMiles" name="bicycleMiles" th:value="${item?.bicycleMiles}" placeholder="K meter" required>
+                  <div class="input-group">
+                    <input type="number" class="form-control form-control-lg" id="bicycleMiles" name="bicycleMiles" th:value="${item?.bicycleMiles}" placeholder="K meter" required>
+					<span class="input-group-text">km</span>
+                  </div>
                   </div>
                 </div>                
                 <div class="bg-body-tertiary rounded p-4">
@@ -181,11 +184,7 @@
                       <h6 class="mb-2">자전거의 시리얼넘버를 저장하세요.</h6>
                       <div class="d-flex gap-2" style="max-width: 354px">
                         <input type="text" class="form-control" id="bicycleSN" name="bicycleSN" th:value="${item?.bicycleSN}" placeholder="S/N code">
-                        <button type="button" class="btn btn-icon btn-dark" aria-label="Camera">
-                          <i class="fi-camera fs-base"></i>
-                        </button>
                       </div>
-                      
                     </div>
                   </div>
                 </div>
@@ -269,7 +268,7 @@
                   </div>
                   <div class="col">
                     <label for="exterior-color" class="form-label">휠셋 모델명</label>
-                    <input type="text" class="form-control form-control-lg" id="wheelModel" th:value="${item?.wheelModel}" name="wheelModel">
+                    <input type="text" class="form-control form-control-lg" id="wheelModel" th:value="${item?.wheelModel}" name="wheelModel" placeholder="휠셋 모델명">
                   </div>
                 </div>
                 <label for="description" class="form-label fs-6 fw-semibold">추가 기술 *</label>
@@ -317,7 +316,7 @@
                   </div>
                   <div class="card-body position-relative z-1 px-0 px-lg-4 pb-3">
                     <div class="d-flex align-items-center justify-content-between mb-2">
-                      <div class="fs-xs text-body-secondary me-3" id="bikeCate">28/06/2024</div>
+                      <div class="fs-xs text-body-secondary me-3" id="nowDate">28/06/2024</div>
                       <div class="d-flex gap-2 position-relative z-2">
                       </div>
                     </div>
@@ -332,21 +331,13 @@
                     <div class="border-top pt-3">
                       <div class="row row-cols-2 g-2 fs-sm">
                         <div class="col d-flex align-items-center gap-2">
-                          <i class="fi-map-pin"></i>
-                          서울
+                          <i class="fi-bicycle"></i>
+                          <span id="bikeCate">Road</span>
                         </div>
                         <div class="col d-flex align-items-center gap-2">
                           <i class="fi-tachometer"></i>
                           <span id="bikeMiles">2870</span>Km
                         </div>
-                        <!-- <div class="col d-flex align-items-center gap-2">
-                          <i class="fi-gas-pump"></i>
-                          Gasoline
-                        </div>
-                        <div class="col d-flex align-items-center gap-2">
-                          <i class="fi-gearbox"></i>
-                          Automatic
-                        </div> -->
                       </div>
                     </div>
                   </div>
@@ -398,10 +389,20 @@ function validationInst() {
 
 document.getElementById("btnSubmit").onclick = function () {
 		if(validationInst() == false) return false;
-		form.action = "/bicycle/bicycleUsrInst";
-		form.submit();
+		//form.action = "/bicycle/bicycleUsrInst";
+		//form.submit();
 }
-
+$("#bicycleMiles").on("keyup", function(){
+	let regExp = /^[0-9]{1,}$/
+	$("#bicycleMiles").removeClass("is-invalid");
+	if(!regExp.test($("#bicycleMiles").val())) {
+		$("#bicycleMiles").removeClass("is-valid");
+		$("#bicycleMiles").addClass("is-invalid");
+	} else {
+		$("#bicycleMiles").removeClass("is-invalid");
+		$("#bicycleMiles").addClass("is-valid");
+	}
+});
 </script>
 
 <script>
@@ -508,6 +509,7 @@ document.getElementById("btnSave").onclick = function (keyValue) {
 			, "wheelModel" : $("#wheelModel").val()
 			}
 		,success: function(data) {
+			$("#nowDate").text(getTodayFormatted());
 			$("#bikeCate").text(data.bicycleCateCdName);
 			$("#bikeBrand").text(data.bicycleBrandCdName);
 			$("#bikeModel").text(data.bicycleModel);
@@ -526,7 +528,12 @@ document.getElementById("btnSave").onclick = function (keyValue) {
 	});
 }
 
-
+function getTodayFormatted() {
+    const d = new Date();
+    return d.getFullYear() + "/" + 
+           String(d.getMonth() + 1).padStart(2, '0') + "/" + 
+           String(d.getDate()).padStart(2, '0');
+}
 </script>
   </body>
 </html>
