@@ -47,6 +47,10 @@ public class ReservationService extends BaseService {
 		return dao.selectOne4View(vo);
 	}
 	
+	public ReservationDto selectOne4InR(ReservationVo vo) {
+		return dao.selectOne4InR(vo);
+	}
+	
 	public List<ReservationDto> selectList4ServiceView(ReservationVo vo) {
 		return dao.selectList4ServiceView(vo);
 	}

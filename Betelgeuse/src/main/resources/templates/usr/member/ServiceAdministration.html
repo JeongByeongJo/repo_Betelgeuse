@@ -226,6 +226,7 @@
 				<div class="d-sm-flex align-items-center" th:if="${#lists.isEmpty(listR)}"><h4> 예약 또는 점검,정비 중인 자전거가 없습니다.</h4></div>
 				<div class="d-sm-flex align-items-center" th:if="${!#lists.isEmpty(listR)}" th:each="listR : ${listR}">
 					<input type="hidden" id="shopSeq" name="shopSeq" />
+					<input type="hidden" id="irSeq" name="irSeq" th:value="${listR?.irSeq}" />
 	                    <div class="d-inline-flex position-relative z-2 pt-1 pb-2 ps-2 p-sm-0 ms-2 ms-sm-0 me-sm-2">
 	                      <div class="form-check position-relative z-1 fs-lg m-0">
 	                        <input type="checkbox" class="form-check-input" checked>
@@ -258,15 +259,15 @@
 	                                  </button>
 	                                  <ul class="dropdown-menu dropdown-menu-end">
 	                                    <li>
-	                                      <a class="dropdown-item" th:attr="onclick=|goInR('${listR.rsrvSeq}')|">
+	                                      <a class="dropdown-item" th:id="viewReservation" href="javascript:void(0);" th:attr="onclick=|goAjax ('${listR?.rsrvSeq}')|">
 	                                        <i class="fi-edit opacity-75 me-2"></i>
-	                                        점검,정비 입력
+	                                        예약내용보기
 	                                      </a>
 	                                    </li>
-	                                    <li>
-	                                      <a class="dropdown-item" th:attr="onclick=|goInRMfom('${listR.rsrvSeq}')|">
-	                                        <i class="fi-zap fs-base opacity-75 me-2"></i>
-	                                        점검,정비내역 수정
+                                    	<li>
+	                                      <a class="dropdown-item" th:attr="onclick=|goInR('${listR.rsrvSeq}')|">
+	                                        <i class="fi-zap opacity-75 me-2"></i>
+	                                        점검,정비 입력
 	                                      </a>
 	                                    </li>
 	                                    <li>
@@ -379,8 +380,8 @@ goAjax = function (keyValue) {
 		,url: "/shop/resrvUsrViewProc"
 		,data: {"rsrvSeq" : keyValue}
 		,success: function(fragmentHtml) {
-            $("#modalContent").html(fragmentHtml);  // 모달 내용 삽입
-            $("#reservationDetails").modal("show");            // 모달 표시
+            $("#modalContent").html(fragmentHtml); 
+            $("#reservationDetails").modal("show");
         }
 		,error : function(jqXHR, textStatus, errorThrown){
 			alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);

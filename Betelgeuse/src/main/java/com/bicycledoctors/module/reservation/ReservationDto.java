@@ -20,6 +20,7 @@ public class ReservationDto extends BicycleDto {
 	private String reservServicesCd;
 	private String userName;
 	private String userTel;
+	private String irSeq;
 	private Integer xCount;
 //	-----
 	public String getRsrvSeq() {
@@ -129,6 +130,12 @@ public class ReservationDto extends BicycleDto {
 	}
 	public void setReservServicesCd(String reservServicesCd) {
 		this.reservServicesCd = reservServicesCd;
+	}
+	public String getIrSeq() {
+		return irSeq;
+	}
+	public void setIrSeq(String irSeq) {
+		this.irSeq = irSeq;
 	}
 	
 }

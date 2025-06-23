@@ -69,12 +69,10 @@
             </div>
 
             <!-- Price + Address + Facilities -->
-            <div class="h3 pb-1 mb-2" th:text="${item?.shopName}">섭바이크</div>
-            <p class="fs-sm pb-1 mb-2"th:text="${item?.shopAddress1}">서울 중랑구 용마산로136가길 2 <span th:text="${item?.shopAddress3}">1층</span></p>
+            <div class="h3 pb-1 mb-2" th:text="${item?.shopName}"></div>
+            <p class="fs-sm pb-1 mb-2"th:text="${item?.shopAddress1}"><span th:text="${item?.shopAddress3}"></span></p>
             <div class="d-flex gap-2 mb-4">
-              <div class="d-flex align-items-center fs-sm gap-1 me-2" th:text="${item?.shopTel}">
-                02-978-0719
-              </div>
+              <div class="d-flex align-items-center fs-sm gap-1 me-2" th:text="${item?.shopTel}"></div>
             </div>
 
             <!-- Amenities -->
@@ -247,44 +245,6 @@
               <span class="position-absolute top-0 start-0 w-100 h-100 bg-white rounded shadow d-none-dark"></span>
               <span class="position-absolute top-0 start-0 w-100 h-100 bg-body-tertiary rounded d-none d-block-dark"></span>
             </div>
-
-            <!-- Meta + Sharing and wishlist buttons -->
-<!--             <div class="d-flex align-items-center justify-content-between gap-3 pt-4"> -->
-<!--               <div class="d-flex gap-3 fs-sm"> -->
-<!--                 <div>Published: <span class="fw-medium text-dark-emphasis">Sep 9, 2024</span></div> -->
-<!--                 <div>Views: <span class="fw-medium text-dark-emphasis">158</span></div> -->
-<!--               </div> -->
-<!--               <div class="d-flex gap-2"> -->
-<!--                 <div class="dropdown" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-sm" title="Share"> -->
-<!--                   <button type="button" class="btn btn-icon btn-secondary bg-transparent border-0 animate-scale" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="Share"> -->
-<!--                     <i class="fi-share-2 animate-target fs-base"></i> -->
-<!--                   </button> -->
-<!--                   <ul class="dropdown-menu dropdown-menu-end" style="--fn-dropdown-min-width: 9.5rem"> -->
-<!--                     <li> -->
-<!--                       <a class="dropdown-item" href="#!"> -->
-<!--                         <i class="fi-facebook fs-base me-2"></i> -->
-<!--                         Facebook -->
-<!--                       </a> -->
-<!--                     </li> -->
-<!--                     <li> -->
-<!--                       <a class="dropdown-item" href="#!"> -->
-<!--                         <i class="fi-instagram fs-base me-2"></i> -->
-<!--                         Instagram -->
-<!--                       </a> -->
-<!--                     </li> -->
-<!--                     <li> -->
-<!--                       <a class="dropdown-item" href="#"> -->
-<!--                         <i class="fi-linkedin fs-base me-2"></i> -->
-<!--                         LinkedIn -->
-<!--                       </a> -->
-<!--                     </li> -->
-<!--                   </ul> -->
-<!--                 </div> -->
-<!--                 <button type="button" class="btn btn-icon btn-secondary bg-transparent border-0 animate-pulse" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-sm" title="Wishlist" aria-label="Wishlist"> -->
-<!--                   <i class="fi-heart animate-target fs-base"></i> -->
-<!--                 </button> -->
-<!--               </div> -->
-<!--             </div> -->
           </div>
 
           <!-- Sidebar with contact form that turns into offcanvas on screens < 992px wide (lg breakpoint) -->

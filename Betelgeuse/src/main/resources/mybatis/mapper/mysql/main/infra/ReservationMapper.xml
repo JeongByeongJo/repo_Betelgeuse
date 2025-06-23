@@ -272,6 +272,7 @@
 		    b.userCustomer_seq,
 		    r.rsrvSeq,
 		    (select userShopSeq from usercustomer where seq=#{userShopSeq}) as userShopSeq
+		    ,(select irSeq from inspectRepair where reservation_rsrvSeq=rsrvSeq) as irSeq
 		    ,u.userName
  		from
 			bicycle as b
@@ -280,10 +281,19 @@
 		where 1=1
 			and r.shop_shopSeq = #{userShopSeq}
 			and b.bikeStatus between 122 and 123
+			and r.rsrvDelNy = 0
 <!-- 			and a.bikeStatus &gt;= 120 -->
 <!-- 			and a.bikeStatus &lt;= 121 -->
 	</select>
-	
+	<select  id="selectOne4InR" resultMap="resultMapObj">
+		SELECT
+			i.irSeq
+		FROM
+			inspectRepair as i
+			LEFT JOIN reservation as r ON i.reservation_rsrvSeq = r.rsrvSeq
+            WHERE 1=1
+            AND r.rsrvSeq = #{rsrvSeq}
+	</select>
 	
 	<update id="bikeStatusUpdt">
 		update bicycle set
@@ -330,5 +340,6 @@
 		where 1=1
 			and r.shop_shopSeq = (select userShopSeq from usercustomer where seq = #{seq})
 			and b.bikeStatus between 122 and 123
+			and r.rsrvDelNy = 0
     </select>
 </mapper>

@@ -18,6 +18,7 @@ public interface ReservationDao {
 	public Integer selectOneCountInRList(ReservationVo vo);
 	public int rsrvServicesInst(@Param("listAS")List<ShopAvailableServiceDto> listAS);
 	public ReservationDto selectOne4View(ReservationVo vo);
+	public ReservationDto selectOne4InR(ReservationVo vo);
 	
 	public ReservationDto selectOne(ReservationVo vo);
 	public int selectOneCount(ReservationVo vo);

@@ -72,15 +72,15 @@ public class ReservationController extends BaseController {
 		return "usr/member/ServiceAdministration :: modalContent";
 	}
 	@RequestMapping(value = "/shop/InRUsrForm")
-	public String inRUsrform(Model model, ReservationVo vo) {
-		model.addAttribute("item", service.selectOne4View(vo));
-		return "usr/shop/InRUsrForm";
-	}
-	@RequestMapping(value = "/shop/InRUsrMfom")
-	public String InRUsrMfom(Model model, ReservationVo vo, InsRepVo insRepVo) {
-		model.addAttribute("item", service.selectOne4View(vo));
-		model.addAttribute("itemR", insRepService.selectOne(insRepVo));
-		return "usr/shop/InRUsrMfom";
+	public String inRUsrform(Model model, ReservationVo vo, InsRepVo insRepVo) {
+		if(service.selectOne4InR(vo) == null) {
+			model.addAttribute("item", service.selectOne4View(vo));
+			return "usr/shop/InRUsrForm";
+		} else {
+			model.addAttribute("item", service.selectOne4View(vo));
+			model.addAttribute("itemR", insRepService.selectOne(insRepVo));
+			return "usr/shop/InRUsrMfom";
+		}
 	}
 
 	@ResponseBody
