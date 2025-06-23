@@ -10,6 +10,7 @@
 
     <!-- Page content -->
     <main class="content-wrapper"><form id="form" name="form">
+    <input type="hidden" id="irSeq" name="irSeq" th:value="${itemR?.irSeq}"/>
     <input type="hidden" id="shopSeq" name="shop_shopSeq" th:value="${item?.shop_shopSeq}"/>
     <input type="hidden" id="bikeSeq" name="bicycle_bikeSeq" th:value="${item?.bikeSeq}"/>
     <input type="hidden" id="rsrvSeq" name="reservation_rsrvSeq" th:value="${item?.rsrvSeq}"/>
@@ -45,7 +46,7 @@
                   <div class="col">
                     <label for="drivetrainDate" class="form-label">구동계 점검,정비일</label>
                     <div class="position-relative">
-                      <input type="date" class="form-control form-icon-end" id="drivetrainDate" name="drivetrainDate" data-datepicker placeholder="날짜를 선택해주세요">
+                      <input type="date" class="form-control form-icon-end" id="drivetrainDate" name="drivetrainDate" th:value="${itemR?.drivetrainDate}" data-datepicker placeholder="날짜를 선택해주세요" readonly>
                       <i class="fi-calendar position-absolute top-50 end-0 translate-middle-y me-3"></i>
                     </div>
                   </div>
@@ -55,8 +56,7 @@
                       <span class="input-group-text">
                         ₩
                       </span>
-                      <input type="hidden" id="drivetrainInsCost" name="drivetrainInsCost" style="text-align: right;" class="form-control">
-                      <input type="text" id="drivetrainInsCostComma" data-raw-id="drivetrainInsCost" style="text-align: right;" class="form-control comma-input">
+                      <input type="text" id="drivetrainInsCost" name="drivetrainInsCost" th:value="${itemR?.drivetrainInsCost}" style="text-align: right;" class="form-control" readonly>
                       <span class="input-group-text">원</span>
                     </div>
                   </div>
@@ -66,20 +66,19 @@
                       <span class="input-group-text">
                         ₩
                       </span>
-                      <input type="hidden" id="drivetrainRepCost" name="drivetrainRepCost" style="text-align: right;" class="form-control">
-                      <input type="text" id="drivetrainRepCostComma" data-raw-id="drivetrainRepCost" style="text-align: right;" class="form-control comma-input">
+                      <input type="text" id="drivetrainRepCost" name="drivetrainRepCost" th:value="${itemR?.drivetrainRepCost}" style="text-align: right;" class="form-control" readonly>
                       <span class="input-group-text">원</span>
                     </div>
                   </div>
                   <div class="col">
                     <label for="drivetrainInsDesc" class="form-label fs-6 fw-semibold">점검 기술서</label>
                       <p class="fs-sm mb-2">점검 내역을 기입해주세요.</p>
-                      <textarea class="form-control form-control-lg" rows="5" id="drivetrainInsDesc" name="drivetrainInsDesc" placeholder="최대 2000자" required></textarea>
+                      <textarea class="form-control form-control-lg" rows="5" id="drivetrainInsDesc" name="drivetrainInsDesc" th:text="${itemR?.drivetrainInsDesc}" placeholder="최대 2000자" readonly></textarea>
                   </div>
                   <div class="col">
                     <label for="drivetrainRepDesc" class="form-label fs-6 fw-semibold">정비 기술서</label>
                       <p class="fs-sm mb-2">정비 내역을 기입해주세요.</p>
-                      <textarea class="form-control form-control-lg" rows="5" id="drivetrainRepDesc" name="drivetrainRepDesc" placeholder="최대 2000자" required></textarea>
+                      <textarea class="form-control form-control-lg" rows="5" id="drivetrainRepDesc" name="drivetrainRepDesc" th:text="${itemR?.drivetrainRepDesc}" placeholder="최대 2000자" readonly></textarea>
                   </div>
                 </div>
               <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark rounded d-none d-block-dark"></div>
@@ -111,7 +110,7 @@
                   <div class="col">
                     <label for="brakeDate" class="form-label">브레이크 점검,정비일</label>
                     <div class="position-relative">
-                      <input type="date" class="form-control form-icon-end" id="brakeDate" name="brakeDate" data-datepicker placeholder="날짜를 선택해주세요">
+                      <input type="date" class="form-control form-icon-end" id="brakeDate" name="brakeDate" th:value="${itemR?.brakeDate}" data-datepicker placeholder="날짜를 선택해주세요" readonly>
                       <i class="fi-calendar position-absolute top-50 end-0 translate-middle-y me-3"></i>
                     </div>
                   </div>
@@ -121,8 +120,7 @@
                       <span class="input-group-text">
                         ₩
                       </span>
-                      <input type="hidden" id="brakeInsCost" name="brakeInsCost" style="text-align: right;" class="form-control">
-                      <input type="text" id="brakeInsCostComma" data-raw-id="brakeInsCost" style="text-align: right;" class="form-control comma-input">
+                      <input type="text" id="brakeInsCost" name="brakeInsCost" th:value="${itemR?.brakeInsCost}" style="text-align: right;" class="form-control" readonly>
                       <span class="input-group-text">원</span>
                     </div>
                   </div>
@@ -132,20 +130,19 @@
                       <span class="input-group-text">
                         ₩
                       </span>
-                      <input type="text" id="brakeRepCostComma" data-raw-id="brakeRepCost" style="text-align: right;" class="form-control comma-input">
-                      <input type="hidden" id="brakeRepCost" name="brakeRepCost" style="text-align: right;" class="form-control">
+                      <input type="text" id="brakeRepCost" name="brakeRepCost" th:value="${itemR?.brakeRepCost}" style="text-align: right;" class="form-control" readonly>
                       <span class="input-group-text">원</span>
                     </div>
                   </div>
                   <div class="col">
                     <label for="brakeInsDesc" class="form-label fs-6 fw-semibold">점검 기술서</label>
                       <p class="fs-sm mb-2">점검 내역을 기입해주세요.</p>
-                      <textarea class="form-control form-control-lg" rows="5" id="brakeInsDesc" name="brakeInsDesc" placeholder="최대 2000자" required></textarea>
+                      <textarea class="form-control form-control-lg" rows="5" id="brakeInsDesc" name="brakeInsDesc" th:text="${itemR?.brakeInsDesc}" placeholder="최대 2000자" readonly></textarea>
                   </div>
                   <div class="col">
                     <label for="brakeRepDesc" class="form-label fs-6 fw-semibold">정비 기술서</label>
                       <p class="fs-sm mb-2">정비 내역을 기입해주세요.</p>
-                      <textarea class="form-control form-control-lg" rows="5" id="brakeRepDesc" name="brakeRepDesc" placeholder="최대 2000자" required></textarea>
+                      <textarea class="form-control form-control-lg" rows="5" id="brakeRepDesc" name="brakeRepDesc" th:text="${itemR?.brakeRepDesc}" placeholder="최대 2000자" readonly></textarea>
                   </div>
               <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark rounded d-none d-block-dark"></div>
             </section>
@@ -176,7 +173,7 @@
                   <div class="col">
                     <label for="wheelDate" class="form-label">휠셋 점검,정비일</label>
                     <div class="position-relative">
-                      <input type="date" class="form-control form-icon-end" id="wheelDate" name="wheelDate" data-datepicker placeholder="날짜를 선택해주세요">
+                      <input type="date" class="form-control form-icon-end" id="wheelDate" name="wheelDate" th:value="${itemR?.wheelDate}" data-datepicker placeholder="날짜를 선택해주세요" readonly>
                       <i class="fi-calendar position-absolute top-50 end-0 translate-middle-y me-3"></i>
                     </div>
                   </div>
@@ -186,8 +183,7 @@
                       <span class="input-group-text">
                         ₩
                       </span>
-                      <input type="text" id="wheelInsCostComma" data-raw-id="wheelInsCost" style="text-align: right;" class="form-control comma-input">
-                      <input type="hidden" id="wheelInsCost" name="wheelInsCost" style="text-align: right;" class="form-control">
+                      <input type="text" id="wheelInsCost" name="wheelInsCost" th:value="${itemR?.wheelInsCost}" style="text-align: right;" class="form-control" readonly>
                       <span class="input-group-text">원</span>
                     </div>
                   </div>
@@ -197,20 +193,19 @@
                       <span class="input-group-text">
                         ₩
                       </span>
-                      <input type="text" id="wheelRepCostComma" data-raw-id="wheelRepCost" style="text-align: right;" class="form-control comma-input">
-                      <input type="hidden" id="wheelRepCost" name="wheelRepCost" style="text-align: right;" class="form-control">
+                      <input type="text" id="wheelRepCost" name="wheelRepCost" th:value="${itemR?.wheelRepCost}" style="text-align: right;" class="form-control" readonly>
                       <span class="input-group-text">원</span>
                     </div>
                   </div>
                   <div class="col">
                     <label for="wheelInsDesc" class="form-label fs-6 fw-semibold">점검 기술서</label>
                       <p class="fs-sm mb-2">점검 내역을 기입해주세요.</p>
-                      <textarea class="form-control form-control-lg" rows="5" id="wheelInsDesc" name="wheelInsDesc" placeholder="최대 2000자" required></textarea>
+                      <textarea class="form-control form-control-lg" rows="5" id="wheelInsDesc" name="wheelInsDesc" th:text="${itemR?.wheelInsDesc}" placeholder="최대 2000자" readonly></textarea>
                   </div>
                   <div class="col">
                     <label for="wheelRepDesc" class="form-label fs-6 fw-semibold">정비 기술서</label>
                       <p class="fs-sm mb-2">정비 내역을 기입해주세요.</p>
-                      <textarea class="form-control form-control-lg" rows="5" id="wheelRepDesc" name="wheelRepDesc" placeholder="최대 2000자" required></textarea>
+                      <textarea class="form-control form-control-lg" rows="5" id="wheelRepDesc" name="wheelRepDesc" th:text="${itemR?.wheelRepDesc}" placeholder="최대 2000자" readonly></textarea>
                   </div>
               <!-- <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark rounded d-none d-block-dark"></div> -->
             </section>
@@ -219,8 +214,9 @@
                 <h2 class="h4 mb-3 mb-sm-4">콕핏 정비,점검</h2>
                 <div class="row row-cols-1 row-cols-md-2 g-3 g-md-4 mb-3 mb-md-4">
                   <div class="col">
+                    <input type="hidden" id="cockpits-hidden" th:value="${itemR?.cockpits}" />
                     <label for="cockpits" class="form-label">콕핏 분야 *</label>
-                    <select class="form-select" id="cockpits" name="cockpits" data-select multiple aria-label="Multiple select">
+                    <select class="form-select" id="cockpits" name="cockpits" multiple aria-label="Multiple select">
                       <option value="">Select</option>
                       <option value="핸들바">핸들바</option>
                       <option value="포크">포크</option>
@@ -233,7 +229,7 @@
                   <div class="col">
                     <label for="cockpitDate" class="form-label">콕핏 점검,정비일</label>
                     <div class="position-relative">
-                      <input type="date" class="form-control form-icon-end" id="cockpitDate" name="cockpitDate" data-datepicker placeholder="날짜를 선택해주세요">
+                      <input type="date" class="form-control form-icon-end" id="cockpitDate" name="cockpitDate" th:value="${itemR?.cockpitDate}" data-datepicker placeholder="날짜를 선택해주세요" readonly>
                       <i class="fi-calendar position-absolute top-50 end-0 translate-middle-y me-3"></i>
                     </div>
                   </div>
@@ -243,8 +239,7 @@
                       <span class="input-group-text">
                         ₩
                       </span>
-                      <input type="text" id="cockpitInsCostComma" data-raw-id="cockpitInsCost" style="text-align: right;" class="form-control comma-input">
-                      <input type="hidden" id="cockpitInsCost" name="cockpitInsCost" style="text-align: right;" class="form-control">
+                      <input type="text" id="cockpitInsCost" name="cockpitInsCost" th:value="${itemR?.cockpitInsCost}" style="text-align: right;" class="form-control" readonly>
                       <span class="input-group-text">원</span>
                     </div>
                   </div>
@@ -254,20 +249,19 @@
                       <span class="input-group-text">
                         ₩
                       </span>
-                      <input type="text" id="cockpitRepCostComma" data-raw-id="cockpitRepCost" style="text-align: right;" class="form-control comma-input">
-                      <input type="hidden" id="cockpitRepCost" name="cockpitRepCost" style="text-align: right;" class="form-control">
+                      <input type="text" id="cockpitRepCost" name="cockpitRepCost" th:value="${itemR?.cockpitRepCost}" style="text-align: right;" class="form-control" readonly>
                       <span class="input-group-text">원</span>
                     </div>
                   </div>
                   <div class="col">
                     <label for="cockpitInsDesc" class="form-label fs-6 fw-semibold">점검 기술서</label>
                       <p class="fs-sm mb-2">점검 내역을 기입해주세요.</p>
-                      <textarea class="form-control form-control-lg" rows="5" id="cockpitInsDesc" name="cockpitInsDesc" placeholder="최대 2000자" required></textarea>
+                      <textarea class="form-control form-control-lg" rows="5" id="cockpitInsDesc" name="cockpitInsDesc" th:text="${itemR?.cockpitInsDesc}" placeholder="최대 2000자" readonly></textarea>
                   </div>
                   <div class="col">
                     <label for="cockpirRepDesc" class="form-label fs-6 fw-semibold">정비 기술서</label>
                       <p class="fs-sm mb-2">정비 내역을 기입해주세요.</p>
-                      <textarea class="form-control form-control-lg" rows="5" id="cockpirRepDesc" name="cockpirRepDesc" placeholder="최대 2000자" required></textarea>
+                      <textarea class="form-control form-control-lg" rows="5" id="cockpitRepDesc" name="cockpitRepDesc" th:text="${itemR?.cockpitRepDesc}" placeholder="최대 2000자" readonly></textarea>
                   </div>
               <!-- <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark rounded d-none d-block-dark"></div> -->
             </section>
@@ -277,12 +271,12 @@
                 <div class="row row-cols-1 row-cols-md-2 g-3 g-md-4 mb-3 mb-md-4">
                   <div class="col">
                   	<label for="etcs" class="form-label">점검,정비 컴포넌트</label>
-                    <input type="text" class="form-control" id="etcs" name="etcs" placeholder="입력해주세요">
+                    <input type="text" class="form-control" id="etcs" name="etcs" th:value="${itemR?.etcs}" placeholder="입력해주세요" readonly>
                   </div>
                   <div class="col">
                     <label for="etcDate" class="form-label">기타 컴포넌트 점검,정비일</label>
                     <div class="position-relative">
-                      <input type="date" class="form-control form-icon-end" id="etcDate" name="etcDate" data-datepicker placeholder="날짜를 선택해주세요">
+                      <input type="date" class="form-control form-icon-end" id="etcDate" name="etcDate" th:value="${itemR?.etcDate}" data-datepicker placeholder="날짜를 선택해주세요" readonly>
                       <i class="fi-calendar position-absolute top-50 end-0 translate-middle-y me-3"></i>
                     </div>
                   </div>
@@ -292,8 +286,7 @@
                       <span class="input-group-text">
                         ₩
                       </span>
-                      <input type="text" id="etcInsCostComma" data-raw-id="etcInsCost" style="text-align: right;" class="form-control comma-input">
-                      <input type="hidden" id="etcInsCost" name="etcInsCost" style="text-align: right;" class="form-control">
+                      <input type="text" id="etcInsCost" name="etcInsCost" th:value="${itemR?.etcInsCost}" style="text-align: right;" class="form-control" readonly>
                       <span class="input-group-text">원</span>
                     </div>
                   </div>
@@ -303,20 +296,19 @@
                       <span class="input-group-text">
                         ₩
                       </span>
-                      <input type="text" id="etcRepCostComma" data-raw-id="etcRepCost" style="text-align: right;" class="form-control comma-input">
-                      <input type="hidden" id="etcRepCost" name="etcRepCost" style="text-align: right;" class="form-control">
+                      <input type="text" id="etcRepCost" name="etcRepCost" th:value="${itemR?.etcRepCost}" style="text-align: right;" class="form-control" readonly>
                       <span class="input-group-text">원</span>
                     </div>
                   </div>
                   <div class="col">
                     <label for="etcInsDesc" class="form-label fs-6 fw-semibold">점검 기술서</label>
                       <p class="fs-sm mb-2">점검 내역을 기입해주세요.</p>
-                      <textarea class="form-control form-control-lg" rows="5" id="etcInsDesc" name="etcInsDesc" placeholder="최대 2000자" required></textarea>
+                      <textarea class="form-control form-control-lg" rows="5" id="etcInsDesc" name="etcInsDesc" th:text="${itemR?.etcInsDesc}" placeholder="최대 2000자" readonly></textarea>
                   </div>
                   <div class="col">
                     <label for="etcRepDesc" class="form-label fs-6 fw-semibold">정비 기술서</label>
                       <p class="fs-sm mb-2">정비 내역을 기입해주세요.</p>
-                      <textarea class="form-control form-control-lg" rows="5" id="etcRepDesc" name="etcRepDesc" placeholder="최대 2000자" required></textarea>
+                      <textarea class="form-control form-control-lg" rows="5" id="etcRepDesc" name="etcRepDesc" th:text="${itemR?.etcRepDesc}" placeholder="최대 2000자" readonly></textarea>
                   </div>
               <!-- <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark rounded d-none d-block-dark"></div> -->
             </section>
@@ -326,9 +318,10 @@
                 <h2 class="h4 mb-3 mb-sm-4">소모품 교체</h2>
                 <div class="row row-cols-1 row-cols-md-2 g-3 g-md-4 mb-3 mb-md-4">
                   <div class="col">
+                  <input type="hidden" id="expendables-hidden" th:value="${itemR?.expendables}" />
                     <label for="expendables" class="form-label">소모품 *</label>
-                    <select class="form-select" id="expendables" name="expendables" data-select multiple aria-label="Multiple select">
-                      <option value="">Select</option>
+                    <select class="form-select" id="expendables" name="expendables" multiple aria-label="Multiple select">
+                      <option value="" disabled hidden>Select</option>
                       <option value="타이어">타이어</option>
                       <option value="튜브">튜브</option>
                       <option value="실란트">실란트</option>
@@ -341,7 +334,7 @@
                   <div class="col">
                     <label for="expendableDate" class="form-label">소모품 교체일</label>
                     <div class="position-relative">
-                      <input type="date" class="form-control form-icon-end" id="expendableDate" name="expendableDate" data-datepicker placeholder="날짜를 선택해주세요">
+                      <input type="date" class="form-control form-icon-end" id="expendableDate" name="expendableDate" th:value="${itemR?.expendableDate}" data-datepicker placeholder="날짜를 선택해주세요" readonly>
                       <i class="fi-calendar position-absolute top-50 end-0 translate-middle-y me-3"></i>
                     </div>
                   </div>
@@ -351,8 +344,7 @@
                       <span class="input-group-text">
                         ₩
                       </span>
-                      <input type="text" id="expendableCost1Comma" data-raw-id="expendableCost1" style="text-align: right;" class="form-control comma-input">
-                      <input type="hidden" id="expendableCost1" name="expendableCost1" style="text-align: right;" class="form-control">
+                      <input type="text" id="expendableCost1" name="expendableCost1" th:value="${itemR?.expendableCost1}" style="text-align: right;" class="form-control" readonly>
                       <span class="input-group-text">원</span>
                     </div>
                   </div>
@@ -362,8 +354,7 @@
                       <span class="input-group-text">
                         ₩
                       </span>
-                      <input type="text" id="expendableCost2Comma" data-raw-id="expendableCost2" style="text-align: right;" class="form-control comma-input">
-                      <input type="hidden" id="expendableCost2" name="expendableCost2" style="text-align: right;" class="form-control">
+                      <input type="text" id="expendableCost2" name="expendableCost2" th:value="${itemR?.expendableCost2}" style="text-align: right;" class="form-control" readonly>
                       <span class="input-group-text">원</span>
                     </div>
                   </div>
@@ -373,8 +364,7 @@
                       <span class="input-group-text">
                         ₩
                       </span>
-                      <input type="text" id="expendableCost3Comma" data-raw-id="expendableCost3" style="text-align: right;" class="form-control comma-input">
-                      <input type="hidden" id="expendableCost3" name="expendableCost3" style="text-align: right;" class="form-control">
+                      <input type="text" id="expendableCost3" name="expendableCost3" th:value="${itemR?.expendableCost3}" style="text-align: right;" class="form-control" readonly>
                       <span class="input-group-text">원</span>
                     </div>
                   </div>
@@ -384,8 +374,7 @@
                       <span class="input-group-text">
                         ₩
                       </span>
-                      <input type="text" id="expendableCost4Comma" data-raw-id="expendableCost4" style="text-align: right;" class="form-control comma-input">
-                      <input type="hidden" id="expendableCost4" name="expendableCost4" style="text-align: right;" class="form-control">
+                      <input type="text" id="expendableCost4" name="expendableCost4" th:value="${itemR?.expendableCost4}" style="text-align: right;" class="form-control" readonly>
                       <span class="input-group-text">원</span>
                     </div>
                   </div>
@@ -395,8 +384,7 @@
                       <span class="input-group-text">
                         ₩
                       </span>
-                      <input type="text" id="expendableCost5Comma" data-raw-id="expendableCost5" style="text-align: right;" class="form-control comma-input">
-                      <input type="hidden" id="expendableCost5" name="expendableCost5" style="text-align: right;" class="form-control">
+                      <input type="text" id="expendableCost5" name="expendableCost5" th:value="${itemR?.expendableCost5}" style="text-align: right;" class="form-control" readonly>
                       <span class="input-group-text">원</span>
                     </div>
                   </div>                  
@@ -406,14 +394,14 @@
                       <span class="input-group-text">
                         ₩
                       </span>
-                      <input type="text" id="expendableCosts" name="expendableCosts" style="text-align: right;" class="form-control" readonly>
+                      <input type="text" id="expendableCosts" name="expendableCosts" th:value="${itemR?.expendableCosts}" style="text-align: right;" class="form-control" readonly>
                       <span class="input-group-text">원</span>
                     </div>
                   </div>
                 </div>
                 <label for="expendableDesc" class="form-label fs-6 fw-semibold">소모품 교체 기술서 *</label>
                 <p class="fs-sm mb-2">소모품 교체 상세내역을 기입해주세요.</p>
-                <textarea class="form-control form-control-lg" rows="5" id="expendableDesc" name="expendableDesc" placeholder="최대 2000자" required></textarea>
+                <textarea class="form-control form-control-lg" rows="5" id="expendableDesc" name="expendableDesc" th:text="${itemR?.expendableDesc}" placeholder="최대 2000자" readonly></textarea>
               </div>
               <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark rounded d-none d-block-dark"></div>
             </section>
@@ -462,39 +450,39 @@
                     <p><i class="fi-search"></i><span style="font-size: medium;">점검</span>&ensp;<i class="fi-tool"></i>정비</p>
                     <table>
                       <thead>
-                        <th style="width: 15ex;">분야</th>
+                        <th style="width: 13ex;">분야</th>
                         <th style="width: 6ex;">여부</th>
-                        <th style="width: 12ex; text-align: right;">비용</th>
+                        <th style="width: 12ex;">비용</th>
                       </thead>
                       <tr>
                         <td id="drivetrainNy">구동계</td>
                         <td><i id="insDrivetrain" class="fi-search" style="display: none;"></i><i id="repDrivetrain" class="fi-tool" style="display: none;"></i></td>
-                        <td style="text-align: right;"><span id="drivetrainPrice">-</span><span>원</span></td>
+                        <td><span id="drivetrainPrice">-</span><span>원</span></td>
                       </tr>
                       <tr>
                         <td id="brakeNy">브레이크</td>
                         <td><i id="insBrake" class="fi-search" style="display: none;"></i><i id="repBrake" class="fi-tool" style="display: none;"></i></td>
-                        <td style="text-align: right;"><span id="brakePrice">-</span><span>원</span></td>
+                        <td><span id="brakePrice">-</span><span>원</span></td>
                       </tr>
                       <tr>
                         <td id="wheelNy">휠셋</td>
                         <td><i id="insWheel" class="fi-search" style="display: none;"></i><i id="repWheel" class="fi-tool" style="display: none;"></i></td>
-                        <td style="text-align: right;"><span id="wheelPrice">-</span><span>원</span></td>
+                        <td><span id="wheelPrice">-</span><span>원</span></td>
                       </tr>
                       <tr>
                         <td id="cockpitNy">콕핏</td>
                         <td><i id="insCockpit" class="fi-search" style="display: none;"></i><i id="repCockpit" class="fi-tool" style="display: none;"></i></td>
-                        <td style="text-align: right;"><span id="cockpitPrice">-</span><span>원</span></td>
+                        <td><span id="cockpitPrice">-</span><span>원</span></td>
                       </tr>
                       <tr>
                         <td id="etcNy">기타컴포넌트</td>
                         <td><i id="insEtc" class="fi-search" style="display: none;"></i><i id="repEtc" class="fi-tool" style="display: none;"></i></td>
-                        <td style="text-align: right;"><span id="etcPrice">-</span><span>원</span></td>
+                        <td><span id="etcPrice">-</span><span>원</span></td>
                       </tr>
                       <tr>
                         <td id="expendalbeNy">소모품교체</td>
                         <td></td>
-                        <td style="text-align: right;"><span id="expendalbePrice"> 0 </span><span>원</span></td>
+                        <td><span id="expendalbePrice">-</span><span>원</span></td>
                       </tr>
                     </table>
                   </div>
@@ -502,10 +490,10 @@
                     <div class="border-top pt-3">
                       <div class="row row-cols-2 g-2 fs-lg">
                         <div class="col d-flex align-items-center gap-2">
-                          <p style="font-weight: 700;">총 액</p>
+                          총액
                         </div>
-                        <div class="col d-flex align-items-center gap-2 justify-content-end">
-                          <p style="font-weight: 700;"><span id="totalCost">-</span>원</p>
+                        <div class="col d-flex align-items-center gap-2">
+                          <span id="totalCost">-</span>원
                         </div>
                         <input type="hidden" id="totalPrice" name="totalPrice" />
                       </div>
@@ -525,11 +513,11 @@
  <script>
   // 모든 소모품 input 필드와 총합 필드를 참조
   const costInputs = [
-    document.getElementById('expendableCost1Comma'),
-    document.getElementById('expendableCost2Comma'),
-    document.getElementById('expendableCost3Comma'),
-    document.getElementById('expendableCost4Comma'),
-    document.getElementById('expendableCost5Comma')
+    document.getElementById('expendableCost1'),
+    document.getElementById('expendableCost2'),
+    document.getElementById('expendableCost3'),
+    document.getElementById('expendableCost4'),
+    document.getElementById('expendableCost5')
   ];
   const totalCostInput = document.getElementById('expendableCosts');
   const totalP = document.getElementById('expendalbePrice');
@@ -545,37 +533,35 @@
       const value = parseInt(input.value.replace(/[^0-9]/g, '')) || 0;
       total += value;
     });
-    totalCostInput.value = total.toLocaleString(); // 쉼표 포함 포맷
+    totalCostInput.value = total;
     totalP.innerText = total.toLocaleString();
   }
 </script>
  <script>
-  // 모든 소모품 input 필드와 총합 필드를 참조
   const costInput = [
-    document.getElementById('drivetrainInsCostComma'),
-    document.getElementById('drivetrainRepCostComma'),
-    document.getElementById('brakeInsCostComma'),
-    document.getElementById('brakeRepCostComma'),
-    document.getElementById('wheelInsCostComma'),
-    document.getElementById('wheelRepCostComma'),
-    document.getElementById('cockpitInsCostComma'),
-    document.getElementById('cockpitRepCostComma'),
-    document.getElementById('etcInsCostComma'),
-    document.getElementById('etcRepCostComma'),
-    document.getElementById('expendableCost1Comma'),
-    document.getElementById('expendableCost2Comma'),
-    document.getElementById('expendableCost3Comma'),
-    document.getElementById('expendableCost4Comma'),
-    document.getElementById('expendableCost5Comma')
+    document.getElementById('drivetrainInsCost'),
+    document.getElementById('drivetrainRepCost'),
+    document.getElementById('brakeInsCost'),
+    document.getElementById('brakeRepCost'),
+    document.getElementById('wheelInsCost'),
+    document.getElementById('wheelRepCost'),
+    document.getElementById('cockpitInsCost'),
+    document.getElementById('cockpitRepCost'),
+    document.getElementById('etcInsCost'),
+    document.getElementById('etcRepCost'),
+    document.getElementById('expendableCost1'),
+    document.getElementById('expendableCost2'),
+    document.getElementById('expendableCost3'),
+    document.getElementById('expendableCost4'),
+    document.getElementById('expendableCost5')
   ];
   const totalCost = document.getElementById('totalCost');
 
-  // 입력값이 변경될 때마다 총합을 계산
   costInput.forEach(input => {
-    input.addEventListener('input', updateTotalCost);
+    input.addEventListener('input', updateTotalCosts);
   });
 
-  function updateTotalCost() {
+  function updateTotalCosts() {
     let total = 0;
     costInput.forEach(input => {
       const value = parseInt(input.value.replace(/[^0-9]/g, '')) || 0;
@@ -598,8 +584,8 @@
 
   // 각 항목에 대해 동작 적용
   components.forEach(comp => {
-    const insInput = document.getElementById(`${comp.name}InsCostComma`);
-    const repInput = document.getElementById(`${comp.name}RepCostComma`);
+    const insInput = document.getElementById(`${comp.name}InsCost`);
+    const repInput = document.getElementById(`${comp.name}RepCost`);
     const insIcon = document.getElementById(`ins${capitalize(comp.name)}`);
     const repIcon = document.getElementById(`rep${capitalize(comp.name)}`);
     const priceField = document.getElementById(`${comp.name}Price`);
@@ -614,7 +600,7 @@
 
       // 금액 표시
       const total = insVal + repVal;
-      priceField.textContent = total > 0 ? total.toLocaleString() : ' 0 ';
+      priceField.textContent = total > 0 ? total.toLocaleString() : '-';
     }
 
     // 이벤트 연결
@@ -623,6 +609,8 @@
 
     // 페이지 로드 시 초기화
     update();
+    updateTotalCost();
+    updateTotalCosts();
   });
 
   // 첫 글자 대문자 변환 함수
@@ -630,6 +618,47 @@
     return str.charAt(0).toUpperCase() + str.slice(1);
   }
 </script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+	  const selectElement = document.getElementById('expendables');
+	  const hidden = document.getElementById('expendables-hidden');
+
+	  let choices = selectElement.choicesInstance;
+
+	  if (!choices) {
+	    choices = new Choices(selectElement, {
+	      removeItemButton: true,
+	    });
+	    selectElement.choicesInstance = choices;
+	  }
+
+	  if (hidden && hidden.value) {
+	    const selectedValues = hidden.value.split(',').map(v => v.trim());
+	    choices.setChoiceByValue(selectedValues);
+	  }
+	});
+document.addEventListener('DOMContentLoaded', function () {
+	  const selectcockpits = document.getElementById('cockpits');
+	  const hiddencockpits = document.getElementById('cockpits-hidden');
+
+	  let choices = selectcockpits.choicesInstance;
+
+	  if (!choices) {
+	    choices = new Choices(selectcockpits, {
+	      removeItemButton: true,
+	    });
+	    selectcockpits.choicesInstance = choices;
+	  }
+
+	  if (hiddencockpits && hiddencockpits.value) {
+	    const selectedValues = hiddencockpits.value.split(',').map(v => v.trim());
+	    choices.setChoiceByValue(selectedValues);
+	  }
+	});
+
+  
+</script>
+
 
 
 <script type="text/javascript">
@@ -649,24 +678,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 document.getElementById("btnSubmit").onclick = function () {
-	form.action = "/shop/InsRepUsrInst";
+	form.action = "/shop/InsRepUsrUpdt";
 	form.submit();
 }
 
-$(document).ready(function () {
-  $(".comma-input").on("input", function () {
-    let raw = $(this).val().replace(/,/g, "").replace(/\D/g, "");
-    let targetId = $(this).data("raw-id");
-
-    if (raw) {
-      $(this).val(Number(raw).toLocaleString("en-US"));
-    } else {
-      $(this).val("");
-    }
-
-    $("#" + targetId).val(raw);
-  });
-});
 </script>
   </body>
 </html>

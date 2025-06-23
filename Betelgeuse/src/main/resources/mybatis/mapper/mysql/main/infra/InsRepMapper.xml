@@ -231,8 +231,8 @@
 		    ,drivetrainRepDesc = #{drivetrainRepDesc}
 		    ,brakeDate =
 		    <choose>
-				<when test="brakeDate.equals('')">,NULL</when>  
-				<otherwise>,#{brakeDate}</otherwise>
+				<when test="brakeDate.equals('')">NULL</when>  
+				<otherwise>#{brakeDate}</otherwise>
 			</choose>
 		    ,brakeInsCost = #{brakeInsCost}
 		    ,brakeRepCost = #{brakeRepCost}
@@ -240,8 +240,8 @@
 		    ,brakeRepDesc = #{brakeRepDesc}
 		    ,wheelDate =
     		<choose>
-				<when test="wheelDate.equals('')">,NULL</when>  
-				<otherwise>,#{wheelDate}</otherwise>
+				<when test="wheelDate.equals('')">NULL</when>  
+				<otherwise>#{wheelDate}</otherwise>
 			</choose>
 		    ,wheelInsCost = #{wheelInsCost}
 		    ,wheelRepCost = #{wheelRepCost}
@@ -250,18 +250,18 @@
 		    ,cockpits = #{cockpits}
 		    ,cockpitDate =
 		    <choose>
-				<when test="cockpitDate.equals('')">,NULL</when>  
+				<when test="cockpitDate.equals('')">NULL</when>  
 				<otherwise>,#{cockpitDate}</otherwise>
 			</choose>
 		    ,cockpitInsCost = #{cockpitInsCost}
 		    ,cockpitRepCost = #{cockpitRepCost}
 		    ,cockpitInsDesc = #{cockpitInsDesc}
-		    ,cockpirRepDesc = #{cockpirRepDesc}
+		    ,cockpitRepDesc = #{cockpitRepDesc}
 		    ,etcs = #{etcs}
 		    ,etcDate =
 		    <choose>
-				<when test="etcDate.equals('')">,NULL</when>  
-				<otherwise>,#{etcDate}</otherwise>
+				<when test="etcDate.equals('')">NULL</when>  
+				<otherwise>#{etcDate}</otherwise>
 			</choose>
 		    ,etcInsCost = #{etcInsCost}
 		    ,etcRepCost = #{etcRepCost}
@@ -270,8 +270,8 @@
 		    ,expendables = #{expendables}
 		    ,expendableDate =
 		    <choose>
-				<when test="expendableDate.equals('')">,NULL</when>  
-				<otherwise>,#{expendableDate}</otherwise>
+				<when test="expendableDate.equals('')">NULL</when>  
+				<otherwise>#{expendableDate}</otherwise>
 			</choose>
 		    ,expendableCost1 = #{expendableCost1}
 		    ,expendableCost2 = #{expendableCost2}
@@ -284,6 +284,6 @@
 		    ,UpdtDate = DATE_FORMAT(CONVERT_TZ(NOW(), 'UTC', 'Asia/Seoul'), '%Y-%m-%d %H:%i:%S')
 	    WHERE 1=1
 <!-- 	    AND irSeq = #{irSeq} -->
-	    AND irSeq = (select irSeq from inspectRepair where reservation_rsrvSeq = #{rsrvSeq})
+	    AND irSeq = #{irSeq}
 	</update>
 </mapper>

@@ -184,8 +184,8 @@ public class InsRepDto extends BicycleDto {
 	public String getCockpitRepDesc() {
 		return cockpitRepDesc;
 	}
-	public void setCockpitRepDesc(String cockpirRepDesc) {
-		this.cockpitRepDesc = cockpirRepDesc;
+	public void setCockpitRepDesc(String cockpitRepDesc) {
+		this.cockpitRepDesc = cockpitRepDesc;
 	}
 	public String getEtcs() {
 		return etcs;
