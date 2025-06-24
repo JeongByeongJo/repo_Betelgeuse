@@ -64,14 +64,15 @@
                 </div>
                 <div class="card-footer gap-2 border-0 bg-transparent pt-0 pb-0 px-3 mt-n1">
                   <div class="row px-2">
-                    <div class="col-sm-5">
-                      <a class="btn btn-outline-secondary mb-3" th:href="'#collapse' + ${list?.shopSeq}" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapsebklnd">
+                    <div class="col-sm-6">
+                      <a class="btn btn-outline-secondary mb-3 ms-auto d-block w-100 w-sm-auto text-wrap" th:href="'#collapse' + ${list?.shopSeq}" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapsebklnd">
                         영업시간
                       </a>
                     </div>
-                    <div class="col-sm-7">
-                      <a type="button" class="btn btn-outline-primary ms-auto d-block" th:href="@{/shop/shopUsrView(shopSeq=${list.shopSeq})}">
-                        점검&정비 예약하기
+<!--                     <div class="col-sm-2"></div> -->
+                    <div class="col-sm-6">
+                      <a type="button" class="btn btn-outline-primary ms-auto d-block w-100 w-sm-auto text-wrap" th:href="@{/shop/shopUsrView(shopSeq=${list.shopSeq})}">
+                        예약하기
                       </a>
                     </div>
                   </div>
