@@ -118,7 +118,7 @@
 		,delNy
 	from filesUploaded
 	where 1=1
-	and sort = 1000
+	and type = 1000
 	and delNy = 0
 	and pSeq = #{bikeSeq}
 	order by sort asc

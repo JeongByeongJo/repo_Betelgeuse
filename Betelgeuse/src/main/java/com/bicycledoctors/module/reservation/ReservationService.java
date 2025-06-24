@@ -64,7 +64,15 @@ public class ReservationService extends BaseService {
 	public List<ReservationDto> selectList4iNrCompl(ReservationVo vo) {
 		return dao.selectList4iNrCompl(vo);
 	}
-	
+	public Integer selectOneCountRsrvList(ReservationVo vo) {
+		return dao.selectOneCountRsrvList(vo);
+	}
+	public Integer selectOneCountInRList(ReservationVo vo) {
+		return dao.selectOneCountInRList(vo);
+	}
+	public Integer selectOneCountInRComplList(ReservationVo vo) {
+		return dao.selectOneCountInRComplList(vo);
+	}
 	
 	public LocalDate num2Date(int i) {
 		LocalDate today = LocalDate.now();

@@ -98,12 +98,6 @@
                         </div>
                       </div>
                       <div class="col-6" style="margin-top: 1ex;">
-<!--                         <div class="input-group mb-3"> -->
-<!--                           <span class="input-group-text" id="addon-left"> -->
-<!--                             모델명 -->
-<!--                           </span> -->
-<!--                           <input type="text" class="form-control" id="driveTrainModel" name="driveTrainModel" aria-label="Username" aria-describedby="addon-left"> -->
-<!--                         </div> -->
                       </div>
                     </div>
                   </div>
@@ -406,18 +400,14 @@
               <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark rounded d-none d-block-dark"></div>
             </section>
 
-            
-
-
             <!-- Action buttons -->
             <section class="d-flex flex-column flex-sm-row justify-content-between gap-3 mt-4">
-              <button type="button" id="btnSubmit" class="btn btn-lg btn-primary">
-                <i class="fi-upload fs-lg ms-n1 me-2"></i>
-                저장하기
-              </button>
+              <a type="button" href="/member/shopUsrServiceAdmin" class="btn btn-lg btn-secondary">
+                <i class="fi-chevrons-left fs-lg ms-n1 me-2"></i>
+                돌아가기
+              </a>
             </section>
           </div>
-
 
           <!-- Quick preview (Sidebar) -->
           <aside class="col-lg-4 col-xl-3 mt-lg-n4">
@@ -656,15 +646,6 @@ document.addEventListener('DOMContentLoaded', function () {
 	  }
 	});
 
-  
-</script>
-
-
-
-<script type="text/javascript">
-let seq = document.querySelector("input[name=rsrvSeq]");
-let form = document.querySelector("form[name=form]");
-
 document.addEventListener('DOMContentLoaded', function () {
     const todayEl = document.getElementById('today');
     const now = new Date();
@@ -675,13 +656,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     todayEl.textContent = `${year}-${month}-${day}`;
   });
-
-
-document.getElementById("btnSubmit").onclick = function () {
-	form.action = "/shop/InsRepUsrUpdt";
-	form.submit();
-}
-
 </script>
   </body>
 </html>

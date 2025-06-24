@@ -82,6 +82,12 @@ public class ReservationController extends BaseController {
 			return "usr/shop/InRUsrMfom";
 		}
 	}
+	@RequestMapping(value = "/shop/InRUsrView")
+	public String inRUsrView(Model model, ReservationVo vo, InsRepVo insRepVo) {
+		model.addAttribute("item", service.selectOne4View(vo));
+		model.addAttribute("itemR", insRepService.selectOne(insRepVo));
+		return "usr/member/InRUsrView";
+	}
 
 	@ResponseBody
 	@RequestMapping(value = "/shop/resrvUsrProc")

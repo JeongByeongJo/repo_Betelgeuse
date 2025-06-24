@@ -68,23 +68,58 @@
           <!-- Account listings content -->
           <div class="col-lg-9">
             <h1 class="h2 pb-2 pb-lg-3">예약, 점검정비 관리</h1>
+<div class="card">
+	<div class="card-body">
+    <h5 class="card-title">검색하기</h5><div class="row">
+			<div class="col-md-2">
+                <select id="shOptionDate" name="shOptionDate" class="form-select form-select-sm">
+					<option value="" th:selected="${reservationVo.shOptionDate == null}">날짜</option>
+					<option value="1" th:selected="${reservationVo.shOptionDate == 1}">예약일</option>
+					<option value="2" th:selected="${reservationVo.shOptionDate == 2}">점검일</option>
+				</select>
+            </div>
+            <div class="col-md-2">
+                <input type="date" id="shDateStart" name="shDateStart" th:value="${reservationVo.shDateStart}" placeholder="시작일" class="form-control form-control-sm" data-datepicker autocomplete="off">
+<!--                 <input type="date" id="shDateStart" name="shDateStart" th:value="${#strings.substring(reservationVo.shDateStart, 0, 10)}" placeholder="시작일" class="form-control form-control-sm" data-datepicker autocomplete="off"> -->
+            </div>
+            <div class="col-md-2">
+                <input type="date" id="shDateEnd" name="shDateEnd" th:value="${reservationVo.shDateEnd}" placeholder="종료일" class="form-control form-control-sm" data-datepicker autocomplete="off">
+<!--                 <input type="date" id="shDateEnd" name="shDateEnd" th:value="${#strings.substring(reservationVo.shDateEnd, 0, 10)}" placeholder="종료일" class="form-control form-control-sm" data-datepicker autocomplete="off"> -->
+            </div>
+            <div class="col-md-2">
+                <select id="shOption" name="shOption" class="form-select form-select-sm">
+					<option value="" th:selected="${reservationVo.shOption == null}">검색구분</option>
+					<option value="1" th:selected="${reservationVo.shOption == 1}">고객 이름</option>
+					<option value="2" th:selected="${reservationVo.shOption == 2}">고객 ID</option>
+					<option value="3" th:selected="${reservationVo.shOption == 3}">자전거 이름</option>
+				</select>
+            </div>
+            <div class="col-md-2">
+                <input type="search" id="shValue" name="shValue" th:value="${reservationVo.shValue}" onkeyup="enterkey()" placeholder="검색어" class="form-control form-control-sm">
+            </div>
+            <div class="col-md-2">
+				<button type="button" id="btnSearch" class="btn btn-outline-dark"><i class="fi-search"></i></button>
+				<button type="button" id="btnReset" class="btn btn-outline-info"><i class="fi-refresh-ccw"></i></button>
+            </div>
+	</div></div>
+</div>
 
             <!-- Nav pills -->
-            <div class="nav overflow-x-auto mb-2">
+            <div class="nav overflow-x-auto mb-2 pt-4">
               <ul class="nav nav-pills flex-nowrap gap-2 pb-2 mb-1" role="tablist">
                 <li class="nav-item me-1" role="presentation">
                   <button type="button" class="nav-link text-nowrap active" id="published-tab" data-bs-toggle="pill" data-bs-target="#published" role="tab" aria-controls="published" aria-selected="true">
-                    예약신청 자전거 (<span th:text="${@reservationService.selectOneCountRsrvList(session.sessSeqUsr)}"></span>)
+                    예약신청 자전거 (<span th:text="${rc}"></span>)
                   </button>
                 </li>
                 <li class="nav-item me-1" role="presentation">
                   <button type="button" class="nav-link text-nowrap" id="drafts-tab" data-bs-toggle="pill" data-bs-target="#drafts" role="tab" aria-controls="drafts" aria-selected="false">
-                    점검&정비 자전거 (<span th:text="${@reservationService.selectOneCountInRList(session.sessSeqUsr != null ? session.sessSeqUsr : 0)}"></span>)
+                    점검&정비 자전거 (<span th:text="${ic}"></span>)
                   </button>
                 </li>
                 <li class="nav-item" role="presentation">
                   <button type="button" class="nav-link text-nowrap" id="archived-tab" data-bs-toggle="pill" data-bs-target="#archived" role="tab" aria-controls="archived" aria-selected="false">
-                    점검&정비 보관소 (<span th:text="${@reservationService.selectOneCountInRComplList(session.sessSeqUsr != null ? session.sessSeqUsr : 0)}"></span>)
+                    점검&정비 보관소 (<span th:text="${icc}"></span>)
                   </button>
                 </li>
               </ul>
@@ -126,7 +161,7 @@
                       <div class="row g-0">
                         <div class="col-sm-4 col-md-3 rounded overflow-hidden pb-2 pb-sm-0 pe-sm-2">
                           <a class="position-relative d-flex h-100 bg-body-tertiary" href="#!" style="min-height: 174px">
-                            <img src="/usr/template/Finder/assets/img/add-item/bd/IMG_4871.JPG" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" alt="Image">
+                            <img th:src="${list.path}" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" alt="Image">
                             <div class="ratio d-none d-sm-block"  style="--fn-aspect-ratio: calc(180 / 240 * 100%)"></div>
                             <div class="ratio ratio-16x9 d-sm-none"></div>
                           </a>
@@ -342,19 +377,13 @@
 	                                    <li>
 	                                      <a class="dropdown-item" th:id="viewReservation" href="javascript:void(0);" th:attr="onclick=|goAjax ('${listC?.rsrvSeq}')|">
 	                                        <i class="fi-edit opacity-75 me-2"></i>
-	                                        예약내용보기
+	                                        예약 내용
 	                                      </a>
 	                                    </li>
                                     	<li>
-	                                      <a class="dropdown-item" th:attr="onclick=|goInR('${listC.rsrvSeq}')|">
+	                                      <a class="dropdown-item" th:attr="onclick=|goInRView('${listC.rsrvSeq}')|">
 	                                        <i class="fi-zap opacity-75 me-2"></i>
-	                                        점검,정비 입력
-	                                      </a>
-	                                    </li>
-	                                    <li>
-	                                      <a class="dropdown-item text-danger" href="javascript:void(0);" th:attr="data-rsrvSeq=${listC.rsrvSeq}" onclick="openConfirmModal(this)">
-	                                        <i class="fi-archive opacity-75 me-2"></i>
-	                                        점검정비완료
+	                                        점검,정비 내역
 	                                      </a>
 	                                    </li>
 	                                  </ul>
@@ -522,6 +551,11 @@ goInR = function (keyValue) {
     form.action = "/shop/InRUsrForm";
     form.submit();
 }
+goInRView = function (keyValue) {
+    seq.value = keyValue;
+    form.action = "/shop/InRUsrView";
+    form.submit();
+}
 goInRCompl = function (keyValue) {
 	seqR.value = keyValue;
 	forM.action = "/inr/InsRepUsrCompl";
@@ -546,5 +580,12 @@ document.getElementById("btnModal").addEventListener("click", function () {
 	goInRCompl(rsrvSeq);
 });
 
+document.getElementById("btnSearch").onclick = function () {
+	form.action = "/member/shopUsrServiceAdmin";
+	form.submit();
+};
+document.getElementById("btnReset").onclick = function () {
+	location = "/member/shopUsrServiceAdmin";
+};
 </script>
 </html>

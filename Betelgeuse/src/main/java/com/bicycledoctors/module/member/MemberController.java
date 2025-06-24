@@ -365,12 +365,16 @@ public class MemberController extends BaseController {
 	}
 
 	@RequestMapping(value = "/member/shopUsrServiceAdmin")
-	public String shopUsrServiceAdmin(Model model, MemberVo vo, IndexVo indexVo, HttpSession httpSession, BicycleDto bicycleDto, ReservationVo reservationVo) {
+	public String shopUsrServiceAdmin(Model model, MemberVo vo, IndexVo indexVo, HttpSession httpSession, BicycleDto bicycleDto,@ModelAttribute ReservationVo reservationVo) {
 		bicycleDto.setUserCustomer_seq((String)httpSession.getAttribute("sessSeqUsr"));
 		vo.setSeq((String)httpSession.getAttribute("sessSeqUsr"));
+		reservationVo.setSeq((String)httpSession.getAttribute("sessSeqUsr"));
 		indexVo.setSeq((String)httpSession.getAttribute("sessSeqUsr"));
 		model.addAttribute("itemH", indexService.selectOneUserShopSeq(indexVo));
 		reservationVo.setUserShopSeq(service.select4ShopSeq(vo).getUserShopSeq());
+		model.addAttribute("rc", reservationService.selectOneCountRsrvList(reservationVo));
+		model.addAttribute("ic", reservationService.selectOneCountInRList(reservationVo));
+		model.addAttribute("icc", reservationService.selectOneCountInRComplList(reservationVo));
 		model.addAttribute("list", reservationService.selectList4ReservationCheck(reservationVo));
 		model.addAttribute("listR", reservationService.selectList4iNr(reservationVo));
 		model.addAttribute("listC", reservationService.selectList4iNrCompl(reservationVo));

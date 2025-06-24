@@ -229,16 +229,13 @@
 		    goForm(0);
 		}
 
-
 		goForm = function (keyValue) {
 		    seq.value = keyValue;
 		    form.action = "/code/codeXdmForm";
 		    form.submit();
 		}
 		
-		
 		document.getElementById("btnExls").onclick = function () {
-			alert("D");
 			form.action = "/code/codeXdmExls";
 			form.submit();
 		};

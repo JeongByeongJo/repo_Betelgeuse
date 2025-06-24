@@ -98,14 +98,6 @@
                     <label for="myBicycle-master" class="form-check-label fw-normal mt-1 ms-2">모두 선택하기</label>
                   </div>
                   <div class="d-flex flex-wrap" id="published-action-buttons">
-                    <!-- <a class="nav-link position-relative px-0 pe-sm-2 py-2 me-4" href="#!">
-                      <i class="fi-zap fs-base me-2"></i>
-                      <span class="hover-effect-underline stretched-link d-none d-md-inline">Promote</span>
-                    </a>
-                    <a class="nav-link position-relative px-0 pe-sm-2 py-2 me-4" href="#!">
-                      <i class="fi-archive fs-base me-2"></i>
-                      <span class="hover-effect-underline stretched-link d-none d-md-inline">Move to archive</span>
-                    </a> -->
                     <a class="nav-link position-relative text-danger px-0 py-2" href="#!">
                       <i class="fi-trash fs-base me-1"></i>
                       <span class="hover-effect-underline stretched-link d-none d-md-inline">삭제하기</span>
@@ -157,18 +149,6 @@
                                         수정하기
                                       </a>
                                     </li>
-                                    <li>
-                                      <a class="dropdown-item" href="#!">
-                                        <i class="fi-zap fs-base opacity-75 me-2"></i>
-                                        점검,정비 내역보기
-                                      </a>
-                                    </li>
-                                    <!-- <li>
-                                      <a class="dropdown-item" href="#!">
-                                        <i class="fi-archive opacity-75 me-2"></i>
-                                        Move to archive
-                                      </a>
-                                    </li> -->
                                     <li>
                                       <a class="dropdown-item text-danger" href="javascript:void(0);" th:attr="data-bikeSeq=${list.bikeSeq}" onclick="openConfirmModal(this)">
                                         <i class="fi-trash opacity-75 me-2"></i>
@@ -262,27 +242,21 @@
                                   </button>
                                   <ul class="dropdown-menu dropdown-menu-end">
                                     <li>
-                                      <a class="dropdown-item" href = "javascript:void(0);" th:attr="onclick=|goForm('${listR.bikeSeq}')|">
+                                      <a class="dropdown-item" href="javascript:void(0);" th:attr="onclick=|goForm('${listR.bikeSeq}')|">
                                         <i class="fi-edit opacity-75 me-2"></i>
-                                        수정하기
+                                        예약 수정
                                       </a>
                                     </li>
-                                    <li>
-                                      <a class="dropdown-item" href="#!">
-                                        <i class="fi-zap fs-base opacity-75 me-2"></i>
-                                        점검,정비 내역보기
-                                      </a>
-                                    </li>
-                                    <!-- <li>
-                                      <a class="dropdown-item" href="#!">
-                                        <i class="fi-archive opacity-75 me-2"></i>
-                                        Move to archive
-                                      </a>
-                                    </li> -->
+<!--                                     <li> -->
+<!--                                       <a class="dropdown-item" href="#!"> -->
+<!--                                         <i class="fi-zap fs-base opacity-75 me-2"></i> -->
+<!--                                         점검,정비 내역보기 -->
+<!--                                       </a> -->
+<!--                                     </li> -->
                                     <li>
                                       <a class="dropdown-item text-danger" href="#!">
                                         <i class="fi-trash opacity-75 me-2"></i>
-                                        삭제하기
+                                        예약 취소
                                       </a>
                                     </li>
                                   </ul>

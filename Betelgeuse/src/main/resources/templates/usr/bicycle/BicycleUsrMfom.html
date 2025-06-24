@@ -344,45 +344,28 @@
                   </div>
                   <div class="card-body position-relative z-1 px-0 px-lg-4 pb-3">
                     <div class="d-flex align-items-center justify-content-between mb-2">
-                      <div class="fs-xs text-body-secondary me-3">28/06/2024</div>
+                      <div class="fs-xs text-body-secondary me-3" id="nowDate">28/06/2024</div>
                       <div class="d-flex gap-2 position-relative z-2">
-                        <button type="button" class="btn btn-icon btn-sm btn-outline-secondary animate-pulse rounded-circle" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-sm" title="Wishlist" aria-label="Add to wishlist">
-                          <i class="fi-heart animate-target fs-sm"></i>
-                        </button>
-                        <button type="button" class="btn btn-icon btn-sm btn-outline-secondary animate-shake rounded-circle" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-sm" title="Notify" aria-label="Notify">
-                          <i class="fi-bell animate-target fs-sm"></i>
-                        </button>
-                        <button type="button" class="btn btn-icon btn-sm btn-outline-secondary animate-rotate rounded-circle" data-bs-toggle="tooltip" data-bs-custom-class="tooltip-sm" title="Compare" aria-label="Compare">
-                          <i class="fi-repeat animate-target fs-sm"></i>
-                        </button>
                       </div>
                     </div>
                     <h3 class="h6 mb-2">
-                      <a class="hover-effect-underline stretched-link me-1" href="#!">Look 795 Light RS</a>
-                      <span class="fs-xs fw-normal text-body-secondary">(2021)</span>
+                      <a class="hover-effect-underline stretched-link me-1" href="#!"><span id="bikeBrand">Look</span> <span id="bikeModel">795 Light RS</span></a>
+                      <span class="fs-xs fw-normal text-body-secondary">(<span id="bicycleMY">2021</span>)</span>
                     </h3>
-                    <div class="h6 mb-0 opacity-75">Campanolo SuperRecord</div>
-                    <div class="h6 mb-0 opacity-75">Campanolo Bora Ultra 50</div>
+                    <div class="h6 mb-0 opacity-75"><span id="dtBrand">Campanolo</span> <span id="dtModel">SuperRecord</span></div>
+                    <div class="h6 mb-0 opacity-75"><span id="whBrand">Campanolo</span> <span id="whModel">Bora Ultra 50</span></div>
                   </div>
                   <div class="card-footer position-relative z-1 bg-transparent border-0 pt-0 px-0 px-lg-4 pb-0 pb-lg-4">
                     <div class="border-top pt-3">
                       <div class="row row-cols-2 g-2 fs-sm">
                         <div class="col d-flex align-items-center gap-2">
-                          <i class="fi-map-pin"></i>
-                          서울
+                          <i class="fi-bicycle"></i>
+                          <span id="bikeCate">Road</span>
                         </div>
-                        <div class="col d-flex align-items-center gap-2">
+                        <div class="col d-flex align-items-center gap-2 justify-content-end" >
                           <i class="fi-tachometer"></i>
-                          2870Km
+                          <span id="bikeMiles">2870</span>Km
                         </div>
-                        <!-- <div class="col d-flex align-items-center gap-2">
-                          <i class="fi-gas-pump"></i>
-                          Gasoline
-                        </div>
-                        <div class="col d-flex align-items-center gap-2">
-                          <i class="fi-gearbox"></i>
-                          Automatic
-                        </div> -->
                       </div>
                     </div>
                   </div>
@@ -393,38 +376,48 @@
 
                 <hr class="d-lg-none">
 
-                <!-- Progress -->
-                <!-- <div class="position-relative bg-body rounded">
-                  <div class="position-relative z-1 p-lg-3">
-                    <h3 class="h6 mb-1">The quality of content</h3>
-                    <div class="fs-sm text-end mb-2">75%</div>
-                    <div class="progress" role="progressbar" aria-label="Warning example" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="height: 4px">
-                      <div class="progress-bar bg-warning rounded-pill" style="width: 75%"></div>
-                    </div>
-                  </div>
-                  <div class="d-none d-lg-block">
-                    <div class="position-absolute top-0 start-0 w-100 h-100 bg-body-tertiary rounded d-none d-block-dark"></div>
-                  </div>
-                </div> -->
               </div>
             </div>
           </aside>
         </div>
       </div>
     </main>
+    
+<div class="modal fade" id="warningModal" tabindex="-1" aria-labelledby="warningModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-warning-subtle">
+        <h5 class="modal-title" id="warningModalLabel">알림</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="닫기"></button>
+      </div>
+      <div class="modal-body" id="warningModalBody">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
+      </div>
+    </div>
+  </div>
+</div>
  <div th:replace="~{usr/include/LoginedFooter :: LoginedFooter}"></div>
 <script type="text/javascript">
 let seq = document.querySelector("input[name=bikeSeq]");
 let form = document.querySelector("form[name=form]");
 
-
-
+$("#bicycleMiles").on("keyup", function(){
+	let regExp = /^[0-9]{1,}$/
+	$("#bicycleMiles").removeClass("is-invalid");
+	if(!regExp.test($("#bicycleMiles").val())) {
+		$("#bicycleMiles").removeClass("is-valid");
+		$("#bicycleMiles").addClass("is-invalid");
+	} else {
+		$("#bicycleMiles").removeClass("is-invalid");
+		$("#bicycleMiles").addClass("is-valid");
+	}
+});
 
 $('.btn-check').on('click', function() {
 	$('#bicycleCateCd').val($(this).val());
 });
-
-
 
 function validationInst() {
     if(document.getElementById("bicycleName").value == null || document.getElementById("bicycleName").value == "") {
@@ -436,17 +429,13 @@ function validationInst() {
 	}
 }
 
-
 document.getElementById("btnSubmit").onclick = function () {
 	if(validationInst() == false) return false;
-	alert("4");
 	form.action = "/bicycle/bicycleUsrUpdt";
 	form.submit();
 }
 
 </script>
-
-
 <script>
   const uploadInput = document.getElementById('uploadImg1');
   const previewContainer = document.getElementById('previewContainer');
@@ -508,7 +497,6 @@ document.getElementById("btnSubmit").onclick = function () {
     }
   });
 </script>
-
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const removeButtons = document.querySelectorAll(".btn-remove-image");
@@ -530,7 +518,73 @@ document.getElementById("btnSubmit").onclick = function () {
     });
   });
 </script>
+<script type="text/javascript">
+function showWarningModal(message) {
+	  const modalBody = document.getElementById("warningModalBody");
+	  modalBody.textContent = message;
 
+	  const modal = new bootstrap.Modal(document.getElementById('warningModal'));
+	  modal.show();
+	}
 
+document.getElementById("btnSave").onclick = function (keyValue) {
+	const coverImg = previewContainer.querySelector('.col .badge')?.closest('.hover-effect-opacity')?.querySelector('img');
+
+	  if (!coverImg) {
+		  showWarningModal("대표 이미지가 없습니다.");
+	    return;
+	  }
+
+	  const coverSrc = coverImg.getAttribute('src');
+
+	  // 미리보기 영역의 이미지 변경
+	  const previewImg = document.querySelector('.ratio.hover-effect-target img');
+	  if (previewImg) {
+	    previewImg.setAttribute('src', coverSrc);
+	  }
+	  
+	$.ajax({
+		async: true 
+		,cache: false
+		,type: "post"
+		,url: "/bicycle/bicycleUsrProc"
+		,data: {"bicycleCateCd" : $("#bicycleCateCd").val()
+			, "bicycleBrandCd" : $("#bicycleBrandCd").val()
+			, "bicycleModel" : $("#bicycleModel").val()
+			, "bicycleYears" : $("#bicycleYears").val()
+			, "bicycleMiles" : $("#bicycleMiles").val()
+			, "bicycleName" : $("#bicycleName").val()
+			, "drivetrainBrandCd" : $("#drivetrainBrandCd").val()
+			, "drivetrainModel" : $("#drivetrainModel").val()
+			, "brakeBrandCd" : $("#brakeBrandCd").val()
+			, "wheelBrandCd" : $("#wheelBrandCd").val()
+			, "wheelModel" : $("#wheelModel").val()
+			}
+		,success: function(data) {
+			$("#nowDate").text(getTodayFormatted());
+			$("#bikeCate").text(data.bicycleCateCdName);
+			$("#bikeBrand").text(data.bicycleBrandCdName);
+			$("#bikeModel").text(data.bicycleModel);
+			$("#dtBrand").text(data.drivetrainBrandCdName);
+			$("#dtModel").text(data.drivetrainModel);
+			$("#whBrand").text(data.wheelBrandCdName);
+			$("#whModel").text(data.wheelModel);
+			$("#bicycleMY").text(data.bicycleYears);
+			$("#bikeMiles").text(data.bicycleMiles);
+
+		}
+		,error : function(jqXHR, textStatus, errorThrown){
+			showWarningModal("자전거정보를 입력하고 미리보기를 실행해주세요.");
+		}
+	});
+}
+
+function getTodayFormatted() {
+    const d = new Date();
+    return d.getFullYear() + "/" + 
+           String(d.getMonth() + 1).padStart(2, '0') + "/" + 
+           String(d.getDate()).padStart(2, '0');
+}
+</script>
   </body>
 </html>

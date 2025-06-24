@@ -25,6 +25,17 @@
             <when test="shOption == 5">AND b.bicycleName LIKE CONCAT('%',#{shValue},'%')</when>
         </choose>
     </sql>
+	<sql id="selectSearch">	    
+		<choose>
+			<when test="shOptionDate == 1">AND r.rsrvInstDate BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+			<when test="shOptionDate == 2">AND i.instDate BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+		</choose>
+        <choose>
+            <when test="shOption == 1">AND u.userName LIKE CONCAT('%',#{shValue},'%')</when>
+            <when test="shOption == 2">AND u.userId LIKE CONCAT('%',#{shValue},'%')</when>
+            <when test="shOption == 3">AND b.bicycleName LIKE CONCAT('%',#{shValue},'%')</when>
+        </choose>
+    </sql>
 	
 	<insert id="insert">
 	INSERT INTO reservation (
@@ -234,15 +245,18 @@
 		    b.userCustomer_seq,
 		    r.rsrvSeq,
 		    (select userShopSeq from usercustomer where seq=#{userShopSeq}) as userShopSeq
+		    ,(select path from filesUploaded where type = 1000 and delNy = 0 and pSeq = bikeSeq) as path
 		    ,u.userName
  		from
 			bicycle as b
 			left join reservation r on b.bikeSeq = r.bicycle_bikeSeq
 			left join usercustomer u on u.seq = b.userCustomer_seq
+			left join inspectRepair i on r.rsrvSeq = i.reservation_rsrvSeq
 		where 1=1
 			and r.shop_shopSeq = #{userShopSeq}
 			and b.bikeStatus = 121
 			and r.rsrvDelNy = 0
+			<include refid = "selectSearch"></include>
 	</select>
 	<select id="selectList4iNr" resultMap="resultMapObj">
 		SELECT 
@@ -278,12 +292,14 @@
 			bicycle as b
 			left join reservation r on b.bikeSeq = r.bicycle_bikeSeq
 			left join usercustomer u on u.seq = b.userCustomer_seq
+			left join inspectRepair i on r.rsrvSeq = i.reservation_rsrvSeq
 		where 1=1
 			and r.shop_shopSeq = #{userShopSeq}
 			and b.bikeStatus between 122 and 123
 			and r.rsrvDelNy = 0
 <!-- 			and a.bikeStatus &gt;= 120 -->
 <!-- 			and a.bikeStatus &lt;= 121 -->
+		<include refid = "selectSearch"></include>
 	</select>
 	<select id="selectList4iNrCompl" resultMap="resultMapObj">
 		SELECT 
@@ -323,6 +339,7 @@
 		where 1=1
 			and r.shop_shopSeq = #{userShopSeq}
 			and i.irIsCompleteNy = 1
+			<include refid = "selectSearch"></include>
 	</select>
 	<select  id="selectOne4InR" resultMap="resultMapObj">
 		SELECT
@@ -366,20 +383,23 @@
     	SELECT count(*)
     	FROM bicycle as b
 			left join reservation r on b.bikeSeq = r.bicycle_bikeSeq
+			left join inspectRepair i on r.rsrvSeq = i.reservation_rsrvSeq
 		where 1=1
 			and r.shop_shopSeq = (select userShopSeq from usercustomer where seq = #{seq})
 			and b.bikeStatus = 121
 			and r.rsrvDelNy = 0
-			
+			<include refid = "selectSearch"></include>
     </select>
 	<select id="selectOneCountInRList" resultType="Integer">
     	SELECT count(*)
     	FROM bicycle as b
 			left join reservation r on b.bikeSeq = r.bicycle_bikeSeq
+			left join inspectRepair i on r.rsrvSeq = i.reservation_rsrvSeq
 		where 1=1
 			and r.shop_shopSeq = (select userShopSeq from usercustomer where seq = #{seq})
 			and b.bikeStatus between 122 and 123
 			and r.rsrvDelNy = 0
+			<include refid = "selectSearch"></include>
     </select>
 	<select id="selectOneCountInRComplList" resultType="Integer">
     	SELECT count(*)
@@ -391,5 +411,6 @@
 		where 1=1
 			and r.shop_shopSeq = (select userShopSeq from usercustomer where seq = #{seq})
 			and i.irIsCompleteNy = 1
+			<include refid = "selectSearch"></include>
     </select>
 </mapper>

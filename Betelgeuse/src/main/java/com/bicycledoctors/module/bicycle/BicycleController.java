@@ -85,7 +85,7 @@ public class BicycleController extends BaseController{
 
 	    Map<String, String> result = new HashMap<>();
 
-	    result.put("bicycleCateCdName", CodeService.selectOneCachedCodeEng(dto.getBicycleCateCd()));
+	    result.put("bicycleCateCdName", CodeService.selectOneCachedCode(dto.getBicycleCateCd()));
 	    result.put("bicycleBrandCdName", CodeService.selectOneCachedCodeEng(dto.getBicycleBrandCd()));
 	    result.put("drivetrainBrandCdName", CodeService.selectOneCachedCodeEng(dto.getDrivetrainBrandCd()));
 	    result.put("brakeBrandCdName", CodeService.selectOneCachedCodeEng(dto.getBrakeBrandCd()));
