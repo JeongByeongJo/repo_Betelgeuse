@@ -84,7 +84,7 @@
                 </li>
                 <li class="nav-item" role="presentation">
                   <button type="button" class="nav-link text-nowrap" id="archived-tab" data-bs-toggle="pill" data-bs-target="#archived" role="tab" aria-controls="archived" aria-selected="false">
-                    점검&정비 보관소 (0)
+                    점검&정비 보관소 (<span th:text="${@reservationService.selectOneCountInRComplList(session.sessSeqUsr != null ? session.sessSeqUsr : 0)}"></span>)
                   </button>
                 </li>
               </ul>
@@ -227,6 +227,7 @@
 				<div class="d-sm-flex align-items-center" th:if="${!#lists.isEmpty(listR)}" th:each="listR : ${listR}">
 					<input type="hidden" id="shopSeq" name="shopSeq" />
 					<input type="hidden" id="irSeq" name="irSeq" th:value="${listR?.irSeq}" />
+					<input type="hidden" id="bikeSeq" name="bikeSeq" th:value="${listR?.bikeSeq}" />
 	                    <div class="d-inline-flex position-relative z-2 pt-1 pb-2 ps-2 p-sm-0 ms-2 ms-sm-0 me-sm-2">
 	                      <div class="form-check position-relative z-1 fs-lg m-0">
 	                        <input type="checkbox" class="form-check-input" checked>
@@ -271,7 +272,7 @@
 	                                      </a>
 	                                    </li>
 	                                    <li>
-	                                      <a class="dropdown-item text-danger" href="#!">
+	                                      <a class="dropdown-item text-danger" href="javascript:void(0);" th:attr="data-rsrvSeq=${listR.rsrvSeq}" onclick="openConfirmModal(this)">
 	                                        <i class="fi-archive opacity-75 me-2"></i>
 	                                        점검정비완료
 	                                      </a>
@@ -302,7 +303,79 @@
 
               <!-- Archived tab -->
               <div class="tab-pane fade" id="archived" role="tabpanel" aria-labelledby="archived-tab">
-                <h2 class="h6 pt-2 mb-2">점검&정비중인 자전거가 없습니다.</h2>
+                <div class="d-sm-flex align-items-center" th:if="${#lists.isEmpty(listC)}"><h4> 점검,정비 완료 내역이 없습니다.</h4></div>
+				<div class="d-sm-flex align-items-center" th:if="${!#lists.isEmpty(listC)}" th:each="listC : ${listC}">
+					<input type="hidden" id="shopSeq" name="shopSeq" />
+					<input type="hidden" id="irSeq" name="irSeq" th:value="${listC?.irSeq}" />
+					<input type="hidden" id="bikeSeq" name="bikeSeq" th:value="${listC?.bikeSeq}" />
+	                    <div class="d-inline-flex position-relative z-2 pt-1 pb-2 ps-2 p-sm-0 ms-2 ms-sm-0 me-sm-2">
+	                      <div class="form-check position-relative z-1 fs-lg m-0">
+	                        <input type="checkbox" class="form-check-input" checked>
+	                      </div>
+	                      <span class="position-absolute top-0 start-0 w-100 h-100 bg-body border rounded d-sm-none"></span>
+	                    </div>
+	                    <article class="card w-100">
+	                      <div class="row g-0">
+	                        <div class="col-sm-4 col-md-3 rounded overflow-hidden pb-2 pb-sm-0 pe-sm-2">
+	                          <a class="position-relative d-flex h-100 bg-body-tertiary" href="#!" style="min-height: 174px">
+	                            <img src="/usr/template/Finder/assets/img/add-item/bd/IMG_4871.JPG" class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" alt="Image">
+	                            <div class="ratio d-none d-sm-block"  style="--fn-aspect-ratio: calc(180 / 240 * 100%)"></div>
+	                            <div class="ratio ratio-16x9 d-sm-none"></div>
+	                          </a>
+	                        </div>
+	                        <div class="col-sm-8 col-md-9 align-self-center">
+	                          <div class="card-body d-flex justify-content-between p-3 py-sm-4 ps-sm-2 ps-md-3 pe-md-4 mt-n1 mt-sm-0">
+	                            <div class="position-relative pe-3">
+	                              <div class="h2 mb-2"><span th:text="${listC.bicycleName}"></span></div>
+	                              <div class="h5 mb-2"><span th:text="${@codeService.selectOneCachedCodeEng(listC?.bicycleBrandCd)}"></span> <span th:text="${listC?.bicycleModel}"></span></div>
+	                              <div class="h6 fs-sm mb-0 opacity-75"><span th:text="${@codeService.selectOneCachedCodeEng(listC.drivetrainBrandCd)}"></span> <span th:text="${listC.drivetrainModel}"></span></div>
+	                              <div class="h6 fs-sm mb-0 opacity-75"><span th:text="${@codeService.selectOneCachedCodeEng(listC.wheelBrandCd)}"></span> <span th:text="${listC.wheelModel}"></span></div>
+	                            </div>
+	                            <div class="text-end">
+	                              <div class="fs-xs text-body-secondary mb-3">최근 점검&정비: <span th:text="${listC.updtDate}"></span></div>
+	                              <div class="d-flex justify-content-end gap-2 mb-3">                            
+	                                <div class="dropdown">
+	                                  <button type="button" class="btn btn-icon btn-outline-secondary" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Settings">
+	                                    <i class="fi-settings fs-base"></i>
+	                                  </button>
+	                                  <ul class="dropdown-menu dropdown-menu-end">
+	                                    <li>
+	                                      <a class="dropdown-item" th:id="viewReservation" href="javascript:void(0);" th:attr="onclick=|goAjax ('${listC?.rsrvSeq}')|">
+	                                        <i class="fi-edit opacity-75 me-2"></i>
+	                                        예약내용보기
+	                                      </a>
+	                                    </li>
+                                    	<li>
+	                                      <a class="dropdown-item" th:attr="onclick=|goInR('${listC.rsrvSeq}')|">
+	                                        <i class="fi-zap opacity-75 me-2"></i>
+	                                        점검,정비 입력
+	                                      </a>
+	                                    </li>
+	                                    <li>
+	                                      <a class="dropdown-item text-danger" href="javascript:void(0);" th:attr="data-rsrvSeq=${listC.rsrvSeq}" onclick="openConfirmModal(this)">
+	                                        <i class="fi-archive opacity-75 me-2"></i>
+	                                        점검정비완료
+	                                      </a>
+	                                    </li>
+	                                  </ul>
+	                                </div>
+	                              </div>
+	                              <ul class="list-unstyled flex-row flex-wrap fs-sm mb-0">
+	                                <li class="d-flex align-items-center me-2 me-md-3">
+	                                  <i class="fi-eye fs-base me-1"></i>
+	                                  고객명 :&ensp;  <span th:text="${listC?.userName}"></span>
+	                                </li>
+	                                <!-- <li class="d-flex align-items-center me-2 me-md-3">
+	                                  <i class="fi-heart fs-base me-1"></i>
+	                                  최근 점검일
+	                                </li> -->
+	                              </ul>
+	                            </div>
+	                          </div>
+	                        </div>
+	                      </div>
+	                    </article>
+	                  </div>
               </div>
             </div>
           </div>
@@ -370,6 +443,26 @@
   </div>
 </div>
 
+<div class="modal fade" id="modalConfirm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="modalConfirmTitle">title</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body" id="modalConfirmBody">
+				body
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">닫힘</button>
+				<form id="forM" name="forM">
+				<input type="hidden" name="rsrvSeq" id="irsrvSeq" />
+				<button type="button" class="btn btn-danger" id="btnModal">완료</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
     <div th:replace="~{usr/include/LoginedFooter :: LoginedFooter}"></div>
 <script type="text/javascript">
 goAjax = function (keyValue) {
@@ -420,18 +513,38 @@ goNeservation = function (keyValue) {
 	});
 }
 let form = document.querySelector("form[name=formList]");
+let forM = document.querySelector("form[name=forM]");
 let seq = document.querySelector("input[name=rsrvSeq]");
+let seqR = document.getElementById("irsrvSeq");
 
 goInR = function (keyValue) {
     seq.value = keyValue;
     form.action = "/shop/InRUsrForm";
     form.submit();
 }
-goInRMfom = function (keyValue) {
-    seq.value = keyValue;
-    form.action = "/shop/InRUsrMfom";
-    form.submit();
+goInRCompl = function (keyValue) {
+	seqR.value = keyValue;
+	forM.action = "/inr/InsRepUsrCompl";
+	forM.submit();
 }
+function openConfirmModal(element) {
+	const rsrvSeq = element.getAttribute("data-rsrvSeq");
+	
+	document.getElementById("modalConfirmTitle").textContent = "점검정비 완료안내";
+	document.getElementById("modalConfirmBody").textContent = "점검정비를 완료하시겠습니까?";
+	document.getElementById("btnModal").textContent = "점검정비내역 입력을 완료하였습니다.";
+	
+	const btn = document.getElementById("btnModal");
+	btn.setAttribute("data-rsrvSeq", rsrvSeq);
+	
+	const modal = new bootstrap.Modal(document.getElementById('modalConfirm'));
+	modal.show();
+}
+
+document.getElementById("btnModal").addEventListener("click", function () {
+	const rsrvSeq = this.getAttribute("data-rsrvSeq");
+	goInRCompl(rsrvSeq);
+});
 
 </script>
 </html>

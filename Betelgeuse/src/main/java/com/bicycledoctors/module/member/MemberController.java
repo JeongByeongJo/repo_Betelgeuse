@@ -373,6 +373,7 @@ public class MemberController extends BaseController {
 		reservationVo.setUserShopSeq(service.select4ShopSeq(vo).getUserShopSeq());
 		model.addAttribute("list", reservationService.selectList4ReservationCheck(reservationVo));
 		model.addAttribute("listR", reservationService.selectList4iNr(reservationVo));
+		model.addAttribute("listC", reservationService.selectList4iNrCompl(reservationVo));
 		return "usr/member/ServiceAdministration";
 	}
 	

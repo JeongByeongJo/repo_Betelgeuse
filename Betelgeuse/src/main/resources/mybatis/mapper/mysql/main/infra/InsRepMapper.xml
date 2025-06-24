@@ -286,4 +286,16 @@
 <!-- 	    AND irSeq = #{irSeq} -->
 	    AND irSeq = #{irSeq}
 	</update>
+	<update id="inrCompleteBike">
+		UPDATE bicycle set
+			bikeStatus = 124
+		WHERE 1=1
+		AND bikeSeq = (select bicycle_bikeSeq from reservation where rsrvSeq = #{rsrvSeq})
+	</update>
+	<update id="inrComplete">
+		UPDATE inspectRepair set
+			irIsCompleteNy = 1
+		WHERE 1=1
+		AND reservation_rsrvSeq = #{rsrvSeq}
+	</update>
 </mapper>

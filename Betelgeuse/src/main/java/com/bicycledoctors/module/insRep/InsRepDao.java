@@ -9,4 +9,6 @@ public interface InsRepDao {
 	public InsRepDto selectOne(InsRepVo vo);
 	public int insert(InsRepDto dto);
 	public int update(InsRepDto dto);
+	public int inrComplete(InsRepDto dto);
+	public int inrCompleteBike(InsRepDto dto);
 }

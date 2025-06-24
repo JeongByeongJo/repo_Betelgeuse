@@ -8,7 +8,6 @@
       <div class="container pt-4 pt-sm-5 pb-5 mb-xxl-3">
         <div class="row pt-2 pt-sm-0 pt-lg-2 pb-2 pb-sm-3 pb-md-4 pb-lg-5">
 
-
           <!-- Sidebar navigation that turns into offcanvas on screens < 992px wide (lg breakpoint) -->
           <aside class="col-lg-3" style="margin-top: -105px">
             <div class="offcanvas-lg offcanvas-start sticky-lg-top pe-lg-3 pe-xl-4" id="accountSidebar">
@@ -61,7 +60,6 @@
               </div>
             </div>
           </aside>
-
 
           <!-- Account listings content -->
           <div class="col-lg-9">
@@ -172,7 +170,7 @@
                                       </a>
                                     </li> -->
                                     <li>
-                                      <a class="dropdown-item text-danger" href = "javascript:void(0);" th:attr="data-bikeSeq=${list.bikeSeq}" onclick="openConfirmModal(this)">
+                                      <a class="dropdown-item text-danger" href="javascript:void(0);" th:attr="data-bikeSeq=${list.bikeSeq}" onclick="openConfirmModal(this)">
                                         <i class="fi-trash opacity-75 me-2"></i>
                                         삭제하기
                                       </a>

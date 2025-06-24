@@ -19,5 +19,11 @@ public class InsRepService {
 	public int update(InsRepDto dto) {
 		return dao.update(dto);
 	}
+	public int inrComplete(InsRepDto dto) {
+		return dao.inrComplete(dto);
+	}
+	public int inrCompleteBike(InsRepDto dto) {
+		return dao.inrCompleteBike(dto);
+	}
 	
 }

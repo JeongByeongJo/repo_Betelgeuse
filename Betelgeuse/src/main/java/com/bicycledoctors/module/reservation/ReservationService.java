@@ -61,6 +61,9 @@ public class ReservationService extends BaseService {
 	public List<ReservationDto> selectList4iNr(ReservationVo vo) {
 		return dao.selectList4iNr(vo);
 	}
+	public List<ReservationDto> selectList4iNrCompl(ReservationVo vo) {
+		return dao.selectList4iNrCompl(vo);
+	}
 	
 	
 	public LocalDate num2Date(int i) {
@@ -81,5 +84,11 @@ public class ReservationService extends BaseService {
 		vo.setSeq(seq.toString());
 		Integer countInR = dao.selectOneCountInRList(vo);
 		return countInR;
+	}
+	public Integer selectOneCountInRComplList(Integer seq) {
+		ReservationVo vo = new ReservationVo();
+		vo.setSeq(seq.toString());
+		Integer countInRCompl = dao.selectOneCountInRComplList(vo);
+		return countInRCompl;
 	}
 }

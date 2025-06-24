@@ -16,6 +16,7 @@ public interface ReservationDao {
 	public int bikeStatusUpdt(ReservationDto dto);
 	public Integer selectOneCountRsrvList(ReservationVo vo);
 	public Integer selectOneCountInRList(ReservationVo vo);
+	public Integer selectOneCountInRComplList(ReservationVo vo);
 	public int rsrvServicesInst(@Param("listAS")List<ShopAvailableServiceDto> listAS);
 	public ReservationDto selectOne4View(ReservationVo vo);
 	public ReservationDto selectOne4InR(ReservationVo vo);
@@ -26,4 +27,5 @@ public interface ReservationDao {
 	public List<ReservationDto> selectList4ServiceView(ReservationVo vo);
 	public List<ReservationDto> selectList4ReservationCheck(ReservationVo vo);
 	public List<ReservationDto> selectList4iNr(ReservationVo vo);
+	public List<ReservationDto> selectList4iNrCompl(ReservationVo vo);
 }

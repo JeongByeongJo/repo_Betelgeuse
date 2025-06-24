@@ -43,6 +43,7 @@ public class InsRepDto extends BicycleDto {
     private Integer expendableCosts;
     private String expendableDesc;
     private Integer totalPrice;
+    private Integer irIsCompleteNy;
     private String instDate;
     private String updtDate;
     private String reservation_rsrvSeq;
@@ -312,6 +313,12 @@ public class InsRepDto extends BicycleDto {
 	}
 	public void setBicycle_bikeSeq(String bicycle_bikeSeq) {
 		this.bicycle_bikeSeq = bicycle_bikeSeq;
+	}
+	public Integer getIrIsCompleteNy() {
+		return irIsCompleteNy;
+	}
+	public void setIrIsCompleteNy(Integer irIsCompleteNy) {
+		this.irIsCompleteNy = irIsCompleteNy;
 	}
 
 }
