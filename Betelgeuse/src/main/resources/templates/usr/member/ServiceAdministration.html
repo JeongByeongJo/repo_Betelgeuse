@@ -4,7 +4,8 @@
 
 
     <!-- Page content -->
-    <main class="content-wrapper"><form id="formList" name="formList" method="post">
+    <main class="content-wrapper">
+    <form action="/member/shopUsrServiceAdmin" id="formList" name="formList" method="post">
     <input type="hidden" name="bikeSeq"/>
     <input type="hidden" name="rsrvSeq"/>
       <div class="container pt-4 pt-sm-5 pb-5 mb-xxl-3">
@@ -68,41 +69,41 @@
           <!-- Account listings content -->
           <div class="col-lg-9">
             <h1 class="h2 pb-2 pb-lg-3">예약, 점검정비 관리</h1>
-<div class="card">
-	<div class="card-body">
-    <h5 class="card-title">검색하기</h5><div class="row">
-			<div class="col-md-2">
-                <select id="shOptionDate" name="shOptionDate" class="form-select form-select-sm">
-					<option value="" th:selected="${reservationVo.shOptionDate == null}">날짜</option>
-					<option value="1" th:selected="${reservationVo.shOptionDate == 1}">예약일</option>
-					<option value="2" th:selected="${reservationVo.shOptionDate == 2}">점검일</option>
-				</select>
-            </div>
-            <div class="col-md-2">
-                <input type="date" id="shDateStart" name="shDateStart" th:value="${reservationVo.shDateStart}" placeholder="시작일" class="form-control form-control-sm" data-datepicker autocomplete="off">
-<!--                 <input type="date" id="shDateStart" name="shDateStart" th:value="${#strings.substring(reservationVo.shDateStart, 0, 10)}" placeholder="시작일" class="form-control form-control-sm" data-datepicker autocomplete="off"> -->
-            </div>
-            <div class="col-md-2">
-                <input type="date" id="shDateEnd" name="shDateEnd" th:value="${reservationVo.shDateEnd}" placeholder="종료일" class="form-control form-control-sm" data-datepicker autocomplete="off">
-<!--                 <input type="date" id="shDateEnd" name="shDateEnd" th:value="${#strings.substring(reservationVo.shDateEnd, 0, 10)}" placeholder="종료일" class="form-control form-control-sm" data-datepicker autocomplete="off"> -->
-            </div>
-            <div class="col-md-2">
-                <select id="shOption" name="shOption" class="form-select form-select-sm">
-					<option value="" th:selected="${reservationVo.shOption == null}">검색구분</option>
-					<option value="1" th:selected="${reservationVo.shOption == 1}">고객 이름</option>
-					<option value="2" th:selected="${reservationVo.shOption == 2}">고객 ID</option>
-					<option value="3" th:selected="${reservationVo.shOption == 3}">자전거 이름</option>
-				</select>
-            </div>
-            <div class="col-md-2">
-                <input type="search" id="shValue" name="shValue" th:value="${reservationVo.shValue}" onkeyup="enterkey()" placeholder="검색어" class="form-control form-control-sm">
-            </div>
-            <div class="col-md-2">
-				<button type="button" id="btnSearch" class="btn btn-outline-dark"><i class="fi-search"></i></button>
-				<button type="button" id="btnReset" class="btn btn-outline-info"><i class="fi-refresh-ccw"></i></button>
-            </div>
-	</div></div>
-</div>
+			<div class="card">
+				<div class="card-body">
+			    <h5 class="card-title">검색하기</h5><div class="row">
+						<div class="col-md-2">
+			                <select id="shOptionDate" name="shOptionDate" class="form-select form-select-sm">
+								<option value="" th:selected="${reservationVo.shOptionDate == null}">날짜</option>
+								<option value="1" th:selected="${reservationVo.shOptionDate == 1}">예약일</option>
+								<option value="2" th:selected="${reservationVo.shOptionDate == 2}">점검일</option>
+							</select>
+			            </div>
+			            <div class="col-md-2">
+			                <input type="date" id="shDateStart" name="shDateStart" th:value="${reservationVo.shDateStart}" placeholder="시작일" class="form-control form-control-sm" data-datepicker autocomplete="off">
+			<!--                 <input type="date" id="shDateStart" name="shDateStart" th:value="${#strings.substring(reservationVo.shDateStart, 0, 10)}" placeholder="시작일" class="form-control form-control-sm" data-datepicker autocomplete="off"> -->
+			            </div>
+			            <div class="col-md-2">
+			                <input type="date" id="shDateEnd" name="shDateEnd" th:value="${reservationVo.shDateEnd}" placeholder="종료일" class="form-control form-control-sm" data-datepicker autocomplete="off">
+			<!--                 <input type="date" id="shDateEnd" name="shDateEnd" th:value="${#strings.substring(reservationVo.shDateEnd, 0, 10)}" placeholder="종료일" class="form-control form-control-sm" data-datepicker autocomplete="off"> -->
+			            </div>
+			            <div class="col-md-2">
+			                <select id="shOption" name="shOption" class="form-select form-select-sm">
+								<option value="" th:selected="${reservationVo.shOption == null}">검색구분</option>
+								<option value="1" th:selected="${reservationVo.shOption == 1}">고객 이름</option>
+								<option value="2" th:selected="${reservationVo.shOption == 2}">고객 ID</option>
+								<option value="3" th:selected="${reservationVo.shOption == 3}">자전거 이름</option>
+							</select>
+			            </div>
+			            <div class="col-md-2">
+			                <input type="search" id="shValue" name="shValue" th:value="${reservationVo.shValue}" onkeyup="enterkey()" placeholder="검색어" class="form-control form-control-sm">
+			            </div>
+			            <div class="col-md-2">
+							<button type="button" id="btnSearch" class="btn btn-outline-dark"><i class="fi-search"></i></button>
+							<button type="button" id="btnReset" class="btn btn-outline-info"><i class="fi-refresh-ccw"></i></button>
+			            </div>
+				</div></div>
+			</div>
 
             <!-- Nav pills -->
             <div class="nav overflow-x-auto mb-2 pt-4">
@@ -587,5 +588,11 @@ document.getElementById("btnSearch").onclick = function () {
 document.getElementById("btnReset").onclick = function () {
 	location = "/member/shopUsrServiceAdmin";
 };
+function enterkey() {
+	if (window.event.keyCode === 13) {
+		form.action = "/member/shopUsrServiceAdmin";
+		form.submit();
+	}
+}
 </script>
 </html>

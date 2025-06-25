@@ -207,10 +207,12 @@
 		    b.seq,
 			b.userID,
 			b.userName,
-			(select path from filesUploaded where type=1000 and pSeq = a.bikeSeq) as path
+			(select path from filesUploaded where type=1000 and pSeq = a.bikeSeq) as path,
+			r.rsrvSeq
  		from
 			bicycle as a
 			left join usercustomer b on a.userCustomer_seq = b.seq
+			left join reservation r on a.bikeSeq = r.bicycle_bikeSeq
 		where 1=1
 			and a.userCustomer_seq = #{userCustomer_seq}
 			and a.bikeStatus between 121 and 122

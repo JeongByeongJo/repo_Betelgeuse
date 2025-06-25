@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="ko" data-bs-theme="light" data-pwa="true" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="reservationModifier">
+<form id="formRM" name="formRM">
+<input type="hidden" id="rsrvSeq" name="rsrvSeq" th:value="${itemR.rsrvSeq}" />
+<input type="hidden" id="bicycle_bikeSeq" name="bicycle_bikeSeq" th:value="${itemR.bicycle_bikeSeq}" />
+<div class="d-none d-lg-block" style="margin-top: -105px"></div>
+              <div class="d-none d-lg-block" style="height: 90px"></div>
+              <div class="bg-body-tertiary rounded p-4">
+                <div class="position-relative z-1 p-xl-2">
+                  <h2 class="h5 mb-4 d-none d-lg-block">점검&정비 예약변경</h2>
+                  <h3>예약샵: <span th:text="${itemR.shopName}"></span></h3>
+                  <label class="form-label fs-base pt-3" for="reservServicesCd">점검 & 정비</label>
+                  <select class="form-select form-select-lg" id="reservServicesCd" name="reservServicesCd" data-select multiple aria-label="gear select">
+                    <option value="">선택해주세요.&emsp;&emsp;&emsp;&emsp;</option>
+                    <option th:each="list : ${list}" th:value="${list?.availableServiceCd}" th:text="${@codeService.selectOneCachedCode(list.availableServiceCd)}">구동계</option>
+                  </select>
+                  <div class="d-flex gap-4 pb-2 mb-1">
+                    
+                  </div>
+<div class="btn-group w-100" role="group" aria-label="Date/time selection">
+  <button type="button" id="prevBtn" class="btn btn-icon btn-outline-info flex-grow-0 px-2" aria-label="previous">
+    <i class="fi-chevron-left fs-lg"></i>
+  </button>
+  <div id="date-buttons" class="d-flex flex-grow-1 justify-content-between overflow-hidden">
+    <th:block th:each="day, iterStat : ${visitDays}">
+      <input type="radio" class="btn-check" name="reservationDateCd" th:id="${day.id}" th:checked="${day.checked}" th:data-index="${iterStat.index}" th:value="${iterStat.index}" />
+      <label class="btn btn-outline-info text-center px-2 rounded-0" th:for="${day.id}" th:text="${day.label}" th:data-index="${iterStat.index}" style="flex: 1; min-width: 0; border-left: none; border-right: none;">날짜</label>
+    </th:block>
+  </div>
+  <button type="button" id="nextBtn" class="btn btn-icon btn-outline-info flex-grow-0 px-2" aria-label="next">
+    <i class="fi-chevron-right fs-lg"></i>
+  </button>
+</div>
+                  <div class="row row-cols-4 g-2 pt-4 pb-2">
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-1" th:value="100">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-1">10:00</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-2" th:value="101">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-2">10:30</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-3" th:value="102">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-3">11:00</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-4" th:value="103">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-4">11:30</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-5" th:value="104">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-5">12:00</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-6" th:value="105" checked>
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-6">12:30</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-7" th:value="106">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-7">13:00</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-8" th:value="107">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-8">13:30</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-9" th:value="108">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-9">14:00</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-10" th:value="109">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-10">14:30</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-11" th:value="110">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-11">15:00</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-12" th:value="111">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-12">15:30</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-13" th:value="112">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-13">16:00</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-14" th:value="113">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-14">16:30</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-15" th:value="114">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-15">17:00</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-16" th:value="115">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-16">17:30</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-17" th:value="116">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-17">18:00</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-18" th:value="117">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-18">18:30</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-19" th:value="118">
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-19">19:00</label>
+                    </div>
+                    <div class="col">
+                      <input type="radio" class="btn-check" name="reservationTime" id="visit-time-20" th:value="119" disabled>
+                      <label class="btn btn-outline-secondary w-100 rounded-pill px-2" for="visit-time-20">19:30</label>
+                    </div>
+                  </div>
+                  <textarea class="form-control" id="rsrvDesc" name="rsrvDesc" placeholder="점검,정비 요청사항을 자세히 기입해주세요." rows="3"></textarea>
+                </div>
+              </div>
+			
+</form>
+	<script src="/xdm/template/NiceAdmin/assets/jquery/jquery-3.7.1.min.js"></script>
+	
+    <!-- Vendor scripts -->
+    <script src="/usr/template/Finder/assets/vendor/glightbox/dist/js/glightbox.min.js"></script>
+    <script src="/usr/template/Finder/assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="/usr/template/Finder/assets/vendor/cleave.js/dist/cleave.min.js"></script>
+    <script src="/usr/template/Finder/assets/vendor/choices.js/public/assets/scripts/choices.min.js"></script>
+    <script src="/usr/template/Finder/assets/vendor/flatpickr/dist/flatpickr.min.js"></script>
+
+    <!-- Bootstrap + Theme scripts -->
+    <script src="/usr/template/Finder/assets/js/theme.min.js"></script>
+<script>
+function initReservationDateSlider() {
+	  const maxVisible = 3;
+	  let startIndex = 0;
+
+	  const inputs = Array.from(document.querySelectorAll('input[name="reservationDateCd"]'));
+	  const labels = Array.from(document.querySelectorAll('#date-buttons label.btn'));
+
+	  const prevBtn = document.getElementById("prevBtn");
+	  const nextBtn = document.getElementById("nextBtn");
+
+	  function updateVisible() {
+	    inputs.forEach((input, i) => {
+	      input.style.display = (i >= startIndex && i < startIndex + maxVisible) ? '' : 'none';
+	    });
+
+	    labels.forEach((label, i) => {
+	      label.style.display = (i >= startIndex && i < startIndex + maxVisible) ? '' : 'none';
+	    });
+	  }
+
+	  if (prevBtn && nextBtn) {
+	    prevBtn.addEventListener('click', () => {
+	      if (startIndex > 0) {
+	        startIndex--;
+	        updateVisible();
+	      }
+	    });
+
+	    nextBtn.addEventListener('click', () => {
+	      if (startIndex + maxVisible < inputs.length) {
+	        startIndex++;
+	        updateVisible();
+	      }
+	    });
+	  }
+
+	  updateVisible();
+	}
+</script>
+</th:block>
+</html>

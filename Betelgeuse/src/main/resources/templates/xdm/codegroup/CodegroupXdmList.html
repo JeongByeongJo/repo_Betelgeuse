@@ -74,7 +74,7 @@
                 </div>
             </div>
             <div class="col-md-2">
-                <input type="text" id="shValue" name="shValue" th:value="${vo.shValue}" onkeyup="enterkey()" placeholder="검색어" class="form-control form-control-sm">
+                <input type="search" id="shValue" name="shValue" th:value="${vo.shValue}" onkeyup="enterkey()" placeholder="검색어" class="form-control form-control-sm">
                 <div class="invalid-feedback">
                   검색어를 입력해주세요.
                 </div>
@@ -235,7 +235,12 @@ document.getElementById("btnExls").onclick = function () {
 	document.getElementById("btnReset").onclick = function () {
 		location = "/codegroup/codegroupXdmList";
 	};
-	
+	function enterkey() {
+		if (window.event.keyCode === 13) {
+			form.action = "/codegroup/codegroupXdmList";
+			form.submit();
+		}
+	}
 	goList = function (thisPage) {
 	    document.querySelector("input[name=thisPage]").value = thisPage;
 	    form.action = "/codegroup/codegroupXdmList";

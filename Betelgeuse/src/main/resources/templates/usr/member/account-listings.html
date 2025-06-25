@@ -242,7 +242,7 @@
                                   </button>
                                   <ul class="dropdown-menu dropdown-menu-end">
                                     <li>
-                                      <a class="dropdown-item" href="javascript:void(0);" th:attr="onclick=|goForm('${listR.bikeSeq}')|">
+                                      <a class="dropdown-item" href="javascript:void(0);" th:attr="onclick=|goReModal('${listR.rsrvSeq}')|">
                                         <i class="fi-edit opacity-75 me-2"></i>
                                         예약 수정
                                       </a>
@@ -311,7 +311,22 @@
 		</div>
 	</div>
 </div>
-
+			<div class="modal" id="modalReReserv" tabindex="-1" role="dialog">
+	          <div class="modal-dialog modal-dialog-scrollable" role="document">
+	            <div class="modal-content">
+	              <div class="modal-header">
+	                <h5 class="modal-title">예약변경</h5>
+	                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+	              </div>
+	              <div class="modal-body" id="reservationModifier">
+	              </div>
+	              <div class="modal-footer flex-column flex-sm-row align-items-stretch">
+	                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+	                <button type="button" id="btnReservation" class="btn btn-primary">예약변경</button>
+	              </div>
+	            </div>
+	          </div>
+	        </div>
     <div th:replace="~{usr/include/LoginedFooter :: LoginedFooter}"></div>
 <script type="text/javascript">
 let form = document.querySelector("form[name=formList]");
@@ -332,6 +347,28 @@ goShop = function (keyValue) {
     seqS.value = keyValue;
     form.action = "/shop/shopUsrView";
     form.submit();
+}
+goReModal = function (keyValue) {
+	$.ajax({
+		async: true 
+		,cache: false
+		,type: "post"
+		,url: "/shop/reservationUsrMfom"
+		,data: {"rsrvSeq" : keyValue}
+		,success: function(htmlFragment) {
+			$("#reservationModifier").html(htmlFragment);
+		    bootstrap.Modal.getOrCreateInstance(document.getElementById("modalReReserv")).show();
+		    initReservationDateSlider();
+			
+// 			const modalElement = document.getElementById("modalReReserv");
+// 	        const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
+// 	        modal.show();
+// 	        initReservationDateSlider()
+        }
+		,error : function(jqXHR, textStatus, errorThrown){
+			alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
+		}
+	});
 }
 
 function openConfirmModal(element) {

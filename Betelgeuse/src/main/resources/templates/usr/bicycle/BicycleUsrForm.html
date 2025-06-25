@@ -389,8 +389,8 @@ function validationInst() {
 
 document.getElementById("btnSubmit").onclick = function () {
 		if(validationInst() == false) return false;
-		//form.action = "/bicycle/bicycleUsrInst";
-		//form.submit();
+		form.action = "/bicycle/bicycleUsrInst";
+		form.submit();
 }
 $("#bicycleMiles").on("keyup", function(){
 	let regExp = /^[0-9]{1,}$/

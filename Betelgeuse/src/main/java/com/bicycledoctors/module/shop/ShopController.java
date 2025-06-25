@@ -22,6 +22,8 @@ import com.bicycledoctors.module.favorite.FavoriteService;
 import com.bicycledoctors.module.favorite.FavoriteVo;
 import com.bicycledoctors.module.index.IndexService;
 import com.bicycledoctors.module.index.IndexVo;
+import com.bicycledoctors.module.reservation.ReservationService;
+import com.bicycledoctors.module.reservation.ReservationVo;
 import com.bicycledoctors.module.review.ReviewService;
 import com.bicycledoctors.module.review.ReviewVo;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -46,6 +48,9 @@ public class ShopController extends BaseController {
 	
 	@Autowired
 	FavoriteService favoriteService;
+	
+	@Autowired
+	ReservationService reservationService;
 	
 	@RequestMapping(value = "/shop/shopXdmList")
 	public String shopXdmList(@ModelAttribute("vo") ShopVo vo, ShopDto dto, Model model) {
@@ -274,16 +279,10 @@ public class ShopController extends BaseController {
 		FavoriteVo favoriteVo = new FavoriteVo();
 		favoriteVo.setSeq(seq);
 		favoriteVo.setShopSeq(shopSeq);
-		System.out.println(">>>>>>>>>>>");
-		System.out.println(favoriteVo.getSeq());
-		System.out.println(favoriteVo.getShopSeq());
 		favoriteDto = favoriteService.selectOne(favoriteVo);
 		if (favoriteDto == null) {
 			favoriteService.insert(favoriteVo);
 		} else {
-			System.out.println(">>>>>>>>>>>");
-			System.out.println(favoriteDto.getSeq());
-			System.out.println(favoriteDto.getShop_shopSeq());
 			if (favoriteDto.getFavrDelNy() == 0) {
 				favoriteService.uelete(favoriteDto);
 			} else {
@@ -312,6 +311,17 @@ public class ShopController extends BaseController {
 		model.addAttribute("listPic", picList);  // 이미지 정보 리스트 (혹시 필요하다면)
 		
 		return "usr/shop/ShopListFragment :: shopListFragment";
+	}
+	
+	@RequestMapping(value = "/shop/reservationUsrMfom")
+	public String reservationUsrMfom(Model model, ShopVo shopVo, BicycleVo bicycleVo, ReservationVo vo, HttpSession httpSession) {
+		shopVo.setSeq(httpSession.getAttribute("sessSeqUsr").toString());
+		bicycleVo.setUserCustomer_seq(httpSession.getAttribute("sessSeqUsr").toString());
+		shopVo.setShopSeq(reservationService.selectOne(vo).getShop_shopSeq());
+		model.addAttribute("itemR", reservationService.selectOne(vo));
+		model.addAttribute("list", service.selectShopService(shopVo));
+		model.addAttribute("visitDays", service.getNext7Days());
+		return "usr/member/reservation-modifier :: reservationModifier";
 	}
 	
 }
