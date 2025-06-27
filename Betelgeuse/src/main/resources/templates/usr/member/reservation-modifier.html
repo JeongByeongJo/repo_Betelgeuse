@@ -2,18 +2,18 @@
 <html lang="ko" data-bs-theme="light" data-pwa="true" xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="reservationModifier">
 <form id="formRM" name="formRM">
-<input type="hidden" id="rsrvSeq" name="rsrvSeq" th:value="${itemR.rsrvSeq}" />
-<input type="hidden" id="bicycle_bikeSeq" name="bicycle_bikeSeq" th:value="${itemR.bicycle_bikeSeq}" />
+<input type="hidden" id="rsrvSeq" name="rsrvSeq" th:value="${itemR?.rsrvSeq}" />
+<input type="hidden" id="bicycle_bikeSeq" name="bicycle_bikeSeq" th:value="${itemR?.bicycle_bikeSeq}" />
 <div class="d-none d-lg-block" style="margin-top: -105px"></div>
               <div class="d-none d-lg-block" style="height: 90px"></div>
               <div class="bg-body-tertiary rounded p-4">
                 <div class="position-relative z-1 p-xl-2">
                   <h2 class="h5 mb-4 d-none d-lg-block">점검&정비 예약변경</h2>
-                  <h3>예약샵: <span th:text="${itemR.shopName}"></span></h3>
+                  <h3>예약샵: <span th:text="${itemR?.shopName}"></span></h3>
                   <label class="form-label fs-base pt-3" for="reservServicesCd">점검 & 정비</label>
                   <select class="form-select form-select-lg" id="reservServicesCd" name="reservServicesCd" data-select multiple aria-label="gear select">
                     <option value="">선택해주세요.&emsp;&emsp;&emsp;&emsp;</option>
-                    <option th:each="list : ${list}" th:value="${list?.availableServiceCd}" th:text="${@codeService.selectOneCachedCode(list.availableServiceCd)}">구동계</option>
+                    <option th:each="lists : ${lists}" th:value="${lists?.availableServiceCd}" th:text="${@codeService.selectOneCachedCode(lists.availableServiceCd)}">구동계</option>
                   </select>
                   <div class="d-flex gap-4 pb-2 mb-1">
                     
@@ -119,7 +119,7 @@
               </div>
 			
 </form>
-	<script src="/xdm/template/NiceAdmin/assets/jquery/jquery-3.7.1.min.js"></script>
+<script src="/xdm/template/NiceAdmin/assets/jquery/jquery-3.7.1.min.js"></script>
 	
     <!-- Vendor scripts -->
     <script src="/usr/template/Finder/assets/vendor/glightbox/dist/js/glightbox.min.js"></script>

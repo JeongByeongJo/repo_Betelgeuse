@@ -319,7 +319,7 @@ public class ShopController extends BaseController {
 		bicycleVo.setUserCustomer_seq(httpSession.getAttribute("sessSeqUsr").toString());
 		shopVo.setShopSeq(reservationService.selectOne(vo).getShop_shopSeq());
 		model.addAttribute("itemR", reservationService.selectOne(vo));
-		model.addAttribute("list", service.selectShopService(shopVo));
+		model.addAttribute("lists", service.selectShopService(shopVo));
 		model.addAttribute("visitDays", service.getNext7Days());
 		return "usr/member/reservation-modifier :: reservationModifier";
 	}

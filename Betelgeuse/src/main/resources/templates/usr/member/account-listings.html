@@ -319,6 +319,7 @@
 	                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
 	              </div>
 	              <div class="modal-body" id="reservationModifier">
+<!-- 	              <th:block th:replace="~{usr/member/reservation-modifier :: reservationModifier}"></th:block> -->
 	              </div>
 	              <div class="modal-footer flex-column flex-sm-row align-items-stretch">
 	                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
@@ -359,17 +360,20 @@ goReModal = function (keyValue) {
 			$("#reservationModifier").html(htmlFragment);
 		    bootstrap.Modal.getOrCreateInstance(document.getElementById("modalReReserv")).show();
 		    initReservationDateSlider();
-			
-// 			const modalElement = document.getElementById("modalReReserv");
-// 	        const modal = bootstrap.Modal.getOrCreateInstance(modalElement);
-// 	        modal.show();
-// 	        initReservationDateSlider()
         }
 		,error : function(jqXHR, textStatus, errorThrown){
 			alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
 		}
 	});
 }
+document.addEventListener('DOMContentLoaded', function() {
+    const modalElement = document.getElementById('modalReReserv');
+    if (modalElement) {
+      modalElement.addEventListener('hidden.bs.modal', function () {
+        location.reload();
+      });
+    }
+  });
 
 function openConfirmModal(element) {
     const bikeSeq = element.getAttribute("data-bikeSeq");
